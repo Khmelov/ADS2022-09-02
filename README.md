@@ -2,8 +2,8 @@
 
 ### Начало работы:
 
-<b>Посмотрите видео: <a href="https://youtu.be/mIs-X63CH78" target="_blank">Tutorial:QuickStart</a></b>
-<br><i>(оно старое, но переписывать смысла нет, все понятно должно быть)</i>.
+**Посмотрите видео: <a href="https://youtu.be/mIs-X63CH78" target="_blank">Tutorial:QuickStart</a>**
+<br>_(оно старое, но переписывать смысла нет, все понятно должно быть)_.
 
 1. Инициализация. Нажмите Fork на странице https://github.com/Khmelov/ADS2022-09-02/
 2. У вас в аккаунте fork появится тут  https://github.com/ваш_логин/ADS2022-09-02
