@@ -1,0 +1,86 @@
+package by.it.group151001.shlyk.lesson01;
+
+/*
+ * Даны целые числа 1<=n<=1E18 и 2<=m<=1E5,
+ * необходимо найти остаток от деления n-го числа Фибоначчи на m.
+ * время расчета должно быть не более 2 секунд
+ */
+
+import javax.swing.*;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class FiboC {
+
+    private long startTime = System.currentTimeMillis();
+
+    private long time() {
+        return System.currentTimeMillis() - startTime;
+    }
+
+    public static void main(String[] args) {
+        FiboC fibo = new FiboC();
+        long n = 10000;
+        int m = 100_000;
+        System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
+    }
+
+    long fasterC(long n, int m) {
+        ArrayList<Long> pizSeq = new ArrayList<>();
+        ArrayList<Long> checkSeq = new ArrayList<>();
+
+        int pizPeriod = 2;
+        int tempPeriod = pizPeriod;
+        BigInteger divider = BigInteger.valueOf(m);
+        BigInteger lastFibbo = BigInteger.ZERO;
+        BigInteger currFibbo = BigInteger.ONE;
+        BigInteger tempFibbo;
+
+        pizSeq.add(0L);
+        pizSeq.add(1L);
+        checkSeq.add(23L);
+        long rest; //currFibbo.remainder(divider);
+
+        boolean isCompleted = false;
+        boolean isTriggered = false;
+
+        while(!isCompleted){
+            tempFibbo = currFibbo;
+            currFibbo = currFibbo.add(lastFibbo);
+            lastFibbo = tempFibbo;
+            rest = (currFibbo.compareTo(divider) < 0) ? currFibbo.intValue() : (currFibbo.remainder(divider) ).intValue();
+            if (isTriggered){
+                checkSeq.add(rest);
+                isTriggered = rest == pizSeq.get(tempPeriod - pizPeriod);
+                tempPeriod++;
+                isCompleted = tempPeriod >= pizPeriod * 2;
+            } else{
+                if (checkSeq.size() > 0) {
+                    pizSeq.addAll(checkSeq);
+                    checkSeq.clear();
+                    pizPeriod = tempPeriod;
+                }
+                tempPeriod++;
+                isTriggered = rest == 0;
+                if (isTriggered)
+                    checkSeq.add(rest);
+                else{
+                    pizPeriod = tempPeriod;
+                    pizSeq.add(rest);
+                }
+            }
+
+        }
+        //Решение сложно найти интуитивно
+        //возможно потребуется дополнительный поиск информации
+        //см. период Пизано
+        return  pizPeriod;
+        //   return (n % pizPeriod - 1);
+       // return pizSeq.get((int) n % pizPeriod - 1);
+    }
+
+
+}
+
