@@ -22,12 +22,15 @@ public class FiboC {
 
     public static void main(String[] args) {
         FiboC fibo = new FiboC();
-        long n = 10000;
-        int m = 100_000;
+        long n = 1001;
+        int m = 3;
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
+    final int AVAILABLE_MISTAKE = 100;
     long fasterC(long n, int m) {
+        if (n <= 2)
+            return 1;
         ArrayList<Long> pizSeq = new ArrayList<>();
         ArrayList<Long> checkSeq = new ArrayList<>();
 
@@ -40,7 +43,6 @@ public class FiboC {
 
         pizSeq.add(0L);
         pizSeq.add(1L);
-        checkSeq.add(23L);
         long rest; //currFibbo.remainder(divider);
 
         boolean isCompleted = false;
@@ -55,7 +57,7 @@ public class FiboC {
                 checkSeq.add(rest);
                 isTriggered = rest == pizSeq.get(tempPeriod - pizPeriod);
                 tempPeriod++;
-                isCompleted = tempPeriod >= pizPeriod * 2;
+                isCompleted = tempPeriod >= (pizPeriod + AVAILABLE_MISTAKE) || tempPeriod >= 2 * pizPeriod;
             } else{
                 if (checkSeq.size() > 0) {
                     pizSeq.addAll(checkSeq);
@@ -73,12 +75,10 @@ public class FiboC {
             }
 
         }
-        //Решение сложно найти интуитивно
-        //возможно потребуется дополнительный поиск информации
-        //см. период Пизано
-        return  pizPeriod;
+        //return  pizPeriod;
         //   return (n % pizPeriod - 1);
-       // return pizSeq.get((int) n % pizPeriod - 1);
+
+        return pizSeq.get((int) n % pizPeriod);
     }
 
 

@@ -34,9 +34,29 @@ public class Lesson1Test {
     }
 
 
-    @Test(timeout = 2000)
+    @Test(timeout = 100000)
     public void fasterC() throws Exception {
         FiboC fibo=new FiboC();
+        FiboB calculator = new FiboB();
+        final int timeLimit = 2000;
+        final int nLeft = 1;
+        final int nRight = 100000;
+        final int mLeft = 2;
+        final int mRight = 10000;
+        long result;
+        long timeStart, timeEnd;
+        BigInteger divider;
+        for (int i = nLeft; i <= nRight; i += 10000){
+            for (int j = mLeft; j <= mRight; j += 1000){
+                String codeError = i + ", " + j;
+                timeStart = System.currentTimeMillis();
+                divider = BigInteger.valueOf(j);
+                result = calculator.fastB(i).remainder(divider).intValue();
+                assertTrue("fasterC failed with correct result:" + result +" at " + codeError, fibo.fasterC(i,j) == result );
+                timeEnd = System.currentTimeMillis();
+                assertTrue(codeError + "Time failed", (timeStart - timeEnd) <= timeLimit);
+            }
+        }
         assertTrue("fasterC failed 1", fibo.fasterC(10,2)==1L);
         assertTrue("fasterC failed 2", fibo.fasterC(1,2)==1L);
         assertTrue("fasterC failed 3", fibo.fasterC(999999999,321)==34L);
