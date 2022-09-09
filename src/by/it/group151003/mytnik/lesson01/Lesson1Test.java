@@ -1,4 +1,4 @@
-package by.it.group151003.mytnik;
+package by.it.group151003.mytnik.lesson01;
 
 import org.junit.Test;
 
