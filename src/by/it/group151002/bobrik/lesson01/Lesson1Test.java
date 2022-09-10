@@ -76,5 +76,8 @@ public class Lesson1Test {
         assertTrue("fasterC failed 1", fibo.fasterC(10,2)==1L);
         assertTrue("fasterC failed 2", fibo.fasterC(1,2)==1L);
         assertTrue("fasterC failed 3", fibo.fasterC(999999999,321)==34L);
+        assertTrue("fasterC failed 4", fibo.fasterC(1, 100000000) == 1L);
+        assertTrue("fasterC failed 5", fibo.fasterC(17, 8) == 5L);
+        assertTrue("fasterC failed 6", fibo.fasterC(9, 7) == 6L);
     }
 }
