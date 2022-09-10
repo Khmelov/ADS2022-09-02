@@ -31,12 +31,19 @@ public class FiboB {
     }
 
     private BigInteger helper(Integer n) {
-        if (mem[n] != null) {
-            return mem[n];
+        if (mem[n] != null) return mem[n];
+        return mem[n] = helper(n - 1).add(helper(n - 2));
+    }
+
+    // итеративный способ
+    /*
+    private BigInteger helper(Integer n) {
+        for (int i = 2; i <= n; i++) {
+            mem[i] = mem[i - 1].add(mem[i - 2]);
         }
-        mem[n] = helper(n - 1).add(helper(n - 2));
         return mem[n];
     }
+    */
 
 
 }

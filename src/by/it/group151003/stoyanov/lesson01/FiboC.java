@@ -6,7 +6,10 @@ package by.it.group151003.stoyanov.lesson01;
  * время расчета должно быть не более 2 секунд
  */
 
+import java.math.BigInteger;
+
 public class FiboC {
+    private long[] mem;
 
     private long startTime = System.currentTimeMillis();
 
@@ -22,10 +25,36 @@ public class FiboC {
     }
 
     long fasterC(long n, int m) {
-        //Решение сложно найти интуитивно
-        //возможно потребуется дополнительный поиск информации
-        //см. период Пизано
-        return 0L;
+        return fibM(n % calculatePisanoPeriod(m), m);
+    }
+
+    private long fibM(long n, int m) {
+        int prevRemainder = 0;
+        int currentRemainder = 1;
+        for (int i = 0; i < n; i++) {
+            int t = prevRemainder;
+            prevRemainder = currentRemainder;
+            currentRemainder = (t + currentRemainder) % m;
+        }
+
+        return prevRemainder;
+
+    }
+
+
+    private int calculatePisanoPeriod(int m) {
+        int prevRemainder = 0;
+        int currentRemainder = 1;
+        int pisanoPeriod = 0;
+
+        do {
+            int t = prevRemainder;
+            prevRemainder = currentRemainder;
+            currentRemainder = (t + currentRemainder) % m;
+            pisanoPeriod++;
+        } while (prevRemainder != 0 || currentRemainder != 1);
+
+        return prevRemainder;
     }
 
 

@@ -27,19 +27,13 @@ public class FiboA {
 
 
     private int calc(int n) {
-        if (n < 2) {
-            return n;
-        }
-
+        if (n < 2) return n;
         return calc(n - 2) + calc(n - 1);
-
     }
 
 
     BigInteger slowA(Integer n) {
-        if (n < 2) {
-            return BigInteger.valueOf(n);
-        }
+        if (n < 2) return BigInteger.valueOf(n);
         return slowA(n - 2).add(slowA(n - 1));
     }
 
