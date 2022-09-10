@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson01;
+package by.it.group151002.bobrik.lesson01;
 
 import org.junit.Test;
 
@@ -22,6 +22,22 @@ public class Lesson1Test {
         FiboA fibo=new FiboA();
         BigInteger res=fibo.slowA(33);
         boolean ok=res.toString().equals("3524578");
+        assertTrue("slowA failed", ok);
+
+        res = fibo.slowA(37);
+        ok = res.toString().equals("24157817");
+        assertTrue("slowA failed", ok);
+
+        res = fibo.slowA(0);
+        ok = res.toString().equals("0");
+        assertTrue("slowA failed", ok);
+
+        res = fibo.slowA(1);
+        ok = res.toString().equals("1");
+        assertTrue("slowA failed", ok);
+
+        res = fibo.slowA(20);
+        ok = res.toString().equals("6765");
         assertTrue("slowA failed", ok);
     }
 
