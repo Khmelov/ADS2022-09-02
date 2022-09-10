@@ -1,6 +1,10 @@
 package by.it.group151001.shlyk.lesson02;
 
+import java.security.InvalidAlgorithmParameterException;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 /*
 даны интервальные события events
@@ -11,7 +15,39 @@ import java.util.List;
 
 public class B_Sheduler {
     //событие у аудитории(два поля: начало и конец)
-    static class Event {
+    interface methodSort {
+        void sort(int lBorder, int rBorder);
+    }
+        static class Event {
+
+        static void sort(Event[] array){
+            methodSort self = new methodSort() {
+                @Override
+                public void sort(int lBorder, int rBorder){
+                    int i = lBorder;
+                    int j = rBorder;
+                    Event x = array[ (i + j) / 2];
+                    do{
+                        while(x.start > array[i].start)
+                            i++;
+                        while(x.start < array[j].start)
+                            j--;
+                        if (i <= j){
+                            Event temp = array[i];
+                            array[i] = array[j];
+                            array[j] = temp;
+                            j--;
+                            i++;
+                        }
+                    } while (i < j);
+                    if (i < rBorder)
+                        sort(i, rBorder);
+                    if (j > lBorder)
+                        sort(lBorder, j);
+                }
+            };
+            self.sort(0, array.length - 1);
+        }
         int start;
         int stop;
 
@@ -41,19 +77,38 @@ public class B_Sheduler {
     }
 
     List<Event> calcStartTimes(Event[] events, int from, int to) {
-        //events - события которые нужно распределить в аудитории
-        //в период [from, int] (включительно).
-        //оптимизация проводится по наибольшему числу непересекающихся событий.
-        //начало и конец событий могут совпадать.
-        List<Event> result;
-        result = new ArrayList<>();
-        //ваше решение.
 
+        if (events.length == 0)
+            return new ArrayList<>();
+        Event.sort(events);
+        List<Event> result = new ArrayList<>();
 
-
-
-
-
-        return result;                        //вернем итог
+        Event bestChoice;
+        int iEvents = 0;
+        while(events[iEvents].start < from) {
+            iEvents++;
+            if (iEvents >= events.length)
+                return  new ArrayList<>();
+        }
+        bestChoice = events[iEvents];
+        boolean isUpdated;
+        for (int i = 1; i < events.length; i++){
+            isUpdated = events[i].start <= bestChoice.start && bestChoice.stop > events[i].stop;
+            if(isUpdated)
+            {
+                bestChoice = events[i];
+            }
+            else
+                if (events[i].start >= bestChoice.stop)
+                {
+                if (events[i].start < to) {
+                    result.add(bestChoice);
+                    bestChoice = events[i];
+                } else
+                    break;
+            }
+        }
+        result.add(bestChoice);
+        return result;
     }
 }

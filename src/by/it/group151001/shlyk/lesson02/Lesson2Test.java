@@ -45,10 +45,10 @@ public class Lesson2Test {
     @Test
     public void C_GreedyKnapsack() throws Exception {
         String root=System.getProperty("user.dir")+"/src/";
-        File f=new File(root+"by/it/a_khmelev/lesson02/greedyKnapsack.txt");
+        File f=new File(root+"by/it/group151001/shlyk/lesson02/greedyKnapsack.txt");
         double costFinal=new C_GreedyKnapsack().calc(f);
         boolean ok=costFinal==200;
-        assertTrue("B_Sheduler failed", ok);
+        assertTrue("C task has been failed", ok);
     }
 
 }
