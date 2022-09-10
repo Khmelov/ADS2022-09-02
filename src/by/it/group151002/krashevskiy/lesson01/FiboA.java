@@ -29,16 +29,17 @@ public class FiboA {
         if (n < 2) {
             return n;
         }
-        int prevPrev = 1;
-        int prev = 1;
-        int num = 2;
+
+        int prev;
+        int curr = 1;
+        int next = 2;
         for (int i = 3; i < n; i++) {
-            prevPrev = prev;
-            prev = num;
-            num = prevPrev + prev;
+            prev = curr;
+            curr = next;
+            next = prev + curr;
         }
 
-        return num;
+        return next;
     }
 
     BigInteger slowA(Integer n) {
