@@ -6,11 +6,8 @@ package by.it.group151001.shlyk.lesson01;
  * время расчета должно быть не более 2 секунд
  */
 
-import javax.swing.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FiboC {
 
@@ -22,8 +19,8 @@ public class FiboC {
 
     public static void main(String[] args) {
         FiboC fibo = new FiboC();
-        long n = 1001;
-        int m = 3;
+        long n = 1000_000_000_000_000_000L;
+        int m = 100_000;
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
@@ -43,7 +40,7 @@ public class FiboC {
 
         pizSeq.add(0L);
         pizSeq.add(1L);
-        long rest; //currFibbo.remainder(divider);
+        long rest;
 
         boolean isCompleted = false;
         boolean isTriggered = false;
@@ -57,7 +54,7 @@ public class FiboC {
                 checkSeq.add(rest);
                 isTriggered = rest == pizSeq.get(tempPeriod - pizPeriod);
                 tempPeriod++;
-                isCompleted = tempPeriod >= (pizPeriod + AVAILABLE_MISTAKE) || tempPeriod >= 2 * pizPeriod;
+                isCompleted = tempPeriod >= (pizPeriod + AVAILABLE_MISTAKE) || (tempPeriod >= 2 * pizPeriod);
             } else{
                 if (checkSeq.size() > 0) {
                     pizSeq.addAll(checkSeq);
@@ -75,10 +72,8 @@ public class FiboC {
             }
 
         }
-        //return  pizPeriod;
-        //   return (n % pizPeriod - 1);
-
-        return pizSeq.get((int) n % pizPeriod);
+        long index =  (n % pizPeriod);
+        return pizSeq.get((int) index );
     }
 
 
