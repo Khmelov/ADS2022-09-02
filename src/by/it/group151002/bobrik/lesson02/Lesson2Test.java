@@ -18,13 +18,28 @@ public class Lesson2Test {
     */
 
 
-    @Test
+    @Test(timeout = 1000)
     public void A_VideoRegistrator() {
         A_VideoRegistrator instance=new A_VideoRegistrator();
         double[] events=new double[]{1, 1.1, 1.6, 2.2, 2.4, 2.7, 3.9, 8.1, 9.1, 5.5, 3.7};
-        List<Double> starts=instance.calcStartTimes(events,1); //рассчитаем моменты старта, с длинной сеанса 1
-        boolean ok=starts.toString().equals("[1.0, 2.2, 3.7, 5.5, 8.1]");
-        assertTrue("slowA failed", ok);
+        List<Double> starts = instance.calcStartTimes(events,1); //рассчитаем моменты старта, с длинной сеанса 1
+        boolean ok = starts.toString().equals("[1.0, 2.2, 3.7, 5.5, 8.1]");
+        assertTrue("slowA failed 1", ok);
+
+        events = new double[]{0.2};
+        starts = instance.calcStartTimes(events,1);
+        ok = starts.toString().equals("[0.2]");
+        assertTrue("slowA failed 2", ok);
+
+        events = new double[]{2.5, 5.1, 4.6, 6.4, 5.0, 6.3, 7.2, 2.1, 2.3, 7.8, 10.4, 1.9, 5.6, 5.4, 6.5};
+        starts = instance.calcStartTimes(events, 1);
+        ok = starts.toString().equals("[1.9, 4.6, 6.3, 7.8, 10.4]");
+        assertTrue("slowA failed 3", ok);
+
+        events = new double[]{2.5, 5.1, 4.6, 6.4, 5.0, 6.3, 7.2, 2.1, 2.3, 7.8, 10.4, 1.9, 5.6, 5.4, 6.5};
+        starts = instance.calcStartTimes(events, 5);
+        ok = starts.toString().equals("[1.9, 7.2]");
+        assertTrue("slowA failed 4", ok);
     }
 
     @Test
