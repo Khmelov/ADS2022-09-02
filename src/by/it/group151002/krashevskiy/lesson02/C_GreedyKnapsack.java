@@ -58,20 +58,8 @@ public class C_GreedyKnapsack {
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, w);
 
         sort(items);
-
-        for (Item item:items) {
-            System.out.println(item);
-        }
-        System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, w);
-
-        //тут необходимо реализовать решение задачи
-        //итогом является максимально воможная стоимость вещей в рюкзаке
-        //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
-        //тут реализуйте алгоритм сбора рюкзака
-        //будет особенно хорошо, если с собственной сортировкой
-        //кроме того, можете описать свой компаратор в классе Item
-        //ваше решение.
+
         int i = 0;
         boolean isNotFull = true;
         while (i < n && isNotFull) {
@@ -91,11 +79,8 @@ public class C_GreedyKnapsack {
 
     public static void main(String[] args) throws FileNotFoundException {
         long startTime = System.currentTimeMillis();
-        /*
         String root=System.getProperty("user.dir")+"/src/";
         File f=new File(root+"by/it/a_khmelev/lesson02/greedyKnapsack.txt");
-         */
-        File f = new File("src\\com\\company\\greedyKnapsack.txt");
         double costFinal=new C_GreedyKnapsack().calc(f);
         long finishTime = System.currentTimeMillis();
         System.out.printf("Общая стоимость %f (время %d)",costFinal,finishTime - startTime);

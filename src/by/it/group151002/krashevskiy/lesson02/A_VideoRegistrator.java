@@ -23,6 +23,7 @@ public class A_VideoRegistrator {
     List<Double> calcStartTimes(double[] events, double workDuration){
         //events - события которые нужно зарегистрировать
         //timeWorkDuration время работы видеокамеры после старта
+
         List<Double> result = new ArrayList<>();
         Arrays.sort(events);
         double firstEvent = events[0];
@@ -36,12 +37,7 @@ public class A_VideoRegistrator {
             }
         }
 
-        //комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
-        //подготовка к жадному поглощению массива событий
-        //hint: сортировка Arrays.sort обеспечит скорость алгоритма
-        //C*(n log n) + C1*n = O(n log n)
-
-        return result;                        //вернем итог
+        return result;
     }
 
 }
