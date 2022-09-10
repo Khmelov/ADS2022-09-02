@@ -24,7 +24,9 @@ public class FiboB {
     }
 
     BigInteger fastB(Integer n) {
-        if (n == 1 || n == 2) {
+        if (n == 0) {
+            return BigInteger.ZERO;
+        } else if (n == 1 || n == 2) {
             return BigInteger.ONE;
         }
 
@@ -34,7 +36,7 @@ public class FiboB {
             array[1] = array[2];
             array[2] = array[0].add(array[1]);
         }
-        //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
+
         return array[2];
     }
 

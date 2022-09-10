@@ -26,8 +26,8 @@ public class FiboA {
     }
 
     private int calc(int n) {
-        if (n == 1 || n == 2) {
-            return 1;
+        if (n < 2) {
+            return n;
         }
         int prevPrev = 1;
         int prev = 1;
@@ -42,9 +42,12 @@ public class FiboA {
     }
 
     BigInteger slowA(Integer n) {
-        if (n == 1 || n == 2) {
+        if (n == 0) {
+            return BigInteger.ZERO;
+        } else if (n == 1 || n == 2) {
             return BigInteger.ONE;
         }
+
         return slowA(n - 1).add(slowA(n - 2));
     }
 }
