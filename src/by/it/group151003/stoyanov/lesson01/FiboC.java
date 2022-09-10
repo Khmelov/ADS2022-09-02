@@ -54,7 +54,7 @@ public class FiboC {
             pisanoPeriod++;
         } while (prevRemainder != 0 || currentRemainder != 1);
 
-        return prevRemainder;
+        return pisanoPeriod;
     }
 
 
