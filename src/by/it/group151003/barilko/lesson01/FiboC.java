@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson01;
+package by.it.group151003.barilko.lesson01;
 
 /*
  * Даны целые числа 1<=n<=1E18 и 2<=m<=1E5,
@@ -27,20 +27,20 @@ public class FiboC {
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
 
-        Vector vec = new Vector<Long>();
+        Vector<Long> vec = new Vector<Long>();
         vec.add(0L);
         vec.add(1L); 
 
         for(int i = 2; i < m*m + 1; ++i)
         {
-            Long temp = Long.sum((Long)vec.get(i - 1), (Long)vec.get(i - 2)) % m;
+            Long temp = Long.sum(vec.get(i - 1), vec.get(i - 2)) % m;
             vec.add(temp);
 
-            if ((Long)vec.get(i) == 1L && (Long)vec.get(i - 1) == 0L)
-                return (Long)vec.get((int)n % (i - 1));
+            if (vec.get(i) == 1L && vec.get(i - 1) == 0L)
+                return vec.get((int)n % (i - 1));
         }
 
-        return (Long)vec.get((int)n);
+        return vec.get((int)n);
     }
 
 

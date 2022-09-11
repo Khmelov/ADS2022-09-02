@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson02;
+package by.it.group151003.barilko.lesson02;
 /*
 Даны
 1) объем рюкзака 4
