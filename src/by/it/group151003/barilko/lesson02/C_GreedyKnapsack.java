@@ -14,6 +14,8 @@ package by.it.group151003.barilko.lesson02;
  */
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -57,29 +59,23 @@ public class C_GreedyKnapsack {
         }
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
 
-        int[] iArrProfits = new int[4];
-        for (int i = 0; i < iArrProfits.length; i++) 
-        {
-            iArrProfits[i] = items[i].cost / items[i].weight;    
-        } 
+        
+        Comparator<Item> cmpProfit = (left, right) -> left.cost/left.weight < right.cost/right.weight ? -1 : left.cost/left.weight < right.cost/right.weight ? 1 : 0;
+        Arrays.sort(items, cmpProfit.reversed());
 
         double result = 0;
         int iCapLeft = W;
+        int indx = 0;
         while (iCapLeft != 0)
         {
-            int iMaxIndx = 0;
-            for (int i = 1; i < iArrProfits.length; i++) 
-                iMaxIndx = iArrProfits[i] > iArrProfits[iMaxIndx] ? i : iMaxIndx;    
-            
-            if (iCapLeft - items[iMaxIndx].weight >= 0)
+            if (iCapLeft - items[indx++].weight >= 0)
             {
-                result += items[iMaxIndx].cost;
-                iArrProfits[iMaxIndx] = 0;
-                iCapLeft -= items[iMaxIndx].weight;
+                result += items[indx - 1].cost;
+                iCapLeft -= items[indx - 1].weight;
             }
             else
             {
-                result += iArrProfits[iMaxIndx] * iCapLeft;
+                result += items[indx - 1].cost / items[indx - 1].weight * iCapLeft;
                 iCapLeft = 0;
             }
         }
@@ -91,7 +87,7 @@ public class C_GreedyKnapsack {
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
-        
+
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
     }
