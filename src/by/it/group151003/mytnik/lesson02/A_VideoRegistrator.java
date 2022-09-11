@@ -11,8 +11,8 @@ public class A_VideoRegistrator {
 
         stops.add(events[0]);
 
-        for (int i = 1; i < events.length - 1; i++) {
-            if (events[i] - stops.get(stops.size() - 1) >= workDuration) {
+        for (int i = 1; i < events.length; i++) {
+            if (Math.abs(events[i] - stops.get(stops.size() - 1)) - workDuration >= 10e-6) {
                 stops.add(events[i]);
             }
         }

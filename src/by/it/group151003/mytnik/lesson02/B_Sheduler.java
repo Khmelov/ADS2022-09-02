@@ -26,11 +26,11 @@ public class B_Sheduler {
 
         Arrays.sort(events, Comparator.comparingInt(o -> o.stop));
 
-        result.add(events[0]);
-
-        for (int i = 1; i < events.length; i++) {
-            if (events[i].start >= result.get(result.size() - 1).stop) {
-                result.add(events[i]);
+        int prevStop = from;
+        for (Event event : events) {
+            if (to >= event.stop && prevStop <= event.start) {
+                prevStop = event.stop;
+                result.add(event);
             }
         }
 
