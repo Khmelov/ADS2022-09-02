@@ -1,6 +1,8 @@
 package by.it.group151003.barilko.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 /*
 даны интервальные события events
@@ -40,6 +42,7 @@ public class B_Sheduler {
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
+
     List<Event> calcStartTimes(Event[] events, int from, int to) {
         //events - события которые нужно распределить в аудитории
         //в период [from, int] (включительно).
@@ -47,12 +50,17 @@ public class B_Sheduler {
         //начало и конец событий могут совпадать.
         List<Event> result;
         result = new ArrayList<>();
-        //ваше решение.
+        //ваше решение.     
 
+        Comparator<Event> cmpEventStps = (left, right) -> left.stop < right.stop ? -1 : left.stop < right.stop ? 1 : 0;
 
+        Arrays.sort(events, cmpEventStps);
 
-
-
+        result.add(events[0]);
+        
+        for(int i = 1; i < events.length; ++i)
+            if(events[i].start >= result.get(result.size() - 1).stop)
+                result.add(events[i]);
 
         return result;                        //вернем итог
     }
