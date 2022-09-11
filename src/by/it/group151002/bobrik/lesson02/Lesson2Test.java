@@ -55,7 +55,20 @@ public class Lesson2Test {
 
         List<B_Sheduler.Event> starts = instance.calcStartTimes(events, 0, 10);  //рассчитаем оптимальное заполнение аудитории
         boolean ok=starts.toString().equals("[(0:1), (1:2), (2:3), (3:5), (6:7), (7:9)]");
-        assertTrue("B_Sheduler failed", ok);
+        assertTrue("B_Sheduler failed 1", ok);
+
+        starts = instance.calcStartTimes(events, 1, 3);
+        ok = starts.toString().equals("[(1:2), (2:3)]");
+        assertTrue("B_Sheduler failed 2", ok);
+
+        events = new B_Sheduler.Event[]{new B_Sheduler.Event(0, 5)};
+        starts = instance.calcStartTimes(events, 1, 3);
+        ok = starts.toString().equals("[]");
+        assertTrue("B_Sheduler failed 3", ok);
+
+        starts = instance.calcStartTimes(events, 0, 4);
+        ok = starts.toString().equals("[]");
+        assertTrue("B_Sheduler failed 4", ok);
     }
     @Test
     public void C_GreedyKnapsack() throws Exception {
