@@ -1,4 +1,4 @@
-package by.it.group151004.burbouskij.lesson02;
+package by.it.group151004.burbouski.lesson02;
 
 import static org.junit.Assert.assertTrue;
 

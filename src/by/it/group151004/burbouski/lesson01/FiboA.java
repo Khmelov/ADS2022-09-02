@@ -1,4 +1,4 @@
-package by.it.group151004.burbouskij.lesson01;
+package by.it.group151004.burbouski.lesson01;
 
 import java.math.BigInteger;
 
