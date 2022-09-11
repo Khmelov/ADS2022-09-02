@@ -23,30 +23,31 @@ public class A_VideoRegistrator {
     List<Double> calcStartTimes(double[] events, double workDuration){
         //events - события которые нужно зарегистрировать
         //timeWorkDuration время работы видеокамеры после старта
-        List<Double> result;
-        result = new ArrayList<>();
-        int i = 0, j = 0;                              //i - это индекс события events[i]
-        //комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
-        //подготовка к жадному поглощению массива событий
-        //hint: сортировка Arrays.sort обеспечит скорость алгоритма
-        //C*(n log n) + C1*n = O(n log n)
-
+        List<Double> result = new ArrayList<>();
+        int i = 0, j = 0;
+        ArrayList<Double> startsTimes = new ArrayList<>();
+        //Массив времен включений камеры
         double startTime = events[0];
+        //Сохранение времени начала работы
 
         Arrays.sort(events);
-
-        double endTime = events[events.length - 1];
-        ArrayList<Double> startsTimes = new ArrayList<>();
+        //Сортировка
 
         startsTimes.add(startTime);
+        //сохранение времени первого включения в массив включений
 
-        while (startTime < endTime) {
+        //Формирование времен включения камеры в зависимости от workDuration
+        while (startTime < events[events.length - 1]) {
             startTime += workDuration;
             startsTimes.add(startTime);
         }
 
+        //Выделение не покрываемых событий
         while (i < events.length) {
-            if (j >= events.length - 1) { break; }
+            if (j >= events.length - 1) {
+                //Проверка на выхождение за границы
+                break;
+            }
             if (events[j] > startsTimes.get(i) - 1) {
                 result.add(events[j]);
                 i = (int) Math.round(events[j]);
@@ -58,13 +59,7 @@ public class A_VideoRegistrator {
 
         //[1.0, 2.2, 3.7, 5.5, 8.1]
         //[1.0, 1.1, 1.6, 2.2, 2.4, 2.7, 3.7, 3.9, 5.5, 8.1, 9.1]
-        //пока есть незарегистрированные события
-        //получим одно событие по левому краю
-        //и запомним время старта видеокамеры
-        //вычислим момент окончания работы видеокамеры
-        //и теперь пропустим все покрываемые события
-        //за время до конца работы, увеличивая индекс
 
-        return result;                        //вернем итог
+        return result;
     }
 }
