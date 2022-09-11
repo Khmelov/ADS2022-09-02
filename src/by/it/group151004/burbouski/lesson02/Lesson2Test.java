@@ -2,6 +2,7 @@ package by.it.group151004.burbouski.lesson02;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.List;
 
 import org.junit.Test;
@@ -54,4 +55,13 @@ public class Lesson2Test {
 		ok = "[]".equals(starts.toString());
 		assertTrue("B_Sheduler failed 4", ok);
 	}
+
+    @Test
+    public void C_GreedyKnapsack() throws Exception {
+        String root=System.getProperty("user.dir")+"/src/";
+        File f=new File(root+"by/it/a_khmelev/lesson02/greedyKnapsack.txt");
+        double costFinal=new C_GreedyKnapsack().calc(f);
+        boolean ok=costFinal==200;
+        assertTrue("B_Sheduler failed", ok);
+    }
 }
