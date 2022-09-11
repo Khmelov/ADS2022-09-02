@@ -114,8 +114,9 @@ public class Lesson1Test {
         assertTrue("fasterC failed 5", fibo.fasterC(1, 10) == 1L);
         assertTrue("fasterC failed 6", fibo.fasterC(2, 10) == 1L);
         assertTrue("fasterC failed 8", fibo.fasterC(6, 3) == 2L);
-        assertTrue("fasterC failed 7", fibo.fasterC(10000, 10) == 5L);
+        assertTrue("fasterC failed 7", fibo.fasterC(10000L, 10) == 5L);
         assertTrue("fasterC failed 7", fibo.fasterC(10000, 1000) == 875L);
-        assertTrue("fasterC failed 3", fibo.fasterC(999999999, 321) == 34L);
+        assertTrue("fasterC failed 3", fibo.fasterC(999999999L, 321) == 34L);
+        assertTrue("fasterC failed 3", fibo.fasterC(999_999_999_999_999_99L, 10000) == 626L);
     }
 }
