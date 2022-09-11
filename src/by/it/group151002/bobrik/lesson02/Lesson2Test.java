@@ -42,7 +42,7 @@ public class Lesson2Test {
         assertTrue("slowA failed 4", ok);
     }
 
-    @Test
+    @Test(timeout = 250)
     public void B_Sheduler() {
         B_Sheduler instance = new B_Sheduler();
         B_Sheduler.Event[] events = {new B_Sheduler.Event(0, 3), new B_Sheduler.Event(0, 1), new B_Sheduler.Event(1, 2), new B_Sheduler.Event(3, 5),
@@ -70,7 +70,7 @@ public class Lesson2Test {
         ok = starts.toString().equals("[]");
         assertTrue("B_Sheduler failed 4", ok);
     }
-    @Test
+    @Test(timeout = 1000)
     public void C_GreedyKnapsack() throws Exception {
         String root=System.getProperty("user.dir")+"/src/";
         File f=new File(root+"by/it/a_khmelev/lesson02/greedyKnapsack.txt");
