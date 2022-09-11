@@ -5,6 +5,7 @@ package by.it.a_khmelev.lesson01;
  * необходимо найти остаток от деления n-го числа Фибоначчи на m.
  * время расчета должно быть не более 2 секунд
  */
+import java.util.Vector;
 
 public class FiboC {
 
@@ -25,7 +26,21 @@ public class FiboC {
         //Решение сложно найти интуитивно
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
-        return 0L;
+
+        Vector vec = new Vector<Long>();
+        vec.add(0L);
+        vec.add(1L); 
+
+        for(int i = 2; i < m*m + 1; ++i)
+        {
+            Long temp = Long.sum((Long)vec.get(i - 1), (Long)vec.get(i - 2)) % m;
+            vec.add(temp);
+
+            if ((Long)vec.get(i) == 1L && (Long)vec.get(i - 1) == 0L)
+                return (Long)vec.get((int)n % (i - 1));
+        }
+
+        return (Long)vec.get((int)n);
     }
 
 
