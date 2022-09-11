@@ -6,6 +6,12 @@ package by.it.group151002.zavaliuk.lesson01;
  * время расчета должно быть не более 2 секунд
  */
 
+import java.math.BigInteger;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class FiboC {
 
     private long startTime = System.currentTimeMillis();
@@ -16,43 +22,37 @@ public class FiboC {
 
     public static void main(String[] args) {
         FiboC fibo = new FiboC();
-        long n = 999999999;
-        int m = 321;
+        long n = 999_999_999_999_999_999L;
+        int m = 10000;
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
-    private static long findPeriodPisano(int m) {
-        long a = 0, b = 1, res = 0;
+    public long findPisanoPeriod(long m) {
+        long firstFibNum = 0, secondFibNum = 1, sum;
 
         for (int i = 0; i < m * m; i++) {
-            long c = b;
-            b = (a + b) % m;
-            a = c;
-
-            if (a == 0 && b == 1)
-                res = i + 1;
+            sum = (firstFibNum + secondFibNum) % m;
+            firstFibNum = secondFibNum;
+            secondFibNum = sum;
+            if (firstFibNum == 0 && secondFibNum == 1)
+                return i + 1;
         }
-        return res;
+        return -1;
     }
 
-    long fasterC(long n, int m) {
-        if (n == 0)
-            return 0;
-        else if (n == 1)
-            return 1;
-        
-        n = n % findPeriodPisano(m);
+    public long fasterC(long n, int m) {
+        long numberPisano = n % findPisanoPeriod(m);
 
-        long a = 0, b = 1;
-        for (int i = 0; i < n - 1; i++) {
-            long c;
-            c = b;
-            b = (a + b) % m;
-            a = c;
+        long firstFibNum = 0, secondFibNum = 1, res = numberPisano;
+
+        for (int i = 1; i < numberPisano; i++) {
+            res = (firstFibNum + secondFibNum) % m;
+            firstFibNum = secondFibNum;
+            secondFibNum = res;
         }
-        return b % m;
-    }
 
+        return res % m;
+    }
 
 }
 
