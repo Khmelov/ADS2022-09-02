@@ -27,12 +27,11 @@ public class A_VideoRegistrator {
         int i = 0, j = 0;
         ArrayList<Double> startsTimes = new ArrayList<>();
         //Массив времен включений камеры
-        double startTime = events[0];
-        //Сохранение времени начала работы
 
         Arrays.sort(events);
         //Сортировка
 
+        double startTime = events[0];
         startsTimes.add(startTime);
         //сохранение времени первого включения в массив включений
 
@@ -44,13 +43,13 @@ public class A_VideoRegistrator {
 
         //Выделение не покрываемых событий
         while (i < events.length) {
-            if (j >= events.length - 1) {
+            if (j >= events.length - 1 || i >= startsTimes.size()) {
                 //Проверка на выхождение за границы
                 break;
             }
-            if (events[j] > startsTimes.get(i) - 1) {
+            if (events[j] >= startsTimes.get(i) - workDuration) {
                 result.add(events[j]);
-                i = (int) Math.round(events[j]);
+                i = (int) Math.abs(events[j]);
                 i++;
                 continue;
             }
@@ -59,6 +58,10 @@ public class A_VideoRegistrator {
 
         //[1.0, 2.2, 3.7, 5.5, 8.1]
         //[1.0, 1.1, 1.6, 2.2, 2.4, 2.7, 3.7, 3.9, 5.5, 8.1, 9.1]
+
+        //[1.9, 2.1, 2.3, 2.5, 4.6, 5.0, 5.1, 5.4, 5.6, 6.3, 6.4, 6.5, 7.2, 7.8, 10.4]
+        //[1.9, 4.6, 6.3, 7.8, 10.4]
+        //6.3 -> events[9] > startsTimes.get(4)
 
         return result;
     }

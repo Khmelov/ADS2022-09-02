@@ -25,6 +25,12 @@ public class Lesson2Test {
         List<Double> starts=instance.calcStartTimes(events,1); //рассчитаем моменты старта, с длинной сеанса 1
         boolean ok=starts.toString().equals("[1.0, 2.2, 3.7, 5.5, 8.1]");
         assertTrue("slowA failed", ok);
+
+        events = new double[] { 2.5, 5.1, 4.6, 6.4, 5.0, 6.3, 7.2, 2.1, 2.3, 7.8, 10.4, 1.9, 5.6, 5.4, 6.5 };
+        starts = instance.calcStartTimes(events, 5);
+        ok = "[1.9, 7.2]".equals(starts.toString());
+        assertTrue("slowA failed 4", ok);
+
     }
 
     @Test
