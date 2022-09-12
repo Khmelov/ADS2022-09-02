@@ -28,8 +28,15 @@ public class FiboA {
 
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
+        int num1 = 0;
+        int num2 = 1;
+        for (int i = 0; i < n; i++) {
+            int temp = num1 + num2;
+            num1 = num2;
+            num2 = temp;
+        }
         //время O(2^n)
-        return 0;
+        return num1;
     }
 
 
@@ -39,7 +46,10 @@ public class FiboA {
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
 
-        return BigInteger.ZERO;
+        if (n == 0) return BigInteger.ZERO;
+        if (n == 1) return BigInteger.ONE;
+        
+        return slowA(n-1).add(slowA(n-2));
     }
 
 
