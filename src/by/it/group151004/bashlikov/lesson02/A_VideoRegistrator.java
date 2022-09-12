@@ -24,45 +24,29 @@ public class A_VideoRegistrator {
         //events - события которые нужно зарегистрировать
         //timeWorkDuration время работы видеокамеры после старта
         List<Double> result = new ArrayList<>();
+        List<Double> tmpArray = new ArrayList<>();
         int i = 0, j = 0;
-        ArrayList<Double> startsTimes = new ArrayList<>();
-        //Массив времен включений камеры
+        //result - коллекция для хранения результатов
+        //tmpArray - коллекция для хранения отсортированного events и работы с ним
 
         Arrays.sort(events);
-        //Сортировка
-
-        double startTime = events[0];
-        startsTimes.add(startTime);
-        //сохранение времени первого включения в массив включений
-
-        //Формирование времен включения камеры в зависимости от workDuration
-        while (startTime < events[events.length - 1]) {
-            startTime += workDuration;
-            startsTimes.add(startTime);
+        //Заполнение tmpArray элементами events
+        for (int k = 0; k < events.length; k++) {
+            tmpArray.add(events[k]);
         }
 
-        //Выделение не покрываемых событий
-        while (i < events.length) {
-            if (j >= events.length - 1 || i >= startsTimes.size()) {
-                //Проверка на выхождение за границы
-                break;
+        while (tmpArray.size() != 0) {
+            result.add(tmpArray.get(0));
+            //Добавление элемента в результирующую коллекцию
+            double tmp = result.get(i) + workDuration;
+            while (tmpArray.get(j) < tmp) {
+                tmpArray.remove(j);
+                //j++ - изменяться не должно, так как каждый раз изменяемый элемент - нулевой
+                if (tmpArray.size() == 0) { break; }
             }
-            if (events[j] >= startsTimes.get(i) - workDuration) {
-                result.add(events[j]);
-                i = (int) Math.abs(events[j]);
-                i++;
-                continue;
-            }
-            j++;
+            i++;
+            if (tmpArray.size() == 1) { break; }
         }
-
-        //[1.0, 2.2, 3.7, 5.5, 8.1]
-        //[1.0, 1.1, 1.6, 2.2, 2.4, 2.7, 3.7, 3.9, 5.5, 8.1, 9.1]
-
-        //[1.9, 2.1, 2.3, 2.5, 4.6, 5.0, 5.1, 5.4, 5.6, 6.3, 6.4, 6.5, 7.2, 7.8, 10.4]
-        //[1.9, 4.6, 6.3, 7.8, 10.4]
-        //6.3 -> events[9] > startsTimes.get(4)
-
         return result;
     }
 }

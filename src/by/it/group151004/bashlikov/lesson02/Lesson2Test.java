@@ -31,6 +31,11 @@ public class Lesson2Test {
         ok = "[1.9, 7.2]".equals(starts.toString());
         assertTrue("slowA failed 4", ok);
 
+        events = new double[] { 0.2 };
+        starts = instance.calcStartTimes(events, 1);
+        ok = "[0.2]".equals(starts.toString());
+        assertTrue("slowA failed 2", ok);
+
     }
 
     @Test

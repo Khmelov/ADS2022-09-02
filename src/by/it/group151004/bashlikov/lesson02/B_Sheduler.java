@@ -1,6 +1,7 @@
 package by.it.group151004.bashlikov.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны интервальные события events
@@ -47,9 +48,8 @@ public class B_Sheduler {
         //начало и конец событий могут совпадать.
         List<Event> result;
         result = new ArrayList<>();
-        //ваше решение.
 
-
+        Arrays.sort(events);
 
 
 
