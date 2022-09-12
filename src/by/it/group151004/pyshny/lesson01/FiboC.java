@@ -17,8 +17,8 @@ public class FiboC {
 
     public static void main(String[] args) {
         FiboC fibo = new FiboC();
-        int n = 45;
-        int m = 4;
+        int n = 64;
+        int m = 56;
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
@@ -47,7 +47,10 @@ public class FiboC {
         else {
             int num;
             num =(int) n % 3;
-            if ((num-1)<0) num=i;
+            ost[0]=1;
+            ost[1]=1;
+            ost[2]=0;
+            if ((num-1)<0) num=3;
             vsegochasivotonoreshenie = ost[num-1];
         }
 //        System.out.printf("%d\n",i-2);
