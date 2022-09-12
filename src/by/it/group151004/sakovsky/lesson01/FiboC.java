@@ -47,7 +47,9 @@ public class FiboC {
             }
             int num;
             num = (int) (n % (i - 2));
-            if ((num - 1) < 0) num = i;
+            if ((num - 1) < 0){
+                num = i;
+            }
             result = ost[num];
         }
         else {
@@ -55,7 +57,6 @@ public class FiboC {
             num = (int) n % 3;
             result = ost[num - 1];
         }
-
             return result;
     }
 }
