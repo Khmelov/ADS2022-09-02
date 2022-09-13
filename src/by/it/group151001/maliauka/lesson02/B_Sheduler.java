@@ -1,7 +1,6 @@
 package by.it.group151001.maliauka.lesson02;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 /*
 даны интервальные события events
 реализуйте метод calcStartTimes, так, чтобы число принятых к выполнению
@@ -9,7 +8,7 @@ import java.util.List;
 Алгоритм жадный. Для реализации обдумайте надежный шаг.
 */
 
-public class B_Sheduler {
+public class B_Sheduler{
     //событие у аудитории(два поля: начало и конец)
     static class Event {
         int start;
@@ -19,12 +18,26 @@ public class B_Sheduler {
             this.start = start;
             this.stop = stop;
         }
+        int getStart(){
+            return start;
+        }
+        int getStop(){
+            return stop;
+        }
 
         @Override
         public String toString() {
             return "("+ start +":" + stop + ")";
         }
+
+        static class EventStopComparator implements Comparator<Event>{
+
+            public int compare(Event a, Event b){
+                return a.getStop() - b.getStop();
+            }
+        }
     }
+
 
     public static void main(String[] args) {
         B_Sheduler instance = new B_Sheduler();
@@ -40,20 +53,32 @@ public class B_Sheduler {
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
+
+
     List<Event> calcStartTimes(Event[] events, int from, int to) {
         //events - события которые нужно распределить в аудитории
         //в период [from, int] (включительно).
         //оптимизация проводится по наибольшему числу непересекающихся событий.
         //начало и конец событий могут совпадать.
-        List<Event> result;
-        result = new ArrayList<>();
         //ваше решение.
 
+        List<Event> result = new ArrayList<>();
+        Arrays.sort(events, new Event.EventStopComparator()); //сортируем по правой границе
+        result.add(events[0]); //выбираем первое событие
 
+        //сравниваем конец предыдущего события со start следующего
+        //так же проверяем на диапазон
+        int j = 0;
+        for (int i = 1; i < events.length; i++) {
+            boolean inRange = events[i].start >= from && events[i].stop <= to;
+            boolean isPrompt = events[i].start >= result.get(j).stop;
 
+            if (isPrompt && inRange) {
+                result.add(events[i]);
+                j++;
+            }
+        }
 
-
-
-        return result;                        //вернем итог
+        return result;
     }
 }
