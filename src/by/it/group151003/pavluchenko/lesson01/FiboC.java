@@ -22,9 +22,6 @@ public class FiboC {
     }
 
     long fasterC(long n, int m) {
-        //Решение сложно найти интуитивно
-        //возможно потребуется дополнительный поиск информации
-        //см. период Пизано
         int [] MyArr = new int [m*6];
         MyArr[0] = 0;
         MyArr[1] = 1;

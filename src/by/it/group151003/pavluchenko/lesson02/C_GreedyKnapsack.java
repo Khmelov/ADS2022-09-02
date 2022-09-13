@@ -15,6 +15,7 @@ package by.it.group151003.pavluchenko.lesson02;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class C_GreedyKnapsack {
     private static class Item implements Comparable<Item> {
@@ -38,8 +39,8 @@ public class C_GreedyKnapsack {
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
 
-
             return 0;
+
         }
     }
 
@@ -57,18 +58,37 @@ public class C_GreedyKnapsack {
         }
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
 
-        //тут необходимо реализовать решение задачи
-        //итогом является максимально воможная стоимость вещей в рюкзаке
-        //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
-        //тут реализуйте алгоритм сбора рюкзака
-        //будет особенно хорошо, если с собственной сортировкой
-        //кроме того, можете описать свой компаратор в классе Item
-        //ваше решение.
+        for ( int i = 0; i < items.length - 1; i++)
+        {
+            int max = i;
+            for ( int j = i + 1; j < items.length; j++)
+            {
+                if ((items[max].cost / items[max]. weight) < (items[j].cost / items[j]. weight))
+                {
+                    max = j;
+                }
+            }
+            Item temp = items[i];
+            items[i] = items[max];
+            items[max] = temp;
 
-
-
-
+        }
+        int i = 0;
+        while (i < items.length)
+        {
+            if (W >= items[i].weight)
+            {
+                W -= items[i].weight;
+                result += items[i].cost;
+            }
+            else
+            {
+                result += items[i].cost / items[i].weight * W;
+                W = 0;
+            }
+            i++;
+        }
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
