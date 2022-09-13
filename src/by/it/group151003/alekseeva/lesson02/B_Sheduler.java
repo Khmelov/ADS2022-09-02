@@ -56,10 +56,10 @@ public class B_Sheduler {
             for (int j = i + 1; j <= events.length - 1; ++j) {
                 if (events[j].stop < events[min].stop)
                     min = j;
-                temp = events[i];
-                events[i] = events[min];
-                events[min] = temp;
             }
+            temp = events[i];
+            events[i] = events[min];
+            events[min] = temp;
         }
         int i = 1;
         int end = events[0].stop;
