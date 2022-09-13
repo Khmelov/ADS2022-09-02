@@ -24,6 +24,7 @@ public class B_Sheduler {
         public String toString() {
             return "("+ start +":" + stop + ")";
         }
+
     }
 
     public static void main(String[] args) {
@@ -49,9 +50,44 @@ public class B_Sheduler {
         result = new ArrayList<>();
         //ваше решение.
 
+        //Выполнил сортировку по возрастанию по параметру start
+        int index;
+        Event swap;
+        for (int i=0; i<events.length; i++){
+            index=i;
+            for (int j=i+1; j<events.length; j++){
+                if (events[j].start<events[index].start)    index = j;
 
+            }
+            swap = events[i];
+            events[i] = events[index];
+            events[index]=swap;
+        }
 
+        //Внутри каждого блока с одинаковым start повторил то же действие по параметру stop
+        for (int i=0; i<events.length; i++){
+            index=i;
+            for (int j=i+1; j<events.length; j++){
 
+                if (events[i].start == events[j].start)
+                    if (events[j].stop < events[index].stop) index = j;
+
+            }
+            swap = events[i];
+            events[i] = events[index];
+            events[index]=swap;
+        }
+
+        //Взяли по первому элементу из каждого блока событий с одинаковым значением start
+        index=0;
+        while (events[index].start < from) index++;
+        result.add(events[index]);
+        index++;
+        while (index < events.length){
+            if ( (events[index].start>=result.get(result.size()-1).stop) && (events[index].stop <= to) )
+                result.add(events[index]);
+            index++;
+        }
 
 
         return result;                        //вернем итог

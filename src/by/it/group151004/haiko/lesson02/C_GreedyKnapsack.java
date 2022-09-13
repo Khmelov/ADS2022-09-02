@@ -66,9 +66,10 @@ public class C_GreedyKnapsack {
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
 
-        int index=0;
+        int index;
         Item swap;
         for (int i=0; i<items.length; i++){
+            index = i;
             for (int j=i+1; j<items.length; j++){
 
                 if (items[j].cost/items[j].weight > items[i].cost/items[i].weight)
@@ -86,7 +87,7 @@ public class C_GreedyKnapsack {
             i++;
         }
         if (W>0){
-            result+=items[i].cost*W/items[i].weight;
+            result+=items[i].cost/items[i].weight*W;
         }
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
