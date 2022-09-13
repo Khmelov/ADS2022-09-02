@@ -26,12 +26,12 @@ public class FiboB {
     public BigInteger fastB(Integer n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
         BigInteger[] arrFib = new BigInteger[n+1];
-        BigInteger  result= BigInteger.ZERO;
+        BigInteger  result;
         arrFib[0]= BigInteger.ZERO;
         arrFib[1]= BigInteger.ONE;
 
         for(int i=2; i<=n;i++){
-            arrFib[i]=result.add(arrFib[i-1]).add(arrFib[i-2]);
+            arrFib[i]=arrFib[i-1].add(arrFib[i-2]);
         }
 
         result  = arrFib[n];
