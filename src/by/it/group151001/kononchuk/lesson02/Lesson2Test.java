@@ -48,7 +48,7 @@ public class Lesson2Test {
         File f=new File(root+"by/it/a_khmelev/lesson02/greedyKnapsack.txt");
         double costFinal=new C_GreedyKnapsack().calc(f);
         boolean ok=costFinal==200;
-        assertTrue("B_Sheduler failed", ok);
+        assertTrue("C_GreedyKnapsack failed", ok);
     }
 
 }

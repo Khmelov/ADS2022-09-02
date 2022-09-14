@@ -1,6 +1,7 @@
 package by.it.group151001.kononchuk.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны события events
@@ -37,7 +38,16 @@ public class A_VideoRegistrator {
         //и теперь пропустим все покрываемые события
         //за время до конца работы, увеличивая индекс
 
+        Arrays.sort(events);
+        double lastStart;
 
+        while (i < events.length){
+            lastStart = events[i];
+            result.add(lastStart);
+            while (i < events.length && events[i] <= lastStart + workDuration){
+                i++;
+            }
+        }
 
         return result;                        //вернем итог
     }
