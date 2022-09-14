@@ -7,6 +7,7 @@ public class FiboC {
     public long time() {
         return System.currentTimeMillis() - startTime;
     }
+
    //variables declaration
     public static void main(String[] args     ) {
         FiboC fibo = new FiboC();
