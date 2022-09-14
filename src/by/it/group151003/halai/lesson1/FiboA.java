@@ -8,7 +8,6 @@ public class FiboA       {
     public long time()   {
         return System.currentTimeMillis() - startTime;
     }
-
     public static void main(String[] args) {
         FiboA fibo = new FiboA();
         int n = 17;

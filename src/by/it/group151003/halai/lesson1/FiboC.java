@@ -3,7 +3,6 @@ package by.it.group151003.halai.lesson1;
 
 public class FiboC {
     public long startTime = System.currentTimeMillis();
-
     public long time() {
         return System.currentTimeMillis() - startTime;
     }
