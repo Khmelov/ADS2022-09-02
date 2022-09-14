@@ -83,8 +83,9 @@ public class C_GreedyKnapsack {
             }
         });
         int tmp;
+        int i = 0;
         W = 0;
-        for(int i = 0; i< items.length; i++){
+        while((i< items.length)&&(W < 60)){
             tmp = 60 - W;
             if (tmp < items[i].weight){
                 W += tmp;
@@ -93,6 +94,7 @@ public class C_GreedyKnapsack {
                 W += items[i].weight;
                 result += items[i].cost;
             }
+            i++;
         }
 
 
