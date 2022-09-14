@@ -8,7 +8,6 @@ import java.math.BigInteger;
  */
 
 public class FiboB {
-
     private long startTime = System.currentTimeMillis();
 
     private long time() {
