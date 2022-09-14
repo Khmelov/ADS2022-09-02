@@ -26,7 +26,7 @@ public class FiboA {
     }
 
 
-    private int calc(int n) {
+    int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         int num1 = 0;
         int num2 = 1;
