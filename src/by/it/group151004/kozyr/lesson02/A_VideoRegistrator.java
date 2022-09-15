@@ -1,6 +1,7 @@
 package by.it.group151004.kozyr.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны события events
@@ -29,8 +30,16 @@ public class A_VideoRegistrator {
         //подготовка к жадному поглощению массива событий
         //hint: сортировка Arrays.sort обеспечит скорость алгоритма
         //C*(n log n) + C1*n = O(n log n)
+        Arrays.sort(events);
 
         //пока есть незарегистрированные события
+        double time = events[0];
+        while(i < events.length - 1){
+            result.add(events[i]);
+            time += workDuration;
+            i++;
+            while(time > events[i]) i++;
+        }
         //получим одно событие по левому краю
         //и запомним время старта видеокамеры
         //вычислим момент окончания работы видеокамеры
