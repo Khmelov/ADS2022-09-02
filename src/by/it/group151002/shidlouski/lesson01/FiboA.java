@@ -8,7 +8,7 @@ import java.math.BigInteger;
 
 public class FiboA {
 
-    private long startTime = System.currentTimeMillis();
+    private final long startTime = System.currentTimeMillis();
 
     private long time() {
         return System.currentTimeMillis() - startTime;
@@ -27,9 +27,17 @@ public class FiboA {
 
 
     private int calc(int n) {
-        //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
-        //время O(2^n)
-        return 0;
+        if (n < 3) return 1;
+        else {
+            int first = 1, second = 1, third = 0;
+            for (int i = 3; i <= n; i++) {
+                third = first + second;
+
+                first = second;
+                second = third;
+            }
+            return second;
+        }
     }
 
 
@@ -38,8 +46,11 @@ public class FiboA {
         //здесь нужно реализовать вариант без ограничения на размер числа,
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-
-        return BigInteger.ZERO;
+        if (n == 0) return BigInteger.ZERO;
+        else if (n < 3) return BigInteger.ONE;
+        else{
+            return slowA(n-1).add(slowA(n-2));
+        }
     }
 
 
