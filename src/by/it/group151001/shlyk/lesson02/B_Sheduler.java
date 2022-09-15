@@ -92,7 +92,7 @@ public class B_Sheduler {
         }
         bestChoice = events[iEvents];
         boolean isUpdated;
-        for (int i = 1; i < events.length; i++){
+        for (int i = iEvents + 1; i < events.length; i++){
             isUpdated = events[i].start <= bestChoice.start && bestChoice.stop > events[i].stop;
             if(isUpdated)
             {
