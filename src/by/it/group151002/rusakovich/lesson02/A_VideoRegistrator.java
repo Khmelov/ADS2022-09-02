@@ -38,6 +38,12 @@ public class A_VideoRegistrator {
         //вычислим момент окончания работы видеокамеры
         //и теперь пропустим все покрываемые события
         //за время до конца работы, увеличивая индекс
+        result.add(events[i]);
+        for(i = 1; i < events.length; i++){
+            if(events[i] - result.get(result.size() - 1) > workDuration)
+                result.add(events[i]);
+        }
+
 
 
         return result;                        //вернем итог
