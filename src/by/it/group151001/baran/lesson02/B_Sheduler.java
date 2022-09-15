@@ -1,6 +1,7 @@
 package by.it.group151001.baran.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны интервальные события events
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class B_Sheduler {
     //событие у аудитории(два поля: начало и конец)
-    static class Event {
+    static class Event implements Comparable<Event> {
         int start;
         int stop;
 
@@ -23,6 +24,11 @@ public class B_Sheduler {
         @Override
         public String toString() {
             return "("+ start +":" + stop + ")";
+        }
+
+        @Override
+        public int compareTo(Event o) {
+                return this.stop - o.stop;
         }
     }
 
@@ -40,6 +46,8 @@ public class B_Sheduler {
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
+
+
     List<Event> calcStartTimes(Event[] events, int from, int to) {
         //events - события которые нужно распределить в аудитории
         //в период [from, int] (включительно).
@@ -49,7 +57,18 @@ public class B_Sheduler {
         result = new ArrayList<>();
         //ваше решение.
 
+        Arrays.sort(events);
+        result.add(events[0]);
+        int last = events[0].stop;
+        for(int i = 1; i < events.length; i++){
+            if(events[i].start >= last)
+            {
+                result.add(events[i]);
+                last = events[i].stop;
+            }
+        }
 
+        //System.out.println(events[0]);
 
 
 

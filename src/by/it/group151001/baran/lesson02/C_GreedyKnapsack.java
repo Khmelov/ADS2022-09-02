@@ -14,6 +14,7 @@ package by.it.group151001.baran.lesson02;
  */
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -36,10 +37,7 @@ public class C_GreedyKnapsack {
 
         @Override
         public int compareTo(Item o) {
-            //тут может быть ваш компаратор
-
-
-            return 0;
+            return o.cost/o.weight - this.cost/this.weight;
         }
     }
 
@@ -65,6 +63,21 @@ public class C_GreedyKnapsack {
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
+
+        Arrays.sort(items);
+
+        double currWeight = 0;
+
+        for (int i = 0;currWeight < W && i < items.length; i++){
+            if(W - currWeight > items[i].weight) {
+                result += items[i].cost;
+                currWeight += items[i].weight;
+            }
+            else {
+                result += items[i].cost * (W - currWeight) / items[i].weight;
+                currWeight += W - currWeight;
+            }
+        }
 
 
 
