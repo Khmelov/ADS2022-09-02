@@ -20,10 +20,12 @@ public class C_GreedyKnapsack {
     private class Item implements Comparable<Item> {
         int cost;
         int weight;
+        double price;
 
         Item(int cost, int weight) {
             this.cost = cost;
             this.weight = weight;
+            this.price = this.cost/this.weight;
         }
 
         @Override
@@ -56,20 +58,28 @@ public class C_GreedyKnapsack {
             System.out.println(item);
         }
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
-
-        //тут необходимо реализовать решение задачи
-        //итогом является максимально воможная стоимость вещей в рюкзаке
-        //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
-        //тут реализуйте алгоритм сбора рюкзака
-        //будет особенно хорошо, если с собственной сортировкой
-        //кроме того, можете описать свой компаратор в классе Item
-        //ваше решение.
 
-
-
-
-
+        for (int i = 0; i < items.length; i++)
+            for (int j = i; j < items.length; j++)
+                if(items[i].price < items[j].price){
+                    Item tmp = items[i];
+                    items[i] = items[j];
+                    items[j] = tmp;
+                }
+        double currWeight = 0;
+        int i = 0;
+        while(currWeight < W){
+            if(W - currWeight > items[i].weight)
+            {
+                result += items[i].cost;
+                currWeight+=items[i].weight;
+            } else if (W - currWeight > 0){
+                result += (W - currWeight)* items[i].price;
+                currWeight = W;
+            }
+            i++;
+        }
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
     }
