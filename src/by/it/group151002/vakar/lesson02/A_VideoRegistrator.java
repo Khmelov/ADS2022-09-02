@@ -1,6 +1,7 @@
 package by.it.group151002.vakar.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны события events
@@ -37,7 +38,16 @@ public class A_VideoRegistrator {
         //и теперь пропустим все покрываемые события
         //за время до конца работы, увеличивая индекс
 
+        Arrays.sort(events);
 
+        double stopTime = 0;
+        while (i < events.length) {
+            if (events[i] > stopTime) {
+                result.add(events[i]);
+                stopTime = events[i] + workDuration;
+            }
+            i++;
+        }
 
         return result;                        //вернем итог
     }
