@@ -42,9 +42,11 @@ public class C_GreedyKnapsack {
         public int compareTo(Item o) {
             int result;
             if (this.cost/this.weight > o.cost/o.weight){
-                result = 1;
+                result = -1;
             }else{
-                result = 0;
+                if (this.cost/this.weight < o.cost/o.weight){
+                    result = 1;
+                }else result = 0;
             }
             return result;
         }
@@ -68,20 +70,8 @@ public class C_GreedyKnapsack {
         //итогом является максимально воможная стоимость вещей в рюкзаке
         //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
-        Arrays.sort(items, new Comparator<Item>() {
-            @Override
-            public int compare(Item o1, Item o2) {
-                int result;
-                if (o1.cost/o1.weight == o2.cost/o2.weight){
-                    result = 0;
-                }else{
-                    if (o1.cost/o1.weight < o2.cost/o2.weight){
-                        result = 1;
-                    }else result = - 1;
-                }
-                return result;
-            }
-        });
+        Comparator<Item> comparator = (o1, o2) -> o1.compareTo(o2);
+        Arrays.sort(items,comparator);
         int tmp;
         int i = 0;
         W = 0;
