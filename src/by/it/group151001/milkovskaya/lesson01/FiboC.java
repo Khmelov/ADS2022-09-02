@@ -6,7 +6,6 @@ package by.it.group151001.milkovskaya.lesson01;
  * время расчета должно быть не более 2 секунд
  */
 import java.util.ArrayList;
-import java.util.List;
 
 public class FiboC {
 
@@ -32,8 +31,6 @@ public class FiboC {
         ArrayList<Long> pisPeriod = new ArrayList<>();
          long pred = 0, curr = 1, temp;
          boolean end = false;
-         pred = 0;
-         curr =1;
          while (!end){
              pisPeriod.add(pred);
             temp = curr;
