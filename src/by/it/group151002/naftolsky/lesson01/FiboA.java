@@ -31,6 +31,7 @@ public class FiboA {
         //время O(2^n)
         if (n == 1 || n == 0) {
             return 1;
+            
         }
 
         return calc(n - 1) + calc(n - 2);
