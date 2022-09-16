@@ -28,7 +28,7 @@ public class B_Sheduler {
 
         @Override
         public int compareTo(Event o) {
-            return this.start - o.start;
+            return this.stop - o.stop;
         }
     }
 
@@ -56,8 +56,17 @@ public class B_Sheduler {
         result = new ArrayList<>();
         //ваше решение.
 
+        Arrays.sort(events);
         for (int i = 0; i < events.length; i++){
             System.out.println(events[i].toString());
+        }
+        int i = 1;
+        result.add(events[0]);
+        while (i < events.length){
+            if (events[i].start >= result.get(result.size()).start){
+                result.add(events[i]);
+            }
+            i++;
         }
 
         return result;                        //вернем итог

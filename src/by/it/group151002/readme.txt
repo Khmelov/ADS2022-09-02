@@ -8,9 +8,8 @@
 
 Например:
 
-
-
-by.it.group151002.petrov
+by.it.group151003.ivanov
+by.it.group151003.petrov
 
 В этот пакет копируйте (НО НЕ ПЕРЕМЕЩАЙТЕ) задания из пакета by.it.a_khmelev
 
