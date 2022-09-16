@@ -57,13 +57,10 @@ public class B_Sheduler {
         //ваше решение.
 
         Arrays.sort(events);
-        for (int i = 0; i < events.length; i++){
-            System.out.println(events[i].toString());
-        }
         int i = 1;
         result.add(events[0]);
         while (i < events.length){
-            if (events[i].start >= result.get(result.size()).start){
+            if (events[i].start >= result.get(result.size()-1).stop){
                 result.add(events[i]);
             }
             i++;
