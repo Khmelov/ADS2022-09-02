@@ -32,7 +32,7 @@ public class FiboA {
         if (n == 1 || n == 0) {
             return 1;
 
-            
+
         }
 
         return calc(n - 1) + calc(n - 2);
