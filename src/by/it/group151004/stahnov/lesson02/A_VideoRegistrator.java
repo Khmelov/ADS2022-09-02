@@ -1,6 +1,7 @@
 package by.it.group151004.stahnov.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны события events
@@ -37,7 +38,15 @@ public class A_VideoRegistrator {
         //и теперь пропустим все покрываемые события
         //за время до конца работы, увеличивая индекс
 
-
+        Arrays.sort(events);
+        int j;
+        while(i < events.length){
+            j = i;
+            result.add(events[i]);
+            while((i < events.length) && ((events[i] - events[j]) <= workDuration)){
+               i++;
+            }
+        }
 
         return result;                        //вернем итог
     }
