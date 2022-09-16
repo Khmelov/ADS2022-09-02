@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson02;
+package by.it.group151004.sakovsky.lesson02;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,37 +48,37 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         //ваше решение.
-        boolean flag = true;
-        while (flag) {
-            flag = false;
-            for (int i = 1; i < events.length; i++) {
-                if (events[i].start < events[i-1].start) {
-                    Event tmp = events[i];
-                    events[i]=events[i-1];
-                    events[i-1]=tmp;
-                    flag = true;
+        Event temp;
+        boolean isSorted = false;
+        while (!isSorted) {
+            isSorted = true;
+            for (int i = 0; i < events.length-1; i++) {
+                if (events[i].start > events[i+1].start) {
+                    temp = events[i];
+                    events[i] = events[i+1];
+                    events[i+1] = temp;
+                    isSorted = false;
                 }
             }
         }
-        int i = 0;
-        int start, len;
-        Event current;
-        while(i < events.length-1) {
-            start = events[i].start;
-            len = events[i].stop - events[i].start;
-            current = events[i];
-            for (int j = i; j < events.length; j++) {
-                if (events[j].start == start && (events[j].stop - events[j].start < len)) {
-                    start = events[j].start;
-                    len = events[j].stop - events[j].start;
-                    current = events[j];
+        int i=0;
+        int start,length;
+        Event curEvent;
+        while(i<events.length-1) {
+            start=events[i].start;
+            length=events[i].stop-events[i].start;
+            curEvent = events[i];
+            for(int j=i;j< events.length;j++){
+                if (events[j].start==start && (events[j].stop-events[j].start<length)){
+                    length=events[j].stop-events[j].start;
+                    curEvent=events[j];
                 }
             }
-            while (events[i].start < start + len && i < events.length - 1){
+            while(events[i].start<start+length && i<events.length-1){
                 i++;
             }
-            result.add(current);
+            result.add(curEvent);
         }
-        return result;          //вернем итог
+        return result;                        //вернем итог
     }
 }
