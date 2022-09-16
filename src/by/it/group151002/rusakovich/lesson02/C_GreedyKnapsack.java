@@ -39,13 +39,7 @@ public class C_GreedyKnapsack {
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
             //will sort in descending
-            if(this.cost / this.weight > o.cost / o.weight){
-                return -1;
-            } else if(this.cost / this.weight < o.cost /o.weight) {
-                return 1;
-            } else {
-                return 0;
-            }
+            return Integer.compare(o.cost / o.weight, this.cost / this.weight);
         }
     }
 
