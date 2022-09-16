@@ -42,7 +42,7 @@ public class A_VideoRegistrator {
         while(i < events.length){
             if(events[i] <= result.get(result.size() - 1) + 1){
                 i++;
-            } else {
+            }else {
                 result.add(events[i]);
             }
         }

@@ -53,7 +53,7 @@ public class C_GreedyKnapsack {
             items[i] = new Item(input.nextInt(), input.nextInt());
         }
         //покажем предметы
-        for (Item item:items) {
+        for(Item item:items) {
             System.out.println(item);
         }
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
