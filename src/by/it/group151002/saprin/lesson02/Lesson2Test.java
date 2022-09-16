@@ -4,7 +4,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class Lesson2Test {
@@ -21,10 +23,15 @@ public class Lesson2Test {
     @Test
     public void A_VideoRegistrator() {
         A_VideoRegistrator instance=new A_VideoRegistrator();
-        double[] events=new double[]{1, 1.1, 1.6, 2.2, 2.4, 2.7, 3.9, 8.1, 9.1, 5.5, 3.7};
-        List<Double> starts=instance.calcStartTimes(events,1); //рассчитаем моменты старта, с длинной сеанса 1
+        double[] eventsFirst=new double[]{1, 1.1, 1.6, 2.2, 2.4, 2.7, 3.9, 8.1, 9.1, 5.5, 3.7};
+        double[] eventsSecond=new double[]{0.0, 0.6, 2.0, 2.5, 2.7, 3.0, 3.4};
+
+        List<Double> starts=instance.calcStartTimes(eventsFirst,1); //рассчитаем моменты старта, с длинной сеанса 1
         boolean ok=starts.toString().equals("[1.0, 2.2, 3.7, 5.5, 8.1]");
-        assertTrue("slowA failed", ok);
+        assertTrue("A_VideoRegistrator failed 1", ok);
+        assertEquals("A_VideoRegistrator failed 2", "[0.0, 0.6, 2.0, 2.7, 3.4]",
+                instance.calcStartTimes(eventsSecond, 0.5).toString());
+
     }
 
     @Test
