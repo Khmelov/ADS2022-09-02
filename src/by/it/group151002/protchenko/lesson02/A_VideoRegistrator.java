@@ -26,10 +26,10 @@ public class A_VideoRegistrator {
         List<Double> result;
         result = new ArrayList<>();
 
-        int i=0;  //i - это индекс события events[i]
+        int i = 0;  //i - это индекс события events[i]
+
         double r;
         Arrays.sort(events);
-
         while (i < events.length) {
             result.add(events[i]);
             r = events[i] + 1.0;
@@ -48,8 +48,6 @@ public class A_VideoRegistrator {
         //вычислим момент окончания работы видеокамеры
         //и теперь пропустим все покрываемые события
         //за время до конца работы, увеличивая индекс
-
-
 
         return result;                        //вернем итог
     }
