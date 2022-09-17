@@ -2,6 +2,9 @@ package by.it.group151002.naftolsky.lesson02;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
+import java.util.Comparator;
+
 /*
 даны интервальные события events
 реализуйте метод calcStartTimes, так, чтобы число принятых к выполнению
@@ -26,6 +29,19 @@ public class B_Sheduler {
         }
     }
 
+    public class SortByRight implements Comparator<Event> {
+        public int compare(Event first, Event second) {
+            if (first.stop == second.stop) {
+                return 0;
+            } else if (first.stop < second.stop) {
+                return -1;
+            }
+            return 1;
+        }
+    }
+
+
+
     public static void main(String[] args) {
         B_Sheduler instance = new B_Sheduler();
         Event[] events = {  new Event(0, 3),  new Event(0, 1), new Event(1, 2), new Event(3, 5),
@@ -42,17 +58,32 @@ public class B_Sheduler {
 
     List<Event> calcStartTimes(Event[] events, int from, int to) {
         //events - события которые нужно распределить в аудитории
-        //в период [from, int] (включительно).
+        //в период [from, to] (включительно).
         //оптимизация проводится по наибольшему числу непересекающихся событий.
         //начало и конец событий могут совпадать.
-        List<Event> result;
-        result = new ArrayList<>();
+        List<Event> result = new ArrayList<>();
         //ваше решение.
+        Arrays.sort(events, new SortByRight());
+        int i = 0;
+        int n = events.length;
+        boolean isCorrect = true;
+        while (events[i].start < from && isCorrect) {
+            i++;
+            if (i >= n) {
+                isCorrect = false;
+            }
+        }
 
-
-
-
-
+        if (events[i].stop <= to && isCorrect) {
+            result.add(events[i]);
+            i++;
+            while (events[i].stop <= to && i < n) {
+                if (events[i].start >= result.get(result.size() - 1).stop) {
+                    result.add(events[i]);
+                }
+                i++;
+            }
+        }
 
         return result;                        //вернем итог
     }
