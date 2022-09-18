@@ -29,7 +29,17 @@ public class FiboA {
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        return 0;
+        int sum = 0, a = 1, b = 1;
+        if (n < 1)
+            return 0;
+        if (n == 1 || n == 2)
+            return 1;
+        for (int i = 3; i <= n; i++) {
+            sum = a + b;
+            a = sum;
+            b = a;
+        }
+        return sum;
     }
 
 
@@ -38,10 +48,12 @@ public class FiboA {
         //здесь нужно реализовать вариант без ограничения на размер числа,
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-
-        return BigInteger.ZERO;
+        if (n < 1)
+            return BigInteger.ZERO;
+        if (n == 1 || n == 2)
+            return BigInteger.ONE;
+        return slowA(n-1).add(slowA(n-2));
     }
-
 
 
 }
