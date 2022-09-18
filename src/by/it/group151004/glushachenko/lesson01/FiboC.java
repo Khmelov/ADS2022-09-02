@@ -5,7 +5,6 @@ package by.it.group151004.glushachenko.lesson01;
  * необходимо найти остаток от деления n-го числа Фибоначчи на m.
  * время расчета должно быть не более 2 секунд
  */
-import java.math.BigInteger;
 public class FiboC {
 
     private long startTime = System.currentTimeMillis();

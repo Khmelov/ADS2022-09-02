@@ -1,6 +1,9 @@
 package by.it.group151004.glushachenko.lesson02;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 /*
 даны интервальные события events
@@ -19,7 +22,6 @@ public class B_Sheduler {
             this.start = start;
             this.stop = stop;
         }
-
         @Override
         public String toString() {
             return "("+ start +":" + stop + ")";
@@ -35,9 +37,14 @@ public class B_Sheduler {
                 new Event(4, 5),  new Event(6, 7), new Event(6, 9), new Event(7, 9),
                 new Event(8, 9),  new Event(4, 6), new Event(8, 10), new Event(7, 10)
         };
-
         List<Event> starts = instance.calcStartTimes(events,0,10);  //рассчитаем оптимальное заполнение аудитории
         System.out.println(starts);                                 //покажем рассчитанный график занятий
+    }
+
+    public class sortByRight implements Comparator<Event> {
+        public int compare(Event a, Event b) {
+            return a.stop - b.stop;
+        }
     }
 
     List<Event> calcStartTimes(Event[] events, int from, int to) {
@@ -49,8 +56,18 @@ public class B_Sheduler {
         result = new ArrayList<>();
         //ваше решение.
 
+        int i = 0;
+        int x;
+        Arrays.sort(events, new sortByRight());
 
-
+        while (i < events.length - 1){
+            result.add(events[i]);
+            x = events[i].stop;
+            i++;
+            while(x > events[i].start && i < events.length - 1){
+                i++;
+            }
+        }
 
 
 
