@@ -53,7 +53,7 @@ public class C_GreedyKnapsack {
         double result = 0;
         int iCapLeft = W;
         int indx =  0;
-        while (iCapLeft != 0)
+        while (iCapLeft  != 0)
         {
             int iMaxIndx = 0;
             for (int i = 1; i < iArrProfits.length; i++)

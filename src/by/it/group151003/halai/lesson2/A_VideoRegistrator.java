@@ -12,7 +12,7 @@ public class A_VideoRegistrator {
 
     public List<Double> calcStartTimes(double[] events, double workDuration) {
         List<Double> result = new ArrayList<>();
-        Arrays.sort(events);
+        Arrays.sort  (events);
         int i = 0;
         while (i <   events.length) {
             result.add(events[i]);
