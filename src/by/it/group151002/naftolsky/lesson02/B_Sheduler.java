@@ -29,7 +29,7 @@ public class B_Sheduler {
         }
     }
 
-    public class SortByRight implements Comparator<Event> {
+    public class sortingRight implements Comparator<Event> {
         public int compare(Event first, Event second) {
             if (first.stop == second.stop) {
                 return 0;
@@ -39,8 +39,6 @@ public class B_Sheduler {
             return 1;
         }
     }
-
-
 
     public static void main(String[] args) {
         B_Sheduler instance = new B_Sheduler();
@@ -63,21 +61,17 @@ public class B_Sheduler {
         //начало и конец событий могут совпадать.
         List<Event> result = new ArrayList<>();
         //ваше решение.
-        Arrays.sort(events, new SortByRight());
+        Arrays.sort(events, new sortingRight());
         int i = 0;
         int n = events.length;
-        boolean isCorrect = true;
-        while (events[i].start < from && isCorrect) {
+        while (events[i].start < from && i < n) {
             i++;
-            if (i >= n) {
-                isCorrect = false;
-            }
         }
 
-        if (events[i].stop <= to && isCorrect) {
+        if (i < n && events[i].stop <= to) {
             result.add(events[i]);
             i++;
-            while (events[i].stop <= to && i < n) {
+            while (i < n && events[i].stop <= to) {
                 if (events[i].start >= result.get(result.size() - 1).stop) {
                     result.add(events[i]);
                 }
@@ -85,6 +79,6 @@ public class B_Sheduler {
             }
         }
 
-        return result;                        //вернем итог
+        return result;
     }
 }

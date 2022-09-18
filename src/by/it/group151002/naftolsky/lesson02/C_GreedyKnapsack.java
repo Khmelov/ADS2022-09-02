@@ -43,45 +43,42 @@ public class C_GreedyKnapsack {
         }
     }
 
-    void merge(Item[] arr, int p, int q, int r) {
-        int n1 = q - p + 1;
-        int n2 = r - q;
-        Item[] L = new Item[n1];
-        Item[] R = new Item[n2];
-        int i, j, k;
-        for (i = 0; i < n1; i++) {
-            L[i] = arr[p + i];
-        }
-        for (j = 0; j < n2; j++) {
-            R[j] = arr[q + 1 + j];
-        }
-        i = 0;
-        j = 0;
-        k = p;
-        while (i < n1 && j < n2) {
-            if (L[i].cost/(double)L[i].weight > R[j].cost/(double)R[j].weight) {
-                arr[k++] = L[i++];
+    int partition(double[] arrSpecific, Item[] arr, int lowIndex, int highIndex) {
+        double pivotValue = arrSpecific[lowIndex + highIndex / 2];
+
+        int i = lowIndex - 1;
+        int j = highIndex + 1;
+        while (true)
+        {
+            do {
+                i++;
+            } while (arrSpecific[i] > pivotValue);
+
+            do {
+                j--;
+            } while (arrSpecific[j] < pivotValue);
+
+            if (i >= j) {
+                return j;
             }
-            else {
-                arr[k++] = R[j++];
-            }
-        }
-        while (i < n1) {
-            arr[k++] = L[i++];
-        }
-        while (j < n2) {
-            arr[k++] = R[j++];
+
+            double tempNumber = arrSpecific[i];
+            arrSpecific[i] = arrSpecific[j];
+            arrSpecific[j] = tempNumber;
+
+            Item tempItem = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tempItem;
         }
     }
 
-    //сортировка массива слиянием ("Разделяй и властвуй", сложность: О(n*lg(n)))
-    void sort(Item[] arr, int p, int r) {
-        if (p < r) {
-            int mid = (p + r) / 2;
-            sort(arr, p, mid);
-            sort(arr, mid + 1, r);
-            merge(arr, p, mid, r);
+    void quickSort(double[] arrSpecific, Item[] arr, int  lowIndex, int highIndex) {
+        if (lowIndex >= highIndex) {
+            return;
         }
+        int pivotIndex = partition(arrSpecific, arr, lowIndex, highIndex);
+        quickSort(arrSpecific, arr, lowIndex, pivotIndex);
+        quickSort(arrSpecific, arr, pivotIndex + 1, highIndex);
     }
 
     double calc(File source) throws FileNotFoundException {
@@ -93,10 +90,10 @@ public class C_GreedyKnapsack {
             items[i] = new Item(input.nextInt(), input.nextInt());
         }
         //покажем предметы
-        for (Item item:items) {
+        for (Item item : items) {
             System.out.println(item);
         }
-        System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
+        System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, W);
 
         //тут необходимо реализовать решение задачи
         //итогом является максимально воможная стоимость вещей в рюкзаке
@@ -106,29 +103,37 @@ public class C_GreedyKnapsack {
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
-        sort(items, 0, items.length - 1);
-
-        boolean isFull = false;
-        int i = 0;
-        while (!isFull && items.length > 0) {
-            if (items[i].weight <= W) {
-                result += items[i].cost;
-                W = W - items[i].weight;
-            }
-            else {
-                isFull = true;
-                result += (double)items[i].cost * W / items[i].weight;
-            }
-            i++;
+        double[] arrSpecific = new double[items.length];
+        for (int i = 0; i < arrSpecific.length; i++) {
+            arrSpecific[i] = (double) items[i].cost / items[i].weight;
         }
-        System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
+
+        quickSort(arrSpecific, items, 0, items.length - 1);
+        boolean isCorrect = true;
+        int i = 0;
+
+        while (isCorrect && i < items.length) {
+            if (items[i].weight > W) {
+                isCorrect = false;
+            } else {
+                result = result + items[i].cost;
+                W = W - items[i].weight;
+                i++;
+            }
+        }
+
+        if (i < items.length && W > 0) {
+            result = result + (double) items[i].cost * W / items[i].weight;
+        }
+
+        System.out.printf("Удалось собрать рюкзак на сумму %f\n", result);
         return result;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         long startTime = System.currentTimeMillis();
         String root=System.getProperty("user.dir")+"/src/";
-        File f=new File(root+"by/it/group151002/naftolsky/lesson02/greedyKnapsack.txt");
+        File f = new File(root+"by/it/group151002/naftolsky/lesson02/greedyKnapsack.txt");
         double costFinal=new C_GreedyKnapsack().calc(f);
         long finishTime = System.currentTimeMillis();
         System.out.printf("Общая стоимость %f (время %d)",costFinal,finishTime - startTime);
