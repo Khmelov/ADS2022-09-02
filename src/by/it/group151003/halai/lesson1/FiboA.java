@@ -1,6 +1,6 @@
 package by.it.group151003.halai.lesson1;
 
-import java.math.BigInteger;
+import java.math.BigInteger ;
 
 public class FiboA       {
     public long startTime = System.currentTimeMillis();

@@ -14,7 +14,7 @@ public class A_VideoRegistrator {
         List<Double> result = new ArrayList<>();
         Arrays.sort(events);
         int i = 0;
-        while (i < events.length) {
+        while (i <   events.length) {
             result.add(events[i]);
             double finish = result.get(result.size() - 1) + workDuration;
             i++;

@@ -15,7 +15,7 @@ public class FiboC {
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
-    public long fasterC  (long n, int m) {
+    public long fasterC    (long n, int m) {
         if (n == 1) {
                 return 1L;
         } else {

@@ -30,7 +30,7 @@ public class B_Sheduler {
         Arrays.sort(events, new SortByRight());
         int i = 0;
         int n = events.length;
-        while (events[i].start < from) {
+        while     (events[i].start < from) {
             i++;
             if (i >= n) {
                 break;

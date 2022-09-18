@@ -52,7 +52,7 @@ public class C_GreedyKnapsack {
 
         double result = 0;
         int iCapLeft = W;
-        int indx = 0;
+        int indx =  0;
         while (iCapLeft != 0)
         {
             int iMaxIndx = 0;
