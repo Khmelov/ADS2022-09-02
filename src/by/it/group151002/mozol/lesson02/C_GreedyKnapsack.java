@@ -37,9 +37,9 @@ public class C_GreedyKnapsack {
         @Override
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
-
-
-            return 0;
+            float aver1 = this.cost / this.weight;
+            float aver2 = o.cost / o.weight;
+            return Float.compare(aver1, aver2);
         }
     }
 
@@ -66,10 +66,31 @@ public class C_GreedyKnapsack {
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
 
-
-
-
-
+        for (int i = 0; i < n; i++) {
+            int maxIndex = i;
+            Item max = items[i];
+            Item tempItem = new Item(items[i].cost, items[i].weight);
+            for (int j = i; j < n; j++) {
+                if (items[j].compareTo(max) > 0) {
+                    max = items[j];
+                    maxIndex = j;
+                }
+            }
+            tempItem = items[maxIndex];
+            items[maxIndex] = items[i];
+            items[i] = tempItem;
+        }
+        int i = 0;
+        while (W > 0) {
+            if (items[i].weight < W) {
+                result += items[i].cost;
+                W -= items[i].weight;
+            } else {
+                result += items[i].cost / items[i].weight * W;
+                W = 0;
+            }
+            i++;
+        }
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
     }
