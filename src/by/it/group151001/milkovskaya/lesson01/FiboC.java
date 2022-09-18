@@ -29,7 +29,7 @@ public class FiboC {
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
         ArrayList<Long> pisPeriod = new ArrayList<>();
-         long pred = 0, curr = 1, temp;
+         long pred = 0, curr = 1, temp,res;
          boolean end = false;
          while (!end){
              pisPeriod.add(pred);
@@ -41,8 +41,8 @@ public class FiboC {
                 end = true;
             }
          }
-         n = n % (pisPeriod.size());
-        return pisPeriod.get((int)n);
+         res = n % (pisPeriod.size());
+        return pisPeriod.get((int)res);
     }
 
 
