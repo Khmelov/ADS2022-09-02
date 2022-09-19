@@ -1,6 +1,7 @@
 package by.it.group151001.kononova.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны интервальные события events
@@ -11,11 +12,11 @@ import java.util.List;
 
 public class B_Sheduler {
     //событие у аудитории(два поля: начало и конец)
-    static class Event {
+    public static class Event implements Comparable<Event>{
         int start;
         int stop;
 
-        Event(int start, int stop) {
+        public Event(int start, int stop) {
             this.start = start;
             this.stop = stop;
         }
@@ -23,6 +24,17 @@ public class B_Sheduler {
         @Override
         public String toString() {
             return "("+ start +":" + stop + ")";
+        }
+
+        @Override
+        public int compareTo(Event o) {
+            return this.stop-o.stop;
+            /*if (this.stop > o.stop) {
+                return 1;
+            }
+            if (this.stop == o.stop)
+                return 0;
+            return -1;*/
         }
     }
 
@@ -40,7 +52,7 @@ public class B_Sheduler {
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
-    List<Event> calcStartTimes(Event[] events, int from, int to) {
+    public List<Event> calcStartTimes(Event[] events, int from, int to) {
         //events - события которые нужно распределить в аудитории
         //в период [from, int] (включительно).
         //оптимизация проводится по наибольшему числу непересекающихся событий.
@@ -48,12 +60,15 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         //ваше решение.
-
-
-
-
-
-
+        int i=0;
+        Arrays.sort(events);
+        while (i < events.length) {
+            if (events[i].start >= from && events[i].stop <= to) {
+                result.add(events[i]);
+                from = events[i].stop;
+            }
+            i++;
+        }
         return result;                        //вернем итог
     }
 }

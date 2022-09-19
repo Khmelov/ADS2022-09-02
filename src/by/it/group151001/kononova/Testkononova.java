@@ -3,9 +3,14 @@ package by.it.group151001.kononova;
 import by.it.group151001.kononova.lesson01.FiboA;
 import by.it.group151001.kononova.lesson01.FiboB;
 import by.it.group151001.kononova.lesson01.FiboC;
+import by.it.group151001.kononova.lesson02.A_VideoRegistrator;
+import by.it.group151001.kononova.lesson02.B_Sheduler;
+import by.it.group151001.kononova.lesson02.C_GreedyKnapsack;
 import org.junit.Test;
 
+import java.io.File;
 import java.math.BigInteger;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -96,5 +101,62 @@ public class Testkononova {
         assertTrue("fasterC failed 5", fibo.fasterC(100,100)==75L);
         assertTrue("fasterC failed 6", fibo.fasterC(50,4)==1L);
         assertTrue("fasterC failed 7", fibo.fasterC(0,4)==0L);
+    }
+
+    @Test
+    public void A_VideoRegistrator() {
+        A_VideoRegistrator instance=new A_VideoRegistrator();
+        double[] events=new double[]{1, 1.1, 1.6, 2.2, 2.4, 2.7, 3.9, 8.1, 9.1, 5.5, 3.7};
+        List<Double> starts=instance.calcStartTimes(events,1); //рассчитаем моменты старта, с длинной сеанса 1
+        boolean ok=starts.toString().equals("[1.0, 2.2, 3.7, 5.5, 8.1]");
+        assertTrue("slowA failed", ok);
+
+        events=new double[]{1, 1.2, 1.3, 1.6, 2.4, 4.5, 2.7, 3.1, 3.8, 4.1, 5.1, 4.9, 5.9, 5.0};
+        starts=instance.calcStartTimes(events,0.5);
+        ok=starts.toString().equals("[1.0, 1.6, 2.4, 3.1, 3.8, 4.5, 5.1, 5.9]");
+        assertTrue("slowA failed", ok);
+
+        events=new double[]{1.3, 1.0, 3.5, 10.1, 11.1, 2.0, 3.0, 4.1, 5.3, 5.7};
+        starts=instance.calcStartTimes(events,1.1);
+        ok=starts.toString().equals("[1.0, 3.0, 5.3, 10.1]");
+        assertTrue("slowA failed", ok);
+    }
+
+    @Test
+    public void B_Sheduler() {
+        B_Sheduler instance = new B_Sheduler();
+        B_Sheduler.Event[] events = {new B_Sheduler.Event(0, 3), new B_Sheduler.Event(0, 1), new B_Sheduler.Event(1, 2), new B_Sheduler.Event(3, 5),
+                new B_Sheduler.Event(1, 3), new B_Sheduler.Event(1, 3), new B_Sheduler.Event(1, 3), new B_Sheduler.Event(3, 6),
+                new B_Sheduler.Event(2, 7), new B_Sheduler.Event(2, 3), new B_Sheduler.Event(2, 7), new B_Sheduler.Event(7, 9),
+                new B_Sheduler.Event(3, 5), new B_Sheduler.Event(2, 4), new B_Sheduler.Event(2, 3), new B_Sheduler.Event(3, 7),
+                new B_Sheduler.Event(4, 5), new B_Sheduler.Event(6, 7), new B_Sheduler.Event(6, 9), new B_Sheduler.Event(7, 9),
+                new B_Sheduler.Event(8, 9), new B_Sheduler.Event(4, 6), new B_Sheduler.Event(8, 10), new B_Sheduler.Event(7, 10)
+        };
+
+        List<B_Sheduler.Event> starts = instance.calcStartTimes(events, 0, 10);  //рассчитаем оптимальное заполнение аудитории
+        boolean ok=starts.toString().equals("[(0:1), (1:2), (2:3), (3:5), (6:7), (7:9)]");
+        assertTrue("B_Sheduler failed", ok);
+
+        starts = instance.calcStartTimes(events, 5, 10);
+        ok=starts.toString().equals("[(6:7), (7:9)]");
+        assertTrue("B_Sheduler failed", ok);
+        starts = instance.calcStartTimes(events, 1, 5);
+        ok=starts.toString().equals("[(1:2), (2:3), (3:5)]");
+        assertTrue("B_Sheduler failed", ok);
+        starts = instance.calcStartTimes(events, 2, 2);
+        ok=starts.toString().equals("[]");
+        assertTrue("B_Sheduler failed", ok);
+        events = new B_Sheduler.Event[] {new B_Sheduler.Event(0, 3), new B_Sheduler.Event(0, 1)};
+        starts = instance.calcStartTimes(events, 4, 10);
+        ok=starts.toString().equals("[]");
+        assertTrue("B_Sheduler failed", ok);
+    }
+    @Test
+    public void C_GreedyKnapsack() throws Exception {
+        String root=System.getProperty("user.dir")+"/src/";
+        File f=new File(root+"by/it/a_khmelev/lesson02/greedyKnapsack.txt");
+        double costFinal=new C_GreedyKnapsack().calc(f);
+        boolean ok=costFinal==200;
+        assertTrue("B_Sheduler failed", ok);
     }
 }

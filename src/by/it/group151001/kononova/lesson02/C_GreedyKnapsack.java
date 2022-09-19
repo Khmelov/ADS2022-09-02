@@ -43,7 +43,7 @@ public class C_GreedyKnapsack {
         }
     }
 
-    double calc(File source) throws FileNotFoundException {
+    public double calc(File source) throws FileNotFoundException {
         Scanner input = new Scanner(source);
         int n = input.nextInt();      //сколько предметов в файле
         int W = input.nextInt();      //какой вес у рюкзака
@@ -61,6 +61,18 @@ public class C_GreedyKnapsack {
         //итогом является максимально воможная стоимость вещей в рюкзаке
         //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
+        /*double sum = 0;
+        int i = 0;
+        while (sum < W && i < items.length){
+            if (W - sum > items[i].weight){
+                sum += items[i].weight;
+                result += items[i].cost;
+                i++;
+            } else{
+                result += items[i].cost / items[i].weight * (W - sum);
+                sum = W;
+            }
+        }*/
         //тут реализуйте алгоритм сбора рюкзака
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
