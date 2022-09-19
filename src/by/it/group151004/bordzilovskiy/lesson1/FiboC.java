@@ -1,4 +1,4 @@
-package by.it.group151004.bordzilovskiy;
+package by.it.group151004.bordzilovskiy.lesson1;
 
 /*
  * Даны целые числа 1<=n<=1E18 и 2<=m<=1E5,
