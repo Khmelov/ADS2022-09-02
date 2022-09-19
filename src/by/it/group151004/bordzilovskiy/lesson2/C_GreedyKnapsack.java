@@ -66,6 +66,7 @@ public class C_GreedyKnapsack {
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
 
+
         int price_quality;
 
         Item[] Arr;
