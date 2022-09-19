@@ -46,14 +46,63 @@ public class B_Sheduler {
         //в период [from, int] (включительно).
         //оптимизация проводится по наибольшему числу непересекающихся событий.
         //начало и конец событий могут совпадать.
-        List<Event> result;
-        result = new ArrayList<>();
+        return algorithm(events, from, to);
+    }
 
-        Arrays.sort(events);
+    private void swap(Event[] events, int index1, int index2) {
+        Event tmp = events[index1];
+        events[index1] = events[index2];
+        events[index2] = tmp;
+    }
 
 
+    private void sort(Event[] events) {
+        /* Сортировка массива событий */
+        prevSort(events);
+        postSort(events);
+    }
 
+    private void prevSort(Event[] events) {
+        /* Сортировка по значениям начала */
+        for (int i = events.length - 1; i >= 1; i--) {
+            for (int j = 0; j < i; j++) {
+                if (events[j].start > events[j + 1].start) {
+                    swap(events, j, j + 1);
+                }
+            }
+        }
+    }
 
-        return result;                        //вернем итог
+    private void postSort(Event[] events) {
+        /* Сортировка по значениям конца */
+        int index = 0;
+        for (int i = 0; i < events.length; i++){
+            index = i;
+            for (int j = i + 1; j < events.length; j++){
+                if (events[i].start == events[j].start && events[j].stop < events[index].stop) {
+                    index = j;
+                }
+            }
+            swap(events, i, index);
+        }
+    }
+
+    private List<Event> algorithm(Event[] events, int from, int to) {
+        List<Event> result  = new ArrayList<>();
+        int i = 0;
+
+        sort(events);
+
+        while (events[i].start < from) i++;
+        result.add(events[i]);
+        //Берем первое событие с начала времени аудитории
+
+        i++;
+        while (i < events.length){
+            if ((events[i].start >= result.get(result.size() - 1).stop) && (events[i].stop <= to))
+                result.add(events[i]);
+            i++;
+        }
+        return result;
     }
 }
