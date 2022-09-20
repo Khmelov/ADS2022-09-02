@@ -1,6 +1,7 @@
 package by.it.a_khmelev.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны события events
@@ -10,12 +11,14 @@ import java.util.List;
 Алгоритм жадный. Для реализации обдумайте надежный шаг.
 */
 
+import by.it.group151003.shafarenko.lesson01.lesson02.A_VideoRegistrator;
+
 public class A_VideoRegistrator {
 
     public static void main(String[] args) {
         A_VideoRegistrator instance=new A_VideoRegistrator();
-        double[] events=new double[]{1, 1.1, 1.6, 2.2, 2.4, 2.7, 3.9, 8.1, 9.1, 5.5, 3.7};
-        List<Double> starts=instance.calcStartTimes(events,1); //рассчитаем моменты старта, с длинной сеанса 1
+        double[] events=new double[]{2.5, 5.1, 4.6, 6.4, 5.0, 6.3, 7.2, 2.1, 2.3, 7.8, 10.4, 1.9, 5.6, 5.4, 6.5};
+        List<Double> starts=instance.calcStartTimes(events,5); //рассчитаем моменты старта, с длинной сеанса 1
         System.out.println(starts);                            //покажем моменты старта
     }
     //модификаторы доступа опущены для возможности тестирования
@@ -24,21 +27,17 @@ public class A_VideoRegistrator {
         //timeWorkDuration время работы видеокамеры после старта
         List<Double> result;
         result = new ArrayList<>();
+        Arrays.sort(events);
         int i=0;                              //i - это индекс события events[i]
-        //комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
-        //подготовка к жадному поглощению массива событий
-        //hint: сортировка Arrays.sort обеспечит скорость алгоритма
-        //C*(n log n) + C1*n = O(n log n)
-
-        //пока есть незарегистрированные события
-        //получим одно событие по левому краю
-        //и запомним время старта видеокамеры
-        //вычислим момент окончания работы видеокамеры
-        //и теперь пропустим все покрываемые события
-        //за время до конца работы, увеличивая индекс
-
-
+        while (i < events.length) {
+        	result.add(events[i]);
+        	i++;
+        	while (i < events.length && events[i] <= result.get(result.size()-1) + workDuration) {
+        		i++;
+        	}
+        }
 
         return result;                        //вернем итог
     }
 }
+
