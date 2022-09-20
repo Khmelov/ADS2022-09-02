@@ -14,6 +14,7 @@ package by.it.group151001.kononova.lesson02;
  */
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -36,10 +37,7 @@ public class C_GreedyKnapsack {
 
         @Override
         public int compareTo(Item o) {
-            //тут может быть ваш компаратор
-
-
-            return 0;
+            return o.cost/o.weight - this.cost/this.weight;
         }
     }
 
@@ -61,27 +59,24 @@ public class C_GreedyKnapsack {
         //итогом является максимально воможная стоимость вещей в рюкзаке
         //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
-        /*double sum = 0;
-        int i = 0;
-        while (sum < W && i < items.length){
-            if (W - sum > items[i].weight){
-                sum += items[i].weight;
-                result += items[i].cost;
-                i++;
-            } else{
-                result += items[i].cost / items[i].weight * (W - sum);
-                sum = W;
-            }
-        }*/
         //тут реализуйте алгоритм сбора рюкзака
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
-
-
-
-
-
+        int col = 0;
+        double weight = 0;
+        Arrays.sort(items);
+        while (col < n && weight < W) {
+            if (W - weight >= items[col].weight) {
+                result += items[col].cost;
+                weight += items[col].weight;
+            }
+            else {
+                result += items[col].cost * ((W - weight)/items[col].weight);
+                weight += (W - weight);
+            }
+            col++;
+        }
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
     }
