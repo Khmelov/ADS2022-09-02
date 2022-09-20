@@ -1,6 +1,8 @@
 package by.it.a_khmelev.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 /*
 даны интервальные события events
@@ -8,6 +10,9 @@ import java.util.List;
 непересекающихся событий было максимально.
 Алгоритм жадный. Для реализации обдумайте надежный шаг.
 */
+
+import by.it.group151003.shafarenko.lesson01.lesson02.B_Sheduler;
+import by.it.group151003.shafarenko.lesson01.lesson02.B_Sheduler.Event;
 
 public class B_Sheduler {
     //событие у аудитории(два поля: начало и конец)
@@ -47,13 +52,22 @@ public class B_Sheduler {
         //начало и конец событий могут совпадать.
         List<Event> result;
         result = new ArrayList<>();
-        //ваше решение.
-
-
-
-
-
-
+   
+        Comparator<Event> comparatorStop = new Comparator<Event>(){
+        	public int compare(Event event1, Event event2) {
+        		return event1.stop > event2.stop ? 1 : (event1.stop < event2.stop ? -1 : (event1.start > event2.start ? 1 : -1));
+        	}
+        };
+        
+        Arrays.sort(events, comparatorStop);
+        for (int i = 0; i < events.length; i++) {
+        	if (events[i].start >= from && events[i].stop <= to) {
+        		if (result.size() == 0 || events[i].start >= result.get(result.size()-1).stop) {
+        			result.add(events[i]);
+        		}
+        	}
+        }
+  
         return result;                        //вернем итог
     }
 }
