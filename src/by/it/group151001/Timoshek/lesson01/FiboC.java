@@ -1,4 +1,4 @@
-package by.it.group151001.Timoshek.lesson01;
+package by.it.group151001.timoshek.lesson01;
 
 /*
  * Даны целые числа 1<=n<=1E18 и 2<=m<=1E5,
