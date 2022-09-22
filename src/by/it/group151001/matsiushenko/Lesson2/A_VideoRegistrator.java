@@ -1,6 +1,7 @@
 package by.it.group151001.matsiushenko.Lesson2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны события events
@@ -14,7 +15,7 @@ public class A_VideoRegistrator {
 
     public static void main(String[] args) {
         A_VideoRegistrator instance=new A_VideoRegistrator();
-        double[] events=new double[]{1, 1.1, 1.6, 2.2, 2.4, 2.7, 3.9, 8.1, 9.1, 5.5, 3.7};
+        double[] events=new double[]{1.1, 1.2, 3.3, 2.2, 2.4, 2.7, 2, 8.0, 9.1, 5.5, 3.1};
         List<Double> starts=instance.calcStartTimes(events,1); //рассчитаем моменты старта, с длинной сеанса 1
         System.out.println(starts);                            //покажем моменты старта
     }
@@ -37,7 +38,16 @@ public class A_VideoRegistrator {
         //и теперь пропустим все покрываемые события
         //за время до конца работы, увеличивая индекс
 
+        Arrays.sort(events);
+        double StartTime;
 
+        while (i<events.length){
+            StartTime=events[i];
+            result.add(StartTime);
+            while (i< events.length && events[i]<= StartTime+workDuration){
+                i++;
+            }
+        }
 
         return result;                        //вернем итог
     }
