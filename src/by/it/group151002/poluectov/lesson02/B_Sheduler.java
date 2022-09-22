@@ -53,16 +53,12 @@ public class B_Sheduler {
     }
 
     List<Event> calcStartTimes(Event[] events, int from, int to) {
-        //events - события которые нужно распределить в аудитории
-        //в период [from, int] (включительно).
-        //оптимизация проводится по наибольшему числу непересекающихся событий.
-        //начало и конец событий могут совпадать.
-        List<Event> result;
-        result = new ArrayList<>();
-        //ваше решение.
+        List<Event> result = new ArrayList<>();
+        //sort by "stop" field and then (stop - start) so most of requirable elems would be right before
+        //the shift of "stop" fields
         Arrays.sort(events, Comparator.comparingInt((Event a) -> a.stop).thenComparingInt(a -> a.stop - a.start));
         int i = 0;
-        //initialising first elem
+        //finding first elem
         while (i < events.length && result.isEmpty()) {
             if (events[i].start >= from && events[i].stop <= to) {
                 result.add(events[i]);
@@ -70,11 +66,15 @@ public class B_Sheduler {
             i++;
         }
         if (!result.isEmpty()) {
+            //prev - value of last added element
             Event prev = result.get(result.size() - 1);
+            //patentionally the next elem to be added
             Event candidate = prev;
             while (i < events.length) {
                 if (!events[i].hasCollision(prev)) {
+                    //if there is a shift of "stop" field it usually desired elem
                     if (events[i].stop != candidate.stop) {
+                        //check if that actually it
                         if (!candidate.hasCollision(prev)) {
                             result.add(candidate);
                             prev = candidate;
@@ -85,6 +85,6 @@ public class B_Sheduler {
                 i++;
             }
         }
-        return result;                        //вернем итог
+        return result;
     }
 }
