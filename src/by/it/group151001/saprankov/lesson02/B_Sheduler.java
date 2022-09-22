@@ -77,7 +77,7 @@ public class B_Sheduler {
                 i++;
         }
 
-        
+
 
         return result;                        //вернем итог
     }
