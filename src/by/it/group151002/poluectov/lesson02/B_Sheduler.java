@@ -1,7 +1,7 @@
 package by.it.group151002.poluectov.lesson02;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 /*
 даны интервальные события events
 реализуйте метод calcStartTimes, так, чтобы число принятых к выполнению
@@ -20,23 +20,35 @@ public class B_Sheduler {
             this.stop = stop;
         }
 
+        public int length(){
+            return this.stop - this.start;
+        }
+
+        public boolean hasCollision(Event e) {
+            if (this.stop > e.start) {
+                return e.stop > this.start;
+            }else
+                return false;
+        }
+
+
         @Override
         public String toString() {
-            return "("+ start +":" + stop + ")";
+            return "(" + start + ":" + stop + ")";
         }
     }
 
     public static void main(String[] args) {
         B_Sheduler instance = new B_Sheduler();
-        Event[] events = {  new Event(0, 3),  new Event(0, 1), new Event(1, 2), new Event(3, 5),
-                new Event(1, 3),  new Event(1, 3), new Event(1, 3), new Event(3, 6),
-                new Event(2, 7),  new Event(2, 3), new Event(2, 7), new Event(7, 9),
-                new Event(3, 5),  new Event(2, 4), new Event(2, 3), new Event(3, 7),
-                new Event(4, 5),  new Event(6, 7), new Event(6, 9), new Event(7, 9),
-                new Event(8, 9),  new Event(4, 6), new Event(8, 10), new Event(7, 10)
+        Event[] events = {new Event(0, 3), new Event(0, 1), new Event(1, 2), new Event(3, 5),
+                new Event(1, 3), new Event(1, 3), new Event(1, 3), new Event(3, 6),
+                new Event(2, 7), new Event(2, 3), new Event(2, 7), new Event(7, 9),
+                new Event(3, 5), new Event(2, 4), new Event(2, 3), new Event(3, 7),
+                new Event(4, 5), new Event(6, 7), new Event(6, 9), new Event(7, 9),
+                new Event(8, 9), new Event(4, 6), new Event(8, 10), new Event(7, 10)
         };
 
-        List<Event> starts = instance.calcStartTimes(events,0,10);  //рассчитаем оптимальное заполнение аудитории
+        List<Event> starts = instance.calcStartTimes(events, 0, 10);  //рассчитаем оптимальное заполнение аудитории
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
@@ -48,12 +60,31 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         //ваше решение.
-
-
-
-
-
-
+        Arrays.sort(events, Comparator.comparingInt((Event a) -> a.stop).thenComparingInt(a -> a.stop - a.start));
+        int i = 0;
+        //initialising first elem
+        while (i < events.length && result.isEmpty()) {
+            if (events[i].start >= from && events[i].stop <= to) {
+                result.add(events[i]);
+            }
+            i++;
+        }
+        if (!result.isEmpty()) {
+            Event prev = result.get(result.size() - 1);
+            Event candidate = prev;
+            while (i < events.length) {
+                if (!events[i].hasCollision(prev)) {
+                    if (events[i].stop != candidate.stop) {
+                        if (!candidate.hasCollision(prev)) {
+                            result.add(candidate);
+                            prev = candidate;
+                        }
+                    }
+                    candidate = events[i];
+                }
+                i++;
+            }
+        }
         return result;                        //вернем итог
     }
 }
