@@ -78,47 +78,45 @@ public class C_QSortOptimized {
 
         quickSort(segments, 0, segments.length - 1);
 
-        for (int i = 0; i < m; i++) {
-            result[i] = getAccessoryCount(segments, points[i]);
+        for (int i = 0; i < points.length; i++) {
+            int index = binarySearch(segments, points[i]);
+            if (index == -1) {
+                result[i] = 0;
+            } else {
+                int count = 1;
+                int j = index - 1;
+                while (j >= 0 && segments[j].start == segments[index].start) {
+                    count++;
+                    j--;
+                }
+                j = index + 1;
+                while (j < segments.length && segments[j].start == segments[index].start) {
+                    count++;
+                    j++;
+                }
+                result[i] = count;
+            }
         }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
-    private int getAccessoryCount(Segment[] segments, int point) {
+    private int binarySearch(Segment[] segments, int point) {
         int left = 0;
         int right = segments.length - 1;
         int middle = 0;
-        int result = 0;
-
         while (left <= right) {
             middle = (left + right) / 2;
             if (segments[middle].start <= point && segments[middle].stop >= point) {
-                result = 1;
-                break;
+                return middle;
             } else if (segments[middle].start > point) {
                 right = middle - 1;
             } else {
                 left = middle + 1;
             }
         }
-
-        if (result == 1) {
-            int i = middle - 1;
-            while (i >= 0 && segments[i].start <= point && segments[i].stop >= point) {
-                result++;
-                i--;
-            }
-
-            i = middle + 1;
-            while (i < segments.length && segments[i].start <= point && segments[i].stop >= point) {
-                result++;
-                i++;
-            }
-        }
-
-        return result;
+        return -1;
     }
 
     private void quickSort(Segment[] segments, int left, int right) {
