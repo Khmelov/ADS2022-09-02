@@ -77,7 +77,7 @@ public class Lesson4Test {
         assertTrue("B1 failed", ok);
     }
 
-    @Test
+    @Test (timeout = 1000)
     public void B2() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/group151002/bobrik/lesson04/dataB2.txt");

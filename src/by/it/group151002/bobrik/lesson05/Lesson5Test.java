@@ -9,7 +9,7 @@ import java.util.Arrays;
 import static org.junit.Assert.assertTrue;
 
 public class Lesson5Test {
-    @Test
+    @Test (timeout = 1000)
     public void A() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
@@ -20,16 +20,33 @@ public class Lesson5Test {
     }
 
 
-    @Test
-    public void B() throws Exception {
+    @Test (timeout = 1000)
+    public void B1() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/bobrik/lesson05/dataB.txt");
         B_CountSort instance = new B_CountSort();
         int[] result=instance.countSort(stream);
         boolean ok=Arrays.equals(result,new int[]{2,2,3,9,9});
-        assertTrue("B failed", ok);
+        assertTrue("B1 failed", ok);
     }
 
+    @Test
+    public void B2() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151002/bobrik/lesson05/dataB2.txt");
+        B_CountSort instance = new B_CountSort();
+        //long startTime = System.currentTimeMillis();
+        int[] result = instance.countSort(stream);
+        //long finishTime = System.currentTimeMillis();
+        boolean ok = result.length > 3;
+        int test[] = new int[result.length];
+        System.arraycopy(result,0,test,0,result.length);
+        Arrays.sort(test);
+        for (int i = 0; i < result.length; i++) {
+            ok = ok && (result[i] == test[i]);
+        }
+        assertTrue("B2 failed", ok);
+    }
 
     @Test
     public void C() throws Exception {
