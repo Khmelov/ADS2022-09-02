@@ -60,23 +60,40 @@ public class Lesson4Test {
 
 
     @Test
-    public void B() throws Exception {
+    public void B1() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/bobrik/lesson04/dataB1.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
-        int[] result=instance.getMergeSort(stream);
+        int[] result = instance.getMergeSort(stream);
         //long finishTime = System.currentTimeMillis();
-        boolean ok=result.length>3;
-        int test[]=new int[result.length];
+        boolean ok = result.length > 3;
+        int test[] = new int[result.length];
         System.arraycopy(result,0,test,0,result.length);
         Arrays.sort(test);
         for (int i = 0; i < result.length; i++) {
-            ok=ok && (result[i]==test[i]);
+            ok = ok && (result[i] == test[i]);
         }
-        assertTrue("B failed", ok);
+        assertTrue("B1 failed", ok);
     }
 
+    @Test
+    public void B2() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151002/bobrik/lesson04/dataB2.txt");
+        B_MergeSort instance = new B_MergeSort();
+        //long startTime = System.currentTimeMillis();
+        int[] result = instance.getMergeSort(stream);
+        //long finishTime = System.currentTimeMillis();
+        boolean ok = result.length > 3;
+        int test[] = new int[result.length];
+        System.arraycopy(result,0,test,0,result.length);
+        Arrays.sort(test);
+        for (int i = 0; i < result.length; i++) {
+            ok = ok && (result[i] == test[i]);
+        }
+        assertTrue("B2 failed", ok);
+    }
 
     @Test
     public void C() throws Exception {
