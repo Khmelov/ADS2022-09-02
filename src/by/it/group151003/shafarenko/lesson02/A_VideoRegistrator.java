@@ -1,4 +1,7 @@
-package by.it.a_khmelev.lesson02;
+package by.it.group151003.shafarenko.lesson02;
+//package by.it.a_khmelev.lesson02;
+//пакеты надо исправлять. ломается же все у всех. пофиксил. балл минус.
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +14,9 @@ import java.util.List;
 Алгоритм жадный. Для реализации обдумайте надежный шаг.
 */
 
-import by.it.group151003.shafarenko.lesson01.lesson02.A_VideoRegistrator;
+
+//и что это за импорт??????
+//import by.it.group151003.shafarenko.lesson01.lesson02.A_VideoRegistrator;
 
 public class A_VideoRegistrator {
 
