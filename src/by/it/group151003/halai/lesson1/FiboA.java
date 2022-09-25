@@ -5,7 +5,7 @@ import java.math.BigInteger ;
 public class FiboA       {
     public long startTime = System.currentTimeMillis();
 
-    public long time()    {
+    public long time()       {
         return System.currentTimeMillis() - startTime;
     }
     public static void main(String[] args) {

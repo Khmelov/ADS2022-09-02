@@ -12,7 +12,7 @@ public class FiboC {
         FiboC fibo = new FiboC();
         long n = 7777777;
         int m = 123;
-        System.out. printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
+        System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
     public long fasterC    (long n, int m) {

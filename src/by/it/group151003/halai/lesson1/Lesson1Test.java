@@ -17,7 +17,7 @@ public class Lesson1Test {
     Search for test:    In whole project
     */
 
-    @Test(timeout = 2000)
+    @Test(timeout =  2000)
     public void slowA() throws Exception {
         FiboA fibo=new FiboA();
         BigInteger res=fibo.slowA(33);

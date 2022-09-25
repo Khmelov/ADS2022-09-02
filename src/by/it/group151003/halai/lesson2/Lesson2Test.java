@@ -19,7 +19,7 @@ public class Lesson2Test {
 
 
     @Test
-    public void A_VideoRegistrator() {
+    public void A_VideoRegistrator()  {
         A_VideoRegistrator instance=new A_VideoRegistrator();
         double[] events=new double[]{1, 1.1, 1.6, 2.2, 2.4, 2.7, 3.9, 8.1, 9.1, 5.5, 3.7 };
         List<Double> starts=instance.calcStartTimes(events,1); //рассчитаем моменты старта, с длинной сеанса 1
