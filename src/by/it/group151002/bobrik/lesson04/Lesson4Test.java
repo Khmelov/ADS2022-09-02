@@ -96,16 +96,50 @@ public class Lesson4Test {
     }
 
     @Test
-    public void C() throws Exception {
+    public void C1() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/bobrik/lesson04/dataC1.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
         //long finishTime = System.currentTimeMillis();
         boolean ok=(2==result);
-        assertTrue("C failed", ok);
-
+        assertTrue("C1 failed", ok);
     }
 
+    @Test
+    public void C2() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151002/bobrik/lesson04/dataC2.txt");
+        C_GetInversions instance = new C_GetInversions();
+        //long startTime = System.currentTimeMillis();
+        int result = instance.calc(stream);
+        //long finishTime = System.currentTimeMillis();
+        boolean ok=(6==result);
+        assertTrue("C2 failed", ok);
+    }
+
+    @Test
+    public void C3() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151002/bobrik/lesson04/dataC3.txt");
+        C_GetInversions instance = new C_GetInversions();
+        //long startTime = System.currentTimeMillis();
+        int result = instance.calc(stream);
+        //long finishTime = System.currentTimeMillis();
+        boolean ok=(5==result);
+        assertTrue("C3 failed", ok);
+    }
+
+    @Test
+    public void C4() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151002/bobrik/lesson04/dataC4.txt");
+        C_GetInversions instance = new C_GetInversions();
+        //long startTime = System.currentTimeMillis();
+        int result = instance.calc(stream);
+        //long finishTime = System.currentTimeMillis();
+        boolean ok=(0==result);
+        assertTrue("C4 failed", ok);
+    }
 }
