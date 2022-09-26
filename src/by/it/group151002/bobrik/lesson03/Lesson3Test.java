@@ -20,13 +20,23 @@ public class Lesson3Test {
 
 
     @Test
-    public void A() throws Exception {
+    public void A1() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelev/lesson03/dataHuffman.txt");
+        File f = new File(root + "by/it/group151002/bobrik/lesson03/dataHuffman1.txt");
         A_Huffman instance = new A_Huffman();
         String result = instance.encode(f);
         boolean ok=result.equals("01001100100111");
-        assertTrue("A failed", ok);
+        assertTrue("A1 failed", ok);
+    }
+
+    @Test
+    public void A2() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        File f = new File(root + "by/it/group151002/bobrik/lesson03/dataHuffman2.txt");
+        A_Huffman instance = new A_Huffman();
+        String result = instance.encode(f);
+        boolean ok=result.equals("0111100011110101101011000100111001011110001100000101111010000001001000111101111000011010110111110001011010101011111100011010111111010101111101000110001000011111101001011110100");
+        assertTrue("A2 failed", ok);
     }
 
     @Test
