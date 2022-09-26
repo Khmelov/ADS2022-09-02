@@ -48,9 +48,14 @@ public class C_HeapMax {
             heap.set(index2, heap.get(index1));
             heap.set(index1, temp);
         }
-
+        boolean is_it_in_heap(int i){
+            return i < heap.size();
+        }
         int biggest_child(int i){
-            return heap.get(i * 2) >= heap.get((i + 1) * 2) ? i * 2 : (i+1) * 2;
+            int left = i * 2 + 1, right = i * 2 + 2;
+            if(is_it_in_heap(left) && is_it_in_heap(right))
+                return heap.get(left) > heap.get(right) ? left : right;
+            return is_it_in_heap(left) ? left : is_it_in_heap(right) ? right : i;
         }
         int siftDown(int i) {
             while(heap.get(i) < heap.get(biggest_child(i)))

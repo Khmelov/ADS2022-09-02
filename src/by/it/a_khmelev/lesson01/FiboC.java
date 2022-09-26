@@ -25,7 +25,22 @@ public class FiboC {
         //Решение сложно найти интуитивно
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
-        return 0L;
+
+        int i, pos;
+        long[] arr = new long[6*m];
+        long z;
+        if(n <= 1)
+            return n % m;
+        arr[0] = 0; arr[1] = 1;
+        for(i = 2; i <= n; i++){
+            arr[i] = arr[i-1] + arr[i-2];
+            if(arr[i-1] % m == 0 && arr[i] % m == 1)
+                break;
+        }
+        --i;
+        z = n / i;
+        pos = (int)(n - z*i);
+    return arr[pos] % m ;
     }
 
 
