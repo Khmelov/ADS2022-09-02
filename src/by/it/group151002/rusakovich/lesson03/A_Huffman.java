@@ -147,7 +147,11 @@ public class A_Huffman {
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
         StringBuilder sb = new StringBuilder();
         //.....
-
+        InternalNode root = (InternalNode) priorityQueue.poll();
+        root.fillCodes("");
+        for(int i = 0; i < s.length(); i++){
+            sb.append(codes.get(s.charAt(i)));
+        }
         return sb.toString();
         //01001100100111
         //01001100100111
