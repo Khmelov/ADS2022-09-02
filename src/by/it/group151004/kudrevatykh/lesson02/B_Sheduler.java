@@ -47,12 +47,26 @@ public class B_Sheduler {
         //начало и конец событий могут совпадать.
         List<Event> result;
         result = new ArrayList<>();
-        //ваше решение.
 
 
+        for (int i=events.length-1;i>=1;i--){
+            for (int j=0;j<i;j++){
+                if (events[j].stop>events[j+1].stop){
+                    Event tmp = events[j+1];
+                    events[j+1]=events[j];
+                    events[j]=tmp;
+                }
+            }
+        }
 
-
-
+        int j=0;
+        result.add(events[j]);
+        for(int i=1;i<events.length;i++){
+            if (events[i].start>=result.get(j).stop){
+                result.add(events[i]);
+                j++;
+            }
+        }
 
         return result;                        //вернем итог
     }
