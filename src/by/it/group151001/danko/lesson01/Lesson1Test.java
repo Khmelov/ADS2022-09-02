@@ -1,4 +1,4 @@
-package by.it.group151001.Danko.lesson01;
+package by.it.group151001.danko.lesson01;
 
 import org.junit.Test;
 
