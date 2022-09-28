@@ -1,6 +1,7 @@
 package by.it.group151004.stahnov.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны интервальные события events
@@ -36,7 +37,7 @@ public class B_Sheduler {
                 new Event(8, 9),  new Event(4, 6), new Event(8, 10), new Event(7, 10)
         };
 
-        List<Event> starts = instance.calcStartTimes(events,0,10);  //рассчитаем оптимальное заполнение аудитории
+        List<Event> starts = instance.calcStartTimes(events,3,7);  //рассчитаем оптимальное заполнение аудитории
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
@@ -49,8 +50,29 @@ public class B_Sheduler {
         result = new ArrayList<>();
         //ваше решение.
 
+        for (int i = events.length - 1;i > 0;i--){
+            Event x;
+            for(int j = 0;j < i;j++){
+                if(events[j].stop > events[j+1].stop){
+                    x = events[j];
+                    events[j] = events[j+1];
+                    events[j+1] = x;
+                }
+            }
+        }
 
-
+        int j;
+        int i = 0;
+        while(i < events.length & events[i].start < from ){
+            i++;
+        }
+        while((i < events.length) && events[i].stop <= to){
+            j = i;
+            result.add(events[i]);
+            while((i < events.length) && ((events[i].start < events[j].stop))){
+                i++;
+            }
+        }
 
 
 

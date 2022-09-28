@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 @SuppressWarnings("all")
 public class Lesson1Test {
     /*
-    для прохождения тестов создайте JUnit-конфигурацию на свой пакет:
+    для прохождения  тестов создайте JUnit-конфигурацию на свой пакет:
     Поля:
     Name:               Test a_khmelev (тут ваша фамилия)
     Test kind:          All in package
