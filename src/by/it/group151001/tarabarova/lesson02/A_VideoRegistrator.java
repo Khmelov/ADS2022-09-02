@@ -1,6 +1,7 @@
 package by.it.group151001.tarabarova.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны события events
@@ -29,6 +30,17 @@ public class A_VideoRegistrator {
         //подготовка к жадному поглощению массива событий
         //hint: сортировка Arrays.sort обеспечит скорость алгоритма
         //C*(n log n) + C1*n = O(n log n)
+        Arrays.sort(events);
+        double Launch;
+        int size = events.length;
+        while (i < size - 1)
+        {
+            Launch = events[i];
+            result.add(events[i]);
+            Launch = Launch + workDuration;
+            while (i < size - 1 && Launch > events[i])
+                i++;
+        }
 
         //пока есть незарегистрированные события
         //получим одно событие по левому краю
