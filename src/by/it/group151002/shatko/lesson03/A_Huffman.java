@@ -4,40 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-//Lesson 3. A_Huffman.
-//Разработайте метод encode(File file) для кодирования строки (код Хаффмана)
-
-// По данным файла (непустой строке ss длины не более 104104),
-// состоящей из строчных букв латинского алфавита,
-// постройте оптимальный по суммарной длине беспрефиксный код.
-
-// Используйте Алгоритм Хаффмана — жадный алгоритм оптимального
-// безпрефиксного кодирования алфавита с минимальной избыточностью.
-
-// В первой строке выведите количество различных букв kk,
-// встречающихся в строке, и размер получившейся закодированной строки.
-// В следующих kk строках запишите коды букв в формате "letter: code".
-// В последней строке выведите закодированную строку. Примеры ниже
-
-//        Sample Input 1:
-//        a
-//
-//        Sample Output 1:
-//        1 1
-//        a: 0
-//        0
-
-//        Sample Input 2:
-//        abacabad
-//
-//        Sample Output 2:
-//        4 14
-//        a: 0
-//        b: 10
-//        c: 110
-//        d: 111
-//        00101100100111
-
 public class A_Huffman {
 
     abstract class Node implements Comparable<Node> {
@@ -138,7 +104,7 @@ public class A_Huffman {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelev/lesson03/dataHuffman.txt");
+        File f = new File(root + "by/it/group151002/shatko/lesson03/dataHuffman.txt");
         A_Huffman instance = new A_Huffman();
         long startTime = System.currentTimeMillis();
         String result = instance.encode(f);
