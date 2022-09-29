@@ -2,7 +2,9 @@ package by.it.group151001.novik.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 // Lesson 3. B_Huffman.
 // Восстановите строку по её коду и беспрефиксному коду символов.
@@ -42,6 +44,31 @@ import java.util.Scanner;
 
 public class B_Huffman {
 
+    Character getindex(String val){
+        for( Map.Entry<Character,Integer> pair: codes.entrySet()){
+            if (val.equals(Integer.toString(pair.getValue()))) {
+                return pair.getKey();
+            }
+        }
+        return 'f';
+    }
+    /*Character getstr(String val, String line, int i){
+        if (val == ""){
+            if(line.charAt(i) == '0'){
+                return getindex(line.substring(i,i + 1));
+            } else{
+                if(line.charAt(i) == '1'){
+                    val = line.substring(i, i + 1);
+                    line = line.substring(i + 1);
+                    i++;
+                    getstr(val,line,i);
+                }
+            }
+        }else{
+
+        }
+    }*/
+    static private Map<Character,Integer> codes = new TreeMap<>();
     String decode(File file) throws FileNotFoundException {
         StringBuilder result=new StringBuilder();
         //прочитаем строку для кодирования из тестового файла
@@ -50,6 +77,25 @@ public class B_Huffman {
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
+
+        for (int i = 0; i < count; i++){
+            codes.put(scanner.next().charAt(0),scanner.nextInt());
+        }
+        String line = scanner.next();
+        String tmp ="";
+        int i = 0;
+        int cnt = 0;
+        while( i < line.length()){
+            while((line.charAt(i) != '0')&&(cnt < count - 2)){
+                cnt++;
+                i++;
+            }
+            result.append(getindex(line.substring(0,i + 1)));
+            line = line.substring(i + 1);
+            cnt = 0;
+            i = 0;
+        }
+
 
 
 
