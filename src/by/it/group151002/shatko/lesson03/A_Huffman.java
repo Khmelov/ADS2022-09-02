@@ -91,10 +91,20 @@ public class A_Huffman {
             priorityQueue.add(parentNode);
         }
 
+        if (lastNum == 0) { //для 1 буквы
+            Node left = priorityQueue.poll();
+            LeafNode right = new LeafNode(0, '0');
+            InternalNode parentNode = new InternalNode(left, right);
+            priorityQueue.add(parentNode);
+        }
+
         StringBuilder encryptedString = new StringBuilder();
         Node root = priorityQueue.poll();
         assert root != null;
         root.fillCodes("");
+
+        if (lastNum == 0) codes.remove('0');
+
         for (i = 0; i < sArr.length; i++) {
             encryptedString.append(codes.get(sArr[i]));
         }
