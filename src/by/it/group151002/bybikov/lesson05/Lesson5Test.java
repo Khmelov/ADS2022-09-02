@@ -28,6 +28,10 @@ public class Lesson5Test {
         int[] result=instance.countSort(stream);
         boolean ok=Arrays.equals(result,new int[]{2,2,3,9,9});
         assertTrue("B failed", ok);
+        stream = new FileInputStream(root + "by/it/group151002/bybikov/lesson05/dataB_Test_1.txt");
+        result=instance.countSort(stream);
+        ok=Arrays.equals(result,new int[]{2, 2, 2, 2, 3, 3, 3, 4, 5, 5, 6, 7, 7, 9, 9});
+        assertTrue("B failed", ok);
     }
 
 
