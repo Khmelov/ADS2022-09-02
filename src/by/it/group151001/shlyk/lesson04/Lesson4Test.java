@@ -12,7 +12,7 @@ public class Lesson4Test {
     @Test
     public void A() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/shlyk/lesson04/dataA.txt");
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.findIndex(stream);
@@ -21,7 +21,7 @@ public class Lesson4Test {
         for (int index:result){
             sb.append(index).append(" ");
         }
-        boolean ok=sb.toString().trim().equals("3 1 -1 1 -1");
+        boolean ok=sb.toString().trim().equals("2 0 -1 0 -1");
         assertTrue("A failed", ok);
     }
 
@@ -29,7 +29,7 @@ public class Lesson4Test {
     @Test
     public void B() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/shlyk/lesson04/dataB.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);

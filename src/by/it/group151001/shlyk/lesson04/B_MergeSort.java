@@ -3,6 +3,7 @@ package by.it.group151001.shlyk.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -21,6 +22,48 @@ Sample Output:
 */
 public class B_MergeSort {
 
+    private void mergeSort(int[] sortArray, int offset, int arrSize){
+        if (arrSize == 1 || arrSize == 0)
+            return;
+        if (arrSize > 2)
+        {
+            int rightSize = arrSize / 2;
+            int leftSize = arrSize - rightSize;
+            mergeSort(sortArray, offset, rightSize);
+            mergeSort(sortArray, offset + rightSize, leftSize);
+            int iTemp = 0, iRight = offset, iLeft = offset + rightSize;
+            int[] temp = new int[arrSize];
+            while (iRight < rightSize + offset && iLeft < arrSize + offset){
+                if (sortArray[iRight] < sortArray[iLeft])
+                {
+                    temp[iTemp] = sortArray[iRight];
+                    iRight++;
+                } else
+                {
+                    temp[iTemp] = sortArray[iLeft];
+                    iLeft++;
+                }
+                iTemp++;
+            }
+            boolean isRight = iLeft != arrSize + offset;
+            int nIteration = isRight ? (arrSize + offset - iLeft) : (rightSize  + offset - iRight);
+            int iSource = isRight ? iLeft : iRight;
+            for (int i = 0; i < nIteration; i++){
+                temp[iTemp] = sortArray[iSource + i];
+                iTemp++;
+            }
+            iTemp = 0;
+            for(int i = offset; iTemp < temp.length; i++, iTemp++){
+                sortArray[i] = temp[iTemp];
+            }
+            return;
+        }
+        if (sortArray[0] > sortArray[1]){
+            int temp = sortArray[0];
+            sortArray[0] = sortArray[1];
+            sortArray[1] = temp;
+        } //otherwise array is sorted
+    }
     int[] getMergeSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -30,13 +73,13 @@ public class B_MergeSort {
         int n = scanner.nextInt();
         //сам массив
         int[] a=new int[n];
+        int j = 10;
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
-            System.out.println(a[i]);
+            // System.out.println(a[i]);
         }
+        mergeSort(a, 0, n);
 
-        // тут ваше решение (реализуйте сортировку слиянием)
-        // https://ru.wikipedia.org/wiki/Сортировка_слиянием
 
 
 
@@ -48,13 +91,14 @@ public class B_MergeSort {
     }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/shlyk/lesson04/Values");
         B_MergeSort instance = new B_MergeSort();
-        //long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);
-        //long finishTime = System.currentTimeMillis();
+        long finishTime = System.currentTimeMillis();
+        System.out.println(finishTime - startTime);
         for (int index:result){
-            System.out.print(index+" ");
+          //  System.out.print(index+" ");
         }
     }
 
