@@ -29,7 +29,7 @@ public class Lesson3Test {
         assertTrue("A failed", ok);
         f = new File(root + "by/it/group151002/bybikov/lesson03/dataHuffman_Test_1.txt");
         result = instance.encode(f);
-        ok=result.equals("10110011101111001100101100111010010");
+        ok=result.equals("100011011010110011100011011101110");
         System.out.println(result);
         assertTrue("A failed", ok);
     }
