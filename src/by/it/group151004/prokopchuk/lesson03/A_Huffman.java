@@ -109,27 +109,6 @@ public class A_Huffman {
     //индекс данных из листьев
     static private Map<Character, String> codes = new TreeMap<>();
 
-    void recInOrder(InternalNode root, String code){
-        if (root.left!=null) {
-            try {
-                recInOrder((InternalNode) root.left, code);
-                root.fillCodes(code);
-            } catch (ClassCastException e) {
-                root.fillCodes(code);
-                code = "";
-            }
-        }
-        if (root.right!=null) {
-            try {
-                recInOrder((InternalNode) root.right, code);
-                root.fillCodes(code);
-            } catch (ClassCastException e) {
-                root.fillCodes(code);
-                code = "";
-            }
-        }
-    }
-
     //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
     String encode(File file) throws FileNotFoundException {
         //прочитаем строку для кодирования из тестового файла
@@ -158,13 +137,24 @@ public class A_Huffman {
             }
             repeats = 0;
         }
-        while (priorityQueue.size() > 1) {
-            Node leftChild = priorityQueue.poll();
-            Node rightChild = priorityQueue.poll();
-            InternalNode parent = new InternalNode(leftChild,rightChild);
-            priorityQueue.add(parent);
+        StringBuilder sb = new StringBuilder();
+        if (priorityQueue.size() > 1) {
+            while (priorityQueue.size() > 1) {
+                Node leftChild = priorityQueue.poll();
+                Node rightChild = priorityQueue.poll();
+                InternalNode parent = new InternalNode(leftChild, rightChild);
+                priorityQueue.add(parent);
+            }
+            priorityQueue.peek().fillCodes("");
+            for (int i = 0; i < s.length(); i++) {
+                sb.append(codes.get(s.charAt(i)));
+            }
+        } else {
+            priorityQueue.peek().fillCodes("0");
+            for (int i = 0; i < s.length(); i++) {
+                sb.append(codes.get(s.charAt(i)));
+            }
         }
-        InternalNode root = (InternalNode) priorityQueue.peek();
         //3. вынимая по два узла из очереди (для сборки родителя)
 
         //и возвращая этого родителя обратно в очередь
@@ -173,11 +163,6 @@ public class A_Huffman {
 
         //4. последний из родителей будет корнем этого дерева
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
-        recInOrder(root, "");
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            sb.append(codes.get(s.charAt(i)));
-        }
         return sb.toString();
         //01001100100111
         //01001100100111
