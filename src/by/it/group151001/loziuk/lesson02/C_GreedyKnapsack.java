@@ -72,6 +72,7 @@ public class C_GreedyKnapsack {
             {
                 weight += items[i].weight;
                 result += items[i].cost;
+                i++;
             }
             else
             {
