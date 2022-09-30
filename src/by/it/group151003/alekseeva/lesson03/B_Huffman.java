@@ -60,8 +60,8 @@ public class B_Huffman {
             String code = line.substring(3);
             map.put(code, symbol);
         }
-        String encodedString = scanner.nextLine();
         String tempString = "";
+        String encodedString = scanner.nextLine();
         for (int i = 0; i < length; ++i) {
             tempString += encodedString.charAt(i);
             if (map.containsKey(tempString) == true) {

@@ -123,9 +123,8 @@ public class A_Huffman {
         //1. переберем все символы по очереди и рассчитаем их частоту в Map count
             //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
         for (int i = 0; i < s.length(); ++i) {
-            if (count.containsKey(s.charAt(i)) == true) {
+            if (count.containsKey(s.charAt(i)) == true)
                 count.put(s.charAt(i),count.get(s.charAt(i)) + 1);
-            }
             else
                 count.put(s.charAt(i), 1);
         }
