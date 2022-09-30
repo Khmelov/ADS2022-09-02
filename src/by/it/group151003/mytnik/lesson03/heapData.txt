@@ -1,0 +1,23 @@
+22
+Insert 3
+Insert 5
+Insert 9
+Insert 11
+ExtractMax
+ExtractMax
+Insert 88
+Insert 99
+ExtractMax
+ExtractMax
+ExtractMax
+Insert 456
+Insert 2349
+Insert 34567
+Insert 2345678
+ExtractMax
+ExtractMax
+Insert 11111111
+Insert 111111111
+ExtractMax
+ExtractMax
+ExtractMax
