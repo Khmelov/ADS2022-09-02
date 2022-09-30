@@ -72,6 +72,7 @@ public class C_GreedyKnapsack {
             {
                 weight += items[i].weight;
                 result += items[i].cost;
+                i++;
             }
             else
             {
@@ -79,9 +80,6 @@ public class C_GreedyKnapsack {
                 weight = W;
             }
         }
-
-
-
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
