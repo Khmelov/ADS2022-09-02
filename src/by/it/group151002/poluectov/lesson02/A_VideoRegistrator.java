@@ -1,7 +1,10 @@
 package by.it.group151002.poluectov.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static java.lang.Double.NaN;
 /*
 даны события events
 реализуйте метод calcStartTimes, так, чтобы число включений регистратора на
@@ -25,10 +28,25 @@ public class A_VideoRegistrator {
         List<Double> result;
         result = new ArrayList<>();
         int i=0;                              //i - это индекс события events[i]
+        double temp;
+        Arrays.sort(events);
+        while (i < events.length){
+            result.add(events[i]);
+            temp = events[i++] + workDuration;
+            if (temp < events[events.length - 1]) {
+                while (temp > events[i]) {
+                    i++;
+                }
+            }else break;
+        }
+
         //комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
         //подготовка к жадному поглощению массива событий
         //hint: сортировка Arrays.sort обеспечит скорость алгоритма
-        //C*(n log n) + C1*n = O(n log n)
+        //C*(n log n) + C1*n = O(n log n
+
+
+
 
         //пока есть незарегистрированные события
         //получим одно событие по левому краю
