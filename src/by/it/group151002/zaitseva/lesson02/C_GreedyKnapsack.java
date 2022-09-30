@@ -12,8 +12,10 @@ package by.it.group151002.zaitseva.lesson02;
 Необходимо собрать наиболее дорогой вариант рюкзака для этого объема
 Предметы можно резать на кусочки (т.е. алгоритм будет жадным)
  */
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -37,9 +39,9 @@ public class C_GreedyKnapsack {
         @Override
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
-
-
-            return 0;
+            if(this.cost / this.weight > o.cost / o.weight) return -1;
+            if(this.cost / this.weight < o.cost / o.weight) return 1;
+            else return 0;
         }
     }
 
@@ -65,11 +67,18 @@ public class C_GreedyKnapsack {
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
-
-
-
-
-
+        Arrays.sort(items, Item::compareTo);
+        double weight = 0;
+        int i = 0;
+        while(weight < W){
+            if (W - weight > items[i].weight){
+                result = result + items[i].cost;
+            } else {
+                result = result + items[i].cost * (W - weight) / items[i].weight;
+            }
+            weight = weight + items[i].weight;
+            i++;
+        }
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
     }
