@@ -14,7 +14,7 @@ import java.util.*;
 // Используйте Алгоритм Хаффмана — жадный алгоритм оптимального
 // безпрефиксного кодирования алфавита с минимальной избыточностью.
 
-// В первой строке выведите количество различных букв kk,
+//  В первой строке выведите количество различных буквkk,
 // встречающихся в строке, и размер получившейся закодированной строки.
 // В следующих kk строках запишите коды букв в формате "letter: code".
 // В последней строке выведите закодированную строку. Примеры ниже
@@ -41,7 +41,7 @@ import java.util.*;
 public class A_Huffman {
 
     //Изучите классы Node InternalNode LeafNode
-    abstract class Node implements Comparable<Node> {
+    abstract static class Node implements Comparable<Node> {
         //абстрактный класс элемент дерева
         //(сделан abstract, чтобы нельзя было использовать его напрямую)
         //а только через его версии InternalNode и LeafNode
@@ -107,7 +107,7 @@ public class A_Huffman {
     }
 
     //индекс данных из листьев
-    static private Map<Character, String> codes = new TreeMap<>();
+    static private final Map<Character, String> codes = new TreeMap<>();
 
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -115,26 +115,51 @@ public class A_Huffman {
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(file);
         String s = scanner.next();
-
+        scanner.close();
         //все комментарии от тестового решения были оставлены т.к. это задание A.
         //если они вам мешают их можно удалить
 
         Map<Character, Integer> count = new HashMap<>();
         //1. переберем все символы по очереди и рассчитаем их частоту в Map count
-            //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
+        //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
+        for (char ch : s.toCharArray()) {
+            count.put(ch, count.containsKey(ch) ? count.get(ch) + 1 : 1);
+        }
+
 
         //2. перенесем все символы в приоритетную очередь в виде листьев
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
 
+        for (Map.Entry<Character, Integer> entry : count.entrySet()) {
+            LeafNode newNode = new LeafNode(entry.getValue(), entry.getKey());
+            priorityQueue.add(newNode);
+        }
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
         //построим дерево кодирования Хаффмана.
         //У родителя частоты детей складываются.
 
+        while (priorityQueue.size() > 1) {
+            Node left = priorityQueue.poll();
+            Node right = priorityQueue.poll();
+            assert left != null;
+            assert right != null;
+            InternalNode parent = new InternalNode(left, right);
+            priorityQueue.add(parent);
+        }
+
         //4. последний из родителей будет корнем этого дерева
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
         StringBuilder sb = new StringBuilder();
         //.....
+
+        Node root = priorityQueue.poll();
+
+        Objects.requireNonNull(root).fillCodes("");
+
+        for (int i = 0; i < s.length(); i++) {
+            sb.append(codes.get(s.charAt(i)));
+        }
 
         return sb.toString();
         //01001100100111
@@ -145,7 +170,7 @@ public class A_Huffman {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelev/lesson03/dataHuffman.txt");
+        File f = new File(root + "by/it/group151002/vakar/lesson03/dataHuffman.txt");
         A_Huffman instance = new A_Huffman();
         long startTime = System.currentTimeMillis();
         String result = instance.encode(f);
@@ -155,6 +180,7 @@ public class A_Huffman {
             System.out.printf("%s: %s\n", entry.getKey(), entry.getValue());
         }
         System.out.println(result);
+        System.out.println("time = " + (finishTime - startTime));
     }
 
 }
