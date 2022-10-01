@@ -34,41 +34,70 @@ Sample Output:
 
 
 public class C_GetInversions {
+    int inverses = 0;
+
+    void merge(int[] arr, int[] l, int[] r, int left, int right) {
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (i < left && j < right) {
+            if (l[i] <= r[j]) {
+                arr[k++] = l[i++];
+            } else {
+                arr[k++] = r[j++];
+                inverses += left - i;
+            }
+        }
+
+        while (i < left) {
+            arr[k++] = l[i++];
+        }
+
+        while (j < right) {
+            arr[k++] = r[j++];
+        }
+
+    }
+
+    void mergeSort(int[] arr, int n) {
+        if (n == 1) return;
+        int mid = n / 2;
+        int[] l = new int[mid];
+        int[] r = new int[n - mid];
+
+        for (int i = 0; i < mid; i++) {
+            l[i] = arr[i];
+        }
+
+        for (int i = mid; i < n; i++) {
+            r[i - mid] = arr[i];
+        }
+
+        mergeSort(l, mid);
+        mergeSort(r, n - mid);
+
+        merge(arr, l, r, mid, n - mid);
+    }
 
     int calc(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!
-        //размер массива
         int n = scanner.nextInt();
-        //сам массив
-        int[] a = new int[n];
+        int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
-            a[i] = scanner.nextInt();
+            arr[i] = scanner.nextInt();
         }
-        int result = 0;
-        //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
+        mergeSort(arr, n);
 
-
-
-
-
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return inverses;
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/shatko/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
-        //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
-        //long finishTime = System.currentTimeMillis();
         System.out.print(result);
     }
 }
