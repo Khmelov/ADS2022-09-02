@@ -39,7 +39,6 @@ public class C_GetInversions {
     private static int[] mergeSort(int[] arr, int[] buffer, final int left, final int right) {
         if (left == right) {
             buffer[left] = arr[left];
-            inversions++;
             return buffer;
         }
         int middle = (left + right)/ 2;
