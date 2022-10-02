@@ -41,7 +41,7 @@ public class C_GetInversions {
             buffer[left] = arr[left];
             return buffer;
         }
-        int middle = (left + right)/ 2;
+        int middle = (left + right) / 2;
 
         int[] leftBuff = mergeSort(arr, buffer, left, middle);
         int[] rightBuff = mergeSort(arr, buffer, middle + 1, right);
