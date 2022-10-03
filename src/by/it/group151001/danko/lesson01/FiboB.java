@@ -1,7 +1,6 @@
-package by.it.group151001.Danko.lesson01;
+package by.it.group151001.danko.lesson01;
 
 import java.math.BigInteger;
-import java.sql.Array;
 
 /*
  * Вам необходимо выполнить способ вычисления чисел Фибоначчи с вспомогательным массивом
