@@ -14,6 +14,7 @@ package by.it.group151002.ravodin.lesson02;
  */
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -37,9 +38,9 @@ public class C_GreedyKnapsack {
         @Override
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
-
-
-            return 0;
+            double it1 = (double) this.cost / this.weight;
+            double it2 = (double) o.cost / o.weight;
+            return -1 * Double.compare(it1, it2);
         }
     }
 
@@ -65,10 +66,23 @@ public class C_GreedyKnapsack {
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
+        Arrays.sort(items);
 
-
-
-
+        int currItem = 0;
+        double currCost = 0;
+        double currWeight = 0;
+        while (currWeight < W && currItem < n){
+            if (items[currItem].weight + currWeight < W) {
+                currCost += items[currItem].cost;
+                currWeight += items[currItem].weight;
+                currItem++;
+            }
+            else {
+                currCost += (W - currWeight) * ((double) items[currItem].cost / items[currItem].weight);
+                currWeight += W - currWeight;
+            }
+        }
+        result = currCost;
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
@@ -77,7 +91,7 @@ public class C_GreedyKnapsack {
     public static void main(String[] args) throws FileNotFoundException {
         long startTime = System.currentTimeMillis();
         String root=System.getProperty("user.dir")+"/src/";
-        File f=new File(root+"by/it/a_khmelev/lesson02/greedyKnapsack.txt");
+        File f=new File(root+"by/it/group151002/ravodin/lesson02/greedyKnapsack.txt");
         double costFinal=new C_GreedyKnapsack().calc(f);
         long finishTime = System.currentTimeMillis();
         System.out.printf("Общая стоимость %f (время %d)",costFinal,finishTime - startTime);
