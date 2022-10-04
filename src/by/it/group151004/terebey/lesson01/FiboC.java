@@ -32,7 +32,7 @@ public class FiboC {
         ArrayList<Long> massiv = new ArrayList<>();
         massiv.add((long)0);
         massiv.add((long)1);
-        for(int i = 2; i < m*6; i++)
+        for(int i = 2; i < m*6+1; i++)
         {
             massiv.add((massiv.get(i-1)+massiv.get(i-2))%m);
             if(massiv.get(i) == 1 && massiv.get(i - 1) == 0)
@@ -40,8 +40,7 @@ public class FiboC {
         }
         long Pizano = massiv.size() - 2; // period length
         int a = (int)(n%Pizano); // The remainder of division by a period is the same
-        return massiv.get(a);       // as that of a number
-
+        return massiv.get(a);    // as that of a number
     }
 
 
