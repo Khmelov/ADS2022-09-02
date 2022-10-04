@@ -34,6 +34,40 @@ Sample Output:
 
 
 public class C_GetInversions {
+    public int invertions = 0;
+    public void merge(int[] a, int left, int middle, int right) {
+        int lLength = middle - left + 1;
+        int rLength = right - middle;
+        int[] l = new int[lLength];
+        int[] r = new int[rLength];
+        for (int i = 0; i < lLength; i++)
+            l[i] = a[left + i];
+        for (int j = 0; j < rLength; j++)
+            r[j] = a[middle + 1 + j];
+        int i = 0;
+        int j = 0;
+        int k = left;
+        while (i < lLength && j < rLength)
+            if (l[i] <= r[j])
+                a[k++] = l[i++];
+            else {
+                a[k++] = r[j++];
+                invertions += middle + 1 - left - i;
+            }
+        while (i < lLength)
+            a[k++] = l[i++];
+        while (j < rLength)
+            a[k++] = r[j++];
+    }
+
+    public void mergeSort(int[] a, int left, int right) {
+        if (left < right) {
+            int m = (left + right) / 2;
+            mergeSort(a, left, m);
+            mergeSort(a, m + 1, right);
+            merge(a, left, m, right);
+        }
+    }
 
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -46,19 +80,8 @@ public class C_GetInversions {
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
-        int result = 0;
-        //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        mergeSort(a, 0, n - 1);
+        return invertions;
     }
 
 
