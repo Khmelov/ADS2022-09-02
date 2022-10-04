@@ -2,6 +2,8 @@ package by.it.group151002.haiduk.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -50,10 +52,25 @@ public class B_Huffman {
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
-
-
-
-
+        Map<Character, String> code = new HashMap<>();
+        String temp;
+        scanner.nextLine();
+        for (int i = 0; i < count; i++) {
+            temp = scanner.nextLine();
+            code.put(temp.charAt(0), temp.substring(3));
+        }
+        temp = scanner.nextLine();
+        int i = 0, j = 1;
+        while (i < length) {
+            for (Map.Entry<Character, String> item : code.entrySet()) {
+                if (temp.substring(i, j).equals(item.getValue())) {
+                    result.append(item.getKey());
+                    i = j;
+                    break;
+                }
+            }
+            j++;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
     }
