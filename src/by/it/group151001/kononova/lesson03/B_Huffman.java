@@ -2,6 +2,8 @@ package by.it.group151001.kononova.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -50,10 +52,23 @@ public class B_Huffman {
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
+        Map<String,Character> map = new HashMap<>();
+        for (int i=0; i<count; i++){
+            String key = scanner.next();
+            key = key.substring(0, key.length()-1);
+            String frequency = scanner.next();
+            map.put(frequency,key.charAt(0));
+        }
 
-
-
-
+        String encode = scanner.next();
+        String numb = "";
+        for (int i = 0; i < length; i++){
+            numb += encode.charAt(i);
+            if (map.containsKey(numb)) {
+                result.append(map.get(numb));
+                numb = "";
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
     }
