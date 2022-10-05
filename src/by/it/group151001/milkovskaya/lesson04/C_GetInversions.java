@@ -34,7 +34,38 @@ Sample Output:
 
 
 public class C_GetInversions {
-
+    public static int merge(int[] a, int left,int mid, int right){
+        int it1=0, it2=0, inv = 0;
+        int[] result = new int[right - left];
+        while(left + it1 < mid && mid + it2<right){
+            if(a[left + it1] < a[mid + it2]){
+                result[it1+it2]=a[left + it1];
+                it1++;
+            } else {
+                if(a[left + it1] > a[mid + it2]){
+                    inv = inv + mid + 1 - left - it1;
+                }
+                result[it1 + it2] = a[mid +it2];
+                it2++;
+            }
+        }
+        while(left + it1 < mid){
+            result[it1 + it2] = a[left + it1];
+            it1++;
+        }
+        while(mid+it2 < right){
+            result[it1 + it2] = a[mid+it2];
+            it2++;
+        }
+        for(int i = 0; i < it1 + it2; i++){
+            a[left + i] = result[i];
+        }
+        return inv;
+    }
+    public static int Min(int x, int y){
+        if(x <= y) return x;
+        else return y;
+    }
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -48,14 +79,11 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
+        for(int i = 1; i < n; i = 2 * i){
+            for(int j = 0; j < n - i; j = j + 2*i){
+                result = result + merge(a, j,j+i, Min(j + 2 * i, n));
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
