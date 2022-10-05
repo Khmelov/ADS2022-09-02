@@ -48,19 +48,41 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
+        for (int i = 1;i <= n;i *= 2){
+            for (int j = 0; j <= n - i; j += 2 * i)
+                result += merge(a,j,j + i,Math.min(j + 2 * i,n));
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
-
+    int merge(int[] a,int left,int mid, int right){
+        int i1 = 0, i2 = 0,res = 0;
+        int [] result = new int[right - left + 1];
+        while (left + i1 < mid && mid + i2 < right){
+            if (a[left + i1] <= a[mid + i2]){
+                result[i1 + i2] = a[left + i1];
+                i1++;
+            }
+            else{
+                result[i1 + i2] = a[mid + i2];
+                res++;
+                i2++;
+            }
+        }
+        while (left + i1 < mid){
+            result[i1 + i2] = a[left + i1];
+            i1++;
+        }
+        while (mid + i2 < right){
+            result[i1 + i2] = a[mid + i2];
+            i2++;
+        }
+        for (int i = 0; i < i1 + i2; i++){
+            a[left + i] = result[i];
+        }
+        return res;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
