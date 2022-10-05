@@ -66,7 +66,7 @@ public class C_GetInversions {
             }
             else{
                 result[i1 + i2] = a[mid + i2];
-                res ++;
+                res += mid - left - i1;
                 i2++;
             }
         }
@@ -86,7 +86,7 @@ public class C_GetInversions {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/loziuk/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
