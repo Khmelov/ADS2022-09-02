@@ -66,7 +66,7 @@ public class C_GetInversions {
             }
             else{
                 result[i1 + i2] = a[mid + i2];
-                res++;
+                res ++;
                 i2++;
             }
         }
