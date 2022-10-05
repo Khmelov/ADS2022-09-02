@@ -38,13 +38,11 @@ public class C_GetInversions {
         int it1=0, it2=0, inv = 0;
         int[] result = new int[right - left];
         while(left + it1 < mid && mid + it2<right){
-            if(a[left + it1] < a[mid + it2]){
+            if(a[left + it1] <= a[mid + it2]){
                 result[it1+it2]=a[left + it1];
                 it1++;
             } else {
-                if(a[left + it1] > a[mid + it2]){
-                    inv = inv + mid + 1 - left - it1;
-                }
+                inv = inv + mid - left - it1;
                 result[it1 + it2] = a[mid +it2];
                 it2++;
             }
@@ -92,7 +90,7 @@ public class C_GetInversions {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/milkovskaya/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
