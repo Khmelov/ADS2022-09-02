@@ -27,9 +27,17 @@ public class FiboC {
         //Решение сложно найти интуитивно
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
-        
+        long[] fibo_arr = new long[m * 6];
+        fibo_arr[0] = 0;
+        fibo_arr[1] = 1;
+        for (int i = 2; i < fibo_arr.length; i++) {
+            fibo_arr[i] = (fibo_arr[i - 1] + fibo_arr[i - 2]) % m;
+            if (fibo_arr[i] == 1 && fibo_arr[i - 1] == 0) {
+                return fibo_arr[(int) (n % (i - 1))];
+            }
+        }
+        return fibo_arr[(int) n];
 
-        return 0L;
     }
 
 

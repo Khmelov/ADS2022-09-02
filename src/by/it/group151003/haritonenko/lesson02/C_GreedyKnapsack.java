@@ -38,7 +38,6 @@ public class C_GreedyKnapsack {
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
 
-
             return 0;
         }
     }
@@ -52,10 +51,10 @@ public class C_GreedyKnapsack {
             items[i] = new Item(input.nextInt(), input.nextInt());
         }
         //покажем предметы
-        for (Item item:items) {
+        for (Item item : items) {
             System.out.println(item);
         }
-        System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
+        System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, W);
 
         //тут необходимо реализовать решение задачи
         //итогом является максимально воможная стоимость вещей в рюкзаке
@@ -67,8 +66,29 @@ public class C_GreedyKnapsack {
         //ваше решение.
 
 
+        for (int i = n - 1; i >= 1; i--){
+            for (int j = 0; j < i; j++){
+                if ((items[j+1].cost / items[j+1].weight) > (items[j].cost / items[j].weight)){
+                    Item tmp = items[j+1];
+                    items[j+1] = items[j];
+                    items[j] = tmp;
+                }
+
+            }
+        }
 
 
+        int i = 0;
+        while (W > 0) {
+            if (items[i].weight <= W) {
+                result += items[i].cost;
+            }
+            else {
+                result += (double) (items[i].cost / items[i].weight) * W;
+            }
+            W -= items[i].weight;
+            i++;
+        }
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
