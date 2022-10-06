@@ -54,7 +54,7 @@ public class C_HeapMax {
         }
 
 
-        int siftDown(int i) { //просеивание вверх
+        int siftDown(int i) {
             while (2 * i + 1 < heap.size()) {
                 int leftChild = 2 * i + 1;
                 int rightChild = 2 * i + 2;
@@ -71,7 +71,7 @@ public class C_HeapMax {
             return i;
         }
 
-        int siftUp(int i) { //просеивание вниз
+        int siftUp(int i) {
             while (heap.get(parent(i)) < heap.get(i)) {
                 swap(parent(i), i);
                 i = parent(i);
