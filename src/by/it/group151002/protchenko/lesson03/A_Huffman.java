@@ -39,58 +39,49 @@ import java.util.*;
 //        01001100100111
 
 public class A_Huffman {
-
-    //Изучите классы Node InternalNode LeafNode
     abstract class Node implements Comparable<Node> {
-        //абстрактный класс элемент дерева
-        //(сделан abstract, чтобы нельзя было использовать его напрямую)
-        //а только через его версии InternalNode и LeafNode
-        private final int frequence; //частота символов
+        private final int frequency; //частота символов
 
         //генерация кодов (вызывается на корневом узле
         //один раз в конце, т.е. после построения дерева)
         abstract void fillCodes(String code);
 
-        //конструктор по умолчанию
-        private Node(int frequence) {
-            this.frequence = frequence;
+        private Node(int frequency) {
+            this.frequency = frequency;
         }
-        //метод нужен для корректной работы узла в приоритетной очереди
-        //или для сортировок
+
         @Override
         public int compareTo(Node o) {
-            return Integer.compare(frequence, o.frequence);
+            return Integer.compare(frequency, o.frequency);
         }
     }
+
     ////////////////////////////////////////////////////////////////////////////////////
     //расширение базового класса до внутреннего узла дерева
     private class InternalNode extends Node {
-        //внутренный узел дерева
-        Node left;  //левый ребенок бинарного дерева
-        Node right; //правый ребенок бинарного дерева
+        Node left;
+        Node right;
 
-        //для этого дерева не существует внутренних узлов без обоих детей
-        //поэтому вот такого конструктора будет достаточно
         InternalNode(Node left, Node right) {
-            super(left.frequence + right.frequence);
+            super(left.frequency + right.frequency);
             this.left = left;
             this.right = right;
         }
+
         @Override
         void fillCodes(String code) {
             left.fillCodes(code + "0");
             right.fillCodes(code + "1");
         }
-
     }
+
     ////////////////////////////////////////////////////////////////////////////////////
     //расширение базового класса до листа дерева
     private class LeafNode extends Node {
-        //лист
         char symbol; //символы хранятся только в листах
 
-        LeafNode(int frequence, char symbol) {
-            super(frequence);
+        LeafNode(int frequency, char symbol) {
+            super(frequency);
             this.symbol = symbol;
         }
 
@@ -104,6 +95,8 @@ public class A_Huffman {
 
     //индекс данных из листьев
     static private Map<Character, String> codes = new TreeMap<>();
+
+
 
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -142,11 +135,13 @@ public class A_Huffman {
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         File f = new File(root + "by/it/a_khmelev/lesson03/dataHuffman.txt");
+
         A_Huffman instance = new A_Huffman();
         long startTime = System.currentTimeMillis();
         String result = instance.encode(f);
         long finishTime = System.currentTimeMillis();
         System.out.printf("%d %d\n", codes.size(), result.length());
+
         for (Map.Entry<Character, String> entry : codes.entrySet()) {
             System.out.printf("%s: %s\n", entry.getKey(), entry.getValue());
         }
