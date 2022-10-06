@@ -52,8 +52,7 @@ public class A_QSort {
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+            return start - o.start;
         }
     }
 
@@ -82,11 +81,78 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-
+        QuickSort(segments,0,n - 1);
+        int j;
+        for(int i = 0; i < m;i++){
+            result[i] = 0;
+            j = 0;
+            while(j < n && points[i] >= segments[j].start){
+                if(points[i] <= segments[j].stop){
+                    result[i]++;
+                }
+                j++;
+            }
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    void QuickSort(Segment[] arr,int left, int right){
+        while(left < right) {
+            Pair m = Partition(arr, left, right);
+            if(m.x - left < right - m.y){
+                QuickSort(arr,left,m.x);
+                left = m.getY();
+            }
+            else{
+                QuickSort(arr,m.getY(),right);
+                right = m.getX();
+            }
+        }
+
+    }
+
+    Pair Partition(Segment[] arr,int left, int right){
+        int mid = left;
+        Segment x = arr[right];
+
+        while (mid <= right)
+        {
+            if (arr[mid].compareTo(x) < 0)
+            {
+                swap(arr, left, mid);
+                ++left;
+                ++mid;
+            }
+            else if (arr[mid].compareTo(x) > 0)
+            {
+                swap(arr, mid, right);
+                --right;
+            }
+            else {
+                ++mid;
+            }
+        }
+        return new Pair(left - 1, mid);
+    }
+
+    private void swap(Segment[] arr, int i, int j) {
+        Segment temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    record Pair(int x, int y) {
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
     }
 
 
