@@ -27,6 +27,22 @@ import java.util.Scanner;
 */
 
 public class A_BinaryFind {
+
+    int binary_search(int value, int[] a, int n){
+        int l, r, m;
+        for(l = 0, r = n-1; l <= r; ){
+            m = (l+r)/2;
+            if(a[m] == value){
+                return m+1;
+            }
+            if ((a[m] > value)) {
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
+        }
+        return -1;
+    }
     int[] findIndex(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -46,11 +62,7 @@ public class A_BinaryFind {
         for (int i = 0; i < k; i++) {
             int value = scanner.nextInt();
             //тут реализуйте бинарный поиск индекса
-
-
-
-
-            result[i]=0;
+            result[i]= binary_search(value, a, n);
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
