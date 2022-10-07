@@ -43,35 +43,70 @@ public class C_HeapMax {
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вверх
-
-            return i;
-        }
-
-        int siftUp(int i) { //просеивание вниз
-
-            return i;
-        }
-
-        void insert(Long value) { //вставка
-            int i = 0;
-            for (; i < heap.size(); i++) 
+        int siftDown(int i)
+         { //просеивание вверх
+            while (2 * i + 1 < heap.size()) 
             {
-                if(heap.get(i) < value)
-                {
-                    heap.add(i, value);  
-                    break;  
+                int left = 2 * i + 1;
+                int right = 2 * i + 2;
+                int j = left;
+                if (right < heap.size() && heap.get(right) > heap.get(left)) {
+                    j = right;
                 }
+                if (heap.get(i) >= heap.get(j)) {
+                    break;
+                }
+                long temp = heap.get(i);
+                heap.set(i, heap.get(j));
+                heap.set(j, temp);
+                i = j;
             }
-            if(i == heap.size())
-                heap.add(i, value); 
+            return i;
         }
 
-        Long extractMax() { //извлечение и удаление максимума
+        int siftUp(int i) 
+        { //просеивание вниз
+
+            while (i > 0 && heap.get(i) > heap.get((i - 1) / 2)) 
+            {
+                long temp = heap.get(i);
+                heap.set(i, heap.get((i - 1) / 2));
+                heap.set((i - 1) / 2, temp);
+                i = (i - 1) / 2;
+            }
+
+            return i;
+        }
+
+        void insert(Long value) 
+        { //вставка
+        //     int i = 0;
+        //     for (; i < heap.size(); i++) 
+        //     {
+        //         if(heap.get(i) < value)
+        //         {
+        //             heap.add(i, value);  
+        //             break;  
+        //         }
+        //     }
+        //     if(i == heap.size())
+        //         heap.add(i, value); 
+            heap.add(value);
+            siftUp(heap.size() - 1);
+        }
+
+        Long extractMax()
+         { //извлечение и удаление максимума
             Long result = null;
-            
-            result = heap.get(0);
-            heap.remove(0);
+            if (heap.size() > 0) 
+            {
+                result = heap.get(0);
+                heap.set(0, heap.get(heap.size() - 1));
+                heap.remove(heap.size() - 1);
+                siftDown(0);
+            }
+            // result = heap.get(0);
+            // heap.remove(0);
             return result;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1

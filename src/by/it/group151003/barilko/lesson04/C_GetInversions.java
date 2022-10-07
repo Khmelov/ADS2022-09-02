@@ -3,6 +3,8 @@ package by.it.group151003.barilko.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -35,6 +37,19 @@ Sample Output:
 
 public class C_GetInversions {
 
+    private int nearSqr(int num)
+    {
+        int result = num + 1;
+        Double sqrt = Math.sqrt(result);
+        while(sqrt.intValue() != sqrt)
+        {
+            result++;
+            sqrt = Math.sqrt(result);
+        }
+
+        return result;
+    }
+
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -42,20 +57,36 @@ public class C_GetInversions {
         //размер массива
         int n = scanner.nextInt();
         //сам массив
+        
         int[] a = new int[n];
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
-        int result = 0;
+        Integer result = -1;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
+        Integer max = nearSqr(n);
+        Integer bucket = (int)Math.sqrt(max);
+        
+        List<List<Integer>> bank = new ArrayList(bucket);
+        for (int i = 0; i < bucket; i++)
+        {
+            bank.add(new ArrayList());
+        }
 
 
-
-
-
-
-
-
+        for (int i = 0; i < n; ++i)
+        {
+            Integer pos = (a[i] - 1) / (max / bucket);
+            int newPos = 0;
+            while(newPos < bank.get(pos).size() && bank.get(pos).get(newPos) < a[i] )
+                newPos++;
+            result += bank.get(pos).size() - newPos;
+            bank.get(pos).add(newPos, a[i]);
+            for (int j = pos + 1; j < bucket - 1; j++) 
+            {
+                result += bank.get(j).size(); 
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -64,7 +95,7 @@ public class C_GetInversions {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151003/barilko/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
