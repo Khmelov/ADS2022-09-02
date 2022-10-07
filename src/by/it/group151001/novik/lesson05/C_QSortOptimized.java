@@ -92,10 +92,11 @@ public class C_QSortOptimized {
     return arr;
     }
     int[]  binaryfind(Segment arr[], int value, int l, int r){
-        int out [] = new int[3];
+        int out [] = new int[2];
         boolean f1 = false;
+        int mid = (l + r) / 2;
         while ((l <= r)&&(!f1)){
-            int mid = (l + r) / 2;
+            mid = (l + r) / 2;
             if ((arr[mid].stop >= value)&&(arr[mid].start <= value)){
                 f1 = true;
             } else if (arr[mid].stop > value) {
@@ -108,8 +109,7 @@ public class C_QSortOptimized {
         else{
             out[0] = 0;
         }
-        out[1] = l;
-        out[2] = r;
+        out[1] = mid;
         return out;
     }
 
@@ -141,7 +141,7 @@ public class C_QSortOptimized {
         int r = segments.length - 1;
 
         for(int i = 0; i < points.length; i++) {
-            int[] tmp = new int[3];
+            int[] tmp = new int[2];
             tmp = binaryfind(segments, points[i], l, r);
             result[i] = tmp[0];
             boolean f1 = true;
@@ -152,7 +152,7 @@ public class C_QSortOptimized {
                         r = segments.length - 1;
                         f1 = false;
                     } else if (points[i + 1] < points[i]) {
-                        r = tmp[2];
+                        r = tmp[1];
                         l = 0;
                         f1 = false;
                         } else {
