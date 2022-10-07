@@ -7,57 +7,72 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// Lesson 3. C_Heap.
-// Задача: построить max-кучу = пирамиду = бинарное сбалансированное дерево на массиве.
-// ВАЖНО! НЕЛЬЗЯ ИСПОЛЬЗОВАТЬ НИКАКИЕ КОЛЛЕКЦИИ, КРОМЕ ARRAYLIST (его можно, но только для массива)
-
-//      Проверка проводится по данным файла
-//      Первая строка входа содержит число операций 1 ≤ n ≤ 100000.
-//      Каждая из последующих nn строк задают операцию одного из следующих двух типов:
-
-//      Insert x, где 0 ≤ x ≤ 1000000000 — целое число;
-//      ExtractMax.
-
-//      Первая операция добавляет число x в очередь с приоритетами,
-//      вторая — извлекает максимальное число и выводит его.
-
-//      Sample Input:
-//      6
-//      Insert 200
-//      Insert 10
-//      ExtractMax
-//      Insert 5
-//      Insert 500
-//      ExtractMax
-//
-//      Sample Output:
-//      200
-//      500
-
-
 public class C_HeapMax {
 
     private class MaxHeap {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        //тут запишите ваше решение.
-        //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
+
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вверх
+        private int leftChild (int pos){ return 2*pos; }
 
-            return i;
+        private int rightChild (int pos){ return 2*pos + 1; }
+
+        private int parent (int pos){ return (pos-1) / 2; }
+
+        private void swap (int pos1, int pos2){
+
+            long temp = heap.get(pos1);
+            heap.set(pos1, heap.get(pos2));
+            heap.set(pos2 ,temp);
         }
 
-        int siftUp(int i) { //просеивание вниз
+        private int siftUp(int i){
 
-            return i;
+            while(i > 0 && (heap.get(parent(i)) < heap.get(i)))
+            {
+                swap(parent(i), i);
+                i = parent(i);
+            }
+            return  i;
         }
 
-        void insert(Long value) { //вставка
+        void siftDown(int i) { //просеивание вверх
+
+            int max = i;
+
+            int left = leftChild(i);
+            if (left < heap.size() && heap.get(left) > heap.get(max))
+            {
+                max = left;
+            }
+
+            int right = leftChild(i);
+            if (right < heap.size() && heap.get(right) > heap.get(max))
+            {
+                max = right;
+            }
+
+            if (i != max)
+            {
+                swap(max, i);
+                siftDown(i);
+            }
+        }
+
+        void insert(Long value) {
+            heap.add(value);
+            siftUp(heap.size() - 1);
         }
 
         Long extractMax() { //извлечение и удаление максимума
             Long result = null;
+            if (heap.size() == 0) {return result;}
+
+            result = heap.get(0);
+            heap.set(0, heap.get(heap.size() - 1));
+            heap.remove(heap.size() - 1);
+            siftDown(0);
 
             return result;
         }
@@ -65,10 +80,10 @@ public class C_HeapMax {
     }
 
     //эта процедура читает данные из файла, ее можно не менять.
-    Long findMaxValue(InputStream stream) {
+    public Long findMaxValue(InputStream stream) {
         Long maxValue=0L;
         MaxHeap heap = new MaxHeap();
-        //прочитаем строку для кодирования из тестового файла
+
         Scanner scanner = new Scanner(stream);
         Integer count = scanner.nextInt();
         for (int i = 0; i < count; ) {
@@ -97,8 +112,4 @@ public class C_HeapMax {
         System.out.println("MAX="+instance.findMaxValue(stream));
     }
 
-    // РЕМАРКА. Это задание исключительно учебное.
-    // Свои собственные кучи нужны довольно редко.
-    // "В реальном бою" все существенно иначе. Изучите и используйте коллекции
-    // TreeSet, TreeMap, PriorityQueue и т.д. с нужным CompareTo() для объекта внутри.
 }
