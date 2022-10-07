@@ -22,6 +22,13 @@ Sample Output:
 */
 public class B_MergeSort {
 
+    public boolean isOrdered(int[] sortArray){
+        for(int i = 1; i < sortArray.length; i++){
+            if(sortArray[i -1] > sortArray[i])
+                return false;
+        }
+        return true;
+    }
     private void mergeSort(int[] sortArray, int offset, int arrSize){
         if (arrSize == 1 || arrSize == 0)
             return;
@@ -58,10 +65,10 @@ public class B_MergeSort {
             }
             return;
         }
-        if (sortArray[0] > sortArray[1]){
-            int temp = sortArray[0];
-            sortArray[0] = sortArray[1];
-            sortArray[1] = temp;
+        if (sortArray[offset] > sortArray[offset + 1]){
+            int temp = sortArray[offset];
+            sortArray[offset] = sortArray[offset + 1];
+            sortArray[offset + 1] = temp;
         } //otherwise array is sorted
     }
     int[] getMergeSort(InputStream stream) throws FileNotFoundException {
@@ -79,13 +86,6 @@ public class B_MergeSort {
             // System.out.println(a[i]);
         }
         mergeSort(a, 0, n);
-
-
-
-
-
-
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return a;
     }
@@ -98,7 +98,7 @@ public class B_MergeSort {
         long finishTime = System.currentTimeMillis();
         System.out.println(finishTime - startTime);
         for (int index:result){
-          //  System.out.print(index+" ");
+            System.out.print(index+" ");
         }
     }
 
