@@ -3,6 +3,7 @@ package by.it.group151002.krumkachev.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Random;
 import java.util.Scanner;
 
 /*
@@ -33,7 +34,7 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
@@ -43,10 +44,50 @@ public class C_QSortOptimized {
         }
 
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+            return Integer.compare(this.start, o.start);
         }
+    }
+
+    void swap(Segment[] arr, int i, int j) {
+        Segment tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+
+    void quickSort(Segment[] arr, int low, int high) {
+        while (low < high) {
+            int[] boundaries = partition(arr, low, high);
+            int left = boundaries[0];
+            int right = boundaries[1];
+            quickSort(arr, low, left);
+            low = right;
+        }
+    }
+
+    int[] partition(Segment[] arr, int low, int high) {
+        int[] result = new int[2];
+        Segment pivot = arr[high];
+        int i = low, j = high;
+        while (i < j) {
+            while (arr[i].compareTo(pivot) < 0)
+                i++;
+            while (j >= low && arr[j].compareTo(pivot) >= 0)
+                j--;
+            if (i < j)
+                swap(arr, i++, j--);
+        }
+        int left = i - 1;
+        swap(arr, high, i++);
+        int right = i;
+        for (; i < high; i++)
+            if (arr[i].compareTo(pivot) == 0)
+                swap(arr, i, right++);
+
+        result[0] = left;
+        result[1] = right;
+        return result;
     }
 
 
@@ -68,12 +109,23 @@ public class C_QSortOptimized {
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        quickSort(segments, 0, segments.length - 1);
+
+        for (int i = 0; i < m; i++) {
+            int count = 0;
+            for (Segment segment: segments)
+                if (points[i] < segment.start)
+                    break;
+                else if (points[i] <= segment.stop)
+                    count++;
+            result[i] = count;
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -82,7 +134,7 @@ public class C_QSortOptimized {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/krumkachev/lesson05/dataC.txt");
         C_QSortOptimized instance = new C_QSortOptimized();
         int[] result=instance.getAccessory2(stream);
         for (int index:result){
