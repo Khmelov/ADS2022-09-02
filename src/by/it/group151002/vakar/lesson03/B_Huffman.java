@@ -2,7 +2,10 @@ package by.it.group151002.vakar.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+
 
 // Lesson 3. B_Huffman.
 // Восстановите строку по её коду и беспрефиксному коду символов.
@@ -51,8 +54,34 @@ public class B_Huffman {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
 
+        Map<String, Character> codes = new HashMap<>();
 
+        scanner.nextLine();
 
+        for (int i = 0; i < count; i++) {
+            String line = scanner.nextLine();
+            String [] arr = line.split(": ");
+            codes.put(arr[1],arr[0].charAt(0));
+        }
+
+        String code = scanner.nextLine();
+        String temp = "";
+        scanner.close();
+
+        int i = 0;
+        while (i < code.length()) {
+            if (codes.containsKey(temp)) {
+                result.append(codes.get(temp));
+                temp = "";
+            } else {
+                temp = temp + code.charAt(i);
+                i++;
+            }
+        }
+
+        if (codes.containsKey(temp)) {
+            result.append(codes.get(temp));
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111

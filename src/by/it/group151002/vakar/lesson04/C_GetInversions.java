@@ -46,21 +46,57 @@ public class C_GetInversions {
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
-        int result = 0;
+        int result;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
+        counter = 0;
+        mergeSort(a);
+        result = counter;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    static int counter;
+
+    void mergeSort(int[] arr) {
+        int length = arr.length;
+
+        if (length < 2) return;
+
+        int mid = length / 2;
+        int[] left = new int[mid];
+        int[] right = new int[length - mid];
+
+        System.arraycopy(arr, 0, left, 0, mid);
+        System.arraycopy(arr, mid, right, 0, length - mid);
+
+        mergeSort(left);
+        mergeSort(right);
+
+        merge(arr, left, right, mid, length - mid);
+    }
+
+    void merge(int[] arr, int[] leftArr, int[] rightArr, int left, int right) {
+
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        while (i < left && j < right) {
+            if (leftArr[i] <= rightArr[j]){
+                arr[k++] = leftArr[i++];
+            } else {
+                arr[k++] = rightArr[j++];
+                counter++;
+            }
+        }
+
+        while (i < left)
+            arr[k++] = leftArr[i++];
+
+        while (j < right)
+            arr[k++] = rightArr[j++];
+
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
