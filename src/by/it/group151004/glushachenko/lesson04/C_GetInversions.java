@@ -34,6 +34,35 @@ Sample Output:
 
 
 public class C_GetInversions {
+    int merge(int[] a, int count){
+        if (a.length > 1){
+            int[] left = new int[a.length / 2];
+            System.arraycopy(a,0,left,0,left.length);
+            int[] right = new int[a.length - left.length];
+            System.arraycopy(a,a.length / 2,right,0,right.length);
+
+            merge(left, count);
+            merge(right, count);
+
+            int i = 0, j = 0, k = 0;
+
+            while (i < left.length && j < right.length){
+                if (left[i] < right[j])
+                    a[k++] = left[i++];
+                else{
+                    count += left.length - i;
+                    a[k++] = right[j++];
+                }
+            }
+
+            while (i < left.length)
+                a[k++] = left[i++];
+            while (j < right.length)
+                a[k++] = right[j++];
+
+        }
+        return count;
+    }
 
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -47,18 +76,8 @@ public class C_GetInversions {
             a[i] = scanner.nextInt();
         }
         int result = 0;
-        //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
-
-
-
-
-
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return merge(a,result);
     }
 
 
