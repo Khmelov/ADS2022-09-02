@@ -17,26 +17,31 @@ import java.util.Scanner;
 
 public class B_CountSort {
 
+    //it's supposed to be only specific values -> without unlimited range
+    //posible range: 0..10
+public static void countSort(int[] sortArray, int minVal, int maxVal){
+    int[] valCounter = new int[maxVal - minVal + 1];
+    for (int value : sortArray) {
+        valCounter[value - minVal]++; //image to effective array
+    }
+    int iStart = 0;
+    for(int i = 0; i < valCounter.length; i++){
+        for(int j = 0; j < valCounter[i]; j++){
+            sortArray[iStart] = i + minVal;
+            iStart++;
+        }
+    }
+}
 
-    int[] countSort(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
-        Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        //размер массива
+    int[] countSort(Scanner scanner) {
         int n = scanner.nextInt();
         int[] points=new int[n];
 
-        //читаем точки
         for (int i = 0; i < n; i++) {
             points[i]=scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением сортировки подсчетом
+        countSort(points, 0, 20);
 
-
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
     }
 
@@ -45,7 +50,7 @@ public class B_CountSort {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataB.txt");
         B_CountSort instance = new B_CountSort();
-        int[] result=instance.countSort(stream);
+        int[] result=instance.countSort(new Scanner(stream));
         for (int index:result){
             System.out.print(index+" ");
         }

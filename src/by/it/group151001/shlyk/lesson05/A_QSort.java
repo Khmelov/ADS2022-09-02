@@ -37,41 +37,87 @@ import java.util.Scanner;
 
 public class A_QSort {
 
+    public static void quickSort(Segment[] periods, int iMin, int iMax){
+        int i = iMin;
+        int j = iMax;
+        Segment x = periods[(iMin + iMax) / 2];
+        do{
+            while(periods[i].compareTo(x) < 0)
+                i++;
+            while(periods[j].compareTo(x) > 0)
+                j--;
+            if(i <= j){
+                Segment temp = periods[i];
+                periods[i] = periods[j];
+                periods[j] = temp;
+                j--;
+                i++;
+            }
+        }while(i < j);
+        if(i < iMax){
+            quickSort(periods, i, iMax);
+        if(j > iMin)
+            quickSort(periods, iMin, j);
+        }
+    }
+    public static int[] getDuplicates(Segment[] periods, int[] events){
+        int[] result = new int[events.length]; //how many cams have seen event
+        quickSort(periods, 0, periods.length - 1);
+        for(int i = 0; i < events.length; i++){
+
+            for (Segment period : periods) {
+                if (period.stop >= events[i] && period.start <= events[i])
+                    result[i]++;
+                else
+                    if(period.start > events[i])
+                        break;
+            }
+        }
+        return result;
+
+    }
     //отрезок
     private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
+            if(start > stop){
+                this.start = stop;
+                this.stop = start;
+            } else {
+                this.start = start;
+                this.stop = stop;
+            }
+
         }
 
+        //compare with other by start value (i.e. left side)
         @Override
         public int compareTo(Segment o) {
-            //подумайте, что должен возвращать компаратор отрезков
+            int result = (this.start - o.start);
 
-            return 0;
+            if (result != 0){
+                result = result > 0 ? 1 : -1;
+            }
+            return result;
         }
     }
 
 
-    int[] getAccessory(InputStream stream) throws FileNotFoundException {
+    int[] getAccessory(InputStream stream)  {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //число отрезков отсортированного массива
-        int n = scanner.nextInt();
-        Segment[] segments=new Segment[n];
+        int nEntries = scanner.nextInt();
+        Segment[] segments =new Segment[nEntries];
         //число точек
         int m = scanner.nextInt();
         int[] points=new int[m];
-        int[] result=new int[m];
 
         //читаем сами отрезки
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < nEntries; i++) {
             //читаем начало и конец каждого отрезка
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
@@ -79,20 +125,18 @@ public class A_QSort {
         for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+       int[] nDuplicates = getDuplicates(segments, points);
+        for (int nDuplicate : nDuplicates) {
+            System.out.println(nDuplicate);
+        }
 
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return nDuplicates;
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/shlyk/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){
