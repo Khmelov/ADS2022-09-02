@@ -114,7 +114,12 @@ public class A_Huffman {
     String encode(File file) throws FileNotFoundException {
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(file);
-        String s = scanner.next();
+        String s;
+        try {
+            s = scanner.next();
+        } catch (Exception e) {
+            return "";
+        }
         scanner.close();
         //все комментарии от тестового решения были оставлены т.к. это задание A.
         //если они вам мешают их можно удалить
@@ -139,6 +144,8 @@ public class A_Huffman {
         //построим дерево кодирования Хаффмана.
         //У родителя частоты детей складываются.
 
+        String codesStart = priorityQueue.size() > 1 ? "" : "0";
+
         while (priorityQueue.size() > 1) {
             Node left = priorityQueue.poll();
             Node right = priorityQueue.poll();
@@ -155,7 +162,7 @@ public class A_Huffman {
 
         Node root = priorityQueue.poll();
 
-        Objects.requireNonNull(root).fillCodes("");
+        Objects.requireNonNull(root).fillCodes(codesStart);
 
         for (int i = 0; i < s.length(); i++) {
             sb.append(codes.get(s.charAt(i)));

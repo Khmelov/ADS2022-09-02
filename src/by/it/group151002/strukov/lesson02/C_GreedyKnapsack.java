@@ -107,7 +107,7 @@ public class C_GreedyKnapsack {
         while(!isFilled && items.length > 0){
             if(items[i].weight <= W){
                 result += items[i].cost;
-                W = W - items[i].weight;
+                W -= items[i].weight;
             }
             else{
                 isFilled = true;
