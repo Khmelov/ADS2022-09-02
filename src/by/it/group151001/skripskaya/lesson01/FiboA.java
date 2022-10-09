@@ -30,10 +30,10 @@ public class FiboA {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
 
-        int pred1=0, pred2=1, tech = 1, i;
-        if ((n==1) | (n==2))
-            if (n==1) tech = 0;
-            else tech = 1;
+        int pred1=1, pred2=1, tech = 1, i;
+        if ((n==1) | (n==2)) tech = 1;
+      //      if (n==1) tech = 0;
+      //      else tech = 1;
         else {
             for (i = 3; i <= n; ++i) {
                 tech = pred1 + pred2;

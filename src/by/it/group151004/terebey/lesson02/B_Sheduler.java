@@ -2,16 +2,17 @@ package by.it.group151004.terebey.lesson02;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 /*
-даны интервальные события events
+Даны интервальные события events
 реализуйте метод calcStartTimes, так, чтобы число принятых к выполнению
 непересекающихся событий было максимально.
 Алгоритм жадный. Для реализации обдумайте надежный шаг.
 */
 
 public class B_Sheduler {
-    //событие у аудитории(два поля: начало и конец)
-    static class Event {
+
+    static class Event implements Comparable<Event>{
         int start;
         int stop;
 
@@ -24,20 +25,19 @@ public class B_Sheduler {
         public String toString() {
             return "("+ start +":" + stop + ")";
         }
+        public int compareTo(Event compareEvent) {
+            return this.stop - compareEvent.stop;
+        }
     }
 
     public static void main(String[] args) {
         B_Sheduler instance = new B_Sheduler();
-        Event[] events = {  new Event(0, 3),  new Event(0, 1), new Event(1, 2), new Event(3, 5),
-                new Event(1, 3),  new Event(1, 3), new Event(1, 3), new Event(3, 6),
-                new Event(2, 7),  new Event(2, 3), new Event(2, 7), new Event(7, 9),
-                new Event(3, 5),  new Event(2, 4), new Event(2, 3), new Event(3, 7),
-                new Event(4, 5),  new Event(6, 7), new Event(6, 9), new Event(7, 9),
-                new Event(8, 9),  new Event(4, 6), new Event(8, 10), new Event(7, 10)
+        Event[] events = new B_Sheduler.Event[] {new B_Sheduler.Event(6, 12),  new B_Sheduler.Event(7, 8), new B_Sheduler.Event(8, 11), new B_Sheduler.Event(11, 13),
+                new B_Sheduler.Event(12, 14)
         };
 
-        List<Event> starts = instance.calcStartTimes(events,0,10);  //рассчитаем оптимальное заполнение аудитории
-        System.out.println(starts);                                 //покажем рассчитанный график занятий
+        List<Event> starts = instance.calcStartTimes(events,8,14);
+        System.out.println(starts);
     }
 
     List<Event> calcStartTimes(Event[] events, int from, int to) {
@@ -47,13 +47,14 @@ public class B_Sheduler {
         //начало и конец событий могут совпадать.
         List<Event> result;
         result = new ArrayList<>();
-        //ваше решение.
 
-
-
-
-
-
-        return result;                        //вернем итог
+        Arrays.sort(events);
+        for (int i = 0; i < events.length; i++) {
+            if (events[i].start >= from && events[i].stop <= to) {
+                result.add(events[i]);
+                from = events[i].stop;
+            }
+        }
+        return result;
     }
 }

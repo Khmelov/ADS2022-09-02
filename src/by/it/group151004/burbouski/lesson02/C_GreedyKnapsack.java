@@ -25,28 +25,29 @@ public class C_GreedyKnapsack {
 	}
 
 	public double calc(File source) throws FileNotFoundException {
-		Scanner input = new Scanner(source);
-		int n = input.nextInt();
-		int W = input.nextInt();
-		Item[] items = new Item[n];
-		for (int i = 0; i < n; i++) {
-			items[i] = new Item(input.nextInt(), input.nextInt());
-		}
-		for (Item item : items) {
-			System.out.println(item);
-		}
-		System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, W);
-
-		double result = 0;
-
-		for (Item item : items) {
-			double max = 60 / item.weight * item.cost;
-			if (max > result) {
-				result = max;
+		try (Scanner input = new Scanner(source)) {
+			int n = input.nextInt();
+			int W = input.nextInt();
+			Item[] items = new Item[n];
+			for (int i = 0; i < n; i++) {
+				items[i] = new Item(input.nextInt(), input.nextInt());
 			}
+			for (Item item : items) {
+				System.out.println(item);
+			}
+			System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, W);
+
+			double result = 0;
+
+			for (Item item : items) {
+				double max = 60 / item.weight * item.cost;
+				if (max > result) {
+					result = max;
+				}
+			}
+			System.out.printf("Удалось собрать рюкзак на сумму %f\n", result);
+			return result;
 		}
-		System.out.printf("Удалось собрать рюкзак на сумму %f\n", result);
-		return result;
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
