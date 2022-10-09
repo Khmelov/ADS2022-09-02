@@ -18,6 +18,30 @@ import java.util.Scanner;
 public class B_CountSort {
 
 
+    int[] sort(int[] a){
+        int min, max = min = a[0];
+        for (int j : a) {
+            if (j > max)
+                max = j;
+            if (j < min)
+                min = j;
+        }
+        int[] count = new int[max - min + 1];
+
+        for (int j : a) {
+            count[j - min]++;
+        }
+
+        int ind = 0;
+
+        for (int i = 0; i < count.length; i++){
+            for (int j = 0; j < count[i]; j++){
+                a[ind++] = i + min;
+            }
+        }
+        return a;
+    }
+
     int[] countSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -37,7 +61,7 @@ public class B_CountSort {
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return points;
+        return sort(points);
     }
 
 

@@ -52,11 +52,28 @@ public class A_QSort {
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+            return Integer.compare(start, o.start);
         }
     }
 
+    void qs(Segment[] a, int left, int right){
+        if (left <= right) {
+            int j = left;
+            Segment tmp;
+            for (int i = j + 1; i <= right; i++)
+                if (a[i].compareTo(a[j]) < 0) {
+                    j++;
+                    tmp = a[i];
+                    a[i] = a[j];
+                    a[j] = tmp;
+                }
+            tmp = a[left];
+            a[left] = a[j];
+            a[j] = tmp;
+            qs(a, left, j - 1);
+            qs(a, j + 1, right);
+        }
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -82,9 +99,13 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        qs(segments, 0 , segments.length - 1);
 
-
-
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++)
+                if (points[i] >= segments[j].start && points[i] <= segments[j].stop)
+                    result[i]++;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

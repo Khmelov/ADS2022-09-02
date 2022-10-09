@@ -3,6 +3,7 @@ package by.it.group151004.glushachenko.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -38,6 +39,32 @@ import java.util.Scanner;
 
 public class C_LongNotUpSubSeq {
 
+    int findMax(int[] a){
+        int res = 0;
+
+        for (int i = 1; i < a.length; i++){
+            if (a[i] > a[res])
+                res = i;
+        }
+        return a[res];
+    }
+
+    int find(int[] arr){
+        if (arr.length == 1)
+            return arr.length;
+
+        int[] count = new int[arr.length];
+
+        for (int i = 1; i < arr.length; i++){
+            for (int j = 0; j < i; j++){
+                if (arr[i] <= arr[j])
+                    if (count[i] <= count[j])
+                        count[i] = count[j] + 1;
+            }
+        }
+        return findMax(count) + 1;
+    }
+
     int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -52,9 +79,8 @@ public class C_LongNotUpSubSeq {
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
 
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return find(m);
     }
 
 

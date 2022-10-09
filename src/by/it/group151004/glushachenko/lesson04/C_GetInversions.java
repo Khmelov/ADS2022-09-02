@@ -54,12 +54,6 @@ public class C_GetInversions {
                     a[k++] = right[j++];
                 }
             }
-
-            while (i < left.length)
-                a[k++] = left[i++];
-            while (j < right.length)
-                a[k++] = right[j++];
-
         }
         return count;
     }
