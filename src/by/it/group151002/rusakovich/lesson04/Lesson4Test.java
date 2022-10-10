@@ -29,7 +29,7 @@ public class Lesson4Test {
     @Test
     public void B() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/rusakovich/lesson04/dataB1.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);
