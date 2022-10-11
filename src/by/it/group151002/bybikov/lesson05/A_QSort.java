@@ -1,8 +1,6 @@
 package by.it.group151002.bybikov.lesson05;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Scanner;
 
 /*
@@ -57,11 +55,73 @@ public class A_QSort {
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
+            if(this.stop > o.stop)
+                return 1;
             return 0;
         }
     }
 
+    Segment[] getEventsArrayDataFile (String fullWritePath) throws IOException{
+        FileReader fileReader = new FileReader(fullWritePath);
+        Scanner scanner = new Scanner(fileReader);
+        int arrayLength = scanner.nextInt();
+        Segment[] resultArray = new Segment[arrayLength];
+        for (int i = 0 ; i < resultArray.length; i++) {
+            resultArray[i] = scanner.nextInt();
+        }
+        fileReader.close();
+        return resultArray;
+    }
+
+    private void exchangeValuesByIndex (Segment[] array, int firstIndex, int secondIndex) {
+        Segment tmp = array[firstIndex];
+        array[firstIndex] = array[secondIndex];
+        array[secondIndex] = tmp;
+    }
+
+    private int partition(Segment[] array, int lowerIndex, int highIndex) {
+        RandomValuesMethods randomValuesMethods = new RandomValuesMethods();
+        int pivotIndex = randomValuesMethods.getIntRandomValueInRange(lowerIndex, highIndex);
+        exchangeValuesByIndex(array, pivotIndex, highIndex);
+        pivotIndex = highIndex;
+        int i = lowerIndex;
+        for (int j = lowerIndex; j < pivotIndex; j++)
+            if(array[j].compareTo(array[pivotIndex]) > 0) {
+                exchangeValuesByIndex(array, i, j);
+                i++;
+            }
+        exchangeValuesByIndex(array, i, pivotIndex);
+        pivotIndex = i;
+        return pivotIndex;
+    }
+
+    private Segment[] quickSortMethod (Segment[] array, int lowerIndex, int highIndex) {
+        if(highIndex <= lowerIndex)
+            return array;
+        int pivotIndex = partition(array, lowerIndex, highIndex);
+        array = quickSortMethod(array, lowerIndex, pivotIndex);
+        array = quickSortMethod(array, pivotIndex + 1, highIndex);
+        return array;
+    }
+
+    Segment[] quickSort (Segment[] array) {
+        if(array == null)
+            return null;
+        else if(array.length < 2)
+            return array;
+        return quickSortMethod(array, 0, array.length - 1);
+    }
+
+    boolean isSortedArray (Segment[] array) {
+        if(array == null)
+            return true;
+        boolean isSorted = true;
+        for (int i = 1; i < array.length; i++)
+            if (array[i - 1].stop < array[i].stop) {
+                isSorted = false;
+            }
+        return isSorted;
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
