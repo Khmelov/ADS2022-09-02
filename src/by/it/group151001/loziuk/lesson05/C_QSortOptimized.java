@@ -73,15 +73,27 @@ public class C_QSortOptimized {
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
         Q_Sort_fix(segments,0, segments.length - 1);
+
         for (int i = 0; i < m; i++){
-            int count = 0;
-            int j = 0;
-            while (j < n && points[i] <= segments[j].stop){
-                if (segments[j].start <= points[i])
-                    count++;
-                j++;
+            int res_bin_search = BinarySearch(segments,points[i],0, segments.length - 1);
+            if (res_bin_search > -1){
+                int count = 1;
+                int j = res_bin_search + 1;
+                while (j < n && points[i] <= segments[j].stop){
+                    if (segments[j].start <= points[i])
+                        count++;
+                    j++;
+                }
+                j = res_bin_search - 1;
+                while (j >= 0 && points[i] <= segments[j].stop){
+                    if (segments[j].start <= points[i])
+                        count++;
+                    j--;
+                }
+                result[i] = count;
             }
-            result[i] = count;
+            else
+                result[i] = 0;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -150,7 +162,24 @@ public class C_QSortOptimized {
         }
         return A;
     }
+    int BinarySearch(Segment[] A, int key, int left,int right){
+        boolean IsFound = false;
+        while (left <= right && IsFound != true){
+            int mid = (left + right)/2;
+            if (A[mid].start > key)
+                right = mid - 1;
 
+            else{
+                if (A[mid].stop < key)
+                    left = mid + 1;
+                else{
+                    IsFound = true;
+                    return mid;
+                }
+            }
+        }
+        return -1;
+    }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataC.txt");
