@@ -83,16 +83,6 @@ public class Lesson4Test {
 	}
 
 	@Test
-	public void C1() throws Exception {
-		String root = System.getProperty("user.dir") + "/src/";
-		InputStream stream = new FileInputStream(root + "by/it/group151004/burbouski/lesson04/dataC1.txt");
-		C_GetInversions instance = new C_GetInversions();
-		int result = instance.calc(stream);
-		boolean ok = 2 == result;
-		assertTrue("C1 failed", ok);
-	}
-
-	@Test
 	public void C2() throws Exception {
 		String root = System.getProperty("user.dir") + "/src/";
 		InputStream stream = new FileInputStream(root + "by/it/group151004/burbouski/lesson04/dataC2.txt");
@@ -100,16 +90,6 @@ public class Lesson4Test {
 		int result = instance.calc(stream);
 		boolean ok = 6 == result;
 		assertTrue("C2 failed", ok);
-	}
-
-	@Test
-	public void C3() throws Exception {
-		String root = System.getProperty("user.dir") + "/src/";
-		InputStream stream = new FileInputStream(root + "by/it/group151004/burbouski/lesson04/dataC3.txt");
-		C_GetInversions instance = new C_GetInversions();
-		int result = instance.calc(stream);
-		boolean ok = 5 == result;
-		assertTrue("C3 failed", ok);
 	}
 
 	@Test
