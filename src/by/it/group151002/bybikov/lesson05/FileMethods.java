@@ -1,48 +1,30 @@
 package by.it.group151002.bybikov.lesson05;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
+import java.io.OutputStream;
 
 public class FileMethods {
 
-    int[] setEventArrayDataFile(String fullWritePath, int arrayLength, int lowerBound, int upperBound) throws IOException {
-        FileWriter fileWriter = new FileWriter(fullWritePath);
-        RandomValuesMethods randomValues = new RandomValuesMethods();
-        int[] writeArray = new int[arrayLength];
-        fileWriter.write(arrayLength + "\n");
-        for (int i = 0; i < arrayLength; i++) {
-            int value = randomValues.getIntRandomValueInRange(lowerBound, upperBound);
-            fileWriter.write(value + " ");
-            writeArray[i] = value;
+    private void setDateInputFile (String outputPath, RandomValuesMethods.Section[] sectionArray, int[] pointArray) throws IOException {
+        FileWriter writer = new FileWriter(outputPath);
+        writer.write(sectionArray.length + " ");
+        writer.write(pointArray.length + "\n");
+        for (int i = 0; i < sectionArray.length; i++) {
+            writer.write(sectionArray[i].begin + " ");
+            writer.write(sectionArray[i].end + "\n");
         }
-        fileWriter.close();
-        return writeArray;
+        for (int i = 0; i < pointArray.length; i++) {
+            writer.write( pointArray[i] + " ");
+        }
+        writer.close();
     }
 
-    void setObservationArrayDataFile(String fullWritePath, int arrayLength, int lowerBound, int upperBound) throws IOException {
-        FileWriter fileWriter = new FileWriter(fullWritePath);
-        RandomValuesMethods randomValues = new RandomValuesMethods();
-        fileWriter.write(arrayLength + "\n");
-        for (int i = 0; i < arrayLength; i++) {
-            int value = randomValues.getIntRandomValueInRange(lowerBound, upperBound);
-            fileWriter.write(value + " ");
-            value = randomValues.getIntRandomValueInRange(lowerBound, upperBound);
-            fileWriter.write(value + " ");
-        }
-        fileWriter.close();
+    void createInputFile (String outputPath) throws IOException {
+        RandomValuesMethods randomValuesMethods = new RandomValuesMethods();
+        RandomValuesMethods.Section[] sectionArray = randomValuesMethods.getRandomSectionArray(0, 10000);
+        int[] eventArray = randomValuesMethods.getRandomEventArray(0, 100000);
+        setDateInputFile(outputPath, sectionArray, eventArray);
     }
 
-    int[] getEventsArrayDataFile (String fullWritePath) throws IOException{
-        FileReader fileReader = new FileReader(fullWritePath);
-        Scanner scanner = new Scanner(fileReader);
-        int arrayLength = scanner.nextInt();
-        int[] resultArray = new int[arrayLength];
-        for (int i = 0 ; i < resultArray.length; i++) {
-            resultArray[i] = scanner.nextInt();
-        }
-        fileReader.close();
-        return resultArray;
-    }
 }
