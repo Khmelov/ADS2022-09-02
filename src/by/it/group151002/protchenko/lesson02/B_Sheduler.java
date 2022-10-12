@@ -12,7 +12,7 @@ import java.util.List;
 
 public class B_Sheduler {
     //событие у аудитории(два поля: начало и конец)
-    static class Event {
+    static class Event implements Comparable<Event> {
         int start;
         int stop;
 
@@ -24,6 +24,11 @@ public class B_Sheduler {
         @Override
         public String toString() {
             return "("+ start +":" + stop + ")";
+        }
+
+        @Override
+        public int compareTo(Event o) {
+            return this.stop - o.stop;
         }
     }
 
@@ -51,8 +56,15 @@ public class B_Sheduler {
         result = new ArrayList<>();
         //ваше решение.
 
-
-
+        Arrays.sort(events);
+        int i = 1;
+        result.add(events[0]);
+        while (i < events.length){
+            if (events[i].start >= result.get(result.size()-1).stop){
+                result.add(events[i]);
+            }
+            i++;
+        }
 
         return result;                        //вернем итог
     }
