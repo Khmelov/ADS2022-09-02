@@ -32,12 +32,35 @@ public class B_CountSort {
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
 
-
-
-
+        countSort(points, 10);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
+    }
+
+    int[] countSortImp(int[] arr, int MAX){
+        int[] count = new int[MAX];
+        //counting;
+        for (int i = 0; i < arr.length; i++) {
+            count[arr[i]]++;
+        }
+        //inc c[i] += c[i - 1]
+        for (int i = 1; i < MAX; i++) {
+            count[i] += count[i - 1];
+        }
+        int[] sorted = new int[arr.length];
+        for (int i = arr.length - 1; i > -1; i--) {
+            count[arr[i]]--;
+            sorted[count[arr[i]]] = arr[i];
+        }
+        return sorted;
+    }
+
+    void countSort(int[] arr, int MAX){
+        int[] sorted = countSortImp(arr, MAX);
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = sorted[i];
+        }
     }
 
 
