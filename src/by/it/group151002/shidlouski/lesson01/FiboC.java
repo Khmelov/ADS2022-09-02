@@ -25,10 +25,27 @@ public class FiboC {
         //Решение сложно найти интуитивно
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
+        int[] period = new int[m * 6];
+        int tmp;
+        int current = 1;
+        int prev = 0;
+        period[0] = 0;
+        period[1] = 1;
+        int next = 2;
+        for (int i = 0; i < n; i++) {
+            tmp = current;
+            current = (current + prev) % m;
+            prev = tmp;
+            if (current == 1 && prev == 0) {
+                break;
+            } else {
+                period[next] = current;
+                next++;
+            }
 
-        return 0L;
+        }
+        return period[(int) (n % (next - 1))];
     }
-
 
 }
 
