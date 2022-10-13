@@ -12,10 +12,10 @@ public class Lesson5Test {
     @Test
     public void A() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/poluectov/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
-        boolean ok=Arrays.equals(result,new int[]{1,0,0});
+        boolean ok=Arrays.equals(result,new int[]{1,2,0});
         assertTrue("A failed", ok);
     }
 
