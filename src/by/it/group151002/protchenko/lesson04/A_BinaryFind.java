@@ -35,7 +35,7 @@ public class A_BinaryFind {
         //размер отсортированного массива
         int n = scanner.nextInt();
         //сам отсортированный массива
-        int[] a=new int[n];
+        int[] a = new int[n];
         for (int i = 1; i <= n; i++) {
             a[i-1] = scanner.nextInt();
         }
@@ -65,7 +65,7 @@ public class A_BinaryFind {
         int[] result=instance.findIndex(stream);
         //long finishTime = System.currentTimeMillis();
         for (int index:result){
-            System.out.print(index+" ");
+            System.out.print(index + " ");
         }
     }
 
