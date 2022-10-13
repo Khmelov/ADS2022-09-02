@@ -106,6 +106,41 @@ public class A_Huffman {
         }
     }
 
+    Map<Character, Integer> getFreqTable(String str) {
+        Map<Character, Integer> tmp = new HashMap<>();
+        for(int i = 0; i < str.length(); i++) {
+            Character ch = str.charAt(i);
+            if (tmp.containsKey(ch)) {
+                tmp.put(ch, tmp.get(ch) + 1);
+            } else { tmp.put(ch, 1); }
+        }
+        return tmp;
+    }
+
+    private PriorityQueue<Node> fullAll(Map<Character, Integer> freqTable) {
+        PriorityQueue<Node> queue = new PriorityQueue<>();
+        for (Map.Entry<Character, Integer> entry: freqTable.entrySet()) {
+            queue.add(new LeafNode(entry.getValue(), entry.getKey()));
+        }
+        return queue;
+    }
+
+    private Node algoHuff(PriorityQueue<Node> queue) {
+        while(queue.size() > 1) {
+            Node node = new InternalNode(queue.poll(), Objects.requireNonNull(queue.poll()));
+            queue.add(node);
+        }
+        return queue.poll();
+    }
+
+    private StringBuilder decoding(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (Character ch : s.toCharArray()) {
+            sb.append(codes.get(ch));
+        }
+        return sb;
+    }
+
     //индекс данных из листьев
     static private Map<Character, String> codes = new TreeMap<>();
 
@@ -120,28 +155,29 @@ public class A_Huffman {
         //если они вам мешают их можно удалить
 
         Map<Character, Integer> count = new HashMap<>();
+        count = getFreqTable(s);
         //1. переберем все символы по очереди и рассчитаем их частоту в Map count
             //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
 
         //2. перенесем все символы в приоритетную очередь в виде листьев
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
-
+        priorityQueue = fullAll(count);
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
         //построим дерево кодирования Хаффмана.
         //У родителя частоты детей складываются.
-
+        Node huffmanHead = algoHuff(priorityQueue);
+        huffmanHead.fillCodes("");
         //4. последний из родителей будет корнем этого дерева
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
         StringBuilder sb = new StringBuilder();
-        //.....
+        sb = decoding(s);
 
         return sb.toString();
         //01001100100111
         //01001100100111
     }
     //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

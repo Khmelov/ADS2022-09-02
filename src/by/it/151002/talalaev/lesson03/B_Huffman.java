@@ -1,7 +1,9 @@
-package by.it;
+package by.it.group151002;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -49,11 +51,15 @@ public class B_Huffman {
         Integer count = scanner.nextInt();
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        //тут запишите ваше решение
-
-
-
-
+        List<Character> codes = new ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
+            String line = scanner.nextLine();
+            Character ch = line.charAt(0);
+            codes.add(ch);
+        }
+        String toDecode = scanner.nextLine();
+        Node head = createTree(codes);
+        result = decoding(toDecode, head);
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
     }
@@ -64,6 +70,81 @@ public class B_Huffman {
         B_Huffman instance = new B_Huffman();
         String result = instance.decode(f);
         System.out.println(result);
+    }
+
+    private StringBuilder decoding(String strToDecode, Node huffmanTree) {
+        Node curr = huffmanTree;
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < strToDecode.length(); i++) {
+            if (curr.getLeft() != null) {
+                Character ch = strToDecode.charAt(i);
+                if (ch.equals('0')) curr = curr.getLeft();
+                else curr = curr.getRight();
+            } else {
+                result.append(curr.getSym());
+                curr = huffmanTree;
+                i--;
+            }
+        }
+        result.append(curr.getSym());
+        return result;
+    }
+
+    private Node createTree(List<Character> codes) {
+        Node prev = new Node(null, null);
+        Node head = prev;
+        Node curr;
+        for (int i = 0; i < codes.size() - 1; i++) {
+            Character ch = codes.get(i);
+            curr = new Node(ch);
+            prev.setLeft(curr);
+            prev.setRight(new Node(null, null));
+            prev = prev.getRight();
+        }
+        prev.setSym(codes.get(codes.size() - 1));
+        return head;
+    }
+
+    private class Node {
+
+        private Node left;
+        private Node right;
+        private Character sym;
+
+
+        public Node getLeft() {
+            return left;
+        }
+
+        Node(Node left, Node right){
+            this.left = left;
+            this.right = right;
+            this.sym = 0;
+        }
+
+        Node(Character symbol) {
+            this.sym = symbol;
+            this.left = null;
+            this.right = null;
+        }
+
+        public void setLeft(Node l) {
+            this.left = l;
+        }
+
+        public Node getRight() {
+            return right;
+        }
+
+        public void setRight(Node r) {
+            this.right = r;
+        }
+        public void setSym(Character s){
+            this.sym = s;
+        }
+        public Character getSym() {
+            return sym;
+        }
     }
 
 
