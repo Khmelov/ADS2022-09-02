@@ -50,7 +50,7 @@ public class C_HeapMax {
         }
         void siftDown(int i) {
             int j;
-            while (2 * i + 1 < heap.size()) {
+            while (2 * i + 1 < heap.size()){
                 j = 2 * i + 2;
                 if (j >= heap.size() || heap.get(2 * i + 1) > heap.get(2 * i + 2))
                     j = 2 * i + 1;
