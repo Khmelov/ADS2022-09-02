@@ -12,7 +12,7 @@ public class Lesson4Test {
     @Test
     public void A() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/matsiushenko/lesson04/dataA2.txt");
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.findIndex(stream);
@@ -21,7 +21,7 @@ public class Lesson4Test {
         for (int index:result){
             sb.append(index).append(" ");
         }
-        boolean ok=sb.toString().trim().equals("3 1 -1 1 -1");
+        boolean ok=sb.toString().trim().equals("10 1 5 -1 -1 -1 -1");
         assertTrue("A failed", ok);
     }
 
@@ -29,7 +29,7 @@ public class Lesson4Test {
     @Test
     public void B() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/matsiushenko/lesson04/dataB2.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);
@@ -48,7 +48,7 @@ public class Lesson4Test {
     @Test
     public void C() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/matsiushenko/lesson04/dataC2.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);

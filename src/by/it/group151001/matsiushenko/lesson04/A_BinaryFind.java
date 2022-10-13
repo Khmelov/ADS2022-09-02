@@ -47,10 +47,24 @@ public class A_BinaryFind {
             int value = scanner.nextInt();
             //тут реализуйте бинарный поиск индекса
 
+            int rBorder =a.length;
+            int lBorder = -1;
+            int mBorder = (lBorder + rBorder) / 2;
 
+            while (rBorder - lBorder > 1){
+                if (a[mBorder] < value){
+                    lBorder = mBorder;
+                } else{
+                    rBorder = mBorder;
+                }
+                mBorder = (lBorder + rBorder) / 2;
+            }
 
-
-            result[i]=0;
+            if (rBorder < a.length && a[rBorder] == value) {
+                result[i] = rBorder + 1;
+            }else {
+                result[i] = -1;
+            }
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
