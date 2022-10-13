@@ -1,6 +1,8 @@
-package by.it.a_khmelev.lesson02;
+package by.it.group151004.danilov.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 /*
 даны интервальные события events
@@ -40,6 +42,17 @@ public class B_Sheduler {
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
+    static class SortEvent implements Comparator<Event> {
+        @Override
+        public int compare(Event o1, Event o2) {
+            if (o1.start == o2.start && o1.stop == o2.stop) return 0;
+            if (o1.start < o2.start) return -1;
+            else if (o1.start > o2.start) return 1;
+            else if (o1.stop - o1.start < o2.stop - o2.start) return -1;
+            else return 1;
+        }
+    }
+
     List<Event> calcStartTimes(Event[] events, int from, int to) {
         //events - события которые нужно распределить в аудитории
         //в период [from, int] (включительно).
@@ -49,10 +62,28 @@ public class B_Sheduler {
         result = new ArrayList<>();
         //ваше решение.
 
+        Arrays.sort(events, new SortEvent());
 
+        boolean hasReached = false;
+        int i = 0, endTime = from;
+        while (!hasReached && i < events.length) {
 
+            // Stop time
+            if (events[i].stop > to) hasReached = true;
 
+            // Skip all events before start time
+            if (events[i].start < from) {
+                i++;
+                continue;
+            }
 
+            if (events[i].start >= endTime) {
+                result.add(events[i]);
+                endTime = events[i].stop;
+            }
+
+            i++;
+        }
 
         return result;                        //вернем итог
     }
