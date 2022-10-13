@@ -34,10 +34,10 @@ public class Lesson5Test {
     @Test
     public void C() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/poluectov/lesson05/dataC.txt");
         C_QSortOptimized instance = new C_QSortOptimized();
         int[] result=instance.getAccessory2(stream);
-        boolean ok=Arrays.equals(result,new int[]{1,0,0});
+        boolean ok=Arrays.equals(result,new int[]{1,2,0});
         assertTrue("C failed", ok);
     }
 
