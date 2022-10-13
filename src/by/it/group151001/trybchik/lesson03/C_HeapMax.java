@@ -70,7 +70,7 @@ public class C_HeapMax {
         int siftUp(int i) { //просеивание вверх
             int parent = (i-2)/2;
 
-            while (heap.get(i)>heap.get(parent)) {
+            while (i>0 && heap.get(i)>heap.get(parent)) {
                 swap(i, parent);
                 i = parent;
             }
@@ -80,14 +80,7 @@ public class C_HeapMax {
         void insert(Long value) { //вставка
             heap.add(value);
             int i = heap.size() - 1;
-            int parent = (i-1)/2;
-
-            while(i>0 && heap.get(parent)<heap.get(i))
-            {
-                swap(parent,i);
-                i = parent;
-                parent = (i-1)/2;
-            }
+            siftUp(i);
 
         }
 
