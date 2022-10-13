@@ -54,7 +54,6 @@ public class C_HeapMax {
                 heap.set(i, heap.set(j, heap.get(i)));
                 i = j;
             }
-
         }
         void siftUp(int i) { //просеивание вверх
              while (heap.get(i) > heap.get((i - 1) / 2)){
