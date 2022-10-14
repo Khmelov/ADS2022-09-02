@@ -77,6 +77,7 @@ public class C_HeapMax {
         Scanner scanner = new Scanner(stream);
         int count = scanner.nextInt();
 
+
         for (int i = 0; i < count; ) {
             String s = scanner.nextLine();
 
