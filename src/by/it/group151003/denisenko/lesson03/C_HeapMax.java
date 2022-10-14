@@ -80,6 +80,7 @@ public class C_HeapMax {
         for (int i = 0; i < count; ) {
             String s = scanner.nextLine();
 
+
             if (s.equalsIgnoreCase("extractMax")) {
                 Long res = heap.extractMax();
                 if (res != null && res > maxValue) maxValue = res;
