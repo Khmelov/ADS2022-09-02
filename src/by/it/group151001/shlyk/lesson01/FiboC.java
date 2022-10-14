@@ -33,26 +33,23 @@ public class FiboC {
 
         int pizPeriod = 2;
         int tempPeriod = pizPeriod;
-        BigInteger divider = BigInteger.valueOf(m);
-        BigInteger lastFibbo = BigInteger.ZERO;
-        BigInteger currFibbo = BigInteger.ONE;
-        BigInteger tempFibbo;
-
         pizSeq.add(0L);
         pizSeq.add(1L);
-        long rest;
 
         boolean isCompleted = false;
         boolean isTriggered = false;
 
+        long lastRest = 0;
+        long currRest = 1;
+        long temp;
         while(!isCompleted){
-            tempFibbo = currFibbo;
-            currFibbo = currFibbo.add(lastFibbo);
-            lastFibbo = tempFibbo;
-            rest = (currFibbo.compareTo(divider) < 0) ? currFibbo.intValue() : (currFibbo.remainder(divider) ).intValue();
+            temp = currRest;
+            currRest = (currRest + lastRest) % m;
+            lastRest = temp;
+
             if (isTriggered){
-                checkSeq.add(rest);
-                isTriggered = rest == pizSeq.get(tempPeriod - pizPeriod);
+                checkSeq.add(currRest);
+                isTriggered = currRest == pizSeq.get(tempPeriod - pizPeriod);
                 tempPeriod++;
                 isCompleted = tempPeriod >= (pizPeriod + AVAILABLE_MISTAKE) || (tempPeriod >= 2 * pizPeriod);
             } else{
@@ -62,12 +59,12 @@ public class FiboC {
                     pizPeriod = tempPeriod;
                 }
                 tempPeriod++;
-                isTriggered = rest == 0;
+                isTriggered = currRest == 0;
                 if (isTriggered)
-                    checkSeq.add(rest);
+                    checkSeq.add(currRest);
                 else{
                     pizPeriod = tempPeriod;
-                    pizSeq.add(rest);
+                    pizSeq.add(currRest);
                 }
             }
 
