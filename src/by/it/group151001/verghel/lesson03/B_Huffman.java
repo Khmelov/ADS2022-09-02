@@ -2,6 +2,8 @@ package by.it.group151001.verghel.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -48,10 +50,29 @@ public class B_Huffman {
         Scanner scanner = new Scanner(file);
         Integer count = scanner.nextInt();
         Integer length = scanner.nextInt();
+        scanner.nextLine();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
 
+        Map<String, String> map = new HashMap<>();
+        while (count>0){
+            String str = scanner.nextLine();
+            String[] word = str.split(": ");
+            map.put(word[1],word[0]);
+            count--;
+        }
 
+        String code = scanner.nextLine();
+        String temp = "";
+        int i = 0;
+        while (i<length){
+            temp+=code.charAt(i);
+            if (map.containsKey(temp)){
+                result.append(map.get(temp));
+                temp = "";
+            }
+            i++;
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
