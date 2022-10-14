@@ -65,11 +65,14 @@ public class C_HeapMax {
             while (2 * i + 1 < heap.size()) {
                 int leftChild = 2 * i + 1;
                 int rightChild = 2 * i + 2;
-                int largestChild = leftChild;
-                if (rightChild < heap.size() && heap.get(rightChild) < heap.get(leftChild)) {
+                int largestChild = i;
+                if (leftChild < heap.size() && heap.get(leftChild) > heap.get(largestChild)) {
+                    largestChild = leftChild;
+                }
+                if (rightChild < heap.size() && heap.get(rightChild) > heap.get(largestChild)){
                     largestChild = rightChild;
                 }
-                if (heap.get(i) <= heap.get(largestChild)) {
+                    if (largestChild == i) {
                     break;
                 }
                 swap(i, largestChild);

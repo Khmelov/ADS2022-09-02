@@ -65,6 +65,7 @@ public class C_HeapMax {
                 heap.set(i,heap.get(i) ^ heap.get((i - 1) / 2 ));
                 heap.set((i - 1)/2,heap.get((i - 1) / 2 ) ^ heap.get(i) );
                 heap.set(i,heap.get(i) ^ heap.get((i - 1) / 2 ));
+                i = (i - 1)  / 2;
             }
             return ( i - 1) / 2;
         }
@@ -77,7 +78,10 @@ public class C_HeapMax {
         }
 
         Long extractMax() { //извлечение и удаление максимума
-            Long result = heap.remove(0);
+            Long result = heap.get(0);
+            heap.set(0,0L);
+            siftDown(0);
+            heap.remove(heap.size() - 1);
             return result;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1

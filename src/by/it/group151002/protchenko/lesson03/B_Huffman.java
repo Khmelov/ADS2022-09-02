@@ -2,6 +2,8 @@ package by.it.group151002.protchenko.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -43,16 +45,31 @@ import java.util.Scanner;
 public class B_Huffman {
 
     String decode(File file) throws FileNotFoundException {
-        StringBuilder result=new StringBuilder();
+        StringBuilder result = new StringBuilder();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(file);
         Integer count = scanner.nextInt();
         Integer length = scanner.nextInt();
+        scanner.close();
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        //тут запишите ваше решение
 
-
-
+        Scanner scan = new Scanner(file);
+        scan.nextLine();
+        Map<String, Character> map = new HashMap<>();
+        for (int i = 0; i < count; i++) {
+            String s = scan.nextLine();
+            map.put(s.substring(3), s.charAt(0));
+        }
+        String code = scan.nextLine();
+        scan.close();
+        int start = 0;
+        for (int end = 0; end <= code.length(); end++) {
+            if (map.containsKey(code.substring(start, end))) {
+                result.append(map.get(code.substring(start, end)));
+                start = end;
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
