@@ -40,14 +40,13 @@ public class C_GetInversions {
         int res = 0;
         int[] result = new int[right - left];
         while ((left + it1 < mid) && (mid + it2 < right)){
-            if (a[left + it1] < a[mid + it2]){
+            if (a[left + it1] <= a[mid + it2]){
                 result[it1 + it2] = a[left + it1];
                 it1 += 1;}
             else {
                 result[it1 + it2] = a[mid + it2];
-                if (a[left + it1] > a[mid + it2] ){
-                    res += mid - left - it1 + 1;
-                }
+
+                    res += mid - left - it1;
                 it2 += 1;
 
             }}
@@ -75,7 +74,7 @@ public class C_GetInversions {
         int result = 0;
         for (int i = 1; i <n; i *= 2){
             for ( int j = 0; j < n - i;j += 2 * i)
-                result += merge(a, j, j + i, Integer.min(j + 2 * i, n));
+                result += merge(a, j, j + i, Integer.min(j + 2 * i, n ));
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -94,7 +93,7 @@ public class C_GetInversions {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/novik/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
