@@ -3,7 +3,10 @@ package by.it.group151001.pastukhou.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import static java.lang.Math.max;
 
 /*
 Задача на программирование: наибольшая невозростающая подпоследовательность
@@ -51,10 +54,49 @@ public class C_LongNotUpSubSeq {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+        int[] dp = new int[n];
+        int[] pos = new int[n];
+        int[] prev = new int[n];
+        dp[0] = 2000000001;
+        pos[0] = -1;
+        for (int i = 1; i < n; ++i) {
+            dp[i] = -1;
+        }
+        for (int i = 0; i < n; ++i) {
+            int l = 0, r = n;
+            while (r - l > 1) {
+                int mid = (l + r) / 2;
+                if (dp[mid] >= m[i]) {
+                    l = mid;
+                } else {
+                    r = mid;
+                }
+            }
+            int j = r;
+            if (dp[j - 1] >= m[i] && m[i] >= dp[j]) {
+                dp[j] = m[i];
+                pos[j] = i;
+                prev[i] = pos[j - 1];
+                result = max(result, j);
+            }
 
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+
+        }
+        ArrayList<Integer> ans = new ArrayList<Integer>();
+        int p = pos[result];
+        while (p != -1) {
+            ans.add(0, p + 1);
+            p = prev[p];
+        }
+        System.out.println(result);
+        for (int i = 0; i < ans.size(); i++) {
+            System.out.print(ans.get(i));
+            System.out.print(" ");
+        }
         return result;
+        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+
     }
 
 
@@ -63,7 +105,6 @@ public class C_LongNotUpSubSeq {
         InputStream stream = new FileInputStream(root + "by/it/group151001/pastukhou/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
         int result = instance.getNotUpSeqSize(stream);
-        System.out.print(result);
     }
 
 }

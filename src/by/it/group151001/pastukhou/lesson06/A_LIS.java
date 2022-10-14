@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
+import static java.lang.Math.max;
+
 /*
 Задача на программирование: наибольшая возростающая подпоследовательность
 см.     https://ru.wikipedia.org/wiki/Задача_поиска_наибольшей_увеличивающейся_подпоследовательности
@@ -46,8 +48,18 @@ public class A_LIS {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
-
-
+        int[] dp = new int[n];
+        dp[0] = 1;
+        for (int i = 1; i < n; ++i) {
+            dp[i] = 1;
+            for (int j = 0; j < i; ++j) {
+                if (m[i] > m[j] && dp[i] < dp[j] + 1) {
+                    dp[i] = dp[j] + 1;
+                }
+            }
+            result = max(dp[i], result);
+        }
+        result = dp[n - 1];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

@@ -25,10 +25,21 @@ public class B_CountSort {
         //размер массива
         int n = scanner.nextInt();
         int[] points=new int[n];
-
+        int[] cnt = new int[11];
+        for (int i = 1; i <= 10; i++) {
+            cnt[i] = 0;
+        }
         //читаем точки
         for (int i = 0; i < n; i++) {
             points[i]=scanner.nextInt();
+            cnt[points[i]]++;
+        }
+        int i = 0;
+        for (int j = 1; j <= 10; ++j) {
+            while (cnt[j]-- > 0) {
+                points[i] = j;
+                i++;
+            }
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
 

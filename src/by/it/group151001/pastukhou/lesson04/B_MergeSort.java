@@ -21,6 +21,47 @@ Sample Output:
 */
 public class B_MergeSort {
 
+    int[] mergeSort(int[] a, int n) {
+        if (n == 1) return a;
+        int mid = n / 2;
+        int b[] = new int[mid];
+        for (int i = 0; i < mid; i++) {
+            b[i] = a[i];
+        }
+        int c[] = new int[n - mid];
+        for (int i = mid; i < n; i++) {
+            c[i - mid] = a[i];
+        }
+        b = mergeSort(b, mid);
+        c = mergeSort(c, n - mid);
+        int[] res = new int[n];
+        int i = 0, bi = 0, ci = 0;
+        while (bi < mid && ci < n - mid) {
+            if (b[bi] <= c[ci]) {
+                res[i] = b[bi];
+                bi++;
+            } else {
+                res[i] = c[ci];
+                ci++;
+            }
+            i++;
+        }
+        if (bi == mid) {
+            while (ci < n - mid) {
+                res[i] = c[ci];
+                ci++;
+                i++;
+            }
+        } else {
+            while (bi < mid) {
+                res[i] = b[bi];
+                bi++;
+                i++;
+            }
+        }
+        return res;
+    }
+
     int[] getMergeSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -34,7 +75,7 @@ public class B_MergeSort {
             a[i] = scanner.nextInt();
             System.out.println(a[i]);
         }
-
+        a = mergeSort(a, n);
         // тут ваше решение (реализуйте сортировку слиянием)
         // https://ru.wikipedia.org/wiki/Сортировка_слиянием
 

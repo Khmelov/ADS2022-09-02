@@ -35,6 +35,51 @@ Sample Output:
 
 public class C_GetInversions {
 
+    int[] mergeSort(int[] a, int n) {
+        if (n == 1) return a;
+        int mid = n / 2;
+        int b[] = new int[mid + 1];
+        for (int i = 0; i < mid; i++) {
+            b[i] = a[i];
+        }
+        b[mid] = 0;
+        int c[] = new int[n - mid + 1];
+        for (int i = mid; i < n; i++) {
+            c[i - mid] = a[i];
+        }
+        c[n - mid] = 0;
+        b = mergeSort(b, mid);
+        c = mergeSort(c, n - mid);
+        int[] res = new int[n + 1];
+        res[n] = b[mid] + c[n - mid];
+        int i = 0, bi = 0, ci = 0;
+        while (bi < mid && ci < n - mid) {
+            if (b[bi] <= c[ci]) {
+                res[i] = b[bi];
+                bi++;
+            } else {
+                res[i] = c[ci];
+                ci++;
+                res[n] += mid - bi;
+            }
+            i++;
+        }
+        if (bi == mid) {
+            while (ci < n - mid) {
+                res[i] = c[ci];
+                ci++;
+                i++;
+            }
+        } else {
+            while (bi < mid) {
+                res[i] = b[bi];
+                bi++;
+                i++;
+            }
+        }
+        return res;
+    }
+
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -46,7 +91,8 @@ public class C_GetInversions {
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
-        int result = 0;
+        a = mergeSort(a, n);
+        return a[n];
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -58,7 +104,7 @@ public class C_GetInversions {
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+
     }
 
 
