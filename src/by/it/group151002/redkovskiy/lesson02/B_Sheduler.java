@@ -1,6 +1,7 @@
 package by.it.group151002.redkovskiy.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны интервальные события events
@@ -40,20 +41,29 @@ public class B_Sheduler {
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
-    List<Event> calcStartTimes(Event[] events, int from, int to) {
+    List<by.it.group151002.redkovskiy.lesson02.B_Sheduler.Event> calcStartTimes(by.it.group151002.redkovskiy.lesson02.B_Sheduler.Event[] events, int from, int to) {
         //events - события которые нужно распределить в аудитории
         //в период [from, int] (включительно).
         //оптимизация проводится по наибольшему числу непересекающихся событий.
         //начало и конец событий могут совпадать.
-        List<Event> result;
+        List<by.it.group151002.redkovskiy.lesson02.B_Sheduler.Event> result;
         result = new ArrayList<>();
+        Arrays.sort(events,this::compareEvents);
         //ваше решение.
-
-
-
-
-
-
+        int i = 0;
+        while(events[i].start < from && i < events.length){
+            i++;
+        }
+        result.add(events[i]);
+        while(result.get(result.size() - 1).stop <= to && i < events.length){
+            if(events[i].start >= result.get(result.size() - 1).stop && events[i].stop <= to)
+                result.add(events[i]);
+            i++;
+        }
         return result;                        //вернем итог
+    }
+    private int compareEvents(Event x, Event y){
+        int startCompareResult = Integer.compare(x.start,y.start);
+        return startCompareResult == 0 ? Integer.compare(x.stop,y.stop) : startCompareResult;
     }
 }
