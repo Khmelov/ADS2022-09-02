@@ -14,6 +14,7 @@ package by.it.group151001.verghel.lesson02;
  */
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -37,9 +38,7 @@ public class C_GreedyKnapsack {
         @Override
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
-
-
-            return 0;
+            return o.cost / o.weight - this.cost / this.weight;
         }
     }
 
@@ -57,18 +56,21 @@ public class C_GreedyKnapsack {
         }
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
 
-        //тут необходимо реализовать решение задачи
-        //итогом является максимально воможная стоимость вещей в рюкзаке
-        //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
-        //тут реализуйте алгоритм сбора рюкзака
-        //будет особенно хорошо, если с собственной сортировкой
-        //кроме того, можете описать свой компаратор в классе Item
-        //ваше решение.
 
-
-
-
+        Arrays.sort(items);
+        System.out.println(Arrays.toString(items));
+        int i = 0;
+        while(i < items.length && W > 0){
+            if(items[i].weight<W) {
+                W = W - items[i].weight;
+                result = result + items[i].cost;
+            } else{
+                result = result + items[i].cost/items[i].weight*W;
+                W = 0;
+            }
+            i++;
+        }
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
