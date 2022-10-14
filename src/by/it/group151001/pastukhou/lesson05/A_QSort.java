@@ -91,6 +91,7 @@ public class A_QSort {
         int n = scanner.nextInt();
         Segment[] segments=new Segment[n];
         //число точек
+
         int m = scanner.nextInt();
         int[] points=new int[m];
         int[] result=new int[m];
