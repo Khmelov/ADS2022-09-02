@@ -1,4 +1,4 @@
-package by.it;
+package by.it.group151002.talalaev.lesson01;
 
 import org.junit.Test;
 

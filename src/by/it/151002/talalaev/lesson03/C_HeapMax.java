@@ -1,4 +1,4 @@
-package by.it;
+package by.it.group151002.talalaev.lesson03;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package by.it;
+package by.it.group151002.talalaev.lesson02;
 
 import java.util.ArrayList;
 import java.util.Arrays;
