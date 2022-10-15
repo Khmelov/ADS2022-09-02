@@ -1,6 +1,7 @@
 package by.it.group151004.prokopchuk.lesson02;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 /*
 даны интервальные события events
@@ -48,6 +49,39 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         //ваше решение.
+
+        List<Event> eventList = new ArrayList<>();
+        Collections.addAll(eventList, events);
+        int start = from;
+        while (start < to) {
+            int min = 0;
+            for (int i = 0; i < eventList.size(); i++) {
+                if ((eventList.get(i).start - start) <= (eventList.get(min).start - start)) {
+                    min = i;
+                }
+            }
+            start = eventList.get(min).start;
+            int min_length = eventList.get(min).stop - eventList.get(min).start;
+            int min_length_i = min;
+            for (int i = 0; i < eventList.size(); i++) {
+                if (eventList.get(i).start == start) {
+                    if ((eventList.get(i).stop - eventList.get(i).start) < min_length) {
+                        min_length_i = i;
+                    }
+                }
+            }
+            result.add(eventList.get(min_length_i));
+            start = eventList.get(min_length_i).stop;
+            eventList.clear();
+            for (Event event : events) {
+                if (event.start >= start) {
+                    eventList.add(event);
+                }
+            }
+            if (eventList.size() == 0){
+                break;
+            }
+        }
 
 
 

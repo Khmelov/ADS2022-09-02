@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -45,9 +44,12 @@ public class Lesson2Test {
                 new B_Sheduler.Event(8, 9), new B_Sheduler.Event(4, 6), new B_Sheduler.Event(8, 10), new B_Sheduler.Event(7, 10)
         };
 
-        List<B_Sheduler.Event> starts = instance.calcStartTimes(events, 0, 10);  //рассчитаем оптимальное заполнение аудитории
-        boolean ok=starts.toString().equals("[(0:1), (1:2), (2:3), (3:5), (6:7), (7:9)]");
-        assertTrue("B_Sheduler failed", ok);
+        List<B_Sheduler.Event> starts1 = instance.calcStartTimes(events, 0, 10);  //рассчитаем оптимальное заполнение аудитории
+        String expected1 = "[(0:1), (1:2), (2:3), (3:5), (6:7), (7:9)]";
+        assertEquals(expected1, starts1.toString());
+        List<B_Sheduler.Event> starts2 = instance.calcStartTimes(events,2, 8);
+        String expected2 = "[(2:3), (3:5), (6:7)]";
+        assertEquals(expected2, starts2.toString());
     }
     @Test
     public void C_GreedyKnapsack() throws Exception {
