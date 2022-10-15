@@ -8,7 +8,6 @@ package by.it.group151002.protchenko.lesson02;
     120 30
     100 50
 Все это указано в файле (by/it/a_khmelev/lesson02/greedyKnapsack.txt)
-
 Необходимо собрать наиболее дорогой вариант рюкзака для этого объема
 Предметы можно резать на кусочки (т.е. алгоритм будет жадным)
  */
@@ -36,11 +35,43 @@ public class C_GreedyKnapsack {
 
         @Override
         public int compareTo(Item o) {
-            //тут может быть ваш компаратор
-
-
-            return 0;
+            return this.cost - o.cost;
         }
+    }
+
+    Item[] merge(Item[] arrA, Item[] arrB) {
+        Item[] arr = new Item[arrA.length + arrB.length];
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (i < arrA.length && j < arrB.length) {
+            if (((double)arrA[i].cost / arrA[i].weight) > ((double)arrB[j].cost / arrB[j].weight)) {
+                arr[k++] = arrA[i++];
+            } else {
+                arr[k++] = arrB[j++];
+            }
+        }
+        while (i < arrA.length) {
+            arr[k++] = arrA[i++];
+        }
+        while (j < arrB.length) {
+            arr[k++] = arrB[j++];
+        }
+        return arr;
+    }
+    Item[] sort(Item[] arr) {
+        if (arr.length < 2) {
+            return arr;
+        }
+
+        Item[] arrA = new Item[arr.length / 2];
+        System.arraycopy(arr, 0, arrA, 0, arr.length/2);
+        Item[] arrB = new Item[arr.length - arr.length / 2];
+        System.arraycopy(arr, arr.length/2, arrB, 0, arr.length - arr.length / 2);
+
+        arrA = sort(arrA);
+        arrB = sort(arrB);
+        return merge(arrA, arrB);
     }
 
     double calc(File source) throws FileNotFoundException {
@@ -57,18 +88,30 @@ public class C_GreedyKnapsack {
         }
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
 
+        items = sort(items);
+
+        double result = 0;
+        int leftWeight = W;
+        int i = 0;
+        while (leftWeight != 0 || i < items.length) {
+            if (leftWeight > items[i].weight) {
+                result += items[i].cost;
+                leftWeight -= items[i].weight;
+            } else {
+                result += (double)items[i].cost * leftWeight / items[i].weight;
+                leftWeight = 0;
+            }
+            i++;
+        }
+
         //тут необходимо реализовать решение задачи
         //итогом является максимально воможная стоимость вещей в рюкзаке
         //вещи можно резать на кусочки (непрерывный рюкзак)
-        double result = 0;
+
         //тут реализуйте алгоритм сбора рюкзака
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
-
-
-
-
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
