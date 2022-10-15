@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class C_LongNotUpSubSeq {
 
-    int getNotUpSeqSize(InputStream stream) {
+    public int getNotUpSeqSize(InputStream stream) {
         Scanner scanner = new Scanner(stream);
         int n = scanner.nextInt();
 
