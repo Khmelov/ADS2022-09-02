@@ -3,6 +3,7 @@ package by.it.group151004.belsky.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -45,12 +46,22 @@ public class A_BinaryFind {
         int[] result=new int[k];
         for (int i = 0; i < k; i++) {
             int value = scanner.nextInt();
+
             //тут реализуйте бинарный поиск индекса
-
-
-
-
-            result[i]=0;
+            int index = -2;
+            int l = 0, r = n-1, mid;
+            while (l <= r) {
+                mid = (r+l) / 2;
+                if (a[mid] < value) {
+                    l = mid+1;
+                } else if (a[mid] > value) {
+                    r = mid-1;
+                } else {
+                    index = mid;
+                    break;
+                }
+            }
+            result[i]=index+1;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;

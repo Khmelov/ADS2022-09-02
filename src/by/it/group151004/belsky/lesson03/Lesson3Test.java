@@ -22,20 +22,39 @@ public class Lesson3Test {
     @Test
     public void A() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelev/lesson03/dataHuffman.txt");
+        File f = new File(root + "by/it/group151004/belsky/lesson03/dataHuffman.txt");
         A_Huffman instance = new A_Huffman();
         String result = instance.encode(f);
         boolean ok=result.equals("01001100100111");
+        assertTrue("A failed", ok);
+
+        result = instance.encode(new File(root + "by/it/group151004/belsky/lesson03/dataHuffman1.txt"));
+        System.out.println(result);
+        ok = result.equals("1010101111110000010100111110110");
+        assertTrue("A failed", ok);
+
+        result = instance.encode(new File(root + "by/it/group151004/belsky/lesson03/dataHuffman2.txt"));
+        ok = result.equals("0");
         assertTrue("A failed", ok);
     }
 
     @Test
     public void B() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelev/lesson03/encodeHuffman.txt");
+        File f = new File(root + "by/it/group151004/belsky/lesson03/encodeHuffman.txt");
         B_Huffman instance = new B_Huffman();
         String result = instance.decode(f);
         boolean ok=result.equals("abacabad");
+        assertTrue("B failed", ok);
+
+        result = instance.decode(new File(root + "by/it/group151004/belsky/lesson03/encodeHuffman1.txt"));
+//        System.out.println(result);
+        ok=result.equals("abbbbaab");
+        assertTrue("B failed", ok);
+
+        result = instance.decode(new File(root + "by/it/group151004/belsky/lesson03/encodeHuffman2.txt"));
+//        System.out.println(result);
+        ok=result.equals("abcccbaaabc");
         assertTrue("B failed", ok);
     }
     @Test

@@ -3,6 +3,7 @@ package by.it.group151004.belsky.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -31,11 +32,18 @@ public class B_CountSort {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
+        final int N = 10;
+        int[] counts = new int[N];
 
+        for (int point : points)
+            counts[point-1]++;
 
-
-
-
+        int k = 0;
+        for (int i = 0;i < N;i++) {
+            for (int j = 0;j < counts[i];j++) {
+                points[k++] = i+1;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
     }
