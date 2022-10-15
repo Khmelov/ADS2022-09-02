@@ -3,7 +3,11 @@ package by.it.group151001.novik.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.OptionalInt;
 import java.util.Scanner;
+
+import static java.util.Arrays.stream;
 
 /*
 Задача на программирование: наибольшая возростающая подпоследовательность
@@ -46,8 +50,16 @@ public class A_LIS {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
-
-
+        int[]D = new int[n];
+        for(int i = 0; i < m.length; i++){
+            D[i] = 1;
+            for (int j = 0; j < i; j++){
+                if((m[j] < m[i])&&(D[j] + 1 > D[i])) D[i] = D[j] + 1;
+            }
+        }
+        for (int i = 1; i < m.length; i++){
+            if (D[i] > result) result = D[i];
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

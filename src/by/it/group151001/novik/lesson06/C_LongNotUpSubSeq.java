@@ -3,6 +3,8 @@ package by.it.group151001.novik.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -38,7 +40,7 @@ import java.util.Scanner;
 
 public class C_LongNotUpSubSeq {
 
-    int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
+    int[] getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -49,10 +51,34 @@ public class C_LongNotUpSubSeq {
         for (int i = 0; i < n; i++) {
             m[i] = scanner.nextInt();
         }
+        scanner.close();
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
+        int[]result = new int[n];
+        result[0] = 0;
+        int[]D = new int[n];
+        int[]prev = new int[n];
+        for(int i = 0; i < m.length; i++){
+            D[i] = 1;
+            prev[i] = -1;
+            for (int j = 0; j < i; j++){
+                if((m[j] >= m[i])&&(D[j] + 1 > D[i])){
+                    D[i] = D[j] + 1;
+                    prev[i] = j;
+                }
+            }
+        }
+        int k = 0;
+        for (int i = 1; i < m.length; i++){
+            if (D[i] > result[0]){
+                result[0] = D[i];
+                k = i;
+            }
+        }
+        result = Arrays.copyOfRange(result,0,k + 1);
+        while(k > -1){
+            result[D[k]] = k + 1;
+            k = prev[k];
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -62,8 +88,12 @@ public class C_LongNotUpSubSeq {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
-        int result = instance.getNotUpSeqSize(stream);
-        System.out.print(result);
+        int[] result = instance.getNotUpSeqSize(stream);
+
+        System.out.println(result[0]);
+        result = Arrays.copyOfRange(result,1,result.length);
+        System.out.println(Arrays.toString(result));
+
     }
 
 }
