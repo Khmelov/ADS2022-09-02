@@ -32,7 +32,12 @@ public class FiboB {
         for(int i = 2;i < n; i++){
             cache[i] = cache[i-1].add(cache[i-2]);
         }
-        return cache[n - 1];
+
+        if(n > 1) {
+            return cache[n - 1];
+        }
+        else
+            return new BigInteger("-1");
     }
 }
 

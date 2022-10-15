@@ -42,7 +42,8 @@ public class B_Sheduler {
                 new Event(8, 9),  new Event(4, 6), new Event(8, 10), new Event(7, 10)
         };
 
-        List<Event> starts = instance.calcStartTimes(events,0,10);  //рассчитаем оптимальное заполнение аудитории
+        List<Event> starts;  //рассчитаем оптимальное заполнение аудитории
+        starts = instance.calcStartTimes(events,0,10);
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
