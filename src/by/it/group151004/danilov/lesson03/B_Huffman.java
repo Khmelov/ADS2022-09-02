@@ -1,8 +1,11 @@
-package by.it.a_khmelev.lesson03;
+package by.it.group151004.danilov.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.charset.CharsetEncoder;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 // Lesson 3. B_Huffman.
 // Восстановите строку по её коду и беспрефиксному коду символов.
@@ -50,9 +53,22 @@ public class B_Huffman {
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
+        Map<String, Character> codes = new TreeMap<>();
+        for (int i = 0; i < count; i++) {
+            Character ch = scanner.next().charAt(0);
+            String code = scanner.next();
+            codes.put(code, ch);
+        }
 
-
-
+        String code = scanner.next();
+        int inRange = 0;
+        for (int i = 0; i <= length; i++) {
+            String range = code.substring(inRange, i);
+            if (codes.get(range) != null) {
+                result.append(codes.get(range));
+                inRange = i;
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
@@ -60,7 +76,7 @@ public class B_Huffman {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelev/lesson03/encodeHuffman.txt");
+        File f = new File(root + "by/it/group151004/danilov/lesson03/encodeHuffman.txt");
         B_Huffman instance = new B_Huffman();
         String result = instance.decode(f);
         System.out.println(result);

@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson03;
+package by.it.group151004.danilov.lesson03;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,21 +44,48 @@ public class C_HeapMax {
         private List<Long> heap = new ArrayList<>();
 
         int siftDown(int i) { //просеивание вверх
-
+            while (2 * i + 1 < heap.size())  {
+                int leftChild = 2 * i + 1;
+                int rightChild = 2 * i + 2;
+                int chosenChild = leftChild;
+                if ((rightChild < heap.size()) && (heap.get(rightChild)) > heap.get(leftChild))
+                    chosenChild = rightChild;
+                if (heap.get(chosenChild) > heap.get(i)) {
+                    long temp = heap.get(i);
+                    heap.set(i, heap.get(chosenChild));
+                    heap.set(chosenChild, temp);
+                    i = chosenChild;
+                }
+                else
+                    break;
+            }
             return i;
         }
 
         int siftUp(int i) { //просеивание вниз
-
+            while (i > 0 && (heap.get((i - 1) / 2) < heap.get(i))) {
+                int parent = (i - 1) / 2;
+                long temp = heap.get(parent);
+                heap.set(parent, heap.get(i));
+                heap.set(i, temp);
+                i = parent;
+            }
             return i;
         }
 
         void insert(Long value) { //вставка
+            heap.add(value);
+            siftUp(heap.size() - 1);
         }
 
         Long extractMax() { //извлечение и удаление максимума
             Long result = null;
-
+            if (heap.size() > 0) {
+                result = heap.get(0);
+                heap.set(0, heap.get(heap.size() - 1));
+                heap.remove(heap.size() - 1);
+                siftDown(0);
+            }
             return result;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
@@ -92,7 +119,7 @@ public class C_HeapMax {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson03/heapData.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/danilov/lesson03/heapData.txt");
         C_HeapMax instance = new C_HeapMax();
         System.out.println("MAX="+instance.findMaxValue(stream));
     }
