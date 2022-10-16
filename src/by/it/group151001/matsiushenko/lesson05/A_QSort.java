@@ -37,14 +37,62 @@ import java.util.Scanner;
 
 public class A_QSort {
 
+    public static void QSort(Segment[] periods, int MinI, int MaxI){
+        int i = MinI;
+        int j = MaxI;
+        Segment x = periods[(MinI + MaxI) / 2];
+        do{
+            while(periods[i].compareTo(x) < 0) {
+                i++;
+            }
+            while(periods[j].compareTo(x) > 0) {
+                j--;
+            }
+            if(i <= j){
+                Segment temp = periods[i];
+                periods[i] = periods[j];
+                periods[j] = temp;
+                j--;
+                i++;
+            }
+        }while(i < j);
+        if(i < MaxI){
+            QSort(periods, i, MaxI);
+            if(j > MinI) {
+                QSort(periods, MinI, j);
+            }
+        }
+    }
+    public static int[] getDuplicates(Segment[] periods, int[] events){
+        int[] res = new int[events.length];
+        QSort(periods, 0, periods.length - 1);
+        for(int i = 0; i < events.length; i++){
+            for (Segment period : periods) {
+                if (period.stop >= events[i] && period.start <= events[i]) {
+                    res[i]++;
+                } else {
+                    if (period.start > events[i]) {
+                        break;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
     //отрезок
     private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if (start <= stop) {
+                this.start = start;
+                this.stop = stop;
+            }else{
+                this.start = stop;
+                this.stop = start;
+            }
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
         }
@@ -52,8 +100,12 @@ public class A_QSort {
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
+            int res = this.start - o.start;
 
-            return 0;
+            if (res != 0){
+                res = res > 0 ? 1 : -1;
+            }
+            return res;
         }
     }
 
@@ -81,12 +133,12 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
-
-
+        int[] nDuplicates = getDuplicates(segments, points);
+        for (int nDuplicate : nDuplicates) {
+            System.out.println(nDuplicate);
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return nDuplicates;
     }
 
 
