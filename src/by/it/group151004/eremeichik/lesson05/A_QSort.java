@@ -3,6 +3,7 @@ package by.it.group151004.eremeichik.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -51,9 +52,7 @@ public class A_QSort {
 
         @Override
         public int compareTo(Segment o) {
-            //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+            return Integer.compare(start,o.start);
         }
     }
 
@@ -79,16 +78,25 @@ public class A_QSort {
         for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        Arrays.sort(segments);
+        return calculateDetectionCount(segments,points);
     }
 
+    int[] calculateDetectionCount(Segment[] segments, int[] points){
+        int[] result = new int[points.length];
+        for(int i = 0;i<points.length;i++){
+            int count = 0;
+            int segmentIndex = 0;
+            while(segmentIndex<segments.length && segments[segmentIndex].start<=points[i]){
+                if(segments[segmentIndex].stop>=points[i]){
+                    count++;
+                }
+                segmentIndex++;
+            }
+            result[i] = count;
+        }
+        return result;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
