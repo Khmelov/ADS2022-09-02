@@ -1,0 +1,7 @@
+6
+Insert 5
+Insert 5
+ExtractMax
+Insert 5
+Insert 5
+ExtractMax
