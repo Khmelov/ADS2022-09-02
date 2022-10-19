@@ -29,9 +29,9 @@ public class FileMethods {
 
     int[] getRandomArray(String fullFilePath) throws IOException {
         RandomValuesMethods randomValues = new RandomValuesMethods();
-        int arrayLength = randomValues.getIntRandomValueInRange(0, 1000);
+        int arrayLength = randomValues.getIntRandomValueInRange(0, 10000);
         int lowerBound = randomValues.getIntRandomValueInRange(0, 10);
-        int upperBound = randomValues.getIntRandomValueInRange(11, 100);
+        int upperBound = randomValues.getIntRandomValueInRange(11, 100000);
         FileMethods fileMethods = new FileMethods();
         fileMethods.setArrayDataFile(fullFilePath, arrayLength, lowerBound, upperBound);
         return fileMethods.getArrayDataFile(fullFilePath);

@@ -69,4 +69,25 @@ public class C_LongNotUpSubSeq_Dynamic_Array {
         }
         return result;
     }
-}
+
+    int[] getLargestNotUpSequencePositions (int[] inputArray, int[] sequenceLengthArray) {
+        if (inputArray == null || sequenceLengthArray == null)
+            return null;
+        int notUnSequenceEndIndex = getLargestValueIndex(sequenceLengthArray);
+        if (notUnSequenceEndIndex == -1)
+            return null;
+        int[] resultArray = new int[sequenceLengthArray[notUnSequenceEndIndex]];
+        int resultIndex = resultArray.length - 1;
+        resultArray[resultIndex--] = notUnSequenceEndIndex;
+        for (int i = notUnSequenceEndIndex - 1; i >= 0; i--) {
+            if(inputArray[i] >= inputArray[notUnSequenceEndIndex]) {
+                if (sequenceLengthArray[i] == sequenceLengthArray[notUnSequenceEndIndex] - 1) {
+                    resultArray[resultIndex--] = i;
+                    notUnSequenceEndIndex = i;
+                }
+            }
+        }
+        return resultArray;
+    }
+
+    }

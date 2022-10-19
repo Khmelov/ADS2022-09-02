@@ -2,8 +2,6 @@ package by.it.group151002.bybikov.lesson06;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.assertTrue;
 
 public class Lesson6Test {
@@ -58,6 +56,28 @@ public class Lesson6Test {
 
     }
 
+    private int[] getArrayBePositions (int[] inputArray, int[] positionsArray) {
+        if (inputArray == null || positionsArray == null)
+            return null;
+        int[] resultArray = new int[positionsArray.length];
+        for (int i = 0; i < positionsArray.length; i++) {
+            resultArray[i] = inputArray[positionsArray[i]];
+        }
+        return resultArray;
+    }
+
+    private boolean isNotUpSortArray (int[] array) {
+        if (array == null)
+            return true;
+        boolean isSorted = true;
+        for (int i = 1; i < array.length && isSorted; i++) {
+            if(array[i - 1] < array[i]) {
+                isSorted = false;
+            }
+        }
+        return isSorted;
+    }
+
     @Test
     public void C() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
@@ -69,10 +89,19 @@ public class Lesson6Test {
         for (int i = 0; i < 1000 && isCorrect; i++) {
             int[] inputArray = fileMethods.getRandomArray(fullFilePath);
             int[] dynamicProgArray = dynamic_Array.getNotUpSequenceLengthArray(inputArray);
-            int firstLength = dynamic_Array.getLargestNotUpSequenceLength(dynamicProgArray);
+            int dynamicArrayResultLength = dynamic_Array.getLargestNotUpSequenceLength(dynamicProgArray);
             int[][] dynamicProgMatrix = longest_Common_SubSequence.getLongestCommonSubSequenceMatrix(inputArray);
-            int secondLength = longest_Common_SubSequence.getLargestNotUpSequenceLength(dynamicProgMatrix);
-            isCorrect = firstLength == secondLength;
+            int dynamicMatrixResultLength = longest_Common_SubSequence.getLargestNotUpSequenceLength(dynamicProgMatrix);
+            isCorrect = dynamicArrayResultLength == dynamicMatrixResultLength;
+            if(isCorrect) {
+                int[] dynamicPositionsArray = dynamic_Array.getLargestNotUpSequencePositions(inputArray, dynamicProgArray);
+                int[] dynamicPositionsMatrix = longest_Common_SubSequence.getLargestNotUpSequencePositions(inputArray, dynamicProgMatrix);
+                if (dynamicPositionsArray != null && dynamicPositionsMatrix != null)
+                    isCorrect = dynamicPositionsArray.length == dynamicArrayResultLength && dynamicPositionsMatrix.length == dynamicMatrixResultLength;
+                int[] dynamicNotUpSequenceByArray = getArrayBePositions(inputArray, dynamicPositionsArray);
+                int[] dynamicNotUpSequenceByMatrix = getArrayBePositions(inputArray, dynamicPositionsMatrix);
+                isCorrect = isCorrect && isNotUpSortArray(dynamicNotUpSequenceByArray) && isNotUpSortArray(dynamicNotUpSequenceByMatrix);
+            }
         }
         assertTrue("C failed", isCorrect);
     }

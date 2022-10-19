@@ -59,8 +59,9 @@ public class C_LongNotUpSubSeq_Longest_Common_SubSequence {
                 if(notUpSortedArray[notUpSortedCounter - 1] == inputArray[inputCounter - 1]) {
                     dynamicMatrix[notUpSortedCounter][inputCounter] = dynamicMatrix[notUpSortedCounter - 1][inputCounter - 1] + 1;
                 }
-                int tmp = Math.max(dynamicMatrix[notUpSortedCounter - 1][inputCounter], dynamicMatrix[notUpSortedCounter][inputCounter - 1]);
-                dynamicMatrix[notUpSortedCounter][inputCounter] = Math.max(dynamicMatrix[notUpSortedCounter][inputCounter], tmp);
+                else {
+                    dynamicMatrix[notUpSortedCounter][inputCounter] = Math.max(dynamicMatrix[notUpSortedCounter - 1][inputCounter], dynamicMatrix[notUpSortedCounter][inputCounter - 1]);
+                }
             }
         }
         return dynamicMatrix;
@@ -78,5 +79,29 @@ public class C_LongNotUpSubSeq_Longest_Common_SubSequence {
             return 0;
         int resultIndex = longestCommonSubSequenceMatrix.length - 1;
         return longestCommonSubSequenceMatrix[resultIndex][resultIndex];
+    }
+
+    int[] getLargestNotUpSequencePositions (int[] inputArray, int[][] dynamicProgMatrix) {
+        if (dynamicProgMatrix == null || inputArray == null)
+            return null;
+        int[] notUpSortArray = mergeSort(inputArray);
+        int inputIndex = dynamicProgMatrix.length - 1;
+        int notUpSortIndex = dynamicProgMatrix.length - 1;
+        int[] resultArray = new int[dynamicProgMatrix[inputIndex][notUpSortIndex]];
+        int resultIndex = resultArray.length - 1;
+        while (inputIndex > 0 && notUpSortIndex > 0) {
+            if(inputArray[inputIndex - 1] == notUpSortArray[notUpSortIndex - 1]) {
+                resultArray[resultIndex--] = inputIndex - 1;
+                inputIndex--;
+                notUpSortIndex--;
+            }
+            else if (dynamicProgMatrix[notUpSortIndex - 1][inputIndex] > dynamicProgMatrix[notUpSortIndex][inputIndex - 1]){
+                notUpSortIndex--;
+            }
+            else {
+                inputIndex--;
+            }
+        }
+        return resultArray;
     }
 }
