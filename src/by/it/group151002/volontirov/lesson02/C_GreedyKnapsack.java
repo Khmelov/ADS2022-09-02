@@ -66,7 +66,7 @@ public class C_GreedyKnapsack {
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
-        Arrays.sort(items, Item::compareTo);
+        Arrays.sort(items);
         double weight = 0;
         int i = 0;
         while(weight < W){
