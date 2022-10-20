@@ -40,7 +40,6 @@ import java.util.*;
 
 public class A_Huffman {
 
-    //Изучите классы Node InternalNode LeafNode
     abstract class Node implements Comparable<Node> {
         public static int sum;
         //абстрактный класс элемент дерева
@@ -147,7 +146,7 @@ public class A_Huffman {
             priorityQueue.add(node);
         }
         Node root = priorityQueue.poll();
-
+        root.fillCodes("");
 
 
 

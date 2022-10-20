@@ -28,32 +28,40 @@ import java.util.Scanner;
 
 public class A_BinaryFind {
     int[] findIndex(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
-        Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+                try (Scanner scanner = new Scanner(stream)) {
+                    int n = scanner.nextInt();
+                    int[] a = new int[n];
+                    for (int i = 0; i < n; i++) {
+                        a[i] = scanner.nextInt();
+                    }
 
-        //размер отсортированного массива
-        int n = scanner.nextInt();
-        //сам отсортированный массива
-        int[] a=new int[n];
-        for (int i = 1; i <= n; i++) {
-            a[i-1] = scanner.nextInt();
-        }
+                    int k = scanner.nextInt();
+                    int[] result = new int[k];
+                    for (int i = 0; i < k; i++) {
+                        int value = scanner.nextInt();
+                        int left = 0;
+                        int right = n - 1;
+                        int mid = 0;
+                        boolean isFound = false;
+                        while (!isFound && left <= right) {
+                            mid = (left + right) / 2;
+                            if (a[mid] == value) {
+                                isFound = true;
+                                result[i] = mid + 1;
+                            } else if (a[mid] < value) {
+                                left = mid + 1;
+                            } else {
+                                right = mid - 1;
+                            }
+                        }
 
-        //размер массива индексов
-        int k = scanner.nextInt();
-        int[] result=new int[k];
-        for (int i = 0; i < k; i++) {
-            int value = scanner.nextInt();
-            //тут реализуйте бинарный поиск индекса
+                        if (!isFound) {
+                            result[i] = -1;
+                        }
 
-
-
-
-            result[i]=0;
-        }
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+                    }
+                    return result;
+                }
     }
 
 

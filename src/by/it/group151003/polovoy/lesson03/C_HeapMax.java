@@ -47,7 +47,7 @@ public class C_HeapMax {
                 max = left;
             }
 
-            int right = leftChild(i);
+            int right = rightChild(i);
             if (right < heap.size() && heap.get(right) > heap.get(max))
             {
                 max = right;
