@@ -45,6 +45,11 @@ public class C_GreedyKnapsack {
         }
     }
 
+    /**
+     * @param source
+     * @return
+     * @throws FileNotFoundException
+     */
     double calc(File source) throws FileNotFoundException {
         Scanner input = new Scanner(source);
         int n = input.nextInt();      //сколько предметов в файле
@@ -53,6 +58,7 @@ public class C_GreedyKnapsack {
         for (int i = 0; i < n; i++) { //создавая каждый конструктором
             items[i] = new Item(input.nextInt(), input.nextInt());
         }
+        input.close();
         //покажем предметы
         for (Item item:items) {
             System.out.println(item);
