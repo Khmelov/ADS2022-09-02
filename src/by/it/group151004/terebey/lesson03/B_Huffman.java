@@ -2,6 +2,8 @@ package by.it.group151004.terebey.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -50,7 +52,23 @@ public class B_Huffman {
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
+        Map<String, Character> map = new HashMap<>();
+        for (int i=0; i<count; i++){
+            String key = scanner.next();
+            String[] keys = key.split(":");
+            String value = scanner.next();
+            map.put(value,keys[0].charAt(0));
+        }
 
+        String code = scanner.next();
+        String temp="";
+        for (int i=0; i<code.length(); i++){
+            temp+=code.charAt(i);
+            if (map.containsKey(temp)) {
+                result.append(map.get(temp));
+                temp="";
+            }
+        }
 
 
 
@@ -60,7 +78,7 @@ public class B_Huffman {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelev/lesson03/encodeHuffman.txt");
+        File f = new File(root + "by/it/terebey/lesson03/encodeHuffman.txt");
         B_Huffman instance = new B_Huffman();
         String result = instance.decode(f);
         System.out.println(result);
