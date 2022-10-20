@@ -6,6 +6,9 @@ package by.it.group151001.shcherba.lesson01;
  * время расчета должно быть не более 2 секунд
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FiboC {
 
     private long startTime = System.currentTimeMillis();
@@ -17,15 +20,34 @@ public class FiboC {
     public static void main(String[] args) {
         FiboC fibo = new FiboC();
         int n = 10;
-        int m = 2;
-        System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
+        int m = 4;
+        System.out.printf("fasterC(%d) = %d \n\t time = %d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
     long fasterC(long n, int m) {
-        //Решение сложно найти интуитивно
-        //возможно потребуется дополнительный поиск информации
-        //см. период Пизано
-        return 0L;
+        {
+            long prev = 0;
+            long curr = 1;
+            long pisanoLength = 0;
+            List<Long> pisanoPeriod = new ArrayList<Long>();
+            boolean isFind = false;
+
+            while (!isFind)
+            {
+                long temp = 0;
+                temp = curr;
+                curr = (prev + curr) % m;
+                pisanoPeriod.add(prev);
+                prev = temp;
+                pisanoLength++;
+
+                if (prev == 0 && curr == 1)
+                    isFind = true;
+
+            }
+            n = n % pisanoLength;
+            return pisanoPeriod.get((int)n);
+        }
     }
 
 
