@@ -3,6 +3,7 @@ package by.it.group151001.milkovskaya.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -31,26 +32,40 @@ import java.util.Scanner;
 */
 
 public class A_LIS {
-
-
     int getSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //общая длина последовательности
         int n = scanner.nextInt();
+        if(n == 1){
+            return 1;
+        }
         int[] m = new int[n];
         //читаем всю последовательность
         for (int i = 0; i < n; i++) {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
-
+        int[] len = new int[n];
+        Arrays.fill(len,1);
+        for(int j = 1; j < n; j++){
+            for(int k = 0; k < j; k++){
+                if(m[j] > m[k]){
+                    if(len[j] <= len[k]){
+                        len[j] = len[k] + 1;
+                    }
+                }
+            }
+        }
+        int max = 0;
+        for(int l: len){
+            if(l > max){
+                max = l;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return max;
     }
 
 
