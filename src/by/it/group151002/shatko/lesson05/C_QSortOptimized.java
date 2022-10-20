@@ -33,7 +33,7 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
@@ -41,45 +41,117 @@ public class C_QSortOptimized {
             this.start = start;
             this.stop = stop;
         }
-
         @Override
-        public int compareTo(Object o) {
-            //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+        public int compareTo(Segment o){
+            return this.stop - o.stop;
         }
     }
 
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        //число отрезков отсортированного массива
+
         int n = scanner.nextInt();
-        Segment[] segments=new Segment[n];
+        Segment[] segments = new Segment[n];
         //число точек
         int m = scanner.nextInt();
-        int[] points=new int[m];
-        int[] result=new int[m];
+        int[] points = new int[m];
+        int[] result = new int[m];
 
-        //читаем сами отрезки
         for (int i = 0; i < n; i++) {
-            //читаем начало и конец каждого отрезка
-            segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
+            segments[i] = new Segment(scanner.nextInt(),scanner.nextInt());
         }
-        //читаем точки
-        for (int i = 0; i < n; i++) {
-            points[i]=scanner.nextInt();
+
+        for (int i = 0; i < m; i++) {
+            points[i] = scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        Q_Sort_fix(segments,0, segments.length - 1);
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        for (int i = 0; i < m; i++){
+            int res_bin_search = BinarySearch(segments,points[i],0, segments.length - 1);
+            if (res_bin_search > -1){
+                int count = 1;
+                int j = res_bin_search + 1;
+                while (j < n && points[i] <= segments[j].stop){
+                    if (segments[j].start <= points[i])
+                        count++;
+                    j++;
+                }
+                j = res_bin_search - 1;
+                while (j >= 0 && points[i] <= segments[j].stop){
+                    if (segments[j].start <= points[i])
+                        count++;
+                    j--;
+                }
+                result[i] = count;
+            }
+            else
+                result[i] = 0;
+        }
+
         return result;
     }
+    public static class Partition {
+        int left;
+        int right;
 
+        public Partition(int lt, int gt) {
+        }
+    }
+    Partition new_Partition(Segment[] A, int left, int right){
+        int lt = left;
+        int current = left;
+        int gt = right;
+        Segment value = A[left];
+        while (current <= gt) {
+            if (A[current].compareTo(value) < 0){
+                Segment temp = A[current];
+                A[current] = A[lt];
+                A[lt] = temp;
+                lt++;
+                current++;}
+            else{
+                if (A[current].compareTo(value) == 0)
+                    current++;
+                else{
+                    Segment temp = A[current];
+                    A[current] = A[gt];
+                    A[gt] = temp;
+                    gt--;
+                }
 
+            }
+        }
+        Partition res = new Partition(lt,gt);
+        return res;
+    }
+
+    Segment[] Q_Sort_fix(Segment[] A, int left, int right){
+        while (left < right) {
+            Partition middlePartition = new_Partition(A, left, right);
+            Q_Sort_fix(A, left, middlePartition.left - 1);
+            left = middlePartition.right + 1;
+
+        }
+        return A;
+    }
+    int BinarySearch(Segment[] A, int key, int left,int right){
+        while (left <= right){
+            int mid = (left + right)/2;
+            if (A[mid].start > key)
+                right = mid - 1;
+
+            else{
+                if (A[mid].stop < key)
+                    left = mid + 1;
+                else {
+                    return mid;
+                }
+            }
+        }
+        return -1;
+    }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataC.txt");
