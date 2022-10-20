@@ -16,18 +16,48 @@ public class FiboC {
 
     public static void main(String[] args) {
         FiboC fibo = new FiboC();
-        int n = 10;
-        int m = 2;
+        int n = 999999999;
+        int m = 321;
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
-    long fasterC(long n, int m) {
-        //Решение сложно найти интуитивно
-        //возможно потребуется дополнительный поиск информации
-        //см. период Пизано
-        return 0L;
+    public static long getperiod(long m) {
+
+        long num1 = 0;
+        long num2 = 1;
+        long buf = 0;
+
+        int i;
+        for (i = 0; i < m * m; i++) {
+            long temp;
+            temp = num2;
+            num2 = (num1 + num2) % m;
+            num1 = temp;
+
+        if (num1 == 0 && num2 == 1)
+             buf=i+1;
+        }
+        return buf;
     }
 
+    long fasterC(long n, int m) {
+        long periodfinal = getperiod(m);
+        n = n % periodfinal;
+        long num1 = 0;
+        long num2 = 1;
+        if (n == 0)
+            return 0;
+        else if (n == 1)
+            return 1;
+        int i;
+        for (i = 0; i < n - 1; i++) {
+            long temp;
+            temp = num2;
+            num2 = (num1 + num2) % m;
+            num1 = temp;
+        }
+        return num2 % m;
 
+    }
 }
 
