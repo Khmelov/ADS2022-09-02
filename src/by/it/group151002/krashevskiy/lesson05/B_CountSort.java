@@ -43,7 +43,6 @@ public class B_CountSort {
             }
         }
         sort(points, min, max);
-
         return points;
     }
 
