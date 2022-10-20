@@ -51,7 +51,7 @@ public class FiboC {
     private int PisanoPeriod(int p){
 
         int prev = 0;
-        int curr = 0;
+        int curr = 1;
         int tmp;
         int result = 0;
 
