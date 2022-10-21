@@ -1,6 +1,7 @@
 package by.it.group151003.mytnik.lesson06;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_LongNotUpSubSeq {
@@ -14,12 +15,20 @@ public class C_LongNotUpSubSeq {
             m[i] = scanner.nextInt();
         }
 
-        // int[] testArray = {15, 27, 14, 38, 63, 55, 46, 65, 85};
+        int[] ldsIndexes = longestDecreasingSubsequenceIndexes(m);
 
-        return longestDecreasingSubsequence(m);
+        System.out.println("Given array: " + Arrays.toString(m));
+        System.out.println("Indexes: " + Arrays.toString(ldsIndexes));
+        System.out.println("Elements: " + Arrays.toString(getElements(m, ldsIndexes)));
+
+        return ldsIndexes.length;
     }
 
-    private int longestDecreasingSubsequence(int[] m) {
+    private int[] getElements(int[] m, int[] ldsIndexes) {
+        return Arrays.stream(ldsIndexes).map(i -> m[i - 1]).toArray();
+    }
+
+    private int[] longestDecreasingSubsequenceIndexes(int[] m) {
         int[] lds = new int[m.length];
         int maxLds = 0;
 
@@ -37,6 +46,17 @@ public class C_LongNotUpSubSeq {
             }
         }
 
-        return maxLds;
+        int[] indexes = new int[maxLds];
+        int index = maxLds - 1;
+
+        for (int i = m.length - 1; i >= 0; i--) {
+            if (lds[i] == maxLds) {
+                indexes[index] = i + 1;
+                index--;
+                maxLds--;
+            }
+        }
+
+        return indexes;
     }
 }
