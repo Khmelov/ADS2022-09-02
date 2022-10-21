@@ -12,7 +12,7 @@ import java.util.List;
 
 public class B_Sheduler {
     //событие у аудитории(два поля: начало и конец)
-    static class Event {
+    static class Event implements Comparable<Event>{
         int start;
         int stop;
 
@@ -24,15 +24,18 @@ public class B_Sheduler {
         public int getStart() {
             return this.start;
         }
+        public int getStop(){ return this.stop;}
+
+        @Override
+        public int compareTo(Event otherPlayer) {
+            return Integer.compare(getStart(), otherPlayer.getStart());
+        }
 
         @Override
         public String toString() {
             return "("+ start +":" + stop + ")";
         }
 
-        public int compareTo(Event o) {
-            return this.start - o.getStart();
-        }
     }
 
     public static void main(String[] args) {
@@ -57,13 +60,28 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         Arrays.sort(events);
-        //ваше решение.
-
-
-
-
-
-
+        int i = 0;
+        while (events[i].getStart() < from) {
+            i++;
+        }
+        while (i < events.length && events[i].getStop() <= to){
+            int minInterval = events[i].getStop() - events[i].getStart();
+            int currStartTime = events[i].getStart();
+            int j = i;
+            while (j < events.length && currStartTime == events[j].getStart()) {
+                int currInterval = events[j].getStop() - events[j].getStart();
+                if (minInterval > currInterval) {
+                    minInterval = currInterval;
+                    i = j;
+                }
+                j++;
+            }
+            result.add(events[i]);
+            i = j;
+            while (i < events.length && events[i].getStart() < result.get(result.size() - 1).getStop()) {
+                i++;
+            }
+        }
         return result;                        //вернем итог
     }
 }
