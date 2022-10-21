@@ -3,6 +3,7 @@ package by.it.group151004.belsky.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -49,22 +50,42 @@ public class C_GetInversions {
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
-
-
-
-
-
-
-
+        result = mergeSortAndGetInversions(a);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    public int mergeSortAndGetInversions(int[] arr) {
+        if (arr.length <= 1) return 0;
+        int mid = arr.length / 2;
+        int[] l = Arrays.copyOfRange(arr, 0, mid);
+        int[] r = Arrays.copyOfRange(arr, mid, arr.length);
+
+        int result = mergeSortAndGetInversions(l) + mergeSortAndGetInversions(r);
+
+        int i = 0, j = 0, k = 0;
+        while (i < l.length && j < r.length) {
+            if (l[i] <= r[j]) {
+                arr[k++] = l[i++];
+            } else {
+                result+=l.length-i;
+                arr[k++] = r[j++];
+            }
+        }
+        while (i < l.length) {
+            arr[k++] = l[i++];
+        }
+        while (j < r.length) {
+            arr[k++] = r[j++];
+        }
+
+        return  result;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/belsky/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
