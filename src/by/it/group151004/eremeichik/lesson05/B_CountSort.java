@@ -30,15 +30,23 @@ public class B_CountSort {
         for (int i = 0; i < n; i++) {
             points[i]=scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением сортировки подсчетом
-
-
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        sort(points,1,10);
         return points;
     }
+
+    private void sort(int[] arr, int min, int max){
+        int[] countArr = new int[max-min+1];
+        for(int i = 0; i<arr.length;i++){
+            countArr[arr[i]-min]++;
+        }
+        int index = 0;
+        for(int i = min; i<=max;i++){
+            for(int j = 0; j<countArr[i-min];j++){
+                arr[index++] = i;
+            }
+        }
+    }
+
 
 
     public static void main(String[] args) throws FileNotFoundException {
