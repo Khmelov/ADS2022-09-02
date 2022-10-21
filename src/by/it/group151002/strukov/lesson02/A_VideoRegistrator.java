@@ -1,6 +1,7 @@
 package by.it.group151002.strukov.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны события events
@@ -29,7 +30,15 @@ public class A_VideoRegistrator {
         //подготовка к жадному поглощению массива событий...
         //hint: сортировка Arrays.sort обеспечит скорость алгоритма
         //C*(n log n) + C1*n = O(n log n)
-
+        Arrays.sort(events);
+        double end;
+        while(i < events.length){
+            result.add(events[i]);
+            end = result.get(result.size() - 1) + workDuration;
+            i++;
+            while(i < events.length && events[i] <= end)
+                i++;
+        }
         //пока есть незарегистрированные события
         //получим одно событие по левому краю
         //и запомним время старта видеокамеры

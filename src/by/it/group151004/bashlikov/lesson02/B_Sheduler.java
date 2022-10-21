@@ -1,7 +1,6 @@
 package by.it.group151004.bashlikov.lesson02;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 /*
 даны интервальные события events
@@ -75,7 +74,7 @@ public class B_Sheduler {
 
     private void postSort(Event[] events) {
         /* Сортировка по значениям конца */
-        int index = 0;
+        int index;
         for (int i = 0; i < events.length; i++){
             index = i;
             for (int j = i + 1; j < events.length; j++){
