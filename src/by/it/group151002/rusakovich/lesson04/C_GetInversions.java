@@ -35,6 +35,50 @@ Sample Output:
 
 public class C_GetInversions {
 
+    static int invCounter = 0;
+    void Merge(int[] a, int p, int q, int r){
+        int nl = q - p;
+        int nr = r - q + 1;
+        int[] left = new int[nl];
+        int[] right = new int [nr];
+        for(int i = 0; i < nl; i++){
+            left[i] = a[p + i];
+        }
+        for(int i = 0; i < nr; i++){
+            right[i] = a[q+i];
+        }
+        int i = 0, j = 0;
+        for(int k = p; k <= r; ++k){
+            if(i < left.length && j < right.length) {
+                if (left[i] <= right[j]) {
+                    a[k] = left[i];
+                    ++i;
+                } else {
+                    a[k] = right[j];
+                    invCounter += left.length - i;
+                    ++j;
+                }
+            } else {
+                if(i < left.length) {
+                    a[k] = left[i];
+                    ++i;
+                }
+                if(j < right.length) {
+                    a[k] = right[j];
+                    ++j;
+                }
+            }
+        }
+    }
+    void countInversions(int[] a, int p, int r) {
+        if (p < r) {
+            int q = (p + r) / 2;
+            countInversions(a, p, q);
+            countInversions(a, q + 1, r);
+            Merge(a, p, q + 1, r);
+        }
+    }
+
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -46,25 +90,23 @@ public class C_GetInversions {
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
-        int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
 
-
-
+        countInversions(a, 0, a.length-1);
 
 
 
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return invCounter;
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/rusakovich/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);

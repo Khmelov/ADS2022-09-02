@@ -43,22 +43,45 @@ public class C_HeapMax {
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вверх
-
-            return i;
+        void swap(int i, int j) {
+            Long temp = heap.get(i);
+            heap.set(i, heap.get(j));
+            heap.set(j, temp);
+        }
+        void siftDown(int i) {
+            int j;
+            while (2 * i + 1 < heap.size()) {
+                j = 2 * i + 2;
+                if (j >= heap.size() || heap.get(2 * i + 1) > heap.get(2 * i + 2))
+                    j = 2 * i + 1;
+                if (heap.get(i) > heap.get(j))
+                    break;
+                heap.set(i, heap.set(j, heap.get(i)));
+                i = j;
+            }
         }
 
-        int siftUp(int i) { //просеивание вниз
-
+        int siftUp(int i) {
+            int parent = (i - 1) / 2;
+            while (i > 0 && (heap.get(parent) < heap.get(i))) {
+                swap(i, parent);
+                i = parent;
+                parent = (i - 1) / 2;
+            }
             return i;
         }
 
         void insert(Long value) { //вставка
+            heap.add(value);
+            siftUp(heap.size() - 1);
         }
 
         Long extractMax() { //извлечение и удаление максимума
             Long result = null;
-
+            if (heap.size() == 1)
+                return heap.remove(0);
+            result = heap.set(0, heap.remove(heap.size() - 1));
+            siftDown(0);
             return result;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1

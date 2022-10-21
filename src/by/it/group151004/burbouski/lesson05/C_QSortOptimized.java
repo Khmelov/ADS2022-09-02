@@ -116,7 +116,7 @@ public class C_QSortOptimized {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		String root = System.getProperty("user.dir") + "/src/";
-		InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataC.txt");
+		InputStream stream = new FileInputStream(root + "by/it/group151004/burbouski/lesson05/dataC.txt");
 		C_QSortOptimized instance = new C_QSortOptimized();
 		int[] result = instance.getAccessory2(stream);
 		for (int index : result) {
