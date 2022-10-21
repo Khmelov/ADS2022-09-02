@@ -113,7 +113,6 @@ public class A_QSort {
         QuickS(segments, 0, n-1);
         for(int i=0; i<m; i++){
             result[i] = 0;
-            boolean belong = false;
             for(int j=0; j<n; j++){
                 if(points[i] >= segments[j].start && points[i] <= segments[j].stop){
                     result[i] += 1;
