@@ -14,6 +14,7 @@ package by.it.group151004.golovchuk.lesson02;
  */
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -36,14 +37,11 @@ public class C_GreedyKnapsack {
 
         @Override
         public int compareTo(Item o) {
-            //тут может быть ваш компаратор
-
-
-            return 0;
+            return o.cost/o.weight - this.cost/this.weight;
         }
     }
 
-    double calc(File source) throws FileNotFoundException {
+    public double calc(File source) throws FileNotFoundException {
         Scanner input = new Scanner(source);
         int n = input.nextInt();      //сколько предметов в файле
         int W = input.nextInt();      //какой вес у рюкзака
@@ -51,25 +49,27 @@ public class C_GreedyKnapsack {
         for (int i = 0; i < n; i++) { //создавая каждый конструктором
             items[i] = new Item(input.nextInt(), input.nextInt());
         }
-        //покажем предметы
         for (Item item:items) {
             System.out.println(item);
         }
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
 
-        //тут необходимо реализовать решение задачи
-        //итогом является максимально воможная стоимость вещей в рюкзаке
-        //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
-        //тут реализуйте алгоритм сбора рюкзака
-        //будет особенно хорошо, если с собственной сортировкой
-        //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
-
-
-
-
-
+        int amount = 0;
+        double weight = 0;
+        Arrays.sort(items);
+        while (amount < n && weight < W) {
+            if (W - weight >= items[amount].weight) {
+                result += items[amount].cost;
+                weight += items[amount].weight;
+            }
+            else {
+                result += items[amount].cost * ((W - weight)/items[amount].weight);
+                weight += (W - weight);
+            }
+            amount++;
+        }
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
     }

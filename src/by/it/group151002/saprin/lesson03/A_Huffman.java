@@ -60,7 +60,7 @@ public class A_Huffman {
         //или для сортировок
         @Override
         public int compareTo(Node o) {
-            return Integer.compare(frequence, o.frequence);
+            return frequence - o.frequence;
         }
     }
 
@@ -122,22 +122,45 @@ public class A_Huffman {
         Map<Character, Integer> count = new HashMap<>();
         //1. переберем все символы по очереди и рассчитаем их частоту в Map count
             //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
-
+        for (int i = 0; i < s.length(); i++){
+            if (count.containsKey(s.charAt(i))){
+                count.put(s.charAt(i), count.get(s.charAt(i)) + 1);
+            } else {
+                count.put(s.charAt(i), 1);
+            }
+        }
         //2. перенесем все символы в приоритетную очередь в виде листьев
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
+        for (int i = 0; i < s.length(); i++){
+            if (count.containsKey(s.charAt(i))) {
+                priorityQueue.add(new LeafNode(count.get(s.charAt(i)), s.charAt(i)));
+                count.remove(s.charAt(i));
+            }
+        }
 
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
         //построим дерево кодирования Хаффмана.
         //У родителя частоты детей складываются.
+        int indexOfLastElem = priorityQueue.size() - 1;
+        for (int i = 0; i < indexOfLastElem; i++){
+            Node left = priorityQueue.poll();
+            Node right = priorityQueue.poll();
+            InternalNode parentNode = new InternalNode(left, right);
+            priorityQueue.add(parentNode);
+        }
 
         //4. последний из родителей будет корнем этого дерева
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
-        StringBuilder sb = new StringBuilder();
-        //.....
+        StringBuilder resultStr = new StringBuilder();
+        Node root = priorityQueue.poll();
+        root.fillCodes("");
 
-        return sb.toString();
-        //01001100100111
+        for (int i = 0; i < s.length(); i++){
+            resultStr.append(codes.get(s.charAt(i)));
+        }
+
+        return resultStr.toString();
         //01001100100111
     }
     //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
