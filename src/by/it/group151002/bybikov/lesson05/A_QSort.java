@@ -1,8 +1,7 @@
 package by.it.group151002.bybikov.lesson05;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -37,7 +36,7 @@ import java.util.Scanner;
 
 public class A_QSort {
 
-    //отрезок
+    boolean isCorrect;
     private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
@@ -57,11 +56,71 @@ public class A_QSort {
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
+            if(this.stop > o.stop)
+                return 1;
             return 0;
         }
     }
 
+    int[] completeTaskStupidWay (Segment[] segmentArray, int[] eventArray) {
+        int[] result= new int[eventArray.length];
+        for (int i = 0; i < eventArray.length; i++) {
+            for (int j = 0; j < segmentArray.length; j++)
+                if(eventArray[i] >= segmentArray[j].start && eventArray[i] <= segmentArray[j].stop)
+                result[i]++;
+        }
+        return result;
+    }
+
+    private void exchangeValuesByIndex (Segment[] array, int firstIndex, int secondIndex) {
+        Segment tmp = array[firstIndex];
+        array[firstIndex] = array[secondIndex];
+        array[secondIndex] = tmp;
+    }
+
+    private int partition(Segment[] array, int lowerIndex, int highIndex) {
+        RandomValuesMethods randomValuesMethods = new RandomValuesMethods();
+        int pivotIndex = randomValuesMethods.getIntRandomValueInRange(lowerIndex, highIndex);
+        exchangeValuesByIndex(array, pivotIndex, highIndex);
+        pivotIndex = highIndex;
+        int i = lowerIndex;
+        for (int j = lowerIndex; j < pivotIndex; j++)
+            if(array[j].compareTo(array[pivotIndex]) > 0) {
+                exchangeValuesByIndex(array, i, j);
+                i++;
+            }
+        exchangeValuesByIndex(array, i, pivotIndex);
+        pivotIndex = i;
+        return pivotIndex;
+    }
+
+    private Segment[] quickSortMethod (Segment[] array, int lowerIndex, int highIndex) {
+        if(highIndex <= lowerIndex)
+            return array;
+        int pivotIndex = partition(array, lowerIndex, highIndex);
+        array = quickSortMethod(array, lowerIndex, pivotIndex);
+        array = quickSortMethod(array, pivotIndex + 1, highIndex);
+        return array;
+    }
+
+    Segment[] quickSort (Segment[] array) {
+        if(array == null)
+            return null;
+        else if(array.length < 2)
+            return array;
+        return quickSortMethod(array, 0, array.length - 1);
+    }
+
+    boolean isSortedArray (Segment[] array) {
+        if(array == null)
+            return true;
+        boolean isSorted = true;
+        for (int i = 1; i < array.length; i++)
+            if (array[i - 1].stop < array[i].stop) {
+                isSorted = false;
+            }
+        return isSorted;
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -86,20 +145,36 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
-
-
+        segments = quickSort(segments);
+        this.isCorrect = isSortedArray(segments);
+        for (int i = 0; i < points.length; i++) {
+            for (int j = 0; j < segments.length && points[i] <= segments[j].stop; j++) {
+                if(points[i] >= segments[j].start)
+                    result[i]++;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        scanner.close();
+        int[] otherResult = completeTaskStupidWay(segments, points);
+        if (this.isCorrect)
+            this.isCorrect = Arrays.equals(otherResult, result);
         return result;
     }
 
 
-    public static void main(String[] args) throws FileNotFoundException {
-        String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+    public static void main(String[] args) throws IOException {
         A_QSort instance = new A_QSort();
-        int[] result=instance.getAccessory(stream);
+        instance.isCorrect = true;
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream input = new FileInputStream(root + "by/it/group151002/bybikov/lesson05/dataA_Test.txt");
+        String outputPath = root + "by/it/group151002/bybikov/lesson05/dataA_Test.txt";
+        FileMethods fileMethods = new FileMethods();
+        fileMethods.createInputFile(outputPath);
+        int[] result = instance.getAccessory(input);
+        if(instance.isCorrect)
+            System.out.println("A_QSort Test Complete");
+        else
+            System.err.println("A_QSort Test wrong");
         for (int index:result){
             System.out.print(index+" ");
         }

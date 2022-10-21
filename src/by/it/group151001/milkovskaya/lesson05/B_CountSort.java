@@ -32,7 +32,7 @@ public class B_CountSort {
         }
         int min = points[0];
         int max = points[0];
-        for (int i = 1;i<n; i++){
+        for (int i = 1; i < n; i++){
             if(points[i] < min){
                 min = points[i];
             }
