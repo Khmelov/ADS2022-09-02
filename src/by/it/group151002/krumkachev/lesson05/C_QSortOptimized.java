@@ -47,6 +47,7 @@ public class C_QSortOptimized {
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
             return Integer.compare(this.start, o.start);
+
         }
     }
 
@@ -90,6 +91,23 @@ public class C_QSortOptimized {
         return result;
     }
 
+    int binarySearch(Segment[] arr, int point) {
+        int left = 0;
+        int right = arr.length - 1;
+        int result = -1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (point < arr[mid].start)
+                right = mid - 1;
+            else if (point > arr[mid].stop)
+                left = mid + 1;
+            else {
+                result = mid;
+                break;
+            }
+        }
+        return result;
+    }
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -119,10 +137,15 @@ public class C_QSortOptimized {
 
         for (int i = 0; i < m; i++) {
             int count = 0;
-            for (Segment segment: segments)
-                if (points[i] < segment.start)
-                    break;
-                else if (points[i] <= segment.stop)
+            int first = binarySearch(segments, points[i]);
+            if (first != -1) {
+                count++;
+            }
+            for (int j = 0; j < first && points[i] >= segments[j].start; j++)
+                if (points[i] <= segments[j].stop)
+                    count++;
+            for (int j = first + 1; j < segments.length && points[i] >= segments[j].start; j++)
+                if (points[i] <= segments[j].stop)
                     count++;
             result[i] = count;
         }
