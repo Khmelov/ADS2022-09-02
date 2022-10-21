@@ -47,15 +47,48 @@ public class A_QSort {
             this.stop = stop;
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
+            if (start > stop) {
+                int tmp;
+                tmp = start;
+                this.start = stop;
+                this.stop = tmp;
+            }
         }
 
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+            return Integer.compare(this.start, o.start);
         }
     }
+
+
+
+    int Partition(Segment[] a, int left, int right){
+        Segment temp = a[left];
+        int j = left;
+        for(int i = left+1;i<=right;i++){
+            if(a[i].compareTo(temp)<=0){
+                j += 1;
+                Segment tmp = a[j];
+                a[j] = a[i];
+                a[i] = tmp;
+            }
+        }
+        temp = a[left];
+        a[left] = a[j];
+        a[j] = temp;
+        return j;
+    }
+
+    void QuickS(Segment[] a, int l, int r){
+        while(l < r){
+            int m = Partition(a,l,r);
+            QuickS(a,l,m-1);
+            l = m+1;
+        }
+    }
+
 
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
@@ -83,7 +116,17 @@ public class A_QSort {
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
 
-
+        QuickS(segments,0,n-1);
+        for (int i=0;i<m;i++){
+            result[i]=0;
+            for (int j=0;j<n;j++){
+                if(points[i]>=segments[j].start && points[i]<=segments[j].stop){
+                    result[i]++;
+                    if(segments[j+1].start >segments[j].start)
+                        break;
+                }
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;

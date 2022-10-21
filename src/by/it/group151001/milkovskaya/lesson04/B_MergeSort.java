@@ -67,8 +67,6 @@ public class B_MergeSort {
                 merge(a, j,j+i, Min(j + 2 * i, n));
             }
         }
-
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return a;
     }

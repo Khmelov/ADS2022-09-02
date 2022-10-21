@@ -35,6 +35,67 @@ Sample Output:
 
 public class C_GetInversions {
 
+    int merge(int[] arr, int[] leftArr, int[] rightArr, int countInversion) {
+        int counter = 0;
+        int i = 0;
+        int j = 0;
+        while (i < leftArr.length && j < rightArr.length) {
+            if (leftArr[i] <= rightArr[j]) {
+                arr[counter] = leftArr[i];
+                counter++;
+                i++;
+            } else {
+                countInversion = countInversion + (leftArr.length - i);
+
+                arr[counter] = rightArr[j];
+                counter++;
+                j++;
+            }
+        }
+
+        while (i < leftArr.length) {
+            arr[counter] = leftArr[i];
+            counter++;
+            i++;
+        }
+
+        while (j < rightArr.length) {
+            arr[counter++] = rightArr[j++];
+            counter++;
+            j++;
+        }
+
+        return countInversion;
+    }
+
+
+    int sort(int[] arr, int countInversion) {
+        if(arr.length == 1) {
+            return countInversion;
+        } else {
+            int leftSize = arr.length / 2;
+            int rightSize = arr.length - leftSize;
+            int[] leftArr = new int[leftSize];
+            int[] rightArr = new int[rightSize];
+
+            for (int i = 0; i < leftSize; i++) {
+                leftArr[i] = arr[i];
+            }
+
+            for (int i = leftSize; i < arr.length; i++) {
+                rightArr[i - leftSize] = arr[i];
+            }
+
+            countInversion = sort(leftArr, countInversion);
+            countInversion = sort(rightArr, countInversion);
+
+            countInversion = merge(arr, leftArr, rightArr, countInversion);
+        }
+
+        return countInversion;
+    }
+
+
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -49,22 +110,17 @@ public class C_GetInversions {
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
-
-
-
-
-
-
-
+        int countInversion = 0;
+        countInversion = sort(a, countInversion);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return result = countInversion;
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/naftolsky/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
