@@ -21,7 +21,7 @@ public class FiboA {
 
         //вычисление чисел фибоначчи медленным методом (рекурсией)
         fibo = new FiboA();
-        n = 33;
+        n = 35;
         System.out.printf("slowA(%d)=%d \n\t time=%d \n\n", n, fibo.slowA(n), fibo.time());
     }
 
@@ -32,7 +32,6 @@ public class FiboA {
         if (n<2) return n;
         return calc(n-1)+calc(n-2);
     }
-
 
     BigInteger slowA(Integer n) {
         //рекурсия
