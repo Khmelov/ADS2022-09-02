@@ -1,5 +1,7 @@
 package by.it.group151002.naftolsky.lesson05;
 
+import by.it.group151002.naftolsky.lesson02.C_GreedyKnapsack;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -43,8 +45,13 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if (stop > start) {
+                this.stop = stop;
+                this.start = start;
+            } else {
+                this.start = stop;
+                this.stop = start;
+            }
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
         }
@@ -52,10 +59,83 @@ public class A_QSort {
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+//            return Integer.compare(stop - start, o.stop - o.start);
+            return Integer.compare(stop, o.stop);
         }
     }
+
+
+
+    int partition(Segment[] segments, int lowIndex, int highIndex) {
+        Segment pivotValue = segments[lowIndex + highIndex / 2];
+
+        int i = lowIndex - 1;
+        int j = highIndex + 1;
+        while (true)
+        {
+            do {
+                i++;
+            } while (segments[i].compareTo(pivotValue) == -1);
+
+            do {
+                j--;
+            } while (segments[j].compareTo(pivotValue) == 1);
+
+            if (i >= j) {
+                return j;
+            }
+
+            Segment tempNumber = segments[i];
+            segments[i] = segments[j];
+            segments[j] = tempNumber;
+        }
+    }
+
+    void quickSort(Segment[] segments, int  lowIndex, int highIndex) {
+        if (lowIndex >= highIndex) {
+            return;
+        }
+        int pivotIndex = partition(segments, lowIndex, highIndex);
+        quickSort(segments, lowIndex, pivotIndex);
+        quickSort(segments,pivotIndex + 1, highIndex);
+    }
+
+
+//    int partitionNumber(Segment[] segments, int lowIndex, int highIndex) {
+//        Segment pivotValue = segments[lowIndex + highIndex / 2];
+//
+//        int i = lowIndex - 1;
+//        int j = highIndex + 1;
+//        while (true)
+//        {
+//            do {
+//                i++;
+//            } while (segments[i].compareTo(pivotValue) == -1);
+//
+//            do {
+//                j--;
+//            } while (segments[i].compareTo(pivotValue) == 1);
+//
+//            if (i >= j) {
+//                return j;
+//            }
+//
+//            Segment tempNumber = segments[i];
+//            segments[i] = segments[j];
+//            segments[j] = tempNumber;
+//        }
+//    }
+//
+//    void quickSortNumbers(Segment[] segments, int  lowIndex, int highIndex) {
+//        if (lowIndex >= highIndex) {
+//            return;
+//        }
+//        int pivotIndex = partition(segments, lowIndex, highIndex);
+//        quickSort(segments, lowIndex, pivotIndex);
+//        quickSort(segments,pivotIndex + 1, highIndex);
+//    }
+
+
 
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
@@ -81,8 +161,36 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        quickSort(segments,0, n - 1);
 
+        for (int i = 0; i < m; i++) {
+            result[i] = 0;
+            int j = 0;
+            while (j < n && segments[j].stop <= points[i]) {
+                j++;
+            }
+            for (; j < n; j++) {
+                if (segments[j].start <= points[i]) {
+                    result[i]++;
+                }
+            }
+        }
 
+//        int n = events.length;
+//        while (events[i].start < from && i < n) {
+//            i++;
+//        }
+
+//        if (i < n && events[i].stop <= to) {
+//            result.add(events[i]);
+//            i++;
+//            while (i < n && events[i].stop <= to) {
+//                if (events[i].start >= result.get(result.size() - 1).stop) {
+//                    result.add(events[i]);
+//                }
+//                i++;
+//            }
+//        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -90,9 +198,11 @@ public class A_QSort {
     }
 
 
+
+
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/naftolsky/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){

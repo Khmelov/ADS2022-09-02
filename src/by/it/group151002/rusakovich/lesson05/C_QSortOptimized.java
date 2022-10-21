@@ -30,24 +30,71 @@ import java.util.Scanner;
 */
 
 
+
+
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
+        int len;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if(start <= stop) {
+                this.start = start;
+                this.stop = stop;
+            } else {
+                this.start = stop;
+                this.stop = start;
+            }
+            len = this.stop-this.start;
+            //тут вообще-то лучше доделать конструктор на случай если
+            //концы отрезков придут в обратном порядке
         }
 
         @Override
-        public int compareTo(Object o) {
-            //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+        public int compareTo(Segment o) {
+            if(this.start != o.start)
+                return this.start - o.start;
+            return this.len - o.len;
         }
     }
+
+    void swap(Segment[] arr, int i, int j){
+        Segment temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    int partition(Segment[] arr, int p, int r){
+        Segment x = arr[r];
+        int i = p -1;
+        for(int j = p; j < r; ++j){
+            if (arr[j].compareTo(x) <= 0){
+                ++i;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i+1, r);
+        return i + 1;
+    }
+
+        int randomisedPartition(Segment[] arr, int p, int r){
+            int i = (int)(Math.random() * r + p);
+            swap(arr, r, i);
+            return partition(arr, p, r);
+        }
+
+
+    void optimisedQuickSort(Segment[] arr, int p, int r){
+        while(p < r){
+            int q = randomisedPartition(arr, p, r);
+            optimisedQuickSort(arr, p, q -1);
+            p = q + 1;
+        }
+    }
+
+
 
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
@@ -73,6 +120,7 @@ public class C_QSortOptimized {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        optimisedQuickSort(segments, 0 ,segments.length-1);
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -82,7 +130,7 @@ public class C_QSortOptimized {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/rusakovich/lesson05/dataA1.txt");
         C_QSortOptimized instance = new C_QSortOptimized();
         int[] result=instance.getAccessory2(stream);
         for (int index:result){

@@ -41,19 +41,68 @@ public class A_QSort {
     private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
+        int len;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if(start <= stop) {
+                this.start = start;
+                this.stop = stop;
+            } else {
+                this.start = stop;
+                this.stop = start;
+            }
+            len = this.stop-this.start;
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
         }
 
         @Override
         public int compareTo(Segment o) {
-            //подумайте, что должен возвращать компаратор отрезков
+            if(this.start != o.start)
+                return this.start - o.start;
+            return this.len - o.len;
+        }
+    }
 
-            return 0;
+    void swap(Segment[] arr, int i, int j){
+        Segment temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    int partition(Segment[] arr, int p, int r){
+        Segment x = arr[r];
+        int i = p -1;
+        for(int j = p; j < r; ++j){
+          if (arr[j].compareTo(x) <= 0){
+              ++i;
+             swap(arr, i, j);
+          }
+        }
+        swap(arr, i+1, r);
+        return i + 1;
+    }
+/*
+    int randomisedPartition(Segment[] arr, int p, int r){
+        int i = (int)(Math.random() * r + p);
+        swap(arr, r, i);
+        return partition(arr, p, r);
+    }
+
+    void randomisedQuickSort(Segment[] arr, int p, int r){
+        int q;
+        if(p < r){
+            q = randomisedPartition(arr, p, r);
+            randomisedQuickSort(arr, p, q -1);
+            randomisedQuickSort(arr, q + 1, r);
+        }
+    }
+*/
+    void quickSort(Segment[] arr, int p, int r){
+        int q;
+        if(p < r){
+            q = partition(arr, p, r);
+            quickSort(arr, p, q -1);
+            quickSort(arr, q + 1, r);
         }
     }
 
@@ -81,7 +130,15 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
+        quickSort(segments, 0, segments.length-1);
+        for(int i = 0; i< m; ++i){
+            int j = 0;
+            while(j < segments.length && points[i] >= segments[j].start){
+                if(points[i] <= segments[j].stop)
+                    ++result[i];
+                ++j;
+            }
+        }
 
 
 
@@ -92,7 +149,7 @@ public class A_QSort {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/rusakovich/lesson05/dataA1.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){

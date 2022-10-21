@@ -87,6 +87,20 @@ public class B_Huffman {
         }
     }
 
+    private class Code implements Comparable<Code> {
+        char symbol;
+        int freq;
+        Code(char ch, int freq){
+            this.symbol = ch;
+            this.freq = freq;
+        }
+
+        @Override
+        public int compareTo(Code o) {
+            return Integer.compare(freq, o.freq);
+        }
+    }
+
     String decode(File file) throws FileNotFoundException {
         StringBuilder result=new StringBuilder();
         //прочитаем строку для кодирования из тестового файла
@@ -96,11 +110,12 @@ public class B_Huffman {
         scanner.nextLine();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
-        List<Character> codes = new ArrayList<>(count);
+        Queue<Code> codes = new PriorityQueue<>(count);
         for (int i = 0; i < count; i++) {
             String line = scanner.nextLine();
-            Character ch = line.charAt(0);
-            codes.add(ch);
+            char ch = line.charAt(0);
+            int freq = Integer.parseInt(line.substring(3), 2);
+            codes.add(new Code(ch, freq));
         }
         String toDecode = scanner.nextLine();
         Node head = huffmanTree(codes);
@@ -109,18 +124,19 @@ public class B_Huffman {
         return result.toString(); //01001100100111
     }
 
-    private Node huffmanTree(List<Character> codes) {
+    private Node huffmanTree(Queue<Code> codes) {
         Node prev = new Node(null, null);
         Node head = prev;
         Node curr;
-        for (int i = 0; i < codes.size() - 1; i++) {
-            Character ch = codes.get(i);
+        int size = codes.size() - 1;
+        for (int i = 0; i < size; i++) {
+            Character ch = codes.poll().symbol;
             curr = new Node(ch);
             prev.setLeft(curr);
             prev.setRight(new Node(null, null));
             prev = prev.getRight();
         }
-        prev.setSymbol(codes.get(codes.size() - 1));
+        prev.setSymbol(codes.poll().symbol);
         return head;
     }
 
@@ -143,7 +159,7 @@ public class B_Huffman {
     }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelev/lesson03/encodeHuffman.txt");
+        File f = new File(root + "by/it/group151002/poluectov/lesson03/encodeHuffmanTest.txt");
         B_Huffman instance = new B_Huffman();
         String result = instance.decode(f);
         System.out.println(result);
