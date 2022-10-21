@@ -2,6 +2,7 @@
 
 ## Algorithms & Data Structures
 
+
 ### Начало работы:
 
 **Посмотрите видео: <a href="https://youtu.be/mIs-X63CH78" target="_blank">Tutorial:QuickStart</a>**
