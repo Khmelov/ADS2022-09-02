@@ -20,7 +20,7 @@ public class FiboC {
     public static void main(String[] args) {
         FiboC fibo = new FiboC();
         int n = 10;
-        int m = 4;
+        int m = 2;
         System.out.printf("fasterC(%d) = %d \n\t time = %d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
@@ -34,8 +34,7 @@ public class FiboC {
 
             while (!isFind)
             {
-                long temp = 0;
-                temp = curr;
+                long temp = curr;
                 curr = (prev + curr) % m;
                 pisanoPeriod.add(prev);
                 prev = temp;
