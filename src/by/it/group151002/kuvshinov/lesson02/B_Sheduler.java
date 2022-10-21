@@ -45,7 +45,7 @@ public class B_Sheduler {
         //в период [from, int] (включительно).
         //оптимизация проводится по наибольшему числу непересекающихся событий.
         //начало и конец событий могут совпадать.
-        List<Event> res = new ArrayList<Event>();
+        List<Event> res = new ArrayList<>();
         int i = from;
         int j;
         boolean isFound;
