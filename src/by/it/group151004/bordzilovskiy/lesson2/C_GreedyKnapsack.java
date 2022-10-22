@@ -105,6 +105,7 @@ public class C_GreedyKnapsack {
               tempW+=Arr[i].weight;
             }
             i++;
+
         }
 
 
