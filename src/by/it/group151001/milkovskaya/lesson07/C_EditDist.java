@@ -48,12 +48,76 @@ import java.util.Scanner;
 
 
 public class C_EditDist {
-
     String getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
+        int m = one.length();
+        int n = two.length();
+        int[][] matr = new int[m+1][n+1];
         String result = "";
+
+        for(int i = 0;i <= m; i++)
+        {
+            matr[i][0] = i;
+        }
+
+        for(int j = 1;j <= n; j++)
+        {
+            matr[0][j] = j;
+        }
+
+        for(int j=1;j<=n;j++)
+        {
+            for(int i=1;i<=m;i++)
+            {
+                if(one.charAt(i-1) == two.charAt(j-1))
+                {
+                    matr[i][j] = matr[i-1][j-1];
+                }
+                else
+                {
+                    matr[i][j] = Math.min(
+                            matr[i-1][j]+1,
+                            Math.min(
+                                    matr[i][j-1]+1,
+                                    matr[i-1][j-1]+1
+                            )
+                    );
+                }
+            }
+        }
+        int i = m;
+        int j = n;
+        while (i > 0 && j>0) {
+                if (one.charAt(i - 1) == two.charAt(j - 1)) {
+                    result = result + "#,";
+                    i--;
+                    j--;
+                } else {
+                    int k = Math.min(
+                            matr[i - 1][j] + 1,
+                            Math.min(
+                                    matr[i][j - 1] + 1,
+                                    matr[i - 1][j - 1] + 1
+                            )
+                    );
+                        if (k == matr[i - 1][j] + 1) {
+                            result = result + "-" + one.charAt(i - 1) + ',';
+                            i--;
+
+                        } else if (k == matr[i][j - 1] + 1) {
+                            result = result + "+" + two.charAt(j - 1) + ',';
+                            j--;
+
+                        } else if (k == matr[i - 1][j - 1] + 1) {
+                            result = result + "~" + two.charAt(j - 1) + ',';
+                            i--;
+                            j--;
+
+                        }
+
+                }
+        }
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
