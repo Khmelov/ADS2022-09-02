@@ -39,12 +39,21 @@ import java.util.Scanner;
 
 public class A_EditDist {
 
+    int r_levenshtein(int l1, String one, int l2, String two){
+        if (l1 == 0) return l2;
+        else
+            if (l2 == 0) return l1;
+            else
+                if (l1 == 1 && l2 == 1 && one.charAt(0) == two.charAt(0)) return 0;
+                else
+                    if (l1 == 1 && l2 == 1 && one.charAt(0) != two.charAt(0)) return 1;
+                    else
+                        return Math.min(Math.min(r_levenshtein(l1 - 1,one,l2,two) + 1,r_levenshtein(l1,one,l2 - 1,two) + 1),r_levenshtein(l1 - 1,one,l2 - 1,two) + ((one.charAt(l1 - 1) == two.charAt(l2 - 1))?0:1));
+    }
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-        int result = 0;
+        int result = r_levenshtein(one.length(), one, two.length(), two);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
