@@ -43,8 +43,14 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if (start < stop){
+                this.start = start;
+                this.stop = stop;
+            }
+            else{
+                this.stop = start;
+                this.start = stop;
+            }
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
         }
@@ -53,10 +59,34 @@ public class A_QSort {
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
 
-            return 0;
+            return Integer.compare(this.start, o.start);
+        }
+    }
+    void qSort(Segment[] arr, int l, int h) {
+        if (l < h) {
+            int p = partition(arr, l, h);
+            qSort(arr, l, p - 1);
+            qSort(arr, p, h);
         }
     }
 
+    int partition(Segment[] arr, int low, int high) {
+        Segment pivot = arr[(low + high) / 2];
+        int i = low;
+        int j = high;
+        while (i <= j) {
+            while (arr[i].compareTo(pivot) < 0 && i < high)
+                i++;
+            while (arr[j].compareTo(pivot) > 0 && j > low)
+                j--;
+            if (i <= j) {
+                Segment tmp = arr[i];
+                arr[i++] = arr[j];
+                arr[j--] = tmp;
+            }
+        }
+        return i;
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -81,8 +111,17 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
+        qSort(segments, 0, n-1);
+        for (int i = 0; i < m; i++){
+            int amount = 0;
+            for (int k = 0; k < n; k++){
+                if (points[i] < segments[k].start)
+                    break;
+                else if (segments[k].stop > points[i])
+                    amount++;
+            }
+            result[i] = amount;
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!

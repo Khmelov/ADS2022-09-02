@@ -18,8 +18,8 @@ public class FiboC {
 
     public static void main(String[] args) {
         FiboC fibo = new FiboC();
-        int n = 10;
-        int m = 2;
+        int n = 1234567899;
+        int m = 117;
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
@@ -27,21 +27,21 @@ public class FiboC {
         //Решение сложно найти интуитивно
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
-        int[] remain = new int[m*m+1];
+        int[] ost = new int[m*m+1];
         boolean flag = true;
         int i=2;
         BigInteger first = BigInteger.ZERO,second = BigInteger.ONE, res;
-        remain[0]=1;
-        remain[1]=1;
+        ost[0]=1;
+        ost[1]=1;
         long result;
         if (m != 2) {
             while (flag) {
                 res = first.add(second);
                 first = second;
                 second = res;
-                remain[i] = (res.mod(BigInteger.valueOf(m))).intValue();
+                ost[i] = (res.mod(BigInteger.valueOf(m))).intValue();
                 i++;
-                if (remain[i - 1] == 1 && remain[i - 2] == 0) {
+                if (ost[i - 1] == 1 && ost[i - 2] == 0) {
                     flag = false;
                 }
             }
@@ -50,15 +50,14 @@ public class FiboC {
             if ((num - 1) < 0){
                 num = i;
             }
-            result = remain[num];
+            result = ost[num];
         }
         else {
             int num;
             num = (int) n % 3;
-            result = remain[num - 1];
+            result = ost[num - 1];
         }
-        return result;
+            return result;
     }
 }
-
 
