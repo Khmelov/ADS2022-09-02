@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
+import static java.lang.Math.max;
+
 /*
 В первой строке источника данных даны:
         - целое число 1<=n<=100000 (размер массива)
@@ -46,11 +48,20 @@ public class A_BinaryFind {
         for (int i = 0; i < k; i++) {
             int value = scanner.nextInt();
             //тут реализуйте бинарный поиск индекса
-
-
-
-
-            result[i]=0;
+            int l = 0;
+            int r = a.length - 1;
+            result[i] = -1;
+            while(l <= r){
+                int index = (l + r) / 2;
+                if(a[index] == value) {
+                    result[i] = index + 1;
+                }
+                if(a[index] < value){
+                    l = index + 1;
+                } else {
+                    r = index - 1;
+                }
+            }
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;

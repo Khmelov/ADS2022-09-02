@@ -60,7 +60,7 @@ public class Lesson3Test {
     @Test
     public void C() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson03/heapData.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/belsky/lesson03/heapData.txt");
         C_HeapMax instance = new C_HeapMax();
         Long res=instance.findMaxValue(stream);
         boolean ok=(res==500);
