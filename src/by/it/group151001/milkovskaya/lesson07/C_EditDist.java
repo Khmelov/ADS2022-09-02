@@ -85,11 +85,13 @@ public class C_EditDist {
                 }
             }
         }
+        StringBuffer res = new StringBuffer();
         int i = m;
         int j = n;
-        while (i > 0 && j>0) {
+        do {
                 if (one.charAt(i - 1) == two.charAt(j - 1)) {
                     result = result + "#,";
+                    res.insert(0,"#,");
                     i--;
                     j--;
                 } else {
@@ -100,26 +102,38 @@ public class C_EditDist {
                                     matr[i - 1][j - 1] + 1
                             )
                     );
-                        if (k == matr[i - 1][j] + 1) {
+                        if (k == (matr[i - 1][j] + 1)) {
                             result = result + "-" + one.charAt(i - 1) + ',';
+                            res.insert(0,"-"+one.charAt(i-1)+",");
                             i--;
 
-                        } else if (k == matr[i][j - 1] + 1) {
+                        } else if (k == (matr[i][j - 1] + 1)) {
                             result = result + "+" + two.charAt(j - 1) + ',';
+                            res.insert(0,"+"+two.charAt(j-1)+",");
                             j--;
 
-                        } else if (k == matr[i - 1][j - 1] + 1) {
+                        } else if (k == (matr[i - 1][j - 1] + 1)) {
                             result = result + "~" + two.charAt(j - 1) + ',';
+                            res.insert(0,"~"+two.charAt(j-1)+",");
                             i--;
                             j--;
-
                         }
 
                 }
-        }
+        } while (i > 0 && j>0);
+        if(i>0){
+            res.insert(0,',');
+            res.insert(0,'-');
+            res.insert(1,one.charAt(i-1));
+        }else if(j > 0){
+            res.insert(0,',');
+            res.insert(0,'+');
+            res.insert(1,two.charAt(j-1));
+        };
+
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return res.toString();
     }
 
 
