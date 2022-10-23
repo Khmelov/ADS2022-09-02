@@ -12,7 +12,7 @@ import java.util.List;
 
 public class B_Sheduler {
     //событие у аудитории(два поля: начало и конец)
-    static class Event {
+    static class Event implements Comparable<Event> {
         int start;
         int stop;
 
@@ -24,6 +24,11 @@ public class B_Sheduler {
         @Override
         public String toString() {
             return "("+ start +":" + stop + ")";
+        }
+
+        @Override
+        public int compareTo(Event o) {
+            return this.stop - o.stop;
         }
     }
 
@@ -37,7 +42,8 @@ public class B_Sheduler {
                 new Event(8, 9),  new Event(4, 6), new Event(8, 10), new Event(7, 10)
         };
 
-        List<Event> starts = instance.calcStartTimes(events,0,10);  //рассчитаем оптимальное заполнение аудитории
+        List<Event> starts;  //рассчитаем оптимальное заполнение аудитории
+        starts = instance.calcStartTimes(events,0,10);
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
@@ -51,8 +57,15 @@ public class B_Sheduler {
         result = new ArrayList<>();
         //ваше решение.
 
-
-
+        Arrays.sort(events);
+        int i = 1;
+        result.add(events[0]);
+        while (i < events.length){
+            if (events[i].start >= result.get(result.size()-1).stop){
+                result.add(events[i]);
+            }
+            i++;
+        }
 
         return result;                        //вернем итог
     }
