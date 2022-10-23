@@ -46,10 +46,20 @@ public class A_Knapsack {
             gold[i]=scanner.nextInt();
         }
 
-
-        int result = 0;
+        int[] D = new int[w + 1];
+        int tmp;
+        for(int i = 0; i <= w; i++){
+            for(int j = 0;j < n;j++){
+                if(gold[j] <= i){
+                    tmp = D[i - gold[j]] + gold[j];
+                    if(D[i] < tmp){
+                        D[i] = tmp;
+                    }
+                }
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return D[w];
     }
 
 

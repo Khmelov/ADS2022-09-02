@@ -38,21 +38,51 @@ import java.util.Scanner;
 
 public class C_LongNotUpSubSeq {
 
-    int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
+    int[] P;
+    int[] M;
+
+    int[] getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //общая длина последовательности
         int n = scanner.nextInt();
-        int[] m = new int[n];
+        int[] x = new int[n];
         //читаем всю последовательность
         for (int i = 0; i < n; i++) {
-            m[i] = scanner.nextInt();
+            x[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
+        P = new int[n];
+        M = new int[n + 1];
+        int L = 0;
+        int lo,hi,mid, newL;
+        for(int i = n - 1 ;i >= 0;i--){
+            lo = 1;
+            hi = L;
+            while(lo <= hi){
+                mid = (lo + hi)/2;
+                if(x[M[mid]] <= x[i]){
+                    lo = mid + 1;
+                }
+                else{
+                    hi = mid - 1;
+                }
+            }
+            newL = lo;
+            P[i] = M[newL - 1];
+            M[newL] = i;
+            if(newL > L){
+                L = newL;
+            }
+        }
+        int[] result = new int[L + 1];
+        result[0] = L;
+        int index = M[L];
+        for(int i = 1;i <= L; i++){
+            result[i] = index + 1;
+            index = P[index];
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -62,8 +92,11 @@ public class C_LongNotUpSubSeq {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
-        int result = instance.getNotUpSeqSize(stream);
-        System.out.print(result);
+        int[] result = instance.getNotUpSeqSize(stream);
+        System.out.println(result[0]);
+        for(int i=1;i <= result[0];i++){
+            System.out.print(result[i] + " ");
+        }
     }
 
 }

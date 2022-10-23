@@ -34,8 +34,8 @@ public class Lesson6Test {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
-        int result=instance.getNotUpSeqSize(stream);
-        boolean ok=(result==4);
+        int[] result=instance.getNotUpSeqSize(stream);
+        boolean ok=(result[0]==4);
         assertTrue("C failed", ok);
     }
 

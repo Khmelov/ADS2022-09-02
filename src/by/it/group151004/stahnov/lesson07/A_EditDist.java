@@ -39,16 +39,49 @@ import java.util.Scanner;
 
 public class A_EditDist {
 
-
+    int[][] D;
+    String o;
+    String t;
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-        int result = 0;
+        t = one;
+        o = two;
+        D = new int[two.length() + 1][one.length() + 1];
+        int result = getEdit(two.length(), one.length());
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    int getEdit(int i,int j){
+        int result;
+        if(D[i][j] == 0){
+            if(i == 0){
+                result = j;
+            }
+            else if(j == 0){
+                result = i;
+            }
+            else{
+                result = getEdit(i - 1, j - 1);
+                if(o.charAt(i - 1) != t.charAt(j - 1)){
+                    result++;
+                }
+                int ins= getEdit(i,j-1) + 1;
+                if(ins < result){
+                    result = ins;
+                }
+                int del = getEdit(i - 1,j) + 1;
+                if(del < result){
+                    result = del;
+                }
+            }
+            D[i][j] = result;
+        }
+        else{
+            result = D[i][j];
+        }
+        return result;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

@@ -50,12 +50,72 @@ import java.util.Scanner;
 public class C_EditDist {
 
     String getDistanceEdinting(String one, String two) {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int[][] D = new int[two.length() + 1][one.length() + 1];
+        for(int i = 0;i <= two.length();i++){
+            D[i][0] = i;
+        }
+        for(int i = 0;i <= one.length();i++){
+            D[0][i] = i;
+        }
+        for(int i = 1;i <= two.length();i++){
+            for(int j = 1;j <= one.length();j++){
+                D[i][j] = D[i-1][j-1];
+                if(two.charAt(i - 1) != one.charAt(j - 1)){
+                    D[i][j]++;
+                }
+                if(D[i-1][j] + 1 < D[i][j]){
+                    D[i][j] = D[i-1][j] + 1;
+                }
+                if(D[i][j-1] + 1 < D[i][j]){
+                    D[i][j] = D[i][j - 1] + 1;
+                }
+            }
+        }
+
+        StringBuffer result = new StringBuffer();
+        int i = two.length();
+        int j = one.length();
+        while(i != 0 | j != 0){
+            result.insert(0,',');
+            if(i > 0 && j > 0 && D[i - 1][j - 1] <= D[i - 1][j] && D[i - 1][j - 1] <= D[i][j - 1]){
+                if (D[i - 1][j - 1] == D[i][j]){
+                    result.insert(0,'#');
+                }
+                else{
+                    result.insert(0,two.charAt(i - 1));
+                    result.insert(0,'~');
+                }
+                i--;
+                j--;
+            }
+            else{
+                if(i == 0){
+                    result.insert(0, one.charAt(j - 1));
+                    result.insert(0, '-');
+                    j--;
+                }
+                else if(j == 0){
+                    result.insert(0, two.charAt(i - 1));
+                    result.insert(0, '+');
+                    i--;
+                }
+                else {
+                    if (D[i - 1][j] < D[i][j - 1]) {
+                        result.insert(0, two.charAt(i - 1));
+                        result.insert(0, '+');
+                        i--;
+                    } else {
+                        result.insert(0, one.charAt(j - 1));
+                        result.insert(0, '-');
+                        j--;
+                    }
+                }
+            }
+        }
+        return result.toString();
 
 
-        String result = "";
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
     }
 
 
