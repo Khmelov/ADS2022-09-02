@@ -3,6 +3,7 @@ package by.it.group151001.yankova.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Queue;
 import java.util.Scanner;
 
 /*
@@ -43,49 +44,63 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
+            if(start <= stop){
+                this.start = start;
+                this.stop = stop;
+            }else{
+                this.start = stop;
+                this.stop = start;
+            }
         }
-
         @Override
         public int compareTo(Segment o) {
-            //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+            return Integer.compare(start, o.start);
         }
     }
 
+    public void QuickSort(Segment[] a, int l, int r){
+        int i = l, j = r;
+        Segment x = a[(l+r)/2];
+        while(i <= j){
+            while(x.compareTo(a[i]) > 0) i++;
+            while(a[j].compareTo(x) > 0) j--;
+            if(i <= j){
+                Segment temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        if(i<r) QuickSort(a, i, r);
+        if(j>l) QuickSort(a, l, j);
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        //число отрезков отсортированного массива
+
         int n = scanner.nextInt();
         Segment[] segments=new Segment[n];
-        //число точек
+
         int m = scanner.nextInt();
         int[] points=new int[m];
         int[] result=new int[m];
 
-        //читаем сами отрезки
-        for (int i = 0; i < n; i++) {
-            //читаем начало и конец каждого отрезка
+        for (int i = 0; i < n; i++)
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
-        }
-        //читаем точки
-        for (int i = 0; i < m; i++) {
+
+        for (int i = 0; i < m; i++)
             points[i]=scanner.nextInt();
+
+        QuickSort(segments, 0, n-1);
+        for(int i=0; i < m; i++){
+            for(int j=0; j < n; j++){
+                if(points[i]<segments[j].start) break;
+                else if(segments[j].start <= points[i]
+                        && segments[j].stop >= points[i])
+                    result[i]++;
+            }
         }
-        //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
