@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson01;
+package by.it.group151003.denisova.lesson01;
 
 /*
  * Даны целые числа 1<=n<=1E18 и 2<=m<=1E5,
@@ -25,9 +25,18 @@ public class FiboC {
         //Решение сложно найти интуитивно
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
-        return 0L;
+        long[] Fibo_A = new long[m*6];
+        Fibo_A[0]=0;
+        Fibo_A[1]=1;
+        for (int i=2; i< Fibo_A.length; i++)
+        {
+            Fibo_A[i]=(Fibo_A[i-1]+Fibo_A[i-2])%m;
+            if (Fibo_A[i]==1 && Fibo_A[i-1]==0){
+                return Fibo_A[(int) (n%(i-1))];
+            }
+        }
+        return Fibo_A[(int) n];
     }
 
 
 }
-
