@@ -21,6 +21,49 @@ Sample Output:
 */
 public class B_MergeSort {
 
+    void mergeSort(int[] arr, int left, int right) {
+        if(left < right){
+            int middle = (left + right) / 2;
+            mergeSort(arr, left, middle);
+            mergeSort(arr, middle + 1, right);
+
+            int[] lArr = new int[middle + 1 - left];
+            int[] rArr = new int[right - middle];
+
+            System.arraycopy(arr, left, lArr, 0, lArr.length);
+            System.arraycopy(arr, middle + 1, rArr, 0, rArr.length);
+
+            int l = 0, r = 0, temp = 0;
+
+            for(int i = left; i <= right; i++)
+            {
+                if (l < lArr.length && r < rArr.length){
+                    if (lArr[l] <= rArr[r]){
+                        temp = lArr[l];
+                        l++;
+                    }
+                    else {
+                        temp = rArr[r];
+                        r++;
+                    }
+                }
+                else {
+                    if (l >= lArr.length)
+                    {
+                        temp = rArr[r];
+                        r++;
+                    }
+                    else if (r >= rArr.length){
+                        temp = lArr[l];
+                        l++;
+                    }
+                }
+
+                arr[i] = temp;
+            }
+        }
+    }
+
     int[] getMergeSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -29,26 +72,18 @@ public class B_MergeSort {
         //размер массива
         int n = scanner.nextInt();
         //сам массив
-        int[] a=new int[n];
+        int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
-            a[i] = scanner.nextInt();
-            System.out.println(a[i]);
+            arr[i] = scanner.nextInt();
+            //System.out.println(arr[i]);
         }
-
-        // тут ваше решение (реализуйте сортировку слиянием)
-        // https://ru.wikipedia.org/wiki/Сортировка_слиянием
-
-
-
-
-
-
+        mergeSort(arr, 0, n - 1);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return a;
+        return arr;
     }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononchuk/lesson04/dataB.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);

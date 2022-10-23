@@ -2,7 +2,10 @@ package by.it.group151001.kononchuk.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Calendar;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 // Lesson 3. B_Huffman.
 // Восстановите строку по её коду и беспрефиксному коду символов.
@@ -49,18 +52,32 @@ public class B_Huffman {
         Integer count = scanner.nextInt();
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        //тут запишите ваше решение
+        String temp = scanner.nextLine();
+        for (int i = 0; i < count; i++)
+        {
+            temp = scanner.nextLine();
+            String[] tokens = temp.split(": ");
+            codes.put(tokens[1], tokens[0].charAt(0));
+        }
 
-
-
-
+        String message = scanner.nextLine();
+        temp = "";
+        for(int i = 0; i < length; i++){
+            temp += message.charAt(i);
+            if(codes.containsKey(temp)){
+                result.append(codes.get(temp));
+                temp = "";
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
     }
 
+    static private Map<String, Character> codes = new TreeMap<>();
+
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelev/lesson03/encodeHuffman.txt");
+        File f = new File(root + "by/it/group151001/kononchuk/lesson03/encodeHuffman.txt");
         B_Huffman instance = new B_Huffman();
         String result = instance.decode(f);
         System.out.println(result);
