@@ -36,10 +36,21 @@ public class C_GreedyKnapsack {
 
         @Override
         public int compareTo(Item o) {
-            //тут может быть ваш компаратор
+            return o.cost/o.weight - this.cost/this.weight;
+        }
+    }
 
-
-            return 0;
+    void my_Sort(Item[] items){
+        for (int i = 0; i < items.length; i++){
+            for (int j = 0; j < items.length - 1 - i; j++) {
+                if ((double)items[j].cost/items[j].weight < (double)items[j + 1].cost/items[j + 1].weight){
+                    int tempCost = items[j].cost, tempWeight = items[j].weight;
+                    items[j].cost = items[j + 1].cost;
+                    items[j].weight = items[j + 1].weight;
+                    items[j + 1].cost = tempCost;
+                    items[j + 1].weight = tempWeight;
+                }
+            }
         }
     }
 
@@ -56,19 +67,19 @@ public class C_GreedyKnapsack {
             System.out.println(item);
         }
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
-
-        //тут необходимо реализовать решение задачи
-        //итогом является максимально воможная стоимость вещей в рюкзаке
-        //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
-        //тут реализуйте алгоритм сбора рюкзака
-        //будет особенно хорошо, если с собственной сортировкой
-        //кроме того, можете описать свой компаратор в классе Item
-        //ваше решение.
 
+        my_Sort(items);
 
-
-
+        for (Item item:items){
+            if(W >= item.weight ){
+                result += item.cost;
+                W -= item.weight;
+            }else{
+                result += (double)item.cost/item.weight * W;
+                break;
+            }
+        }
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
