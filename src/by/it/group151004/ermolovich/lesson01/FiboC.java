@@ -25,7 +25,25 @@ public class FiboC {
         //Решение сложно найти интуитивно
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
-        return 0L;
+
+        long[] period = new long [6 * m + 1];
+        period[0] = 0;
+        period[1] = 1;
+
+        if (m == 0)
+            return period[0];
+        if (n == 0)
+            return period[0];
+        if (n == 1)
+            return period[1];
+
+        for (int i = 2; i <= n; i++){
+            period[i] = (period[i-2] + period[i-1]) % m;
+            if (period[i] == 1 && period[i-1] == 0)
+                return period[(int) (n % (i - 1))];
+        }
+
+        return period[(int) n];
     }
 
 
