@@ -56,19 +56,22 @@ public class C_QSortOptimized {
         arr[i] = arr[j];
         arr[j] = temp;
     }
-    void qSort(Segment[] arr, int l, int r){
-        while (l < r) {
+    void quickSort(Segment[] arr, int left, int right) {
+        while (left < right) {
             int i, j;
+
             //partition
-            if (r - l == 1){
-                if (arr[l].compareTo(arr[r]) > 0)
-                    swap(arr, l, r);
-                i = l;
-                j = r;
+            if (right - left == 1) {
+                if (arr[left].compareTo(arr[right]) > 0)
+                    swap(arr, left, right);
+                i = left;
+                j = right;
             }
-            else{
-                int mid = l, low = l, high = r;
-                Segment pivot = arr[r];
+            else {
+                int mid = left;
+                int low = left;
+                int high = right;
+                Segment pivot = arr[right];
                 while(mid <= high){
                     if (arr[mid].compareTo(pivot) < 0)
                         swap(arr, mid++, low++);
@@ -80,8 +83,8 @@ public class C_QSortOptimized {
                 i = low - 1;
                 j = mid;
             }
-            qSort(arr, l, i);
-            l = j;
+            quickSort(arr, left, i);
+            left = j;
         }
     }
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
@@ -107,7 +110,7 @@ public class C_QSortOptimized {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-        qSort(segments, 0, n - 1);
+        quickSort(segments, 0, n - 1);
         for (int i = 0; i < m; i++) {
             int left = 0, right = n - 1, mid = 0;
             while (left <= right) {
@@ -122,9 +125,11 @@ public class C_QSortOptimized {
                 }
             }
             left = mid - 1;
-            while(left >= 0 && points[i] <= segments[left--].stop) ++result[i];
+            while (left >= 0 && points[i] <= segments[left--].stop)
+                ++result[i];
             left = mid + 1;
-            while(left < n && points[i] >= segments[left++].start) ++result[i];
+            while (left < n && points[i] >= segments[left++].start)
+                ++result[i];
 
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
