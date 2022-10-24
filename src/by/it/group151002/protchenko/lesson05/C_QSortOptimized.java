@@ -33,28 +33,29 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment implements Comparable<Segment>{
+    private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
         Segment(int start, int stop){
             this.start = Math.min(start, stop);
             this.stop = this.start == start ? stop : start;
+            //тут вообще-то лучше доделать конструктор на случай если
+            //концы отрезков придут в обратном порядке
         }
 
         @Override
         public int compareTo(Segment o) {
+            //подумайте, что должен возвращать компаратор отрезков
             return stop < o.stop ? -1 : (stop == o.stop ? (start < o.start ? -1 : (start == o.start ? 0 : 1)) : 1);
         }
     }
-
     void swap(Segment[] arr, int i, int j)
     {
         Segment temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
-
     void qSort(Segment[] arr, int l, int r){
         while (l < r) {
             int i, j;
@@ -83,7 +84,6 @@ public class C_QSortOptimized {
             l = j;
         }
     }
-
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -102,12 +102,11 @@ public class C_QSortOptimized {
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
         qSort(segments, 0, n - 1);
         for (int i = 0; i < m; i++) {
             int left = 0, right = n - 1, mid = 0;
@@ -128,11 +127,9 @@ public class C_QSortOptimized {
             while(left < n && points[i] >= segments[left++].start) ++result[i];
 
         }
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
