@@ -33,22 +33,56 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment implements Comparable<Segment>{
         int start;
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            this.start = Math.min(start, stop);
+            this.stop = this.start == start ? stop : start;
         }
 
         @Override
-        public int compareTo(Object o) {
-            //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+        public int compareTo(Segment o) {
+            return stop < o.stop ? -1 : (stop == o.stop ? (start < o.start ? -1 : (start == o.start ? 0 : 1)) : 1);
         }
     }
 
+    void swap(Segment[] arr, int i, int j)
+    {
+        Segment temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    void qSort(Segment[] arr, int l, int r){
+        while (l < r) {
+            int i, j;
+            //partition
+            if (r - l == 1){
+                if (arr[l].compareTo(arr[r]) > 0)
+                    swap(arr, l, r);
+                i = l;
+                j = r;
+            }
+            else{
+                int mid = l, low = l, high = r;
+                Segment pivot = arr[r];
+                while(mid <= high){
+                    if (arr[mid].compareTo(pivot) < 0)
+                        swap(arr, mid++, low++);
+                    else if (arr[mid].compareTo(pivot) == 0)
+                        mid++;
+                    else
+                        swap(arr, mid, high--);
+                }
+                i = low - 1;
+                j = mid;
+            }
+            qSort(arr, l, i);
+            l = j;
+        }
+    }
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -74,6 +108,26 @@ public class C_QSortOptimized {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        qSort(segments, 0, n - 1);
+        for (int i = 0; i < m; i++) {
+            int left = 0, right = n - 1, mid = 0;
+            while (left <= right) {
+                mid = (left + right) / 2;
+                if (points[i] > segments[mid].stop) {
+                    left = mid + 1;
+                } else if (points[i] < segments[mid].start)
+                    right = mid - 1;
+                else {
+                    result[i] = 1;
+                    break;
+                }
+            }
+            left = mid - 1;
+            while(left >= 0 && points[i] <= segments[left--].stop) ++result[i];
+            left = mid + 1;
+            while(left < n && points[i] >= segments[left++].start) ++result[i];
+
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
