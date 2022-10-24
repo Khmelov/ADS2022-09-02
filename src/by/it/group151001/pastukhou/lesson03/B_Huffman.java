@@ -59,7 +59,8 @@ public class B_Huffman {
         }
         String result = new String(), temp = new String();
         String s = scanner.next();
-        for (int i = 0; i < length; ++i) {
+        s += ' ';
+        for (int i = 0; i <= length; ++i) {
             if (codes.containsKey(temp)) {
                 result += codes.get(temp);
                 temp = new String();
