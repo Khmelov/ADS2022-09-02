@@ -50,7 +50,6 @@ public class A_EditDist {
                     else
                         return Math.min(Math.min(r_levenshtein(l1 - 1,one,l2,two) + 1,r_levenshtein(l1,one,l2 - 1,two) + 1),r_levenshtein(l1 - 1,one,l2 - 1,two) + ((one.charAt(l1 - 1) == two.charAt(l2 - 1))?0:1));
     }
-
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         int result = r_levenshtein(one.length(), one, two.length(), two);
