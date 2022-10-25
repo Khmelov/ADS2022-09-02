@@ -15,6 +15,9 @@ import by.it.group151001.kononova.lesson04.C_GetInversions;
 import by.it.group151001.kononova.lesson05.A_QSort;
 import by.it.group151001.kononova.lesson05.B_CountSort;
 import by.it.group151001.kononova.lesson05.C_QSortOptimized;
+import by.it.group151001.kononova.lesson06.A_LIS;
+import by.it.group151001.kononova.lesson06.B_LongDivComSubSeq;
+import by.it.group151001.kononova.lesson06.C_LongNotUpSubSeq;
 import org.junit.Test;
 
 import java.io.File;
@@ -278,6 +281,37 @@ public class Testkononova {
         C_QSortOptimized instance = new C_QSortOptimized();
         int[] result=instance.getAccessory2(stream);
         boolean ok=Arrays.equals(result,new int[]{1,0,0});
+        assertTrue("C failed", ok);
+    }
+
+    @Test
+    public void A6() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson06/dataA.txt");
+        A_LIS instance = new A_LIS();
+        int result=instance.getSeqSize(stream);
+        boolean ok=(result==3);
+        assertTrue("A failed", ok);
+    }
+
+
+    @Test
+    public void B6() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson06/dataB.txt");
+        B_LongDivComSubSeq instance=new B_LongDivComSubSeq();
+        int result=instance.getDivSeqSize(stream);
+        boolean ok=(result==3);
+        assertTrue("B failed", ok);
+    }
+
+    @Test(timeout = 1000)
+    public void C6() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson06/dataC.txt");
+        C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
+        int result=instance.getNotUpSeqSize(stream);
+        boolean ok=(result==4);
         assertTrue("C failed", ok);
     }
 
