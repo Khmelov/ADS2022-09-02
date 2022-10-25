@@ -3,6 +3,7 @@ package by.it.group151001.kononchuk.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Scanner;
 
 /*
@@ -53,7 +54,35 @@ public class A_QSort {
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
 
-            return 0;
+            return this.start - o.start;
+        }
+    }
+
+    private int Partition(Segment[] seg, int l, int r){
+        Segment x = seg[l];
+        int j = l;
+        for (int i = l + 1; i <= r; i++)
+        {
+            if (seg[i].compareTo(x) < 0)
+            {
+                j++;
+                Segment temp = seg[i];
+                seg[i] = seg[j];
+                seg[j] = temp;
+            }
+        }
+
+        Segment temp = seg[l];
+        seg[l] = seg[j];
+        seg[j] = temp;
+
+        return j;
+    }
+    private void QSort(Segment[] seg, int l, int r){
+        if (l < r){
+            int m = Partition(seg, l, r);
+            QSort(seg, l, m - 1);
+            QSort(seg, m + 1, r);
         }
     }
 
@@ -81,9 +110,19 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        QSort(segments, 0, n - 1);
 
-
-
+        for (int i = 0; i < m; i++){
+            int j = 0;
+            while(j < n && segments[j].start <= points[i])
+            {
+                if (segments[j].stop >= points[i])
+                {
+                    result[i]++;
+                }
+                j++;
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -92,7 +131,7 @@ public class A_QSort {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononchuk/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){

@@ -26,16 +26,20 @@ public class B_CountSort {
         int n = scanner.nextInt();
         int[] points=new int[n];
 
+        int[] count = new int[10];
+
         //читаем точки
         for (int i = 0; i < n; i++) {
-            points[i]=scanner.nextInt();
+            points[i] = scanner.nextInt();
+            count[points[i] - 1]++;
         }
-        //тут реализуйте логику задачи с применением сортировки подсчетом
 
-
-
-
-
+        int index = 0;
+        for(int i = 0; i < count.length; i++){
+            for (int j = 0; j < count[i]; j++){
+                points[index++] = i + 1;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
     }
@@ -43,7 +47,7 @@ public class B_CountSort {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononchuk/lesson05/dataB.txt");
         B_CountSort instance = new B_CountSort();
         int[] result=instance.countSort(stream);
         for (int index:result){
