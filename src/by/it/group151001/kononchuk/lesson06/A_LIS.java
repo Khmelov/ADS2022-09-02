@@ -45,8 +45,22 @@ public class A_LIS {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
+        int[] D = new int[n];
 
+        for (int i = 0; i < n; i++){
+            D[i] = 1;
+            for(int j = 0; j < i; j++){
+                if (m[j] < m[i] && D[j] + 1 > D[i]){
+                    D[i] = D[j] + 1;
+                }
+            }
+        }
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            if (D[i] > result){
+                result = D[i];
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
