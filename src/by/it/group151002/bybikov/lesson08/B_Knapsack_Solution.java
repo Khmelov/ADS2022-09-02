@@ -1,5 +1,7 @@
 package by.it.group151002.bybikov.lesson08;
 
+import java.util.Arrays;
+
 public class B_Knapsack_Solution {
     private int rowCount;
     private int colCount;
@@ -76,5 +78,60 @@ public class B_Knapsack_Solution {
         }
         createKnapsackDynamicMatrix(knapsackSize, goldBarsWeightArray);
         return this.dynamicMatrix[this.getRowCount() - 1][this.getColCount() - 1];
+    }
+
+    int recurrentMethod (int knapsackSize, int[] barsWeightArray, int barsIndex) {
+        if (barsIndex < 0 || knapsackSize == 0) {
+            return knapsackSize;
+        }
+        int knapsackFreeSpace = recurrentMethod(knapsackSize, barsWeightArray, barsIndex - 1);
+        if (knapsackSize >= barsWeightArray[barsIndex]) {
+            int tmp = recurrentMethod(knapsackSize - barsWeightArray[barsIndex], barsWeightArray, barsIndex - 1);
+            return Math.min(knapsackFreeSpace, tmp);
+        }
+        return knapsackFreeSpace;
+
+    }
+
+    private int[] mergeTwoArrays (int[] firstArray, int[] secondArray) {
+        int[] result = new int[firstArray.length + secondArray.length];
+        int i = 0, j = 0;
+        while (i < firstArray.length && j < secondArray.length) {
+            if(firstArray[i] > secondArray[j]) {
+                result[i + j] = firstArray[i];
+                i++;
+            }
+            else {
+                result[i + j] = secondArray[j];
+                j++;
+            }
+
+        }
+        for ( ; i < firstArray.length; i++) {
+            result[i + j] = firstArray[i];
+        }
+        for (; j < secondArray.length; j++) {
+            result[i + j] = secondArray[j];
+        }
+        return result;
+    }
+
+    private int[] mergeSortRealization (int[] array) {
+        if(array == null || array.length < 2)
+            return array;
+        int beginIndex = 0, endIndex = array.length;
+        int dividerIndex = (beginIndex + endIndex) / 2;
+        int[] firstPartArray = mergeSortRealization(Arrays.copyOfRange(array, beginIndex, dividerIndex) );
+        int[] secondPartArray = mergeSortRealization(Arrays.copyOfRange(array, dividerIndex, endIndex) );
+        array = mergeTwoArrays(firstPartArray, secondPartArray);
+        return array;
+    }
+
+    int compareRecurrentMaxKnapsackWeight(int knapsackSize, int[] barsWeightArray) {
+        if (!isValidParameters(knapsackSize, barsWeightArray)) {
+            return -1;
+        }
+        int[] sortedBarsWeight = mergeSortRealization(barsWeightArray);
+        return knapsackSize - recurrentMethod(knapsackSize, sortedBarsWeight, barsWeightArray.length - 1);
     }
 }

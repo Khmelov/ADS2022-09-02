@@ -28,11 +28,29 @@ public class C_Stairs_Solution {
             resultArray[resultCounter] = stairsNumbersArray[resultCounter - 1] +
             Math.max(resultArray[resultCounter - 1], resultArray[resultCounter - 2]);
         }
-        return stairsNumbersArray;
+        return resultArray;
     }
 
     int getMaxStairSum (int[] stairsNumbersArray) {
+        if (!this.isValidParameters(stairsNumbersArray)) {
+            return 0;
+        }
         int[] stairSumArray = createStairSumArray(stairsNumbersArray);
         return stairSumArray[stairSumArray.length - 1];
+    }
+    
+    private int instanceRecurrentMethod (int[] stairsNumbersArray, int currentStairIndex) {
+        if (currentStairIndex < 0)
+            return 0;
+        int result = instanceRecurrentMethod(stairsNumbersArray, currentStairIndex - 1);
+        result = Math.max(result, instanceRecurrentMethod(stairsNumbersArray, currentStairIndex - 2) );
+        return result + stairsNumbersArray[currentStairIndex];
+    }
+    
+    int instanceMaxStairSum (int[] stairsNumbersArray) {
+        if (!this.isValidParameters(stairsNumbersArray)) {
+            return 0;
+        }
+        return instanceRecurrentMethod(stairsNumbersArray, stairsNumbersArray.length -1);
     }
 }

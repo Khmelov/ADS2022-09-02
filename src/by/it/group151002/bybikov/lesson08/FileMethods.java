@@ -12,7 +12,7 @@ public class FileMethods {
         FileWriter fileWriter = new FileWriter(outputFilePath);
         RandomValuesMethods randomValues = new RandomValuesMethods();
         int knapsackSize = randomValues.getIntRandomValueInRange(1, 100000);
-        int goldBarsAmount = randomValues.getIntRandomValueInRange(1, 300);
+        int goldBarsAmount = randomValues.getIntRandomValueInRange(1, 20);
         fileWriter.write(knapsackSize + " ");
         fileWriter.write(goldBarsAmount + "\n");
         for (int i = 0; i < goldBarsAmount; i++) {
@@ -25,7 +25,7 @@ public class FileMethods {
     void set_C_Tasks_Data_File(String outputFilePath) throws IOException {
         FileWriter fileWriter = new FileWriter(outputFilePath);
         RandomValuesMethods randomValues = new RandomValuesMethods();
-        int stairsAmount = randomValues.getIntRandomValueInRange(1, 100);
+        int stairsAmount = randomValues.getIntRandomValueInRange(1, 20);
         fileWriter.write(stairsAmount + "\n");
         for (int i = 0; i < stairsAmount; i++) {
             int currentStairNumber = randomValues. getIntRandomValueInRange(-10000, 10000);
