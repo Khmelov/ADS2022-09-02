@@ -65,7 +65,7 @@ public class Lesson6Test {
             m[i] = random.nextInt(1_000_000_000);
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
         instance.getNotUpSeqSize(m);
-        assertTrue("under timeout", true);
+        assertTrue("C_timeout failed", true);
     }
 
     @Test(timeout = 1000)
