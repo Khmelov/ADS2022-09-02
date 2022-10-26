@@ -3,6 +3,7 @@ package by.it.group151002.poluectov.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Comparator;
 import java.util.Scanner;
 
 /*
@@ -43,17 +44,44 @@ public class B_LongDivComSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
 
+        int result = subSeqSize(m);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    int subSeqSize(int[] arr) {
+        int[] m = new int[arr.length + 1];
+        m[0] = -1;
+        int lo, hi;
+        int L = 0;
+        int newL;
+        for (int i = 0; i < arr.length; i++) {
+            lo = 1;
+            hi = L + 1;
+            while (lo < hi) {
+                int mid = lo + ((hi - lo) / 2);
+                /*if (arr[m[mid]] > arr[i]) {
+                    hi = mid;
+                } else */
+                if ((arr[m[mid]] > arr[i]) && (arr[i] % arr[m[mid]] != 0)) {
+                    hi = mid;
+                } else {
+                    lo = mid + 1;
+                }
+            }
+            newL = lo;
+            m[newL] = i;
+            if (newL > L) L = newL;
+        }
+        return L;
+    }
+
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/poluectov/lesson06/dataB.txt");
         B_LongDivComSubSeq instance = new B_LongDivComSubSeq();
         int result = instance.getDivSeqSize(stream);
         System.out.print(result);

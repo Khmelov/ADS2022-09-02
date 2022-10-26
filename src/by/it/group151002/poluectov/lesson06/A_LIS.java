@@ -45,17 +45,30 @@ public class A_LIS {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
+        return seqSizeImp(m);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+    }
+
+    int seqSizeImp(int[] arr){
+        if (arr.length == 1)
+            return 1;
+        int seqSize = 1;
+        int[] seqSizes = new int[arr.length];
+        seqSizes[0] = 1;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > arr[i - 1]) {
+                seqSizes[i] = seqSizes[i - 1] + 1;
+                if (seqSizes[i] > seqSize) seqSize = seqSizes[i];
+            }else
+                seqSizes[i] = 1;
+        }
+        return seqSize;
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/poluectov/lesson06/dataA.txt");
         A_LIS instance = new A_LIS();
         int result = instance.getSeqSize(stream);
         System.out.print(result);
