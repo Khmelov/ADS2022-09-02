@@ -2,9 +2,9 @@ package by.it.group151002.talalaev.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 // Lesson 3. B_Huffman.
 // Восстановите строку по её коду и беспрефиксному коду символов.
@@ -44,24 +44,45 @@ import java.util.Scanner;
 
 public class B_Huffman {
 
+    Character getIndex(String val) {
+        for (Map.Entry<Character, Integer> pair : codes.entrySet()) {
+            if (val.equals(Integer.toString(pair.getValue()))) {
+                return pair.getKey();
+            }
+        }
+        return 'f';
+    }
+
+
+    static private Map<Character, Integer> codes = new TreeMap<>();
+
     String decode(File file) throws FileNotFoundException {
-        StringBuilder result=new StringBuilder();
+
+        StringBuilder res = new StringBuilder();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(file);
         Integer count = scanner.nextInt();
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        List<Character> codes = new ArrayList<>(count);
-        for (int i = 0; i < count; i++) {
-            String line = scanner.nextLine();
-            Character ch = line.charAt(0);
-            codes.add(ch);
+        //тут запишите ваше решение
+        for (int i = 0; i < count; i++)
+            codes.put(scanner.next().charAt(0), scanner.nextInt());
+
+        String tmpStr = scanner.next();
+        int i = 0, counter = 0;
+
+        while (i < tmpStr.length()) {
+            while ((tmpStr.charAt(i) != '0') && (counter < count - 2)) {
+                counter++;
+                i++;
+            }
+            res.append(getIndex(tmpStr.substring(0, i + 1)));
+            tmpStr = tmpStr.substring(i + 1);
+            counter = 0;
+            i = 0;
         }
-        String toDecode = scanner.nextLine();
-        Node head = createTree(codes);
-        result = decoding(toDecode, head);
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        return result.toString(); //01001100100111
+        return res.toString(); //01001100100111
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -70,81 +91,6 @@ public class B_Huffman {
         B_Huffman instance = new B_Huffman();
         String result = instance.decode(f);
         System.out.println(result);
-    }
-
-    private StringBuilder decoding(String strToDecode, Node huffmanTree) {
-        Node curr = huffmanTree;
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < strToDecode.length(); i++) {
-            if (curr.getLeft() != null) {
-                Character ch = strToDecode.charAt(i);
-                if (ch.equals('0')) curr = curr.getLeft();
-                else curr = curr.getRight();
-            } else {
-                result.append(curr.getSym());
-                curr = huffmanTree;
-                i--;
-            }
-        }
-        result.append(curr.getSym());
-        return result;
-    }
-
-    private Node createTree(List<Character> codes) {
-        Node prev = new Node(null, null);
-        Node head = prev;
-        Node curr;
-        for (int i = 0; i < codes.size() - 1; i++) {
-            Character ch = codes.get(i);
-            curr = new Node(ch);
-            prev.setLeft(curr);
-            prev.setRight(new Node(null, null));
-            prev = prev.getRight();
-        }
-        prev.setSym(codes.get(codes.size() - 1));
-        return head;
-    }
-
-    private class Node {
-
-        private Node left;
-        private Node right;
-        private Character sym;
-
-
-        public Node getLeft() {
-            return left;
-        }
-
-        Node(Node left, Node right){
-            this.left = left;
-            this.right = right;
-            this.sym = 0;
-        }
-
-        Node(Character symbol) {
-            this.sym = symbol;
-            this.left = null;
-            this.right = null;
-        }
-
-        public void setLeft(Node l) {
-            this.left = l;
-        }
-
-        public Node getRight() {
-            return right;
-        }
-
-        public void setRight(Node r) {
-            this.right = r;
-        }
-        public void setSym(Character s){
-            this.sym = s;
-        }
-        public Character getSym() {
-            return sym;
-        }
     }
 
 

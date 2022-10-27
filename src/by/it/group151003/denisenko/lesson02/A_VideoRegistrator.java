@@ -16,7 +16,6 @@ public class A_VideoRegistrator {
             }
         }
 
-
         return stops;
     }
 }
