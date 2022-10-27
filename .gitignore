@@ -23,7 +23,3 @@ TaskB.txt
 TaskC.txt
 
 
-.gitignore
-/bin/
-.classpath
-.project
