@@ -12,7 +12,7 @@ public class RandomValuesMethods {
     }
 
     String getRandomString () {
-        int resultStringLength = getRandomIntValueInRange(0, 15);
+        int resultStringLength = getRandomIntValueInRange(1, 100);
         StringBuilder resultStringBuilder = new StringBuilder();
         for (int i = 0; i < resultStringLength; i++) {
             char currentChar = (char) getRandomIntValueInRange('a', 'z');

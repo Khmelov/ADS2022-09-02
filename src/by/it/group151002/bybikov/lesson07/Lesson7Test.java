@@ -61,22 +61,21 @@ public class Lesson7Test {
 
     @Test
     public void C() throws Exception {
-        LevenshteinEditDistanceClass levenshteinEditDistanceClass = new LevenshteinEditDistanceClass();
+        C_Edit_Distance_Solution solution = new C_Edit_Distance_Solution();
         RandomValuesMethods randomValuesMethods = new RandomValuesMethods();
+        String editSequence;
         String sourceString = "distance";
         String destString = "editing";
+        //sourceString = "ab";
+        //destString = "ab";
         boolean isCorrect = true;
-        for (int i = 0; i < 1 && isCorrect; i++) {
-            sourceString = "distance";
-            destString = "editing";
-            /*
+        for (int i = 0; i < 100000 && isCorrect; i++) {
             sourceString = randomValuesMethods.getRandomString();
             destString = randomValuesMethods.getRandomString();
             System.out.println(sourceString);
             System.out.println(destString);
-            */
-            levenshteinEditDistanceClass.setPrivateLevenshteinEditDistanceMatrix(sourceString, destString);
-            int matrixLowerEditDistance = levenshteinEditDistanceClass.getLowerEditDistanceFromMatrix();
+            solution.setLevenshteinMatrix(sourceString, destString);
+            editSequence = solution.getEditSequence(sourceString, destString);
         }
         assertTrue("C failed", isCorrect);
 
