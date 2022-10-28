@@ -33,7 +33,7 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    public class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
@@ -43,9 +43,9 @@ public class C_QSortOptimized {
         }
 
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+            return Integer.compare(start, o.start);
         }
     }
 
@@ -68,15 +68,67 @@ public class C_QSortOptimized {
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
+        quicksort(segments, 0, segments.length - 1);
+        for (int i = 0; i < points.length; i++) {
+            int number = binarySearch(segments, points[i]);
+            int amount = 0;
+            int j = number;
+            while (j >= 0 && segments[j].start <= points[i]) {
+                if (segments[j].stop >= points[i])
+                    amount++;
+                j--;
+            }
+            result[i] = amount;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    private void quicksort(Segment[] segments, int l, int r) {
+        if (l >= r)
+            return;
+        int i = l;
+        int j = r;
+       Segment pivot = segments[l + (r - l) / 2];
+        while (i <= j) {
+            while (segments[i].compareTo(pivot) == -1) {
+                i++;
+            }
+            while (segments[j].compareTo(pivot) == 1) {
+                j--;
+            }
+            if (i <= j) {
+                Segment tmp = segments[i];
+                segments[i] = segments[j];
+                segments[j] = tmp;
+                i++;
+                j--;
+            }
+        }
+        if (l < j)
+            quicksort(segments, l, j);
+        if (i < r)
+            quicksort(segments, i, r);
+    }
+
+    public int binarySearch(Segment[] segments, int point) {
+        int left = 0;
+        int right = segments.length - 1;
+        while (right > left)
+        {
+            int middle = (left + right + 1)/2;
+            int bias = (right - left + 1) / 2;
+            if (segments[middle].start > point)
+                right -= bias;
+            else
+                left += bias;
+        }
+        return left;
     }
 
 
