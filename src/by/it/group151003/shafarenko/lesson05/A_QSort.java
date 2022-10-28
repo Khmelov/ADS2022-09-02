@@ -125,7 +125,6 @@ public class A_QSort {
     }
 
     private int Partition(Segment[] arr, int left, int right) {
-        Segment tmp;
         Segment pivot = arr[(int)(Math.random() * (right - left) + left)];
         /*int pivot = arr[(left + right) / 2];*/
         int i = left, j = right;
@@ -139,11 +138,15 @@ public class A_QSort {
             if (i >= j) {
                 return j;
             }
-            tmp = arr[i];
-            arr[i++] = arr[j];
-            arr[j--] = tmp;
+            Swap(arr, i++, j++);
         }
         return j;
+    }
+
+    private void Swap(Segment[] arr, int i, int j) {
+        Segment tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
