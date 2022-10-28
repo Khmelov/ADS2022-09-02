@@ -46,15 +46,15 @@ public class C_HeapMax {
 
         int siftDown(int i) { //просеивание вверх
             int leftChild = 2 * i + 1;
-            int rightChild = 2 * i + 2 ;
+            int rightChild = 2 * i + 2;
             int largerChild;
-            if (rightChild < heap.size() && heap.get(rightChild) > heap.get(leftChild)){
+            if (rightChild < heap.size() && heap.get(rightChild) > heap.get(leftChild)) {
                 largerChild = rightChild;
             } else {
                 largerChild = leftChild;
             }
 
-            if (largerChild < heap.size() && heap.get(largerChild) > heap.get(i)){
+            if (largerChild < heap.size() && heap.get(largerChild) > heap.get(i)) {
                 Long temp = heap.get(i);
                 heap.set(i, heap.get(largerChild));
                 heap.set(largerChild, temp);
@@ -64,8 +64,8 @@ public class C_HeapMax {
         }
 
         int siftUp(int i) { //просеивание вниз
-            int parent = Math.floorDiv(i - 1, 2);
-            if (i > 0  && heap.get(parent) < heap.get(i)){
+            int parent = (i - 1) / 2;
+            if (i > 0 && heap.get(parent) < heap.get(i)) {
                 Long temp = heap.get(i);
                 heap.set(i, heap.get(parent));
                 heap.set(parent, temp);
