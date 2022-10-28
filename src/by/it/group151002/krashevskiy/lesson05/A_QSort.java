@@ -43,56 +43,103 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
+            if (start > stop) {
+                this.start = stop;
+                this.stop = start;
+            } else {
+                this.start = start;
+                this.stop = stop;
+            }
         }
 
         @Override
         public int compareTo(Segment o) {
-            //подумайте, что должен возвращать компаратор отрезков
+            int comparing = Integer.compare(this.start, o.start);
+            if (comparing == 0)
+                return Integer.compare(this.stop, o.stop);
 
-            return 0;
+            return comparing;
         }
     }
 
+    void swap(Segment[] arr, final int i, final int j) {
+        Segment temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    int partition(Segment[] arr, final int low, final int high) {
+        Segment pivot = arr[(low + high) / 2];
+        int i = low;
+        int j = high;
+        while (i < j) {
+            while (arr[i].compareTo(pivot) < 0)
+                i++;
+            while (arr[j].compareTo(pivot) > 0)
+                j--;
+            if (i < j) {
+                swap(arr, i, j);
+                i++;
+                j--;
+            }
+        }
+
+        return j;
+    }
+
+    void quickSort(Segment[] arr, final int low, final int high) {
+        if (low < high) {
+            int part = partition(arr, low, high);
+            quickSort(arr, low, part);
+            quickSort(arr, part + 1, high);
+        }
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        //число отрезков отсортированного массива
+
         int n = scanner.nextInt();
         Segment[] segments=new Segment[n];
-        //число точек
+
         int m = scanner.nextInt();
         int[] points=new int[m];
         int[] result=new int[m];
 
-        //читаем сами отрезки
         for (int i = 0; i < n; i++) {
-            //читаем начало и конец каждого отрезка
+
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
-        //читаем точки
+
         for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        quickSort(segments, 0, segments.length - 1);
 
+        int amount;
+        for (int i = 0; i < m; i++) {
+            amount = 0;
+            for (Segment camera : segments){
+                if (points[i] >= camera.start && points[i] <= camera.stop) {
+                    amount++;
+                } else {
+                    break;
+                }
+            }
+            result[i] = amount;
+        }
 
+        for (Segment seg: segments) {
+            System.out.println(seg.start + " " + seg.stop);
+        }
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/krashevskiy/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){
