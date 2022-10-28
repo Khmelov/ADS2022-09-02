@@ -13,7 +13,7 @@ import java.util.Scanner;
 Во второй строке
         - целое число 1<=k<=10000 (сколько чисел нужно найти)
         - k натуральных чисел b1,...,bk не превышающих 10E9 (сами числа)
-Для каждого i от 1 до kk необходимо вывести индекс 1<=j<=n,
+Для каждого i от 1 до k необходимо вывести индекс 1<=j<=n,
 для которого A[j]=bi, или -1, если такого j нет.
 
         Sample Input:
@@ -67,7 +67,7 @@ public class A_BinaryFind {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151003/shafarenko/lesson04/dataA.txt");
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.findIndex(stream);
