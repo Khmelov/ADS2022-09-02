@@ -26,6 +26,15 @@ public class Lesson1Test {
     }
 
     @Test(timeout = 2000)
+    public void slowA1() throws Exception {
+        FiboA fibo=new FiboA();
+        BigInteger res=fibo.slowA(1);
+        boolean ok=res.toString().equals("1");
+        assertTrue("slowA failed", ok);
+    }
+
+
+    @Test(timeout = 2000)
     public void fastB() throws Exception {
         FiboB fibo=new FiboB();
         BigInteger res=fibo.fastB(55555);

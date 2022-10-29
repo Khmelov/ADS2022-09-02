@@ -10,6 +10,7 @@ public class FiboA {
 
     private long startTime = System.currentTimeMillis();
 
+
     private long time() {
         return System.currentTimeMillis() - startTime;
     }
@@ -29,7 +30,11 @@ public class FiboA {
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        return 0;
+        if (n == 0)
+            return 0;
+        if (n == 1)
+            return 1;
+        return calc(n-1) + calc(n-2);
     }
 
 
@@ -38,8 +43,11 @@ public class FiboA {
         //здесь нужно реализовать вариант без ограничения на размер числа,
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-
-        return BigInteger.ZERO;
+        if (n == 0)
+            return BigInteger.ZERO;
+        if (n == 1)
+            return BigInteger.ONE;
+        return slowA(n-1).add(slowA(n-2));
     }
 
 
