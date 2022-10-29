@@ -43,8 +43,13 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if(start <= stop) {
+                this.start = start;
+                this.stop = stop;
+            } else{
+                this.start = stop;
+                this.stop = start;
+            }
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
         }
@@ -53,10 +58,34 @@ public class A_QSort {
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
 
-            return 0;
+            return Integer.compare(this.start, o.start);
         }
     }
 
+    int Partition(Segment[] a, int left, int right){
+        Segment temp = a[left];
+        int j = left;
+        for(int i = left+1;i<=right;i++){
+            if(a[i].compareTo(temp)<=0){
+                j += 1;
+                Segment tmp = a[j];
+                a[j] = a[i];
+                a[i] = tmp;
+            }
+        }
+        temp = a[left];
+        a[left] = a[j];
+        a[j] = temp;
+        return j;
+    }
+
+    void QuickS(Segment[] a, int l, int r){
+        while(l < r){
+            int m = Partition(a,l,r);
+            QuickS(a,l,m-1);
+            l = m+1;
+        }
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -81,7 +110,18 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
+        QuickS(segments, 0, n-1);
+        for(int i=0; i<m; i++){
+            result[i] = 0;
+            for(int j=0; j<n; j++){
+                if(points[i] >= segments[j].start && points[i] <= segments[j].stop){
+                    result[i] += 1;
+                    if(segments[j+1].start > segments[j].stop){
+                        break;
+                    }
+                }
+            }
+        }
 
 
 

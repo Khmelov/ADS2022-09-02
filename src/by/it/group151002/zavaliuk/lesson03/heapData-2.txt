@@ -1,0 +1,13 @@
+12
+Insert 80
+Insert 7
+ExtractMax
+Insert 5
+Insert 40
+ExtractMax
+Insert 1000
+Insert 90
+ExtractMax
+Insert 2
+Insert 50
+ExtractMax

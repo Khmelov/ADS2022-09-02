@@ -1,10 +1,4 @@
 package by.it.group151003.shafarenko.lesson02;
-//package by.it.a_khmelev.lesson02;
-//пакеты надо исправлять. ломается же все у всех.
-// пофиксил.
-// все проблемные файлы удалил.
-// балл минус.
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,9 +12,6 @@ import java.util.List;
 */
 
 
-//и что это за импорт??????
-//import by.it.group151003.shafarenko.lesson01.lesson02.A_VideoRegistrator;
-
 public class A_VideoRegistrator {
 
     public static void main(String[] args) {
@@ -30,7 +21,7 @@ public class A_VideoRegistrator {
         System.out.println(starts);                            //покажем моменты старта
     }
     //модификаторы доступа опущены для возможности тестирования
-    List<Double> calcStartTimes(double[] events, double workDuration){
+    public List<Double> calcStartTimes(double[] events, double workDuration){
         //events - события которые нужно зарегистрировать
         //timeWorkDuration время работы видеокамеры после старта
         List<Double> result;

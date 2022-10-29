@@ -31,7 +31,6 @@ public class FiboA {
         //время O(2^n)
         if (n < 2) return n;
         return calc(n - 1) + calc(n - 2);
-        //jyuyuhyv
     }
 
 
@@ -41,10 +40,13 @@ public class FiboA {
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
 
-        return BigInteger.ZERO;
+            if (n>1)
+                return slowA(n-1).add(slowA(n-2));
+            else return new BigInteger(n.toString());
+        }
     }
 
 
 
-}
+
 
