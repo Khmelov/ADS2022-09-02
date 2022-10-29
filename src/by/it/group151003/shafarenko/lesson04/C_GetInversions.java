@@ -35,39 +35,69 @@ Sample Output:
 
 public class C_GetInversions {
 
-    int calc(InputStream stream) throws FileNotFoundException {
+    int calc(int[] a) throws FileNotFoundException {
         //подготовка к чтению данных
-        Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!
-        //размер массива
-        int n = scanner.nextInt();
-        //сам массив
-        int[] a = new int[n];
-        for (int i = 0; i < n; i++) {
-            a[i] = scanner.nextInt();
-        }
-        int result = 0;
+        int result;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
-
-
-
-
-
-
-
+        int[] aCopy = new int[a.length];
+        int[] buffer = new int[a.length];
+        System.arraycopy(a, 0, aCopy, 0, a.length);
+        result = MergeSort(aCopy, buffer, 0, a.length - 1);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    private int MergeSort(int[] arr, int[] buffer, int left, int right) {
+        int result = 0;
+        if (left == right)
+            return 0;
+
+        int middle = (left + right) / 2;
+        result += MergeSort(arr, buffer, left, middle);
+        result += MergeSort(arr, buffer, middle + 1, right);
+        result += Merge(arr, buffer, left, right);
+        return result;
+    }
+
+    private int Merge (int[] arr, int[] buffer, int left, int right) {
+        int result = 0;
+        int middle = (left + right) / 2;
+        int i = left, j = middle + 1, k = left;
+        while (i <= middle && j <= right) {
+            if (arr[i] <= arr[j]) {
+                buffer[k++] = arr[i++];
+            } else {
+                buffer[k++] = arr[j++];
+                result += middle + 1 - i;
+            }
+        }
+        while (i <= middle) {
+            buffer[k++] = arr[i++];
+        }
+        while (j <= right) {
+            buffer[k++] = arr[j++];
+        }
+        for (i = left; i <= right; i++) {
+            arr[i] = buffer[i];
+        }
+        return result;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151003/shafarenko/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
+        Scanner scanner = new Scanner(stream);
         //long startTime = System.currentTimeMillis();
-        int result = instance.calc(stream);
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+        for (int i = 1; i <= n; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        int result = instance.calc(arr);
         //long finishTime = System.currentTimeMillis();
         System.out.print(result);
     }

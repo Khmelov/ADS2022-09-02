@@ -3,6 +3,7 @@ package by.it.group151001.yankova.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -28,32 +29,32 @@ import java.util.Scanner;
 
 public class A_BinaryFind {
     int[] findIndex(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
-        //размер отсортированного массива
         int n = scanner.nextInt();
-        //сам отсортированный массива
-        int[] a=new int[n];
+        int[] a = new int[n];
         for (int i = 1; i <= n; i++) {
             a[i-1] = scanner.nextInt();
         }
+        Arrays.sort(a);
 
-        //размер массива индексов
         int k = scanner.nextInt();
-        int[] result=new int[k];
+        int[] result =  new int[k];
         for (int i = 0; i < k; i++) {
             int value = scanner.nextInt();
-            //тут реализуйте бинарный поиск индекса
-
-
-
-
-            result[i]=0;
+            result[i] = binary_serach(a, 0, n-1, value);
         }
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    private int binary_serach(int[] a, int l, int r, int key){
+        while (l <= r){
+            int mid = (l + r)/2;
+            if(key == a[mid]) return mid + 1;
+            else if(key > a[mid]) l = mid + 1;
+            else if(key < a[mid]) r = mid - 1;
+        }
+        return -1;
     }
 
 

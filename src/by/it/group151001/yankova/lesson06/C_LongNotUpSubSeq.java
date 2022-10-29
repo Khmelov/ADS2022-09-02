@@ -3,6 +3,8 @@ package by.it.group151001.yankova.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -39,24 +41,41 @@ import java.util.Scanner;
 public class C_LongNotUpSubSeq {
 
     int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        //общая длина последовательности
         int n = scanner.nextInt();
-        int[] m = new int[n];
-        //читаем всю последовательность
+        int[] a = new int[n];
         for (int i = 0; i < n; i++) {
-            m[i] = scanner.nextInt();
+            a[i] = scanner.nextInt();
         }
-        //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
 
+        int[] length = new int[n];
+        int parentInd = 0, maxInd = 0;
+        List<Integer>[] groupSeq = new List[n];
+        for (int i = 0; i < n; i++) {
+            groupSeq[i] = new ArrayList<>();
+        }
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        for (int i = 0; i < n; i++) {
+            length[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (a[j] >= a[i] && length[j] + 1 > length[i]) {
+                    length[i] = length[j] + 1;
+                    parentInd = j;
+                }
+            }
+            groupSeq[i].addAll(groupSeq[parentInd]);
+            groupSeq[i].add(i+1);
+            if(groupSeq[i].size() > groupSeq[maxInd].size())
+                maxInd = i;
+        }
+
+        for(Integer item: groupSeq[maxInd]){
+            System.out.print(item + " ");
+        }
+        System.out.println();
+
+        return groupSeq[maxInd].size();
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

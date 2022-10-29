@@ -3,6 +3,8 @@ package by.it.group151001.yankova.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.Inet4Address;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -22,29 +24,40 @@ Sample Output:
 public class B_MergeSort {
 
     int[] getMergeSort(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
-        Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
-        //размер массива
+        Scanner scanner = new Scanner(stream);
         int n = scanner.nextInt();
-        //сам массив
-        int[] a=new int[n];
+        int[] a = new int[n];
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
             System.out.println(a[i]);
         }
-
-        // тут ваше решение (реализуйте сортировку слиянием)
-        // https://ru.wikipedia.org/wiki/Сортировка_слиянием
-
-
-
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        MergeSort(a, 0, n);
         return a;
+    }
+
+    private void MergeSort(int[] a, int l, int r){
+        if(l + 1 >= r)
+            return;
+        int mid = (l + r)/2;
+        MergeSort(a, l, mid);
+        MergeSort(a, mid, r);
+        MergeArrays(a, l, mid, r);
+    }
+
+    private void MergeArrays(int[] a, int l, int mid, int r){
+        int[] buffer = new int[r - l];
+        int b1 = 0, b2 = 0;
+        while(b1 + b2 != r - l){
+            if((b1>=mid-l) || (b2<r-mid && a[b2+mid]<=a[b1+l])){
+                buffer[b1+b2] = a[b2+mid];
+                b2++;
+            }else{
+                buffer[b1+b2] = a[b1+l];
+                b1++;
+            }
+        }
+        if (r - l >= 0) System.arraycopy(buffer, 0, a, l, r - l);
     }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
