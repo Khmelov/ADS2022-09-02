@@ -10,13 +10,23 @@ import static org.junit.Assert.assertTrue;
 
 public class Lesson5Test {
     @Test (timeout = 1000)
-    public void A() throws Exception {
+    public void A1() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         boolean ok=Arrays.equals(result,new int[]{1,0,0});
-        assertTrue("A failed", ok);
+        assertTrue("A1 failed", ok);
+    }
+
+    @Test (timeout = 1000)
+    public void A2() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151002/bobrik/lesson05/dataA2.txt");
+        A_QSort instance = new A_QSort();
+        int[] result=instance.getAccessory(stream);
+        boolean ok=Arrays.equals(result,new int[]{2, 3, 3, 2, 3, 4, 3, 1, 0});
+        assertTrue("A2 failed", ok);
     }
 
 
