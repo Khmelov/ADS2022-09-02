@@ -31,13 +31,39 @@ public class B_CountSort {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
+        int min = points[0];
+        int max = points[0];
+        for (int i = 0; i < points.length; i++) {
+            if (points[i] > max) {
+                max = points[i];
+            }
+        }
 
 
 
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return points;
+        return sort(points, max);
+    }
+
+    public static int[] sort(int[] arr, int max) {
+        int[] tempArr = new int[max + 1];
+        for (int i = 0; i < tempArr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                if (arr[j] == i) {
+                    tempArr[i]++;
+                }
+            }
+        }
+        int index = 0;
+        for (int i = 0; i < tempArr.length; i++) {
+            for (int j = 0; j < tempArr[i]; j++) {
+                arr[index] = i;
+                index++;
+            }
+        }
+        return arr;
     }
 
 
