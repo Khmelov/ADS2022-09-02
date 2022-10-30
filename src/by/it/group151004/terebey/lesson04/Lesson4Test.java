@@ -29,7 +29,7 @@ public class Lesson4Test {
     @Test
     public void B() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group151004/terebey/lesson04/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/terebey/lesson04/dataB.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);
@@ -48,7 +48,7 @@ public class Lesson4Test {
     @Test
     public void C() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group151004/terebey/lesson04/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/terebey/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
