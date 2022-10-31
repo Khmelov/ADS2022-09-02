@@ -29,10 +29,10 @@ public class Lesson8Test {
     @Test
     public void C() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson08/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151001/milkovskaya/lesson08/dataC.txt");
         C_Stairs instance = new C_Stairs();
         int res=instance.getMaxSum(stream);
-        assertEquals("C failed", res, 3);
+        assertEquals("C failed", res, 4);
     }
 
 }
