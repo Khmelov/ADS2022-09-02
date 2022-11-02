@@ -25,7 +25,20 @@ public class FiboC {
         //Решение сложно найти интуитивно
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
-        return 0L;
+        int[] pizan = new int[m * 6 + 1];
+        pizan[0] = 0;
+        pizan[1] = 1;
+        if (m == 1)
+            return pizan[0];
+        if (n <= 1)
+            return n;
+        else
+            for (int i = 2; i <= n; ++i) {
+                pizan[i] = (pizan[i-1] + pizan[i-2]) % m;
+                if (pizan[i-1] == 0 && pizan[i] == 1)
+                    return pizan[(int) (n % (i-1))];
+            }
+        return pizan[(int) n];
     }
 
 
