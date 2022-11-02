@@ -1,11 +1,8 @@
-package by.it.group151003.halai.lesson04;
+package by.it.group151003.haritonenko.lesson04;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -36,55 +33,47 @@ Sample Output:
 */
 
 
-public class  C_GetInversions {
+public class C_GetInversions {
 
-    int mergeArrays(int[] baseArray, int [] arr1, int [] arr2)
-    {
+    int MergeArrays(int[] a, int l, int m, int r) {
+        int result = 0;
+        int[] left = new int[m - l + 2];
+        for (int i = l; i <= m; i++) {
+            left[i - l] = a[i];
+        }
+        left[m - l + 1] = Integer.MAX_VALUE;
 
-        int sumLength = arr1.length + arr2.length;
-        int ind1 = 0;
-        int ind2 = 0;
-        int inversionsCount = 0;
-        List<Integer> result = new ArrayList<>();
+        int[] right = new int[r - m + 1];
+        for (int i = m + 1; i <= r; i++) {
+            right[i - m - 1] = a[i];
+        }
+        right[r - m] = Integer.MAX_VALUE;
 
-        for(int i = 0; i < sumLength; i++){
-            if (ind1 == arr1.length)
-            {
-                result.add(arr2[ind2]);
-                ind2++;
-                continue;
+        int i = 0, j = 0;
+        for (int k = l; k <= r; k++) {
+            if (left[i] <= right[j]) {
+                a[k] = left[i];
+                i++;
             }
-            if(ind2 == arr2.length)
-            {
-                result.add(arr1[ind1]);
-                ind1++;
-                continue;
-            }
-            if (arr1[ind1] <= arr2[ind2])
-            {
-                result.add(arr1[ind1]);
-                ind1++;
-            }
-            else
-            {
-                result.add(arr2[ind2]);
-                inversionsCount += arr1.length-ind1;
-                ind2++;
+            else {
+                a[k] = right[j];
+                j++;
+                result += left.length - i - 1;
+
             }
         }
-
-        return inversionsCount;
+        return result;
     }
 
-    int getInversions(int[] arr)
-    {
-        if(arr.length <= 1){
-            return 0;
-        }
-        int middle = (arr.length + 1)/2;
-        return getInversions(Arrays.copyOfRange(arr, 0, middle)) +
-                getInversions(Arrays.copyOfRange(arr, middle, arr.length)) +
-                mergeArrays(arr, Arrays.copyOfRange(arr, 0, middle), Arrays.copyOfRange(arr, middle, arr.length));
+    int MergeSort(int[] a, int l, int r) {
+        int result = 0;
+        if (l == r) return 0;
+
+        int m = (l + r) / 2;
+        result += MergeSort(a, l, m);
+        result += MergeSort(a, m+1, r);
+        result += MergeArrays(a, l, m, r);
+        return result;
     }
 
     int calc(InputStream stream) throws FileNotFoundException {
@@ -101,12 +90,7 @@ public class  C_GetInversions {
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
-        result = getInversions(a);
-
-
-
-
-
+        result = MergeSort(a, 0, a.length - 1);
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -116,7 +100,8 @@ public class  C_GetInversions {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group151003/halai/lesson04/dataC1.txt");
+      //  InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+      InputStream stream = new FileInputStream(root + "by/it/group151003/haritonenko/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);

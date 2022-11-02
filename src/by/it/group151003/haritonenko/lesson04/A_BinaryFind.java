@@ -1,9 +1,8 @@
-package by.it.group151003.matoshko.lesson04;
+package by.it.group151003.haritonenko.lesson04;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.FormattableFlags;
 import java.util.Scanner;
 
 /*
@@ -41,33 +40,34 @@ public class A_BinaryFind {
             a[i-1] = scanner.nextInt();
         }
 
+
         //размер массива индексов
         int k = scanner.nextInt();
         int[] result=new int[k];
-        // Проходим по всем элементам из файла и пытаемся их найти
         for (int i = 0; i < k; i++) {
             int value = scanner.nextInt();
-            int left=0; int right=a.length-1;
-            // Строгое условие, чтобы не было выхода за границы при left = a.length
-            while (right > left)
-            {
-                int mid = (left+right)/2;
-                if (a[mid] < value)
-                    left = mid +1;
-                else {
-                    if (a[mid] > value)
-                        right = mid - 1;
-                    else if (a[mid] == value) {
-                        left = mid;
+
+            //тут реализуйте бинарный поиск индекса
+            int l = 0, r = a.length - 1, m = 0;
+            while (l < r) {
+
+                m = (l + r) / 2;
+
+                if (a[m] < value) {
+                    l = m + 1;
+                }
+                else if (a[m] > value) r = m - 1;
+                else if (a[m] == value) {
+                        l = m;
                         break;
                     }
-                }
             }
-            if (a[left] == value)
-                result[i]=left + 1;
-            else
-                result[i] = -1;
+
+            if (a[l] == value) result[i] = l + 1;
+                else result[i] = -1;
+
         }
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -75,7 +75,7 @@ public class A_BinaryFind {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group151003/matoshko/lesson04/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataA.txt");
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.findIndex(stream);
