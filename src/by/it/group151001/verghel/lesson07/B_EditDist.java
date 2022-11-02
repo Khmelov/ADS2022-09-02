@@ -57,8 +57,7 @@ public class B_EditDist {
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
                 cost = one.charAt(i - 1) == two.charAt(j - 1) ? 0: 1;
-                T[i][j] = Integer.min(Integer.min(T[i - 1][j] + 1, T[i][j - 1] + 1),
-                        T[i - 1][j - 1] + cost);
+                T[i][j] = Integer.min(Integer.min(T[i - 1][j] + 1, T[i][j - 1] + 1), T[i - 1][j - 1] + cost);
             }
         }
 
