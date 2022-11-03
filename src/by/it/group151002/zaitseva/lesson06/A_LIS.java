@@ -3,6 +3,7 @@ package by.it.group151002.zaitseva.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -35,27 +36,39 @@ public class A_LIS {
 
     int getSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
-        Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        //общая длина последовательности
-        int n = scanner.nextInt();
-        int[] m = new int[n];
-        //читаем всю последовательность
-        for (int i = 0; i < n; i++) {
-            m[i] = scanner.nextInt();
+        try (Scanner scanner = new Scanner(stream)) {
+            //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+            //общая длина последовательности
+            int n = scanner.nextInt();
+            int[] m = new int[n];
+            for (int i = 0; i < n; i++) {
+                m[i] = scanner.nextInt();
+            }
+            //читаем всю последовательность
+            int[] length = new int[n];
+            Arrays.fill(length, 1);
+            for (int j = 1; j < n; j++) {
+                for (int k = 0; k < j; k++) {
+                    if (m[j] > m[k] && length[j] <= length[k]) {
+                        length[j] = length[k] + 1;
+                    }
+                }
+            }
+            int result = 0;
+            for (int l : length) {
+                if (l > result) {
+                    result = l;
+                }
+            }
+            //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+            return result;
         }
-        //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/zaitseva/lesson06/dataA.txt");
         A_LIS instance = new A_LIS();
         int result = instance.getSeqSize(stream);
         System.out.print(result);
