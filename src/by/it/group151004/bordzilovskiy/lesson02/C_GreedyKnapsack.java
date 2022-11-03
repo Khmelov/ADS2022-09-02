@@ -1,4 +1,4 @@
-package by.it.group151004.bordzilovskiy.lesson2;
+package by.it.group151004.bordzilovskiy.lesson02;
 /*
 Даны
 1) объем рюкзака 4
