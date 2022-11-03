@@ -39,7 +39,6 @@ import java.util.Scanner;
 
 public class A_EditDist {
 
-
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         if (one.length() == 0) {
@@ -62,7 +61,6 @@ public class A_EditDist {
     private int costOfSubstitution(char charAt, char charAt1) {
         return charAt == charAt1 ? 0 : 1;
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

@@ -90,19 +90,6 @@ public class C_LongNotUpSubSeq {
         return result;
     }
 
-    private int binSearch(int[] d, int i, int length, int i1) {
-        while (i < length) {
-            int mid = (i + length) / 2;
-            if (d[mid] < i1) {
-                i = mid + 1;
-            } else {
-                length = mid;
-            }
-        }
-        return i;
-    }
-
-
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
