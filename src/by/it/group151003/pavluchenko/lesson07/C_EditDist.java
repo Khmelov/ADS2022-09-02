@@ -51,9 +51,68 @@ public class C_EditDist {
 
     String getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
+        int[][] matrix = new int[one.length() + 1][two.length() + 1];
+        for (int i = 0; i <= one.length(); i++){
+            matrix[i][0] = i;
+        }
+        for (int i = 0; i <= two.length(); i++){
+            matrix[0][i] = i;
+        }
+        for (int i = 1; i <= one.length(); i++){
+            for (int j = 1; j <= two.length(); j++){
+                int min = Math.min(matrix[i-1][j] + 1, matrix[i][j-1] + 1);
+                int c = 0;
+                if (one.charAt(i - 1) != two.charAt(j - 1))
+                    c = 1;
+                matrix[i][j] = Math.min(min, matrix[i-1][j-1] + c);
+            }
+        }
         String result = "";
+        int i = one.length();
+        int j = two.length();
+        while (i != 0 && j != 0){
+            result += ",";
+            int c = 0;
+            if ( one.charAt(i - 1) != two.charAt(j - 1) )
+                c = 1;
+            if (matrix[i][j] == (matrix[i-1][j-1] + c) && c== 1){
+                result += two.charAt(j - 1);
+                result += "~";
+                i--;
+                j--;
+            }
+            else if (matrix[i][j] == (matrix[i-1][j-1] +c) && c == 0) {
+                result += "#";
+                i--;
+                j--;
+            }
+            else if (matrix[i][j] == matrix[i-1][j] + 1){
+                result += one.charAt(i - 1);
+                result += "-";
+                i--;
+            }
+            else if (matrix[i][j] == matrix[i][j-1] + 1) {
+                result += two.charAt(j - 1);
+                result += "+";
+                j--;
+            }
+        }
+        if (j != 0 || i != 0){
+            result += ",";
+            if (i != 0){
+                result += one.charAt(i - 1);
+                result += "-";
+            }
+            if (j != 0){
+                result += two.charAt(j - 1);
+                result += "+";
+            }
+        }
+       String rev = "";
+       for (int k = result.length() - 1; k>= 0; k--){
+           rev += result.charAt(k);
+       }
+       result = rev;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
