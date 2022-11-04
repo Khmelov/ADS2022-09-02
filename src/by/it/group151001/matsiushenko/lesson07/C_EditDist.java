@@ -51,11 +51,81 @@ public class C_EditDist {
 
     String getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int M = one.length();
+        int N = two.length();
+        StringBuffer result = new StringBuffer();
 
+        int[][] T = new int[M + 1][N + 1];
+        for (int i = 1; i <= M; i++) {
+            T[i][0] = i;
+        }
+        for (int j = 1; j <= N; j++) {
+            T[0][j] = j;
+        }
 
-        String result = "";
+        int cost;
+        for (int i = 1; i <= M; i++) {
+            for (int j = 1; j <= N; j++) {
+                cost = one.charAt(i - 1) == two.charAt(j - 1) ? 0: 1;
+                T[i][j] = Integer.min(Integer.min(T[i - 1][j] + 1, T[i][j - 1] + 1),
+                        T[i - 1][j - 1] + cost);
+            }
+        }
+
+        char cost_c;
+        char A[] = new char[one.length()+1];
+        char B[] = new char[two.length()+1];
+
+        for(int i = 1; i < A.length; i++) {
+            A[i] = one.charAt(i - 1);
+        }
+        for(int i = 1; i < B.length; i++) {
+            B[i] = two.charAt(i - 1);
+        }
+
+        int i = M;
+        int j = N;
+        do{
+
+            cost = A[i] == B[j] ? 0: 1;
+            cost_c = A[i] == B[j] ? '#': '~';
+            if (T[i][j] == T[i - 1][j - 1] + cost){
+                result.insert(0,',');
+                result.insert(0,cost_c);
+
+                if (cost_c == '~')
+                    result.insert(1,B[j]);
+
+                i--;
+                j--;
+            } else
+                if (T[i][j] == T[i][j - 1] + 1) {
+                result.insert(0,',');
+                result.insert(0,'+');
+                result.insert(1,B[i ]);
+                j--;
+                }else
+                    if(T[i][j] == T[i - 1][j] + 1){
+                    result.insert(0,',');
+                    result.insert(0,'-');
+                    result.insert(1,A[i ]);
+                    i--;
+                }
+
+        } while ((i > 0)&&(j > 0));
+
+        if (i > 0){
+            result.insert(0,',');
+            result.insert(0,'-');
+            result.insert(1,A[i ]);
+        }else if(j > 0){
+            result.insert(0,',');
+            result.insert(0,'+');
+            result.insert(1,B[j ]);
+        };
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return result.toString();
     }
 
 
