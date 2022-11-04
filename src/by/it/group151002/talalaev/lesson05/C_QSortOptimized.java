@@ -1,4 +1,4 @@
-package by.it;
+package by.it.group151002.talalaev.lesson05;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,21 +33,60 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment implements Comparable<Segment>{
         int start;
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            this.start = Math.min(start, stop);
+            this.stop = this.start == start ? stop : start;
         }
 
         @Override
-        public int compareTo(Object o) {
-            //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+        public int compareTo(Segment o) {
+            return stop < o.stop ? -1 : (stop == o.stop ? (Integer.compare(start, o.start)) : 1);
         }
     }
+    void swap(Segment[] arr, int i, int j) {
+        Segment temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    void quickSort(Segment[] arr, int l, int r) {
+        while (l < r) {
+            int i;
+            int j;
+
+            if (r - l == 1) {
+                if (arr[l].compareTo(arr[r]) > 0)
+                    swap(arr, l, r);
+                i = l;
+                j = r;
+            } else {
+                int mid = l, low = l, high = r;
+                Segment pivot = arr[r];
+
+                while (mid <= high) {
+
+                    if (arr[mid].compareTo(pivot) < 0)
+                        swap(arr, mid++, low++);
+                    else if (arr[mid].compareTo(pivot) == 0)
+                        mid++;
+                    else
+                        swap(arr, mid, high--);
+                }
+
+                i = low - 1;
+                j = mid;
+            }
+
+            quickSort(arr, l, i);
+            l = j;
+        }
+    }
+
+
 
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
@@ -56,29 +95,51 @@ public class C_QSortOptimized {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //число отрезков отсортированного массива
         int n = scanner.nextInt();
-        Segment[] segments=new Segment[n];
+        Segment[] segments = new Segment[n];
         //число точек
         int m = scanner.nextInt();
-        int[] points=new int[m];
-        int[] result=new int[m];
+        int[] points = new int[m];
+        int[] result = new int[m];
 
         //читаем сами отрезки
         for (int i = 0; i < n; i++) {
             //читаем начало и конец каждого отрезка
-            segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
+            segments[i] = new Segment(scanner.nextInt(), scanner.nextInt());
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
-            points[i]=scanner.nextInt();
+        for (int i = 0; i < m; i++) {
+            points[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        quickSort(segments, 0, n - 1);
+        for (int i = 0; i < m; i++) {
+            int l = 0;
+            int r = n - 1;
+            int mid = 0;
 
+            while (l <= r) {
+                mid = (l + r) / 2;
+                if (points[i] > segments[mid].stop) {
+                    l = mid + 1;
+                } else if (points[i] < segments[mid].start)
+                    r = mid - 1;
+                else {
+                    result[i] = 1;
+                    break;
+                }
+            }
+            l = mid - 1;
+            while (l >= 0 && points[i] <= segments[l--].stop) result[i]++;
 
+            l = mid + 1;
+
+            while (l < n && points[i] >= segments[l++].start) result[i]++;
+
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

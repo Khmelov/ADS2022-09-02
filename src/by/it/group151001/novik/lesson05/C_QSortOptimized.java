@@ -3,9 +3,7 @@ package by.it.group151001.novik.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 /*
 Видеорегистраторы и площадь 2.
@@ -113,7 +111,6 @@ public class C_QSortOptimized {
         return out;
     }
 
-
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -145,7 +142,9 @@ public class C_QSortOptimized {
             tmp = binaryfind(segments, points[i], l, r);
             result[i] = tmp[0];
             boolean f1 = true;
+
             if ((result[i] == 1)&&(i + 1 < points.length)) {
+
                 while ((f1)) {
                     if (points[i + 1] > points[i]) {
                         l = tmp[1];
