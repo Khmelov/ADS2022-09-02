@@ -51,6 +51,17 @@ public class C_LongNotUpSubSeq {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+        int[] maxSubsequence = new int[n];
+        for(int i = 0; i < n; i++)
+        {
+            maxSubsequence[i] = 1;
+            for(int j = 0; j < i; j++) {
+                if(m[i] <= m[j] && maxSubsequence[j] + 1 > maxSubsequence[i]) {
+                    maxSubsequence[i] = maxSubsequence[j] + 1;
+                }
+            }
+            result = Math.max(result, maxSubsequence[i]);
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!

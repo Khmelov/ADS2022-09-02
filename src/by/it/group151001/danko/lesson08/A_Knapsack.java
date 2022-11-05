@@ -3,6 +3,7 @@ package by.it.group151001.danko.lesson08;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -45,6 +46,17 @@ public class A_Knapsack {
         for (int i = 0; i < n; i++) {
             gold[i]=scanner.nextInt();
         }
+        int []weightD = new int[w];
+        Arrays.fill(weightD, 0);
+        for(int i = 1; i < w; i++) {
+            for(int j = 1; j < n; j++)
+            {
+                if(gold[j] <= i) {
+//                    weightD[w] =
+                }
+            }
+        }
+
 
 
         int result = 0;

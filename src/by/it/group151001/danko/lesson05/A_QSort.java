@@ -71,32 +71,27 @@ public class A_QSort {
         segments[j] = temp;
     }
 
+    int partition(Segment[] segments, int left, int right)
+    {
+        Segment current = segments[left];
+        int j = left;
+
+        for(int i = left + 1; i <= right; i++) {
+            if(segments[i].compareTo(current) <= 0) {
+                j++;
+                swap(segments, i, j);
+            }
+        }
+        swap(segments, left, j);
+        return j;
+    }
+
     void quickSort(Segment[] segments, int left, int right) {
         if(segments.length == 0) return;
         if(left >= right) return;
-        int i = left;
-        int j = right;
-        Segment checked = segments[left + (right - left) / 2];
-
-        while(i <= j)
-        {
-            while(segments[i].compareTo(checked) == -1) {
-                i++;
-            }
-            while (segments[j].compareTo(checked) == 1)
-            {
-                j--;
-            }
-            if(i <= j) {
-                swap(segments, i, j);
-                i++;
-                j--;
-            }
-        }
-        if(left < j)
-            quickSort(segments, left, j);
-        if(right > i)
-            quickSort(segments, i, right);
+        int middle = partition(segments, left, right);
+        quickSort(segments, left, middle - 1);
+        quickSort(segments, middle + 1, right);
     }
 
 

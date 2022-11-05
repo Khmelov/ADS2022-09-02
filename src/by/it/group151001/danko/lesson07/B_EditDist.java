@@ -3,6 +3,7 @@ package by.it.group151001.danko.lesson07;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -42,14 +43,34 @@ public class B_EditDist {
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-        int result = 0;
+        int M = one.length() + 1;
+        int N = two.length() + 1;
+        int[][] tableD = new int[M][N];
+        for(int[] row : tableD) {
+            Arrays.fill(row, -1);
+        }
+        int result = EditDistTD(tableD, one, two, M - 1, N - 1);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    int EditDistTD(int [][] tableD, String one, String two, int M, int N) {
+        for(int i = 0; i < M; i++) tableD[i][0] = i;
+        for(int j = 0; j < N; j++) tableD[0][j] = j;
+        for(int i = 1; i < M; i++) {
+            for(int j = 1; j< N; j++) {
+                int ins = tableD[i - 1][j] + 1;
+                int del = tableD[i][j - 1] + 1;
+                int sub = tableD[i - 1][j - 1] + compare(one.charAt(i - 1), two.charAt(j - 1));
+                tableD[i][j] = Math.min(Math.min(ins, del), sub);
+            }
+        }
+        return tableD[M - 1][N - 1];
+    }
+    int compare(char i, char j) {
+        int result = i == j? 0 : 1;
+        return result;
+    }
 
 
     public static void main(String[] args) throws FileNotFoundException {
