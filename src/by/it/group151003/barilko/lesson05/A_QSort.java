@@ -43,22 +43,65 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
 
-            
+            if(start < stop)
+            {
+                this.start = start;
+                this.stop = stop;
+            }
+            else
+            {
+                this.start = stop;
+                this.stop = start;
+            }
+
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
+        }
+
+        Segment(Segment o)
+        {
+            this.start = o.start;
+            this.stop = o.stop;
         }
 
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+            
+            return (this.start - o.start != 0 ? (this.start - o.start) / Math.abs(this.start - o.start) : 0);
         }
     }
 
+    int partition(Segment[] arr, int low, int high)
+    {
+        Segment pivot = new Segment(arr[(high + low) / 2]);
+        int i = low;
+        int j = high;
+        while(true)
+        {
+            while(arr[i].compareTo(pivot) < 0)
+                ++i;
+            while(arr[j].compareTo(pivot) > 0)
+                --j;
+            if(i >= j)
+                return j;
+            Segment temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            ++i; --j; 
+        }
+    }
+
+    void QSort(Segment[] arr, int low, int high)
+    {
+        if (low < high)
+        {
+            int parcer = partition(arr, low, high);
+            QSort(arr, low, parcer);
+            QSort(arr, parcer + 1, high);
+        } 
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -83,8 +126,20 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        QSort(segments, 0, n - 1);
 
 
+        for (int i = 0; i < result.length; i++)
+        {
+            int j = 0;
+            while(j < n && segments[j].start <= points[i])
+            {
+                if(points[i] <= segments[j].stop)
+                    result[i]++;
+                ++j;
+            }
+           
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -94,7 +149,7 @@ public class A_QSort {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151003/barilko/lesson05/dataC.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){
