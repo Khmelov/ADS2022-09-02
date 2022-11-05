@@ -23,6 +23,7 @@ public class B_MergeSort {
 
   void MergeArrays(int[] list, int l, int m, int r) {
 
+      // Break into left and right arrays
       int[] left = new int[m - l + 2];
       for (int i = l; i <= m; i++) {
           left[i - l] = list[i];
@@ -35,12 +36,14 @@ public class B_MergeSort {
       }
      right[r - m] = Integer.MAX_VALUE;
 
+      // Merge in a sorted order to the original array
       int i = 0, j = 0;
       for (int k = l; k <= r; k++) {
           if (left[i] <= right[j]) {
               list[k] = left[i];
               i++;
           }
+          // If the order is not correct
           else {
               list[k] = right[j];
               j++;

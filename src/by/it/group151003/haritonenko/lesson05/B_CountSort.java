@@ -34,8 +34,10 @@ public class B_CountSort {
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
 
+        // new array for result
         int[] output = new int[n];
 
+        // fill it with 0
         int[] count = new int[256];
         for (int i = 0; i < 256; ++i)
             count[i] = 0;
@@ -51,6 +53,7 @@ public class B_CountSort {
             --count[points[i]];
         }
 
+        // присвоить обратно
         for (int i = 0; i < n; ++i)
             points[i] = output[i];
 

@@ -59,23 +59,27 @@ public class A_QSort {
         }
     }
 
+    void Swap(Segment[] segments, int i, int j) {
+            Segment temp = segments[i];
+            segments[i] = segments[j];
+            segments[j] = temp;
+    }
+
     int Partition(Segment[] segms, int l, int r)
     {
         Segment pivot = segms[r];
         int i = (l-1);
+
         for (int j = l; j < r; j++)
         {
             if (segms[j].compareTo(pivot) < 0 || segms[j].compareTo(pivot) == 0)
             {
                 i++;
-                Segment temp = segms[i];
-                segms[i] = segms[j];
-                segms[j] = temp;
+                Swap(segms, i, j);
             }
         }
-        Segment temp = segms[i+1];
-        segms[i+1] = segms[r];
-        segms[r] = temp;
+
+        Swap(segms, i + 1, r);
         return i + 1;
     }
 
