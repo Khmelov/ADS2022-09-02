@@ -42,19 +42,19 @@ public class B_LongDivComSubSeq {
         for (int i = 0; i < n; i++) {
             arr[i] = scanner.nextInt();
         }
-        int[] length = new int[n];
+        int[] lengths = new int[n];
         for (int i = 0; i < n; i++) {
-            length[i] = 1;
+            lengths[i] = 1;
             for (int j = 0; j < i; j++) {
-                if (arr[i] % arr[j] == 0 && length[j] + 1 > length[i]) {
-                    length[i] = length[j] + 1;
+                if (arr[i] % arr[j] == 0 && lengths[j] + 1 > lengths[i]) {
+                    lengths[i] = lengths[j] + 1;
                 }
             }
         }
         int result = 0;
         for (int i = 0; i < n; i++) {
-            if (length[i] > result)
-                result = length[i];
+            if (lengths[i] > result)
+                result = lengths[i];
         }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
