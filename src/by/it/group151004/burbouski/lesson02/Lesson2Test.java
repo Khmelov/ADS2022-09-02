@@ -59,7 +59,7 @@ public class Lesson2Test {
     @Test
     public void C_GreedyKnapsack() throws Exception {
         String root=System.getProperty("user.dir")+"/src/";
-        File f=new File(root+"by/it/a_khmelev/lesson02/greedyKnapsack.txt");
+        File f=new File(root+"by/it/group151004/burbouski/lesson02/greedyKnapsack.txt");
         double costFinal=new C_GreedyKnapsack().calc(f);
         boolean ok=costFinal==240;
         assertTrue("C_GreedyKnapsack failed", ok);

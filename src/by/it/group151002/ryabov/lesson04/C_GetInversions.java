@@ -46,7 +46,7 @@ public class C_GetInversions {
             right[i - left.length] = arr[i];
         countInversions(left);
         countInversions(right);
-        int i = 0, j = 0, k = 0, count = 0;
+        int i = 0, j = 0, count = 0;
         while (i < left.length && j < right.length){
             if (left[i] < right[j]){
                 i++;
@@ -55,7 +55,6 @@ public class C_GetInversions {
                 count++;
 
             }
-            k++;
         }
         return count;
     }
