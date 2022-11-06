@@ -44,19 +44,19 @@ public class A_LIS {
         for (int i = 0; i < n; i++) {
             arr[i] = scanner.nextInt();
         }
-        int[] length = new int[n]; //длина нвп, заканчивающейся в arr[i]
+        int[] lengths = new int[n]; //длина нвп, заканчивающейся в arr[i]
         for (int i = 0; i < n; i++) {
-            length[i] = 1;
+            lengths[i] = 1;
             for (int j = 0; j < i; j++) {
-                if (arr[j] < arr[i] && length[j] + 1 > length[i]) {
-                    length[i] = length[j] + 1;
+                if (arr[j] < arr[i] && lengths[j] + 1 > lengths[i]) {
+                    lengths[i] = lengths[j] + 1;
                 }
             }
         }
         int result = 0;
         for (int i = 0; i < n; i++) {
-            if (length[i] > result)
-                result = length[i];
+            if (lengths[i] > result)
+                result = lengths[i];
         }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
