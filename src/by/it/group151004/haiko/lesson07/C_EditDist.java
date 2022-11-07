@@ -51,24 +51,67 @@ public class C_EditDist {
 
     String getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        int n = one.length(), m = two.length();
-        int[][] T = new int[one.length()+1][two.length()+1];
-        for (int i=0; i<= n; i++){
-            T[i][0]=i;
+        int m = one.length();
+        int n = two.length();
+        StringBuilder result = new StringBuilder();
+        int[][] T = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++) {
+            T[i][0] = i;
         }
-        for (int i=0; i<=m; i++){
-            T[0][i]=i;
+        for (int j = 1; j <= n; j++) {
+            T[0][j] = j;
         }
-        for (int i=1; i<=n; i++){
-            for (int j=1; j<=m; j++){
-                int diff = 0;
-                if (one.charAt(i-1) != two.charAt(j-1)) diff=1;
-                T[i][j] = Integer.min(T[i-1][j]+1, Integer.min(T[i][j-1]+1, (T[i-1][j-1]+diff) ) );
+        int diff;
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                diff = one.charAt(i - 1) == two.charAt(j - 1) ? 0 : 1;
+                T[i][j] = Integer.min(Integer.min(T[i - 1][j] + 1, T[i][j - 1] + 1), T[i - 1][j - 1] + diff);
             }
         }
 
-        StringBuilder result = new StringBuilder();
-
+        char CopRep;
+        char A[] = new char[one.length() + 1];
+        char B[] = new char[two.length() + 1];
+        for (int i = 1; i < A.length; i++) {
+            A[i] = one.charAt(i - 1);
+        }
+        for (int i = 1; i < B.length; i++) {
+            B[i] = two.charAt(i - 1);
+        }
+        int i = m;
+        int j = n;
+        do {
+            diff = A[i] == B[j] ? 0 : 1;
+            CopRep = A[i] == B[j] ? '#' : '~';
+            if (T[i][j] == T[i - 1][j - 1] + diff) {
+                result.insert(0, ',');
+                result.insert(0, CopRep);
+                if (CopRep == '~') {
+                    result.insert(1, B[j]);
+                }
+                i--;
+                j--;
+            } else if (T[i][j] == T[i][j - 1] + 1) {
+                result.insert(0, ',');
+                result.insert(0, '+');
+                result.insert(1, B[i]);
+                j--;
+            } else if (T[i][j] == T[i - 1][j] + 1) {
+                result.insert(0, ',');
+                result.insert(0, '-');
+                result.insert(1, A[i]);
+                i--;
+            }
+        } while (i > 0 && j > 0);
+        if (i > 0) {
+            result.insert(0, ',');
+            result.insert(0, '-');
+            result.insert(1, A[i]);
+        } else if (j > 0) {
+            result.insert(0, ',');
+            result.insert(0, '+');
+            result.insert(1, B[j]);
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result.toString();
