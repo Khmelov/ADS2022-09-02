@@ -51,17 +51,60 @@ public class C_EditDist {
 
     String getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        StringBuilder result = new StringBuilder();
+        int[][] matrix = new int[one.length() + 1][two.length() + 1];
+        matrix[0][0] = 0;
+        for (int i = 1; i <= two.length(); i++) {
+            matrix[0][i] = matrix[0][i - 1] + 1;
+        }
+        int costDel = 0;
+        int costIns = 0;
+        int costRep = 0;
+        int match = 0;
+        for (int i = 1; i <= one.length(); i++) {
+            matrix[i][0] = matrix[i - 1][0] + 1;
+            for (int j = 1; j <= two.length(); j++) {
+                costDel = matrix[i - 1][j] + 1;
+                costIns = matrix[i][j - 1] + 1;
+                match = one.charAt(i - 1) == two.charAt(j - 1) ? 0 : 1;
+                costRep = matrix[i - 1][j - 1] + match;
+                matrix[i][j] = Math.min(Math.min(costDel, costIns), costRep);
+            }
+        }
 
-
-        String result = "";
+        int i = one.length();
+        int j = two.length();
+        while (i > 0 && j > 0) {
+            match = one.charAt(i - 1) == two.charAt(j - 1) ? 0 : 1;
+            if (matrix[i][j] == matrix[i][j - 1] + 1) {
+                result.insert(0, "+" + two.charAt(i - 1) + ",");
+                j--;
+            } else if (matrix[i][j] == matrix[i - 1][j] + 1) {
+                result.insert(0, "-" + one.charAt(i - 1) + ",");
+                i--;
+            } else {
+                if (match == 0) {
+                    result.insert(0, "#,");
+                } else {
+                    result.insert(0, "~" + two.charAt(j - 1) + ",");
+                }
+                i--;
+                j--;
+            }
+        }
+        if (i > 0) {
+            result.insert(0, "-" + one.charAt(i - 1) + ",");
+        } else if (j > 0) {
+            result.insert(0, "+" + two.charAt(j - 1) + ",");
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return result.toString();
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson07/dataABC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/krashevskiy/lesson07/dataABC.txt");
         C_EditDist instance = new C_EditDist();
         Scanner scanner = new Scanner(stream);
         System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));

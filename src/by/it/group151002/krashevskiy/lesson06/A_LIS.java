@@ -44,20 +44,17 @@ public class A_LIS {
         for (int i = 0; i < n; i++) {
             m[i] = scanner.nextInt();
         }
-        int result = 0;
-
         int[] arr = new int[n];
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
-                if (m[i] > m[j]) {
-                    if (arr[i] <= arr[j]) {
-                        arr[i] = arr[j] + 1;
-                    }
+                if (m[i] > m[j] && arr[i] <= arr[j]) {
+                    arr[i] = arr[j] + 1;
                 }
             }
         }
 
+        int result = 0;
         for (int i = 0; i < arr.length; i++) {
             if (result < arr[i])
                 result = arr[i];
@@ -70,7 +67,7 @@ public class A_LIS {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/krashevskiy/lesson06/dataA.txt");
         A_LIS instance = new A_LIS();
         int result = instance.getSeqSize(stream);
         System.out.print(result);
