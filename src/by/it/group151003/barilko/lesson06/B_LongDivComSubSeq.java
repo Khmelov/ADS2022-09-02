@@ -44,7 +44,9 @@ public class B_LongDivComSubSeq {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
 
-        int iMaxlength = 0;
+
+
+        int[] temp = new int[n];
 
         /*int[] iaPrev = new int[n];
         int[] iaMin = new int[n];
@@ -72,8 +74,17 @@ public class B_LongDivComSubSeq {
                 iMaxlength = iNewLength;
         }*/
 
-        
+        for(int i = 0; i < n; ++i)
+        {
+            temp[i] = 1;
+            for(int j = 0; j < i; ++j)
+                if(arr[i] % arr[j] == 0 && temp[j] + 1 > temp[i])
+                    temp[i] = temp[j] + 1;
+        }
 
+        int iMaxlength = 0;
+        for(int i = 0; i < n; ++i)
+            iMaxlength = iMaxlength > temp[i] ? iMaxlength : temp[i];
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return iMaxlength;

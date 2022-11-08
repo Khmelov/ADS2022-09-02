@@ -65,9 +65,9 @@ public class C_LongNotUpSubSeq {
             {
                 int mid = low + (high - low) / 2;
                 if(arr[i] <= arr[iaMin[mid]])
-                    high = mid;
+                    low = mid + 1;            
                 else
-                    low = mid + 1;
+                   high = mid;     
             }
 
             int iNewLength = low;
@@ -79,7 +79,15 @@ public class C_LongNotUpSubSeq {
                 iMaxlength = iNewLength;
         }
 
-
+        int k = 1 + iaMin[iMaxlength];
+        for(int i = iMaxlength - 1; i >= 0; --i)
+        {
+            iaMin[i] = k;
+            k = 1 + iaPrev[k - 1];
+        }
+        for(int i = 0; i < iMaxlength; ++i)
+            System.out.printf("%d ", iaMin[i]);
+        System.out.println("");
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return iMaxlength;
     }
@@ -87,7 +95,7 @@ public class C_LongNotUpSubSeq {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151003/barilko/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
         int result = instance.getNotUpSeqSize(stream);
         System.out.print(result);
