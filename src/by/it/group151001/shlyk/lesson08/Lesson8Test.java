@@ -14,7 +14,7 @@ public class Lesson8Test {
         String fName = root + "by/it/group151001/shlyk/lesson08/dataA.txt";
         A_Knapsack instance = new A_Knapsack();
         int res=instance.getMaxWeight(fName);
-        assertEquals("A failed", res, 14);
+        assertEquals("A failed", res, 15);
     }
 
     @Test

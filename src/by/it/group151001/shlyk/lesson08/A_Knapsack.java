@@ -47,13 +47,15 @@ public class A_Knapsack {
         int[] arrItems = parser.getArray();
         int bagCapacity = parser.getBagCapacity();
         Arrays.sort(arrItems);
-        reverse(arrItems);
-        int wRest = bagCapacity;
+
+        int[] arrWeight = new int[bagCapacity + 1];
         for(int item : arrItems){
-            while(wRest >= item)
-                wRest -= item;
+            for(int weight = 0; weight <= bagCapacity; weight++){
+                if(item <= weight)
+                    arrWeight[weight] = Math.max(arrWeight[weight], arrWeight[weight - item] + item);
+            }
         }
-        return bagCapacity - wRest;
+        return arrWeight[bagCapacity];
     }
 
 
