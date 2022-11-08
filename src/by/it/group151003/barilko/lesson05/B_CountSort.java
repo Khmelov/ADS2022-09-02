@@ -41,7 +41,7 @@ public class B_CountSort {
         {
             for(int j =0; j < Counter[i]; ++j)
             {
-                points[count] = i + 1;
+                points[count] = i;
                 count++;
             }
         }

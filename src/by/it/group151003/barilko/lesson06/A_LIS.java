@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.Vector;
 
 /*
 Задача на программирование: наибольшая возростающая подпоследовательность
@@ -39,23 +40,49 @@ public class A_LIS {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //общая длина последовательности
         int n = scanner.nextInt();
-        int[] m = new int[n];
+        int[] arr = new int[n];
         //читаем всю последовательность
         for (int i = 0; i < n; i++) {
-            m[i] = scanner.nextInt();
+            arr[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
+        int iMaxlength = 0;
 
+        int[] iaPrev = new int[n];
+        int[] iaMin = new int[n + 1];
+        iaMin[0] = -1;
 
+        for(int i = 0; i < n; ++i)
+        {
+            int low = 1;
+            int high = iMaxlength + 1;
+            while(low < high)
+            {
+                int mid = low + (high - low) / 2;
+                if(arr[i] > arr[iaMin[mid]])
+                    low = mid + 1;
+                else
+                    high = mid;
+            }
+
+            int iNewLength = low;
+
+            iaPrev[i] = iaMin[iNewLength - 1];
+            iaMin[iNewLength] = i;
+
+            if(iNewLength > iMaxlength)
+                iMaxlength = iNewLength;
+        }
+
+    
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return iMaxlength;
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151003/barilko/lesson06/dataA.txt");
         A_LIS instance = new A_LIS();
         int result = instance.getSeqSize(stream);
         System.out.print(result);
