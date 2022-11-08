@@ -1,13 +1,11 @@
-package by.it.group151001.shlyk.lesson6;
+package by.it.group151001.shlyk.lesson06;
 
 import org.junit.Test;
 
-import javax.swing.table.DefaultTableCellRenderer;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertTrue;

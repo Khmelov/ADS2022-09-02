@@ -1,4 +1,4 @@
-package by.it.group151001.shlyk.lesson6;
+package by.it.group151001.shlyk.lesson06;
 
 import java.io.*;
 import java.util.Arrays;

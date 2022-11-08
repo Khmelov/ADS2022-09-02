@@ -1,4 +1,4 @@
-package by.it.group151001.shlyk.lesson6;
+package by.it.group151001.shlyk.lesson06;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,7 +7,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /*
-Задача на программирование: наибольшая кратная подпоследовательность
+Задача на программирование: наибольшая возростающая подпоследовательность
+см.     https://ru.wikipedia.org/wiki/Задача_поиска_наибольшей_увеличивающейся_подпоследовательности
+        https://en.wikipedia.org/wiki/Longest_increasing_subsequence
 
 Дано:
     целое число 1≤n≤1000
@@ -16,56 +18,59 @@ import java.util.Scanner;
 Необходимо:
     Выведите максимальное 1<=k<=n, для которого гарантированно найдётся
     подпоследовательность индексов i[1]<i[2]<…<i[k] <= длины k,
-    для которой каждый элемент A[i[k]] делится на предыдущий
-    т.е. для всех 1<=j<k, A[i[j+1]] делится на A[i[j]].
+    для которой каждый элемент A[i[k]]больше любого предыдущего
+    т.е. для всех 1<=j<k, A[i[j]]<A[i[j+1]].
 
 Решить задачу МЕТОДАМИ ДИНАМИЧЕСКОГО ПРОГРАММИРОВАНИЯ
 
     Sample Input:
-    4
-    3 6 7 12
+    5
+    1 3 3 2 6
 
     Sample Output:
     3
 */
 
-public class B_LongDivComSubSeq {
+public class A_LIS {
 
-    final int START_LENTH = 1;
-    int[] restoreSequence(int[] arrLens, int[] arrSource){
+    final int HUGE_VALUE = 1;
+    int[] restoreSequence(int[] arrLens, int[] source){
         int iMax = arrLens.length - 1;
-        for(int i = iMax - 1; i >= 0; i--){
+        for(int i = arrLens.length - 1; i >= 0; i--){
             if(arrLens[i] > arrLens[iMax])
                 iMax = i;
         }
-        int oldLength = arrLens[iMax] + 1;
-        int[] result = new int[oldLength - 1];
+        int[] result = new int[arrLens[iMax]];
         int iResult = result.length - 1;
-        for(int i = iMax; i >= 0 && oldLength != START_LENTH; i--){
-            if(arrLens[i] == oldLength - 1){
-                result[iResult] = arrSource[i];
+        int oldLen = arrLens[iMax] + 1;
+        for(int i = iMax; i >= 0 && oldLen != HUGE_VALUE; i--){
+            if(arrLens[i] == (oldLen - 1))
+            {
+                result[iResult] = source[i];
+                oldLen--;
                 iResult--;
-                oldLength--;
             }
         }
         return result;
     }
-    int[] getResultSeq(int[] source){
-        int[] arrLens = new int[source.length];
-        Arrays.fill(arrLens, START_LENTH);
-        int nSegLen, nOldValue;
+    int[] getResult(int[] source){
+        int[] sample = new int[source.length];
+        Arrays.fill(sample, HUGE_VALUE);
+        int nSegLen;
+        int lastValue;
+        sample[0] = 1; //initial length
         for(int i = 0; i < source.length; i++){
-            nOldValue = source[i];
-            nSegLen = arrLens[i];
+            lastValue = source[i];
+            nSegLen = sample[i];
             for(int j = i + 1; j < source.length; j++){
-                if((arrLens[j] < nSegLen + 1) && (source[j] % nOldValue == 0) )
-                    arrLens[j] = nSegLen + 1;
+                if( source[j] > lastValue && (sample[j] < nSegLen + 1) ){
+                    sample[j] = nSegLen + 1;
+                }
             }
         }
-        return restoreSequence(arrLens, source);
+        return restoreSequence(sample, source);
     }
-
-    int getDivSeqSize(InputStream stream) {
+    int getSeqSize(InputStream stream) {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -77,8 +82,7 @@ public class B_LongDivComSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = getResultSeq(m).length;
-
+        int result = getResult(m).length;
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -87,10 +91,9 @@ public class B_LongDivComSubSeq {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group151001/shlyk/lesson06/dataB.txt");
-        B_LongDivComSubSeq instance = new B_LongDivComSubSeq();
-        int result = instance.getDivSeqSize(stream);
+        InputStream stream = new FileInputStream(root + "by/it/group151001/shlyk/lesson06/dataA.txt");
+        A_LIS instance = new A_LIS();
+        int result = instance.getSeqSize(stream);
         System.out.print(result);
     }
-
 }
