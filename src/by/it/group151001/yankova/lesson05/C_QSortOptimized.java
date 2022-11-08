@@ -18,6 +18,8 @@ import java.util.Scanner;
         2) при поиске подходящих отрезков для точки реализуйте метод бинарного поиска
         для первого отрезка решения, а затем найдите оставшуюся часть решения
         (т.е. отрезков, подходящих для точки, может быть много)
+        -- исключаем?
+
 
     Sample Input:
     2 3
@@ -33,7 +35,7 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
@@ -43,42 +45,97 @@ public class C_QSortOptimized {
         }
 
         @Override
-        public int compareTo(Object o) {
-            //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+        public int compareTo(Segment o) {
+            return Integer.compare(start, o.start);
         }
     }
 
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        //число отрезков отсортированного массива
+
         int n = scanner.nextInt();
         Segment[] segments=new Segment[n];
-        //число точек
+
         int m = scanner.nextInt();
         int[] points=new int[m];
         int[] result=new int[m];
 
-        //читаем сами отрезки
         for (int i = 0; i < n; i++) {
-            //читаем начало и конец каждого отрезка
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
-        //читаем точки
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        QuickSort(segments, n);
+        for(int i = 0; i < m; i++){
+            int l = 0, r = n-1, mid = 0;
+            while(l <= r){
+                mid = (l + r)/2;
+                if(points[i] > segments[mid].stop)
+                    l = mid + 1;
+                else if(points[i] < segments[mid].start)
+                    r = mid - 1;
+                else {
+                    result[i] = 1;
+                    break;
+                }
+            }
+            for(l = mid + 1; l < n; l++)
+                if(points[i] >= segments[l].start) result[i]++;
+            for(l = mid - 1; l >= 0; l--)
+                if(points[i] <= segments[l].stop) result[i]++;
+        }
         return result;
     }
 
+    public void QuickSort(Segment[] a, int n){
+        int maxStack = 2 << 10;
+        int i, j, l, r;
+        Segment x, temp;
+        int[] rReqStack = new int[maxStack];
+        int[] lReqStack = new int[maxStack];
+        int posStack = 0;
+        lReqStack[0] = 0;
+        rReqStack[0] = n-1;
+        do {
+            l = lReqStack[posStack];
+            r = rReqStack[posStack];
+            posStack--;
+            do {
+                i = l;
+                j = r;
+                x = a[(l + r) / 2];
+                do{
+                    while (x.compareTo(a[i]) > 0) i++;
+                    while (a[j].compareTo(x) > 0) j--;
+                    if (i <= j) {
+                        temp = a[i];
+                        a[i] = a[j];
+                        a[j] = temp;
+                        i++;
+                        j--;
+                    }
+                } while(i <= j);
+                if (i < (l + r) / 2) {
+                    if (i < r) {
+                        posStack++;
+                        lReqStack[posStack] = i;
+                        rReqStack[posStack] = r;
+                    }
+                    r = j;
+                } else {
+                    if (j > l) {
+                        posStack++;
+                        lReqStack[posStack] = l;
+                        rReqStack[posStack] = j;
+                    }
+                    l = i;
+                }
+            } while(l < r);
+        } while(posStack != -1);
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
