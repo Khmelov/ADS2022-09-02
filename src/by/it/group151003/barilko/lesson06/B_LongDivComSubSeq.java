@@ -37,23 +37,52 @@ public class B_LongDivComSubSeq {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //общая длина последовательности
         int n = scanner.nextInt();
-        int[] m = new int[n];
+        int[] arr = new int[n];
         //читаем всю последовательность
         for (int i = 0; i < n; i++) {
-            m[i] = scanner.nextInt();
+            arr[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
+
+        int iMaxlength = 0;
+
+        /*int[] iaPrev = new int[n];
+        int[] iaMin = new int[n];
+        iaMin[0] = -1;
+
+        for(int i = 0; i < n; ++i)
+        {
+            int low = 1;
+            int high = iMaxlength + 1;
+            while(low < high)
+            {
+                int mid = low + (high - low) / 2;
+                if(arr[i] % arr[iaMin[mid]] == 0)
+                    low = mid + 1;    
+                else
+                    high = mid;
+            }
+
+            int iNewLength = low;
+
+            iaPrev[i] = iaMin[iNewLength - 1];
+            iaMin[iNewLength] = i;
+
+            if(iNewLength > iMaxlength)
+                iMaxlength = iNewLength;
+        }*/
+
+        
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return iMaxlength;
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151003/barilko/lesson06/dataB.txt");
         B_LongDivComSubSeq instance = new B_LongDivComSubSeq();
         int result = instance.getDivSeqSize(stream);
         System.out.print(result);
