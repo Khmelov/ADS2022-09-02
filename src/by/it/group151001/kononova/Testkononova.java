@@ -21,6 +21,9 @@ import by.it.group151001.kononova.lesson06.C_LongNotUpSubSeq;
 import by.it.group151001.kononova.lesson07.A_EditDist;
 import by.it.group151001.kononova.lesson07.B_EditDist;
 import by.it.group151001.kononova.lesson07.C_EditDist;
+import by.it.group151001.kononova.lesson08.A_Knapsack;
+import by.it.group151001.kononova.lesson08.B_Knapsack;
+import by.it.group151001.kononova.lesson08.C_Stairs;
 import org.junit.Test;
 
 import java.io.File;
@@ -349,6 +352,33 @@ public class Testkononova {
 
         //ожидается     +e,#,#,-s,#,~i,#,-c,~g,
         assertEquals("C3 failed", instance.getDistanceEdinting("distance","editing").split("#").length,5);
+    }
+
+    @Test
+    public void A8() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson08/dataA.txt");
+        A_Knapsack instance = new A_Knapsack();
+        int res=instance.getMaxWeight(stream);
+        assertEquals("A failed", res, 14);
+    }
+
+    @Test
+    public void B8() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson08/dataB.txt");
+        B_Knapsack instance = new B_Knapsack();
+        int res=instance.getMaxWeight(stream);
+        assertEquals("B failed", res, 9);
+    }
+
+    @Test
+    public void C8() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson08/dataC.txt");
+        C_Stairs instance = new C_Stairs();
+        int res=instance.getMaxSum(stream);
+        assertEquals("C failed", res, 3);
     }
 
 }
