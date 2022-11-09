@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson07;
+package by.it.group151002.bobrik.lesson07;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,12 +39,25 @@ import java.util.Scanner;
 
 public class A_EditDist {
 
+    int min(int a, int b, int c) {
+        return Integer.min(a, Integer.min(b, c));
+    }
+
+    int dist(String s1, String s2, int i, int j) {
+        if (i == 0)
+            return j;
+        if (j == 0)
+            return i;
+        return min(dist(s1, s2, i - 1, j) + 1,
+                dist(s1, s2, i, j - 1) + 1,
+                dist(s1, s2, i - 1, j - 1) + (s1.charAt(i - 1) == s2.charAt(j - 1) ? 0 : 1));
+    }
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-        int result = 0;
+        int result = dist(one, two, one.length(), two.length());
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson07;
+package by.it.group151002.bobrik.lesson07;
 
 import org.junit.Test;
 
@@ -11,6 +11,8 @@ public class Lesson7Test {
         assertEquals("A1 failed", instance.getDistanceEdinting("ab","ab"),0);
         assertEquals("A2 failed", instance.getDistanceEdinting("short","ports"),3);
         assertEquals("A3 failed", instance.getDistanceEdinting("distance","editing"),5);
+        assertEquals("A4 failed", instance.getDistanceEdinting("",""),0);
+        assertEquals("A5 failed", instance.getDistanceEdinting("polynomial","exponential"),6);
     }
 
 
@@ -20,6 +22,8 @@ public class Lesson7Test {
         assertEquals("B1 failed", instance.getDistanceEdinting("ab","ab"),0);
         assertEquals("B2 failed", instance.getDistanceEdinting("short","ports"),3);
         assertEquals("B3 failed", instance.getDistanceEdinting("distance","editing"),5);
+        assertEquals("B4 failed", instance.getDistanceEdinting("",""),0);
+        assertEquals("B5 failed", instance.getDistanceEdinting("polynomial","exponential"),6);
     }
 
     @Test
