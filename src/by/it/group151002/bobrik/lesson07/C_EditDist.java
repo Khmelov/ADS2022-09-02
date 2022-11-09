@@ -48,14 +48,55 @@ import java.util.Scanner;
 
 
 public class C_EditDist {
+    int min(int a, int b, int c) {
+        return Integer.min(a, Integer.min(b, c));
+    }
 
     String getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
+        int n = one.length();
+        int m = two.length();
+        int[][] dist = new int[n + 1][m + 1];
+        for (int i = 0; i <= n; i++) {
+            dist[i][0] = i;
+        }
+        for (int j = 0; j <= m; j++) {
+            dist[0][j] = j;
+        }
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                dist[i][j] = min(dist[i - 1][j] + 1,
+                        dist[i][j - 1] + 1,
+                        dist[i - 1][j - 1] + (one.charAt(i - 1) == two.charAt(j - 1) ? 0 : 1));
+            }
+        }
         String result = "";
+        int i = n;
+        int j = m;
+        while (i != 0 && j != 0) {
+            if (dist[i][j] == dist[i][j - 1] + 1) {
+                result = "+" + two.charAt(--j) + result;
+            }
+            else if (dist[i][j] == dist[i - 1][j - 1] + 1) {
+                result = "~" + two.charAt(--j) + result;
+                --i;
+            }
+            else if (dist[i][j] == dist[i - 1][j] + 1) {
+                result = "-" + one.charAt(--i) + result;
+            }
+            else if (dist[i][j] == dist[i - 1][j - 1]) {
+                result = "#" + result;
+                --i;
+                --j;
+            }
+            result = "," + result;
+        }
+        while (j > 0)
+            result = ",+" + two.charAt(--j) + result;
+        while (i > 0)
+            result = ",-" + one.charAt(--i) + result;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return result.substring(1);
     }
 
 
