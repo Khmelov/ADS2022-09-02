@@ -90,7 +90,7 @@ public class A_QSort {
         for(int i = 0; i < points.length; i++){
             for( int j = 0; j < segments.length; j++){
                 if((points[i] <= segments[j].stop)&&(points[i] >= segments[j].start)){
-                    result[i] = 1;
+                    result[i]++;
                     break;
                 }
             }
