@@ -1,4 +1,4 @@
-package by.it;
+package by.it.group151002.talalaev.lesson05;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,10 +31,25 @@ public class B_CountSort {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
+        int maxA;
+        int minA = maxA = points[0];
 
+        for (int i = 0; i < n; i++) {
+            if (points[i] < minA) minA = points[i];
+            else if (points[i] > maxA) maxA = points[i];
+        }
 
+        int[] amount = new int[maxA - minA + 1];
+        for (int i = 0; i < n; i++) {
+            amount[points[i] - minA]++;
+        }
 
-
+        int k = 0;
+        for (int i = 0; i < amount.length; i++) {
+            for (int j = 0; j < amount[i]; j++) {
+                points[k++] = minA + i;
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
