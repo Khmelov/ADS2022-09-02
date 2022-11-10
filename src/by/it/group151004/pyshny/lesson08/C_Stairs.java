@@ -41,12 +41,12 @@ public class C_Stairs {
         for (int i = 0; i < n; i++) {
             stairs[i]=scanner.nextInt();
         }
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        int result = stairs[n-1],i=0;
-        while(i<n-1){
-            result+=(result+stairs[i])>(result+stairs[i+1]) ? stairs[i] : stairs[i+1];
-            if ((result+stairs[i])>(result+stairs[i+1])) i++; else i+=2;
+        int result,i;
+        if(stairs[0]>0){result=stairs[0];i=0;} else {result=(stairs[0]>stairs[1]) ? stairs[0] : stairs[1];i=(stairs[0]>stairs[1]) ? 0 : 1;}
+        while(i<n-2){
+            if(stairs[i+1]>0){result+=stairs[i+1];i++;} else{result+=(result+stairs[i+1])>(result+stairs[i+2]) ? stairs[i+1] : stairs[i+2];i+=(stairs[i+1]>stairs[i+2]) ? 1 : 2;}
         }
+        result+=(i==n-1) ? 0 : stairs[n-1];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -54,7 +54,7 @@ public class C_Stairs {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson08/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/pyshny/lesson08/dataC.txt");
         C_Stairs instance = new C_Stairs();
         int res=instance.getMaxSum(stream);
         System.out.println(res);
