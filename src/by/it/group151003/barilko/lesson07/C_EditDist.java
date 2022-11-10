@@ -49,11 +49,81 @@ import java.util.Scanner;
 
 public class C_EditDist {
 
-    String getDistanceEdinting(String one, String two) {
+    String getDistanceEdinting(String first, String second) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int[][] arr = new int[first.length() + 1][second.length() + 1];
+        for(int i = 0; i < first.length() + 1; ++i)
+        {
+            arr[i][0] = i;
+            if(i < second.length())
+                arr[0][i] = i;
+        }
 
+        for(int i = 1; i < first.length() + 1; ++i)
+            for(int j = 1; j < second.length() + 1; ++j)
+            {
+                int ins = arr[i][j - 1] + 1;
+                int del = arr[i - 1][j] + 1;
+                int sub = arr[i - 1][j - 1] + (first.charAt(i - 1) == second.charAt(j - 1) ? 0 : 1);
+                arr[i][j] = Integer.min(Integer.min(ins, del), sub);
+            }
 
         String result = "";
+        int i = first.length();
+        int j = second.length();
+        while(i > 0 && j > 0)
+        {
+            int ins = arr[i][j - 1]; // 0
+            int del = arr[i - 1][j]; // 1
+            int sub = arr[i - 1][j - 1]; // 2
+
+            int step = Integer.min(Integer.min(ins, del), sub);
+            StringBuilder temp = new StringBuilder();
+            if(step == arr[i][j])
+            {
+                --i; --j;
+                temp.append("#,");
+            }
+            else
+            {
+                step = step == ins ? 0 : step == del ? 1 : 2;
+                switch (step) 
+                {
+                    case 0:
+                        --j;
+                        temp.append("+ ,"); 
+                        temp.setCharAt(1, second.charAt(j));
+                        break;
+                    case 1:
+                        --i;
+                        temp.append("- ,"); 
+                        temp.setCharAt(1, first.charAt(i));
+                        break;
+                    case 2:
+                        --j;
+                        --i;
+                        temp.append("~ ,"); 
+                        temp.setCharAt(1, second.charAt(j));
+                        break;
+                }
+            }
+            result = temp.toString() + result;
+        }
+        StringBuilder temp = new StringBuilder();
+        if(j > 0)
+        {
+            --j;
+            temp.append("+ ,"); 
+            temp.setCharAt(1, second.charAt(j));
+        }
+        if(i > 0)
+        {
+            --i;
+            temp.append("- ,"); 
+            temp.setCharAt(1, first.charAt(i));
+
+        }
+        result = temp.toString() + result;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

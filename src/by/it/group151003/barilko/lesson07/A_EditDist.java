@@ -16,7 +16,8 @@ import java.util.Scanner;
 Необходимо:
     Решить задачу МЕТОДАМИ ДИНАМИЧЕСКОГО ПРОГРАММИРОВАНИЯ
     Рекурсивно вычислить расстояние редактирования двух данных непустых строк
-
+    Осуждаю
+    
     Sample Input 1:
     ab
     ab
@@ -40,11 +41,26 @@ import java.util.Scanner;
 public class A_EditDist {
 
 
-    int getDistanceEdinting(String one, String two) {
+    int getDistanceEdinting(String first, String second) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int[][] arr = new int[first.length() + 1][second.length() + 1];
+        for(int i = 0; i < first.length() + 1; ++i)
+        {
+            arr[i][0] = i;
+            if(i < second.length())
+                arr[0][i] = i;
+        }
 
+        for(int i = 1; i < first.length() + 1; ++i)
+            for(int j = 1; j < second.length() + 1; ++j)
+            {
+                int ins = arr[i][j - 1] + 1;
+                int del = arr[i - 1][j] + 1;
+                int sub = arr[i - 1][j - 1] + (first.charAt(i - 1) == second.charAt(j - 1) ? 0 : 1);
+                arr[i][j] = Integer.min(Integer.min(ins, del), sub);
+            }
 
-        int result = 0;
+        int result = arr[first.length()][second.length()];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
