@@ -45,15 +45,10 @@ public class A_QSort {
         Segment(int start, int stop){
             this.start = start;
             this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
         }
 
         @Override
         public int compareTo(Segment o) {
-            //подумайте, что должен возвращать компаратор отрезков
-
-
             return Integer.compare(start,o.start);//??
         }
     }
@@ -84,7 +79,8 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-            quicksort(segments,0,segments.length-1);
+        quicksort(segments,0,segments.length-1);
+
         for (int i = 0; i < m; i++) {
             result[i] = Amount(segments, points[i]);
         }
@@ -97,9 +93,9 @@ public class A_QSort {
         {
             if (l >= r)  return;
 
-                int m = partition(segments, l, r);
-                quicksort(segments, l, m - 1);
-                quicksort(segments, m + 1, r);
+            int m = partition(segments, l, r);
+            quicksort(segments, l, m - 1);
+            quicksort(segments, m + 1, r);
 
         }
 
