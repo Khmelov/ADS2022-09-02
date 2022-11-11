@@ -59,7 +59,6 @@ public class A_Knapsack {
                         table[k][s] = table[k - 1][s];
             }
         }
-
         int result = table[n][w];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
