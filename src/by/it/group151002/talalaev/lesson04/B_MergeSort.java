@@ -1,8 +1,9 @@
-package by.it;
+package by.it.group151002.talalaev.lesson04;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -44,8 +45,50 @@ public class B_MergeSort {
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return a;
+        return mergeSort(a);
     }
+
+    int[] divArr(int[] arr){
+        if (arr.length <= 1) {
+            return arr;
+        }
+        int mid = arr.length / 2;
+        int[] left = divArr(Arrays.copyOfRange(arr, 0, mid));
+        int[] right = divArr(Arrays.copyOfRange(arr, mid, arr.length));
+
+        return merge(left, right);
+    }
+
+    int[] merge(int[] lArr, int[] rArr) {
+        int[] res = new int[lArr.length + rArr.length];
+        int l = 0;
+        int r = 0;
+        int i = 0;
+        while (i < res.length) {
+            if (r >= rArr.length) {
+                res[i] = lArr[l];
+                l++;
+            }else
+            if (l >= lArr.length) {
+                res[i] = rArr[r];
+                r++;
+            }else
+            if (lArr[l] < rArr[r]){
+                res[i] = lArr[l];
+                l++;
+            }else{
+                res[i] = rArr[r];
+                r++;
+            }
+            i++;
+        }
+        return res;
+    }
+
+    int[] mergeSort(int[] arr){
+        return divArr(arr);
+    }
+    
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataB.txt");

@@ -33,7 +33,7 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment implements Comparable<Segment>{
         int start;
         int stop;
 
@@ -43,12 +43,62 @@ public class C_QSortOptimized {
         }
 
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+            return Integer.compare(this.stop, o.stop);
         }
     }
 
+    int binSearch(Segment[] arr, int point) {
+        int left = 0;
+        int right = arr.length - 1;
+        while (left <= right) {
+            int mid = (left+right)/2;
+            if (arr[mid].start <= point && arr[mid].stop >= point) {
+                return mid;
+            } else if (arr[mid].start > point) {
+                right = mid - 1;
+            } else left = mid + 1;
+        }
+        return -1;
+    }
+
+    public static void swapSegments (Segment[] a, int pos1, int pos2) {
+        if (pos1 != pos2) {
+            Segment tmp = a[pos1];
+            a[pos1] = a[pos2];
+            a[pos2] = tmp;
+        }
+    }
+
+    public static int[] division (Segment[] arr, int left, int right) {
+        int i = left;
+        int curr = left;
+        int j = right;
+        Segment value = arr[left];
+        while (curr <= j) {
+            if (arr[curr].compareTo(value) < 0)
+                swapSegments(arr, curr++, i++);
+            else if (arr[curr].compareTo(value) == 0)
+                curr++;
+            else
+                swapSegments(arr, curr, j--);
+        }
+        return new int[] {i, j};
+    }
+
+    public static void qSort (Segment[] arr, int left, int right) {
+        while (left < right) {
+            int[] pivo = division(arr, left, right);
+            if (pivo[0] - left < right - pivo[1]) {
+                qSort(arr, left, pivo[0] - 1);
+                left = pivo[1] + 1;
+            } else {
+                qSort(arr, pivo[1] + 1, right);
+                right = pivo[0] + 1;
+            }
+        }
+    }
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -73,8 +123,20 @@ public class C_QSortOptimized {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
+        qSort(segments, 0, n-1);
+        for (int i = 0; i < m; i++) {
+            result[i] = 0;
+            int binary = binSearch(segments, points[i]);
+            if (binary == -1)
+                break;
+            else {
+                result[i] += 1;
+                while (segments[binary + 1].start < segments[binary].stop) {
+                    result[i] += 1;
+                    binary++;
+                }
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

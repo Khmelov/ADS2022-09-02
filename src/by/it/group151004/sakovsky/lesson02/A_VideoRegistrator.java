@@ -15,7 +15,7 @@ public class A_VideoRegistrator {
 
     public static void main(String[] args) {
         A_VideoRegistrator instance=new A_VideoRegistrator();
-        double[] events=new double[]{1, 1.1, 1.6, 2.2, 2.4, 2.7, 3.9, 8.1, 9.1, 5.5, 3.7};
+        double[] events=new double[]{0.7, 1.5, 0.3, 2.5, 7.9, 8.4, 5.8, 4.6, 9.4, 5.5, 3.7};
         List<Double> starts=instance.calcStartTimes(events,1); //рассчитаем моменты старта, с длинной сеанса 1
         System.out.println(starts);                            //покажем моменты старта
     }
@@ -25,6 +25,17 @@ public class A_VideoRegistrator {
         //timeWorkDuration время работы видеокамеры после старта
         List<Double> result;
         result = new ArrayList<>();
+        //комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
+        //подготовка к жадному поглощению массива событий
+        //hint: сортировка Arrays.sort обеспечит скорость алгоритма
+        //C*(n log n) + C1*n = O(n log n)
+
+        //пока есть незарегистрированные события
+        //получим одно событие по левому краю
+        //и запомним время старта видеокамеры
+        //вычислим момент окончания работы видеокамеры
+        //и теперь пропустим все покрываемые события
+        //за время до конца работы, увеличивая индекс
         int i=0, j=0;   //i - это индекс события events[i]
         double time=0;
         Arrays.sort(events);
@@ -38,6 +49,7 @@ public class A_VideoRegistrator {
             }
 
         }
+
         return result;                        //вернем итог
     }
 }
