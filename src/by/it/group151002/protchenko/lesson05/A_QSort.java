@@ -66,7 +66,6 @@ public class A_QSort {
     void quickSort(Segment[] arr, int left, int right) {
         if (left < right) {
             Segment x = arr[right];
-
             int j = left;
             for (int i = left + 1; i < right; i++) {
                 if (arr[i].compareTo(x) < 0) {
