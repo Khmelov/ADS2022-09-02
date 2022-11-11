@@ -54,10 +54,10 @@ public class C_HeapMax {
                 int leftNode = 2*i + 1;
                 int rightNode = 2*i + 2;
                 int j = leftNode;
-                if (rightNode < heap.size() && heap.get(rightNode) < heap.get(leftNode)) {
+                if (rightNode < heap.size() && heap.get(rightNode) > heap.get(leftNode)) {
                     j = rightNode;
                 }
-                if (heap.get(i) <= heap.get(j)) {
+                if (heap.get(i) >= heap.get(j)) {
                     break;
                 }
                 swap(i, j);

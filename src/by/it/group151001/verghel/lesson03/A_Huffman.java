@@ -122,18 +122,37 @@ public class A_Huffman {
         Map<Character, Integer> count = new HashMap<>();
         //1. переберем все символы по очереди и рассчитаем их частоту в Map count
             //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
-
+        for (int i=0;i<s.length();i++){
+            Character c = s.charAt(i);
+            Integer kol = count.get(c);
+            count.put(c,kol!=null ? kol+1:1);
+        }
         //2. перенесем все символы в приоритетную очередь в виде листьев
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
+        for (Map.Entry<Character, Integer> entry : count.entrySet()){
+            LeafNode node = new LeafNode(entry.getValue(), entry.getKey());
+            codes.put(entry.getKey(), node.toString());
+            priorityQueue.add(node);
+        }
 
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
         //построим дерево кодирования Хаффмана.
         //У родителя частоты детей складываются.
-
+        while (priorityQueue.size()>1){
+            Node first = priorityQueue.poll();
+            Node second = priorityQueue.poll();
+            priorityQueue.add(new InternalNode(first,second));
+        }
         //4. последний из родителей будет корнем этого дерева
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
         StringBuilder sb = new StringBuilder();
+        Node root = priorityQueue.poll();
+        root.fillCodes("");
+        for (int i = 0; i<s.length();i++){
+            char c = s.charAt(i);
+            sb.append(codes.get(c));
+        }
         //.....
 
         return sb.toString();

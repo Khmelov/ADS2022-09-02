@@ -16,12 +16,12 @@ public class FiboA {
 
     public static void main(String[] args) {
         FiboA fibo = new FiboA();
-        int n = 33;
-        System.out.printf("calc(%d)=%d \n\t time=%d \n\n", n, fibo.calc(n), fibo.time());
+        int n = 6;
+        System.out.printf("\ncalc(%d)=%d \n\t", n, fibo.calc(n));
 
         //вычисление чисел фибоначчи медленным методом (рекурсией)
         fibo = new FiboA();
-        System.out.printf("slowA(%d)=%d \n\t time=%d \n\n", n, fibo.slowA(n), fibo.time());
+        //System.out.printf("\nslowA(%d)=%d \n\t", n, fibo.slowA(n));
     }
 
 
@@ -48,8 +48,6 @@ public class FiboA {
             return BigInteger.ONE;
         return slowA(n - 1).add(slowA(n - 2));
     }
-
-
 
 }
 
