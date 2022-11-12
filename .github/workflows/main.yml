@@ -19,5 +19,5 @@ jobs:
       - name: Check changed files
         uses: veceluxa/action-control-changes@v1.2
         with:
-          changed-files: ${{steps.changed-files.outputs.all_changed_files}}
+          changed-files: ${{steps.changed-files.outputs.all_modified_files}}
           nesting: 4
