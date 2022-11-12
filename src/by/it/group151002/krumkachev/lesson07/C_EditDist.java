@@ -49,13 +49,54 @@ import java.util.Scanner;
 
 public class C_EditDist {
 
-    String getDistanceEdinting(String one, String two) {
+    int min(int a, int b, int c) {
+        return (a > b) ? Math.min(b, c) : Math.min(a, c);
+    }
+
+    String getDistanceEditing(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int[][] matrix = new int[one.length() + 1][two.length() + 1];
+        for (int i = 0; i <= one.length(); i++)
+            matrix[i][0] = i;
+        for (int j = 0; j <= two.length(); j++)
+            matrix[0][j] = j;
+        for (int i = 1; i <= one.length(); i++) {
+            for (int j = 1; j <= two.length(); j++) {
+                int replacementCost = (one.charAt(i - 1) == two.charAt(j - 1)) ? 0 : 1;
+                matrix[i][j] = min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1, matrix[i - 1][j - 1] + replacementCost);
+            }
+        }
+        StringBuilder editing = new StringBuilder();
+        int i = one.length();
+        int j = two.length();
+        while (i != 0 && j != 0) {
+            int min = min(matrix[i - 1][j], matrix[i][j - 1], matrix[i - 1][j - 1]);
+            if (min == matrix[i - 1][j - 1]) {
+                if (one.charAt(i - 1) == two.charAt(j - 1))
+                    editing.append('#');
+                else
+                    editing.append('~').append(two.charAt(j - 1));
+                i--; j--;
+            }
+            else if (min == matrix[i - 1][j])
+                editing.append('-').append(one.charAt(--i));
+            else if (min == matrix[i][j - 1])
+                editing.append('+').append(two.charAt(--j));
+            editing.append(',');
+        }
+        while (i != 0)  editing.append('-').append(one.charAt(--i)).append(',');
+        while (j != 0)  editing.append('+').append(two.charAt(--j)).append(',');
 
-
-        String result = "";
+        StringBuilder result = new StringBuilder();
+        for (i = editing.length() - 1; i >= 0; ) {
+            j = i - 1;
+            while (j >= 0 && editing.charAt(j) != ',')
+                j--;
+            result.append(editing.substring(j + 1, i + 1));
+            i = j;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return result.toString();
     }
 
 
@@ -64,9 +105,10 @@ public class C_EditDist {
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson07/dataABC.txt");
         C_EditDist instance = new C_EditDist();
         Scanner scanner = new Scanner(stream);
-        System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
-        System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
-        System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
+        System.out.println(instance.getDistanceEditing(scanner.nextLine(),scanner.nextLine()));
+        System.out.println(instance.getDistanceEditing(scanner.nextLine(),scanner.nextLine()));
+        System.out.println(instance.getDistanceEditing(scanner.nextLine(),scanner.nextLine()));
+        System.out.println(instance.getDistanceEditing("", ""));
     }
 
 }

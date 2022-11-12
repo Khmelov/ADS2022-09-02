@@ -39,14 +39,26 @@ import java.util.Scanner;
 
 public class A_EditDist {
 
+    int min(int a, int b, int c) {
+        return (a > b) ? Math.min(b, c) : Math.min(a, c);
+    }
 
-    int getDistanceEdinting(String one, String two) {
+    int getDistanceEditing(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        if (one.length() == 0)
+            return two.length();
+        if (two.length() == 0)
+            return one.length();
+        if (one.charAt(0) == two.charAt(0))
+            return getDistanceEditing(one.substring(1), two.substring(1));
 
+        return 1 + min (
+                getDistanceEditing(one, two.substring(1)),
+                getDistanceEditing(one.substring(1), two),
+                getDistanceEditing(one.substring(1), two.substring(1))
+        );
 
-        int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
     }
 
 
@@ -55,8 +67,8 @@ public class A_EditDist {
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson07/dataABC.txt");
         A_EditDist instance = new A_EditDist();
         Scanner scanner = new Scanner(stream);
-        System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
-        System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
-        System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
+        System.out.println(instance.getDistanceEditing(scanner.nextLine(),scanner.nextLine()));
+        System.out.println(instance.getDistanceEditing(scanner.nextLine(),scanner.nextLine()));
+        System.out.println(instance.getDistanceEditing(scanner.nextLine(),scanner.nextLine()));
     }
 }
