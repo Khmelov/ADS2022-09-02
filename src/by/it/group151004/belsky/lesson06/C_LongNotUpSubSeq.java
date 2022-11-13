@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.Stack;
 
 /*
 Задача на программирование: наибольшая невозростающая подпоследовательность
@@ -51,7 +52,45 @@ public class C_LongNotUpSubSeq {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+        int[] d = new int[n];
+        int[] pathArr = new int[n];
 
+        for (int i = 0;i < m.length;i++) {
+            d[i] = 1;
+            pathArr[i] = -1;
+            for (int j = 0;j < i;j++) {
+                if (m[i] <= m[j]) {
+                    d[i] = Math.max(d[i], d[j]+1);
+                    pathArr[i] = j;
+                }
+            }
+        }
+
+        result = d[0];
+        int lastIndex = -1;
+        for (int i = 0;i < d.length;i++) {
+            if (d[i] > result) {
+                result = d[i];
+                lastIndex = i;
+            }
+        }
+
+        Stack<Integer> stack = new Stack<>();
+        int startIndex = lastIndex;
+        do {
+            stack.push(m[startIndex]);
+            startIndex = pathArr[startIndex];
+        } while (startIndex != -1);
+
+//        while (pathArr[startIndex] != -1) {
+//            stack.push(m[startIndex]);
+//            startIndex = pathArr[startIndex];
+//        }
+
+        while (!stack.empty()) {
+            System.out.print(stack.pop().toString() + " ");
+        }
+        System.out.println();
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
