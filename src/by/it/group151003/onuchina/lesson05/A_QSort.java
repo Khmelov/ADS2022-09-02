@@ -102,26 +102,26 @@ public class A_QSort {
                 centre = segments[(l + r) / 2].start;
                 do
                 {
-                    while (segments[i].start < centre) i++;
-                    while (segments[j].start > centre) j--;
+                    while (segments[i].start < centre && i < segments.length) i++;
+                    while (segments[j].start > centre && j >= 0) j--;
                     if (i <= j){
                         temp = segments[i];
                         segments[i] = segments[j];
                         segments[j] = temp;
-                        i++;
-                        j--;
+                        if (i < segments.length - 1) i++;
+                        if (j > 0) j--;
                     }
                 }
-                while (i > j);
+                while (i <= j);
                 if (i < r){
-                    s.push(left);
-                    s.push(right);
+                    s.push(l);
+                    s.push(r);
                 }
                 r = j;
             }
-            while (l >= r);
+            while (l < r);
         }
-        while (s.isEmpty());
+        while (! s.isEmpty());
     }
 
     //тут реализуйте логику задачи с применением быстрой сортировки

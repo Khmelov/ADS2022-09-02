@@ -3,6 +3,8 @@ package by.it.group151003.matoshko.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /*
@@ -23,21 +25,56 @@ public class B_CountSort {
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //размер массива
-        int n = scanner.nextInt();
+        int n = scanner.nextInt(), maxNum = 10;
         int[] points=new int[n];
 
         //читаем точки
         for (int i = 0; i < n; i++) {
             points[i]=scanner.nextInt();
         }
+
+        int[] sortedArr = new int[n];
+        int[] frequency = new int[maxNum];
+
+        // Каждой возможной точке из диапазона ставится элемент массива, в котором хранится частота повторения элемента
+        for(int i=0;i<maxNum;i++){
+            frequency[i]=0;
+        }
+
+        // Считаем частоту: если элемент равен 3, то элемент с таким индексом в массиве частот увеличивается на 1
+        for(int i=0;i<n;i++){
+            frequency[points[i] - 1]++;
+        }
+
+        // Последовательно выводим элемент * его количество
+        int count = 0;
+        for (int i = 0; i < frequency.length; i++) {
+            for (int j = 0; j < frequency[i]; j++) {
+                sortedArr[count++] = i + 1;
+            }
+        }
+
+
+      /*  int[] sortedArr = new int[n];
         //тут реализуйте логику задачи с применением сортировки подсчетом
-
-
+        Map<Integer,Integer> arr= new HashMap<>();
+        for(int i=0;i<n;i++)
+        {
+            if(arr.containsKey(points[i]))
+                arr.put(points[i],arr.get(points[i])+1);
+            else
+                arr.put(points[i],1);
+        }
+        for(int i:arr.keySet())
+        {
+           sortedArr
+        }
+*/
 
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return points;
+        return sortedArr;
     }
 
 
