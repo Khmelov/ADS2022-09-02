@@ -3,6 +3,7 @@ package by.it.group151004.belsky.lesson07;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -42,10 +43,28 @@ public class B_EditDist {
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
         int result = 0;
+        int[][] arr = new int[one.length()+1][two.length()+1];
+        for (int[] subarr : arr) {
+            Arrays.fill(subarr, -1);
+        }
+        for (int i = 0;i < one.length()+1;i++) {
+            arr[i][0] = i;
+        }
+        for (int j = 0;j < two.length()+1;j++) {
+            arr[0][j] = j;
+        }
+
+        for (int i = 1;i < one.length()+1;i++) {
+            for (int j = 1;j < two.length()+1;j++) {
+                int var1 = arr[i][j-1] + 1;
+                int var2 = arr[i-1][j] + 1;
+                int var3 = arr[i-1][j-1];
+                if (one.charAt(i-1) != two.charAt(j-1)) var3+=1;
+                arr[i][j] = Math.min(var1, Math.min(var2, var3));
+            }
+        }
+        result = arr[arr.length-1][arr[0].length-1];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
