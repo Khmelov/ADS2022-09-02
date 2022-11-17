@@ -43,18 +43,62 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
+            if(start <= stop){
+                this.start = start;
+                this.stop = stop;
+            }else{
+                this.start = stop;
+                this.stop = start;
+            }
         }
 
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+            return Integer.compare(start, o.start);
         }
+    }
+
+    private void swap(Segment[] segments,int i,int j)
+    {
+        Segment tmp=segments[i];
+        segments[i]=segments[j];
+        segments[j]=tmp;
+    }
+
+    private void qSort(Segment[] segments,int L,int R)
+    {
+        // BackStep для выхода из рекурсии(если левая граница = правой, то есть 1 элемент остался в сортируемой части)
+        if(L>=R)
+            return;
+        // Ставим дополнительные границы, которые будем сдвигать
+        int i=L;
+        int j=R;
+        // Выбираем опорный элемент(в моем случае это средний)
+        Segment x=segments[(L+R)/2];
+        while (i<=j)
+        {
+            // Сдвигаем границы, пока не найдем элемент слева, который больше опорного
+            // а элемент справа меньше опорного
+            while(segments[i].compareTo(x)==-1)
+                i++;
+            while(segments[j].compareTo(x)==1)
+                j--;
+            // Если мы еще проходим по отведенным левой и правой части и границы не пересеклись, то обмениваем элементы
+            if(i<=j)
+            {
+                swap(segments,i,j);
+                i++;
+                j--;
+            }
+
+        }
+        // Рекурсивно применяем к оставшейся левой и правой части
+        if(L<j)
+            qSort(segments,L,j);
+        if(R>i)
+            qSort(segments,i,R);
+
     }
 
 
@@ -81,7 +125,15 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        qSort(segments,0, segments.length-1);
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (points[i]>=segments[j].start && points[i]<=segments[j].stop){
 
+                    result[i]++;
+                }
+            }
+        }
 
 
 
