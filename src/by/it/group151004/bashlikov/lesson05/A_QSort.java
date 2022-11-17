@@ -3,6 +3,7 @@ package by.it.group151004.bashlikov.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -57,7 +58,6 @@ public class A_QSort {
         }
     }
 
-
     public int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -68,7 +68,6 @@ public class A_QSort {
         //число точек
         int m = scanner.nextInt();
         int[] points=new int[m];
-        int[] result=new int[m];
 
         //читаем сами отрезки
         for (int i = 0; i < n; i++) {
@@ -82,10 +81,17 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        int[] result = new int[points.length];
 
+        for(int i = 0; i < points.length; i++) {
+            int counter = 0, index = 0;
+            while(index < segments.length && segments[index].start < points[i] + 1) {
+                if(segments[index].stop > points[i] + 1) counter += 1;
+                index++;
+            }
+            result[i] = counter;
+        }
 
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
