@@ -3,6 +3,7 @@ package by.it.group151004.belsky.lesson08;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -47,22 +48,18 @@ public class A_Knapsack {
         }
 
         int result = 0;
-        int[][] arr = new int[n+1][w+1];
-        for (int j = 0;j <= w;j++)
-            arr[0][j] = 0;
-        for (int i = 0;i <= n;i++)
-            arr[i][0] = 0;
+        int[] d = new int[w+1];
+        Arrays.fill(d, 0);
 
-        for (int k = 1;k <= n;k++) {
-            for (int s = 1;s <= w;s++) {
-                if (s >= gold[k-1]) {
-                    arr[k][s] = Math.max(arr[k-1][s], arr[k-1][s-gold[k-1]] + gold[k-1]);
-                } else {
-                    arr[k][s] = arr[k-1][s];
+        for (int i = 1;i <= w;i++) {
+            for (int j = 1;j <= n;j++) {
+                if (gold[j-1] <= i) {
+                    d[i] = Math.max(d[i], d[i-gold[j-1]]+gold[j-1]);
                 }
             }
         }
 
+        result = d[w];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
