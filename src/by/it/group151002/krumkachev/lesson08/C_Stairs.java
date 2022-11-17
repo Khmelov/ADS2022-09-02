@@ -41,11 +41,17 @@ public class C_Stairs {
         for (int i = 0; i < n; i++) {
             stairs[i]=scanner.nextInt();
         }
+
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        int result = 0;
+        int[] subtotal = new int[stairs.length];
+        subtotal[0] = 0;
+        if (n > 1)
+            subtotal[1] = Math.max(stairs[0], 0);
+        for (int i = 2; i < subtotal.length; i++)
+            subtotal[i] = Math.max(subtotal[i - 2] + stairs[i - 2], subtotal[i - 1] + stairs[i - 1]);
 
-
-
+        int result = subtotal[subtotal.length - 1] + stairs[stairs.length - 1];
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
