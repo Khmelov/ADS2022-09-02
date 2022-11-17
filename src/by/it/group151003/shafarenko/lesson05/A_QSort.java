@@ -150,8 +150,8 @@ public class A_QSort {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+        String root = System.getProperty("user.dir") + "";
+        InputStream stream = new FileInputStream(root + "/by/it/a_khmelev/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){
