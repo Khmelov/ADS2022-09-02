@@ -54,6 +54,11 @@ public class C_QSortOptimized {
         arr[i] = arr[j];
         arr[j] = temp;
     }
+
+    String[] someFunc(String[] arrStr, int i){
+        return arrStr;
+    }
+
     void qSort(Segment[] arr, int l, int r){
         while (l < r) {
             int i, j;

@@ -59,7 +59,7 @@ public class C_GetInversions {
             }
             else {
                 a[k++] = R[j++];
-                invertions = invertions + q + 1 - p - i;
+                invertions += q + 1 - p - i;
             }
         }
         while (i < n1) {
