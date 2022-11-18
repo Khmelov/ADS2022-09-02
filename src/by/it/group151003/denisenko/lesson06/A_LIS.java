@@ -25,7 +25,6 @@ import java.util.Scanner;
     Sample Output:
     3
 */
-
 public class A_LIS {
     int getSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -44,7 +43,6 @@ public class A_LIS {
             for (int j = 0; j < i; ++j) {
                 if (m[j] < m[i] && maxSequences[j] + 1 > maxSequences[i])
                     maxSequences[i] = maxSequences[j] + 1;
-
             }
 
             if (result < maxSequences[i])

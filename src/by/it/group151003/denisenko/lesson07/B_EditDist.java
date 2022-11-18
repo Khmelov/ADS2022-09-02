@@ -44,7 +44,6 @@ public class B_EditDist {
             distancesTable[i][0] = i;
         for (int j = 0; j < M; ++j)
             distancesTable[0][j] = j;
-
         for (int i = 1; i < N; ++i)
             for (int j = 1; j < M; ++j) {
                 int ins = distancesTable[i][j - 1] + 1;
