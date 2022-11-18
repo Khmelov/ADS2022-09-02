@@ -58,13 +58,13 @@ public class C_LongNotUpSubSeq {
                     maxSequences[i] = maxSequences[j] + 1;
                     previousSequenceElements[i] = j;
                 }
-
             }
             if (result < maxSequences[i]) {
                 result = maxSequences[i];
                 lastMaxSequenceElementIndex = i;
             }
-        }
+        } //// 8 -1 6 1
+        // -1 0 0 2
         int count = 0;
         int i = lastMaxSequenceElementIndex;
         while (previousSequenceElements[i] > 0 || i != 0){

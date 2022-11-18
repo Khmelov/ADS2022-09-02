@@ -19,10 +19,10 @@ import java.util.Scanner;
     Sample Input:
     4
     3 6 7 12
+    3 6 12
     Sample Output:
     3
 */
-
 public class B_LongDivComSubSeq {
     int getDivSeqSize(InputStream stream) throws FileNotFoundException {
         Scanner scanner = new Scanner(stream);
