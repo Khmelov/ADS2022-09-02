@@ -21,6 +21,49 @@ Sample Output:
 */
 public class B_MergeSort {
 
+
+    public static void SliSort(int[] mas) {
+        if (mas.length > 1)
+        {
+            int[] lborder = new int[mas.length / 2];
+            System.arraycopy(mas, 0, lborder, 0, lborder.length);
+            int[] rborder = new int[mas.length - lborder.length];
+            System.arraycopy(mas, mas.length / 2, rborder, 0, rborder.length);
+            SliSort(lborder);
+            SliSort(rborder);
+
+            int i = 0;
+            int j = 0;
+            int m = 0;
+            while (i < lborder.length && j < rborder.length)
+            {
+                if (lborder[i] <= rborder[j])
+                {
+                    mas[m] = lborder[i];
+                    m++;
+                    i++;
+                }
+                else
+                {
+                    mas[m] = rborder[j];
+                    m++;
+                    j++;
+                }
+            }
+            while (i < lborder.length)
+            {
+                mas[m] = lborder[i];
+                m++;
+                i++;
+            }
+            while (j < rborder.length)
+            {
+                mas[m] = rborder[j];
+                m++;
+                j++;
+            }
+        }
+    }
     int[] getMergeSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -40,7 +83,7 @@ public class B_MergeSort {
 
 
 
-
+        SliSort(a);
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -48,7 +91,7 @@ public class B_MergeSort {
     }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/karvatskaya/lesson04/dataB.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);
