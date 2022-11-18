@@ -44,7 +44,7 @@ import java.util.Scanner;
 
 public class B_Huffman {
 
-    String decode(File file) throws FileNotFoundException {
+    public String decode(File file) throws FileNotFoundException {
         StringBuilder result=new StringBuilder();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(file);
@@ -52,27 +52,27 @@ public class B_Huffman {
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
-
-        Map<String, Character> table = new HashMap<>();
-        scanner.nextLine();
-        for(int j = 0; j < count; j++){
-            String info = scanner.nextLine();
-            table.put(info.substring(3),info.charAt(0));
+        Map<String, Character> setup = new HashMap<>();
+        for(int j = 0; j < count; j++)
+        {
+            String out = scanner.next();
+            String in = scanner.next();
+            out = out.substring(0, out.length()-1);
+            setup.put(in, out.charAt(0));
         }
-        String init = scanner.nextLine();
-        //    StringBuilder temp =new StringBuilder();
-        String temp = "";
-        for(int j = 0; j< length; j++){
-            //  temp.append(init.charAt(j));
-            temp = temp + init.charAt(j);
-            if(table.containsKey(temp)){
-                result.append(table.get(temp));
-                //  temp.replace(0,temp.length()-1, "");
-                temp = "";
+        String start = scanner.next();
+        String check = "";
+
+        int i = 0;
+        while (i<= length-1)
+        {
+            check += start.charAt(i);
+            if(setup.containsKey(check)){
+                result.append(setup.get(check));
+                check = "";
             }
+            i++;
         }
-
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
     }
