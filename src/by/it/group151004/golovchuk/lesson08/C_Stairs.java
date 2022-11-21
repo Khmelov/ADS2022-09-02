@@ -43,10 +43,19 @@ public class C_Stairs {
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         int result = 0;
-
-
-
-
+        int i = 0;
+        while (i < n-1) {
+            if (stairs[i] >= stairs[i+1]) {
+                result+= stairs[i];
+                i++;
+            } else {
+                result += stairs[i+1];
+                i = i + 2;
+            }
+        }
+        if ( i == n-1 && stairs[i] > 0) {
+            result += stairs[i];
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

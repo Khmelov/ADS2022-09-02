@@ -3,6 +3,7 @@ package by.it.group151004.golovchuk.lesson08;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -48,6 +49,26 @@ public class A_Knapsack {
 
 
         int result = 0;
+        int[] arr = new int[w+1];
+        Arrays.fill(arr, 0);
+        arr[0] = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = w; j >= gold[i]; j--){
+                if (arr[j-gold[i]] == 1) {
+                    arr[j] = 1;
+                }
+                if (j % gold[i] == 0) {
+                    arr[j] = 1;
+                }
+            }
+        }
+
+        for (int i = w; i >= 0; i--) {
+            if (arr[i] == 1) {
+                result = i;
+                break;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
