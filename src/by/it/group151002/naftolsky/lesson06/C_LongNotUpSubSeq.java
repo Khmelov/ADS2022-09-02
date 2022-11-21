@@ -51,8 +51,23 @@ public class C_LongNotUpSubSeq {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+        int[] arrPosition = new int[n];
 
+        for (int i = 0; i < n; i++) {
+            arrPosition[i] = 1;
 
+            for (int j = 0; j < i; j++) {
+                if (m[j] >= m[i] && arrPosition[j] + 1 >= arrPosition[i]) {
+                    arrPosition[i] = arrPosition[j] + 1;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (result < arrPosition[i]) {
+                result = arrPosition[i];
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -60,7 +75,7 @@ public class C_LongNotUpSubSeq {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/naftolsky/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
         int result = instance.getNotUpSeqSize(stream);
         System.out.print(result);

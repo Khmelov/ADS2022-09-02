@@ -38,7 +38,7 @@ import java.util.Scanner;
 public class A_QSort {
 
     //отрезок
-    private class Segment  implements Comparable<Segment>{
+    private class Segment implements Comparable<Segment>{
         int start;
         int stop;
 
@@ -52,8 +52,35 @@ public class A_QSort {
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
+            return Integer.compare(this.start, o.start);
+        }
+    }
 
-            return 0;
+    int partition(Segment[] arr, int l, int r) {
+        Segment x = arr[r];  //опорный элемент
+        Segment temp;
+        int i = l - 1;
+        int j;
+        for (j = l; j < r; j++) {
+            if (arr[j].compareTo(x) <= 0) {
+                i++;
+                temp = arr[j];
+                arr[j] = arr[i];
+                arr[i] = temp;
+            }
+        }
+
+        temp = arr[i + 1];
+        arr[i + 1] = arr[r];
+        arr[r] = temp;
+        return (i + 1);
+    }
+
+    void quickSort(Segment[] arr, int l, int r) {
+        if (l < r) {
+            int m = partition(arr, l, r);
+            quickSort(arr, l, m - 1);
+            quickSort(arr, m + 1, r);
         }
     }
 
@@ -81,8 +108,17 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        quickSort(segments, 0, n - 1);
 
-
+        for (int k = 0; k < m; k++) {
+            int j = 0;
+            while (j < n && segments[j].start <= points[k]) {
+                if (points[k] <= segments[j].stop) {
+                    result[k]++;
+                }
+                j++;
+            }
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
