@@ -29,8 +29,6 @@ import java.util.Scanner;
 */
 
 public class B_LongDivComSubSeq {
-
-
     int getDivSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -43,14 +41,22 @@ public class B_LongDivComSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
+        int[] d = new int[n];
+        for (int i = 0;i < n; i++){
+            d[i] = 1;
+            for (int j = 0; j < i; j++){
+                if (m[i] % m[j] == 0 && d[i] < d[j] + 1)
+                    d[i] = d[j] + 1;
+            }
+        }
+        int result = d[0];
+        for (int i = 1; i < n; i++){
+            if (d[i] > result)
+                result = d[i];
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
-
-
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataB.txt");

@@ -57,6 +57,40 @@ public class A_QSort {
         }
     }
 
+    public static void quickSort(Segment[] array, int low, int high) {
+        if (array.length == 0)
+            return;
+        if (low >= high)
+            return;
+
+        int mid = low + (high - low) / 2;
+        Segment pivot = array[mid];
+        Segment temp;
+        int i = low, j = high;
+        while (i <= j) {
+            while (array[i].compareTo(pivot) < 0) {
+                i++;
+            }
+
+            while (array[j].compareTo(pivot) < 0) {
+                j--;
+            }
+
+            if (i <= j) {
+                temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+                i++;
+                j--;
+            }
+        }
+
+        if (low < j)
+            quickSort(array, low, j);
+
+        if (high > i)
+            quickSort(array, i, high);
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -82,8 +116,14 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-
-
+        quickSort(segments, 0, n-1);
+        for (int i = 0; i < points.length; i++) {
+            for (int j = 0; j < n; j++) {
+                if (points[i] < segments[j].stop && points[i] > segments[j].start) {
+                    result[i]++;
+                }
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
