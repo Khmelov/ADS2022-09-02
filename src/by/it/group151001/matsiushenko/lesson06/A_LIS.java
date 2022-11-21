@@ -45,11 +45,26 @@ public class A_LIS {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
+        int[] len = new int[n];
+        for (int i : len) {
+            len[i] = 1;
+        }
 
-
+        for(int i = 1; i < n; i++){
+            for(int j = 0; j < i; j++){
+                if(m[j] < m[i] && len[i] <= len[j]){
+                        len[i] = len[j] + 1;
+                }
+            }
+        }
+        int max = 0;
+        for(int k: len){
+            if(k > max){
+                max = k;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return max;
     }
 
 

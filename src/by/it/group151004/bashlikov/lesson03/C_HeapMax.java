@@ -54,6 +54,7 @@ public class C_HeapMax {
         }
 
         void insert(Long value) { //вставка
+
         }
 
         Long extractMax() { //извлечение и удаление максимума
@@ -65,8 +66,8 @@ public class C_HeapMax {
     }
 
     //эта процедура читает данные из файла, ее можно не менять.
-    Long findMaxValue(InputStream stream) {
-        Long maxValue=0L;
+    public Long findMaxValue(InputStream stream) {
+        Long maxValue = 0L;
         MaxHeap heap = new MaxHeap();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(stream);

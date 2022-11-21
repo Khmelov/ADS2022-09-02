@@ -61,9 +61,10 @@ public class C_LongNotUpSubSeq {
         int[] lis = new int[arr.length];
         Arrays.fill(lis,1);
         for(int i = 1;i<arr.length;i++){
-            for(int j = 0; j<i;j++){
+            for(int j = i-1; j>=0;j--){
                 if(arr[i]<=arr[j] && lis[i]<lis[j]+1){
                     lis[i] = lis[j]+1;
+                    break;
                 }
             }
         }
