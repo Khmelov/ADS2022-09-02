@@ -43,20 +43,44 @@ public class B_LongDivComSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
 
+        int result = subSize(m);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    int subSize(int[] arr) {
+        int[] tmpArr = new int[arr.length + 1];
+        tmpArr[0] = -1;
+        int low, high;
+        int counter = 0;
+        int newL;
+        for (int i = 0; i < arr.length; i++) {
+            low = 1;
+            high = counter + 1;
+            while (low < high) {
+                int mid = low + ((high - low) / 2);
+                if ((arr[tmpArr[mid]] > arr[i]) && (arr[i] % arr[tmpArr[mid]] != 0)) {
+                    high = mid;
+                } else {
+                    low = mid + 1;
+                }
+            }
+            newL = low;
+            tmpArr[newL] = i;
+            if (newL > counter) counter = newL;
+        }
+        return counter;
+    }
+
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/talalaev/lesson06/dataB.txt");
         B_LongDivComSubSeq instance = new B_LongDivComSubSeq();
         int result = instance.getDivSeqSize(stream);
-        System.out.print(result);
+        System.out.println(result);
     }
 
 }

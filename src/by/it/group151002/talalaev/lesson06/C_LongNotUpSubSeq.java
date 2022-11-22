@@ -3,6 +3,7 @@ package by.it.group151002.talalaev.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -38,7 +39,7 @@ import java.util.Scanner;
 
 public class C_LongNotUpSubSeq {
 
-    int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
+    int[] getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -50,11 +51,41 @@ public class C_LongNotUpSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
+        int[] result = subIndex(m);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    int[] subIndex(int[] arr) {
+        int[] tmpArr = new int[arr.length + 1];
+        tmpArr[0] = -1;
+        int[] tmpPArr = new int[arr.length];
+        int low, high;
+        int counter = 0;
+        int newL;
+        for (int i = 0; i < arr.length; i++) {
+            low = 1;
+            high = counter + 1;
+            while (low < high) {
+                int mid = low + ((high - low) / 2);
+                if ((arr[tmpArr[mid]] < arr[i])) {
+                    high = mid;
+                } else {
+                    low = mid + 1;
+                }
+            }
+            newL = low;
+            tmpArr[newL] = i;
+            tmpPArr[i] = tmpArr[newL - 1];
+            if (newL > counter) counter = newL;
+        }
+        int[] s = new int[counter];
+        int k = tmpArr[counter];
+        for (int i = counter - 1; i >= 0; i--) {
+            s[i] = k;
+            k = tmpPArr[k];
+        }
+        return s;
     }
 
 
@@ -62,8 +93,9 @@ public class C_LongNotUpSubSeq {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
-        int result = instance.getNotUpSeqSize(stream);
-        System.out.print(result);
+        int[] result=instance.getNotUpSeqSize(stream);
+        System.out.println(result.length);
+        for (int a : result) System.out.print((a+1) + " ");
     }
 
 }

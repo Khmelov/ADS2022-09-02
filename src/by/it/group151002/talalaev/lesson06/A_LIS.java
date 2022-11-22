@@ -45,11 +45,27 @@ public class A_LIS {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
+        int result = findAns(m);
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    int findAns(int[] arr){
+        if (arr.length == 1)
+            return 1;
+        int size = 1;
+        int[] tmpArr = new int[arr.length];
+        tmpArr[0] = 1;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > arr[i - 1]) {
+                tmpArr[i] = tmpArr[i - 1] + 1;
+                if (tmpArr[i] > size) size = tmpArr[i];
+            }else
+                tmpArr[i] = 1;
+        }
+        return size;
     }
 
 
