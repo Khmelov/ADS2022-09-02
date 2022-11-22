@@ -27,7 +27,8 @@ public class B_CountSort {
         int idx = 0;
         for (int i = 0; i < count.length; i++) {
             for (int j = 0; j < count[i]; j++) {
-                array[idx++] = i + min;
+                array[idx] = i + min;
+                idx++;
             }
         }
         return array;

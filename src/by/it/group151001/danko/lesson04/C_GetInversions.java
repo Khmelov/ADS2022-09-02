@@ -35,6 +35,59 @@ Sample Output:
 
 public class C_GetInversions {
 
+    public static int result = 0;
+
+    void mergeSort(int[] arr) {
+        if(arr.length == 1) return;
+        int n = arr.length;
+        int mid = n/2;
+
+        int[] left = new int[mid];
+        int[] right = new int[n-mid];
+        for(int i = 0; i < mid; i++)
+            left[i] = arr[i];
+        for(int i = mid; i < n; i++)
+            right[i-mid] = arr[i];
+
+        mergeSort(left);
+        mergeSort(right);
+        merge(arr, left, right);
+    }
+
+    void merge(int[] arr, int[] left, int[] right)
+    {
+        int leftID = left.length;
+        int rightID = right.length;
+        int i = 0, j = 0, index = 0;
+
+        while (i < leftID && j < rightID)
+        {
+            if(left[i] <= right[j])
+            {
+                arr[index]=left[i];
+                index++;
+                i++;
+            } else
+            {
+                arr[index] = right[j];
+                index++;
+                j++;
+                result = result + leftID - i;
+
+            }
+        }
+
+        for(int ll = i; ll < leftID; ll++)
+        {
+            arr[index++] = left[ll];
+        }
+        for(int rr=j; rr < rightID; rr++)
+        {
+            arr[index++] = right[rr];
+        }
+
+    }
+
     int calc(InputStream stream) throws FileNotFoundException {
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!
@@ -45,17 +98,8 @@ public class C_GetInversions {
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
-        int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
+        mergeSort(a);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
