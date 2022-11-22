@@ -1,0 +1,6 @@
+parallel
+malloc
+length
+penguin
+polynomial
+exponential

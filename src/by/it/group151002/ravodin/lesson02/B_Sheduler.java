@@ -2,6 +2,7 @@ package by.it.group151002.ravodin.lesson02;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 /*
 даны интервальные события events
 реализуйте метод calcStartTimes, так, чтобы число принятых к выполнению
@@ -26,6 +27,11 @@ public class B_Sheduler {
         }
     }
 
+    private int compareEvents(Event x,Event y){
+        int startCompareResult = Integer.compare(x.start,y.start);
+        return startCompareResult == 0 ? Integer.compare(x.stop,y.stop) : startCompareResult;
+    }
+
     public static void main(String[] args) {
         B_Sheduler instance = new B_Sheduler();
         Event[] events = {  new Event(0, 3),  new Event(0, 1), new Event(1, 2), new Event(3, 5),
@@ -48,10 +54,21 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         //ваше решение.
+        for (int i = 0; events[i].start < from && i < events.length; i++){}
 
+        Arrays.sort(events, this::compareEvents);
 
+        if (events.length == 0)
+            return null;
 
-
+        result.add(events[0]);
+        int i = 1;
+        while (result.get(result.size() - 1).stop <= to && i<events.length){
+            if(events[i].start >= result.get(result.size() - 1).stop && events[i].stop <= to){
+                result.add(events[i]);
+            }
+            i++;
+        }
 
 
         return result;                        //вернем итог
