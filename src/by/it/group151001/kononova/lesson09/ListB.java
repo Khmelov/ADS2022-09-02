@@ -3,15 +3,15 @@ package by.it.group151001.kononova.lesson09;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
-public class ListA<T> implements List<T> {
+public class ListB<T> implements List<T> {
     int SIZE = 12;
     Object[] array = new Object[SIZE];
     int index = 0;
 
     public String toString() {
         String arrayString = "[";
-        for (int i = 0; i < index-1; i++) {
-            arrayString += array[i].toString()+", ";
+        for (int i = 0; i < this.index-1; i++) {
+            arrayString += array[i]  +", ";
         }
         if (this.index != 0) {
             arrayString += array[this.index - 1];
@@ -22,7 +22,7 @@ public class ListA<T> implements List<T> {
 
     @Override
     public int size() {
-        return 0;
+        return this.index;
     }
 
     @Override
@@ -32,7 +32,13 @@ public class ListA<T> implements List<T> {
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        boolean isInArray = false;
+        for (Object elem: array) {
+            if (elem == o) {
+                isInArray = true;
+            }
+        }
+        return isInArray;
     }
 
     @Override
@@ -74,7 +80,12 @@ public class ListA<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        Object[] arrayWithCollection = new Object[this.index + c.size()];
+        System.arraycopy(array, 0, arrayWithCollection, 0, this.index);
+        array = arrayWithCollection;
+        for (Object el : c)
+            array[this.index++] = el;
+        return true;
     }
 
     @Override
@@ -114,28 +125,40 @@ public class ListA<T> implements List<T> {
 
     @Override
     public T set(int index, T element) {
-        return null;
+        T deletedElem = (T) array[index];
+        array[index] = element;
+        return deletedElem;
     }
 
     @Override
     public void add(int index, T element) {
-
+        add(element);
+        for (int i = this.index-1; i >= index + 1; i--) {
+            array[i] = array[i-1];
+        }
+        array[index] = element;
     }
 
     @Override
     public T remove(int index) {
         T deletedElem = (T) array[index];
-        for (int i = index; i < this.index; i++) {
+        for (int i = index; i < this.index-1; i++) {
             array[i] = array[i+1];
         }
-        array[this.index] = null;
+        array[this.index-1] = null;
         this.index--;
         return deletedElem;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        int result = -1;
+        for (int i = 0; i < this.index; i++) {
+            if (array[i] == o) {
+                result = i;
+            }
+        }
+        return result;
     }
 
     @Override
