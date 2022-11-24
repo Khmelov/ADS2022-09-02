@@ -48,8 +48,7 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
+        result = sort(a, 0, a.length - 1, result);
 
 
 
@@ -61,6 +60,57 @@ public class C_GetInversions {
         return result;
     }
 
+
+    int merge(int arr[], int left, int middle, int right, int numberOfInversions)
+    {
+        int sizeLeft = middle - left + 1;
+        int sizeRight = right - middle;
+
+        int leftArr[] = new int[sizeLeft];
+        int rightArr[] = new int[sizeRight];
+
+        System.arraycopy(arr, left, leftArr, 0, sizeLeft);
+        System.arraycopy(arr, middle + 1, rightArr, 0, sizeRight);
+        int i = 0, j = 0;
+
+        int k = left;
+        while (i < sizeLeft && j < sizeRight) {
+            if (leftArr[i] <= rightArr[j]) {
+                arr[k] = leftArr[i];
+                i++;
+            }
+            else {
+                arr[k] = rightArr[j];
+                j++;
+                numberOfInversions += (middle - i + 1);
+            }
+            k++;
+        }
+
+        while (i < sizeLeft) {
+            arr[k] = leftArr[i];
+            i++;
+            k++;
+        }
+
+        while (j < sizeRight) {
+            arr[k] = rightArr[j];
+            j++;
+            k++;
+        }
+        return numberOfInversions;
+    }
+
+    int sort(int arr[], int left, int right, int numberOfInversions)
+    {
+        if (left < right) {
+            int middle = left + (right - left) / 2;
+            numberOfInversions = sort(arr, left, middle, numberOfInversions);
+            numberOfInversions = sort(arr, middle + 1, right, numberOfInversions);
+            numberOfInversions = merge(arr, left, middle, right, numberOfInversions);
+        }
+        return numberOfInversions;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

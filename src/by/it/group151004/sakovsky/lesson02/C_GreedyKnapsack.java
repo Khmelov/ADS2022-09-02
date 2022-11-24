@@ -83,12 +83,12 @@ public class C_GreedyKnapsack {
                     ind = j;
                 }
             }
-            temp1 = arr[i][0];
-            temp2 = arr[i][1];
-            arr[i][0]=arr[ind][0];
-            arr[i][1]=arr[ind][1];
-            arr[ind][0]=temp1;
-            arr[ind][1]=temp2;
+                temp1 = arr[i][0];
+                temp2 = arr[i][1];
+                arr[i][0]=arr[ind][0];
+                arr[i][1]=arr[ind][1];
+                arr[ind][0]=temp1;
+                arr[ind][1]=temp2;
         }
 
         int i=0, dif;

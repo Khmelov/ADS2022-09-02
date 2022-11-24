@@ -33,7 +33,7 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
@@ -43,11 +43,81 @@ public class C_QSortOptimized {
         }
 
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+            return Integer.compare(start, o.start);
         }
     }
+
+        public int BinarySearch(Segment[] segments,int point)
+        {
+
+            int leftBorder = 0, rightBorder = segments.length - 1;
+            while (rightBorder > leftBorder)
+            {
+                if (segments[(leftBorder + rightBorder + 1) / 2].start > point)
+                    rightBorder -= (rightBorder - leftBorder + 1) / 2;
+                else
+                    leftBorder += (rightBorder - leftBorder + 1) / 2;
+            }
+            return leftBorder;
+
+
+         /*   int left=0; int right=segments.length-1;
+            // Строгое условие, чтобы не было выхода за границы при left = a.length
+            while (left<right)
+            {
+                int mid = (left + right) / 2;
+                if (segments[mid].start<value)
+                    left = mid +1;
+                else
+                if(segments[mid].start>value)
+                    right =mid-1;
+                else
+                if (segments[mid].start==value)
+                {
+                    left=mid;
+                    break;
+                }
+            }
+            return left;
+
+          */
+
+        }
+
+        private void swap(Segment[] segments,int i,int j)
+        {
+            Segment tmp=segments[i];
+            segments[i]=segments[j];
+            segments[j]=tmp;
+        }
+
+        private void qSort(Segment[] segment,int L, int R)
+        {
+            if(L>=R)
+                return;
+            int i=L;
+            int j=R;
+            Segment x=segment[(L+R)/2];
+            while (i<=j)
+            {
+                while(segment[i].compareTo(x)==-1)
+                    i++;
+                while(segment[j].compareTo(x)==1)
+                    j--;
+                if(i<=j)
+                {
+                    swap(segment,i,j);
+                    i++;
+                    j--;
+                }
+            }
+            if (i<R)
+                qSort(segment,i,R);
+            if (j>L)
+                qSort(segment,L,j);
+        }
 
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
@@ -68,11 +138,25 @@ public class C_QSortOptimized {
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        qSort(segments,0, segments.length-1);
+
+
+        for (int i = 0; i < points.length; i++) {
+            int index = BinarySearch(segments, points[i]);
+            int count = 0;
+            int j = index;
+            while (j >= 0 && segments[j].start <= points[i]) {
+                if (segments[j].stop >= points[i])
+                    count++;
+                j--;
+            }
+            result[i] = count;
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -82,7 +166,7 @@ public class C_QSortOptimized {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151003/matoshko/lesson05/dataC.txt");
         C_QSortOptimized instance = new C_QSortOptimized();
         int[] result=instance.getAccessory2(stream);
         for (int index:result){
