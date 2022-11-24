@@ -9,14 +9,31 @@ import by.it.group151001.kononova.lesson02.C_GreedyKnapsack;
 import by.it.group151001.kononova.lesson03.A_Huffman;
 import by.it.group151001.kononova.lesson03.B_Huffman;
 import by.it.group151001.kononova.lesson03.C_HeapMax;
+import by.it.group151001.kononova.lesson04.A_BinaryFind;
+import by.it.group151001.kononova.lesson04.B_MergeSort;
+import by.it.group151001.kononova.lesson04.C_GetInversions;
+import by.it.group151001.kononova.lesson05.A_QSort;
+import by.it.group151001.kononova.lesson05.B_CountSort;
+import by.it.group151001.kononova.lesson05.C_QSortOptimized;
+import by.it.group151001.kononova.lesson06.A_LIS;
+import by.it.group151001.kononova.lesson06.B_LongDivComSubSeq;
+import by.it.group151001.kononova.lesson06.C_LongNotUpSubSeq;
+import by.it.group151001.kononova.lesson07.A_EditDist;
+import by.it.group151001.kononova.lesson07.B_EditDist;
+import by.it.group151001.kononova.lesson07.C_EditDist;
+import by.it.group151001.kononova.lesson08.A_Knapsack;
+import by.it.group151001.kononova.lesson08.B_Knapsack;
+import by.it.group151001.kononova.lesson08.C_Stairs;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("all")
@@ -166,7 +183,7 @@ public class Testkononova {
     }
 
     @Test
-    public void A() throws Exception {
+    public void A3() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
         File f = new File(root + "by/it/a_khmelev/lesson03/dataHuffman.txt");
         A_Huffman instance = new A_Huffman();
@@ -176,7 +193,7 @@ public class Testkononova {
     }
 
     @Test
-    public void B() throws Exception {
+    public void B3() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
         File f = new File(root + "by/it/a_khmelev/lesson03/encodeHuffman.txt");
         B_Huffman instance = new B_Huffman();
@@ -185,13 +202,183 @@ public class Testkononova {
         assertTrue("B failed", ok);
     }
     @Test
-    public void C() throws Exception {
+    public void C3() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson03/heapData.txt");
         C_HeapMax instance = new C_HeapMax();
         Long res=instance.findMaxValue(stream);
         boolean ok=(res==500);
         assertTrue("C failed", ok);
+    }
+
+    @Test
+    public void A4() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson04/dataA.txt");
+        A_BinaryFind instance = new A_BinaryFind();
+        //long startTime = System.currentTimeMillis();
+        int[] result=instance.findIndex(stream);
+        //long finishTime = System.currentTimeMillis();
+        StringBuilder sb=new StringBuilder();
+        for (int index:result){
+            sb.append(index).append(" ");
+        }
+        boolean ok=sb.toString().trim().equals("3 1 -1 1 -1");
+        assertTrue("A failed", ok);
+    }
+
+
+    @Test
+    public void B4() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson04/dataB.txt");
+        B_MergeSort instance = new B_MergeSort();
+        //long startTime = System.currentTimeMillis();
+        int[] result=instance.getMergeSort(stream);
+        //long finishTime = System.currentTimeMillis();
+        boolean ok=result.length>3;
+        int test[]=new int[result.length];
+        System.arraycopy(result,0,test,0,result.length);
+        Arrays.sort(test);
+        for (int i = 0; i < result.length; i++) {
+            ok=ok && (result[i]==test[i]);
+        }
+        assertTrue("B failed", ok);
+    }
+
+
+    @Test
+    public void C4() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson04/dataC.txt");
+        C_GetInversions instance = new C_GetInversions();
+        //long startTime = System.currentTimeMillis();
+        int result = instance.calc(stream);
+        //long finishTime = System.currentTimeMillis();
+        boolean ok=(2==result);
+        assertTrue("C failed", ok);
+    }
+
+    @Test
+    public void A5() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson05/dataA.txt");
+        A_QSort instance = new A_QSort();
+        int[] result=instance.getAccessory(stream);
+        boolean ok= Arrays.equals(result,new int[]{1,0,0});
+        assertTrue("A failed", ok);
+    }
+
+
+    @Test
+    public void B5() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson05/dataB.txt");
+        B_CountSort instance = new B_CountSort();
+        int[] result=instance.countSort(stream);
+        boolean ok=Arrays.equals(result,new int[]{2,2,3,9,9});
+        assertTrue("B failed", ok);
+    }
+
+
+    @Test
+    public void C5() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson05/dataC.txt");
+        C_QSortOptimized instance = new C_QSortOptimized();
+        int[] result=instance.getAccessory2(stream);
+        boolean ok=Arrays.equals(result,new int[]{1,0,0});
+        assertTrue("C failed", ok);
+    }
+
+    @Test
+    public void A6() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson06/dataA.txt");
+        A_LIS instance = new A_LIS();
+        int result=instance.getSeqSize(stream);
+        boolean ok=(result==3);
+        assertTrue("A failed", ok);
+    }
+
+
+    @Test
+    public void B6() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson06/dataB.txt");
+        B_LongDivComSubSeq instance=new B_LongDivComSubSeq();
+        int result=instance.getDivSeqSize(stream);
+        boolean ok=(result==3);
+        assertTrue("B failed", ok);
+    }
+
+    @Test(timeout = 1000)
+    public void C6() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson06/dataC.txt");
+        C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
+        int result=instance.getNotUpSeqSize(stream);
+        boolean ok=(result==4);
+        assertTrue("C failed", ok);
+    }
+
+    @Test
+    public void A7() throws Exception {
+        A_EditDist instance = new A_EditDist();
+        assertEquals("A1 failed", instance.getDistanceEdinting("ab","ab"),0);
+        assertEquals("A2 failed", instance.getDistanceEdinting("short","ports"),3);
+        assertEquals("A3 failed", instance.getDistanceEdinting("distance","editing"),5);
+    }
+
+
+    @Test
+    public void B7() throws Exception {
+        B_EditDist instance = new B_EditDist();
+        assertEquals("B1 failed", instance.getDistanceEdinting("ab","ab"),0);
+        assertEquals("B2 failed", instance.getDistanceEdinting("short","ports"),3);
+        assertEquals("B3 failed", instance.getDistanceEdinting("distance","editing"),5);
+    }
+
+    @Test
+    public void C7() throws Exception {
+        C_EditDist instance = new C_EditDist();
+        assertEquals("C1 failed", instance.getDistanceEdinting("ab","ab"),"#,#,");
+        //путей может быть много, поэтому тут жестко проверить все сложно
+        //надо найти и проверить их все, что делает тест сложнее реализации
+        //возможно, что хватит только подсчета повторов.
+
+        //ожидается     -s,~p,#,#,#,+s,
+        assertEquals("C2 failed", instance.getDistanceEdinting("short","ports").split("#").length,4);
+
+        //ожидается     +e,#,#,-s,#,~i,#,-c,~g,
+        assertEquals("C3 failed", instance.getDistanceEdinting("distance","editing").split("#").length,5);
+    }
+
+    @Test
+    public void A8() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson08/dataA.txt");
+        A_Knapsack instance = new A_Knapsack();
+        int res=instance.getMaxWeight(stream);
+        assertEquals("A failed", res, 14);
+    }
+
+    @Test
+    public void B8() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson08/dataB.txt");
+        B_Knapsack instance = new B_Knapsack();
+        int res=instance.getMaxWeight(stream);
+        assertEquals("B failed", res, 9);
+    }
+
+    @Test
+    public void C8() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151001/kononova/lesson08/dataC.txt");
+        C_Stairs instance = new C_Stairs();
+        int res=instance.getMaxSum(stream);
+        assertEquals("C failed", res, 3);
     }
 
 }

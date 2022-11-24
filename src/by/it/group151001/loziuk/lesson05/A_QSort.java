@@ -3,6 +3,7 @@ package by.it.group151001.loziuk.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -43,17 +44,19 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
+            if (start <= stop){
+                this.start = start;
+                this.stop = stop;}
+            else{
+                this.start = stop;
+                this.stop = start;
+            }
         }
 
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+            return this.stop - o.stop;
         }
     }
 
@@ -82,14 +85,45 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-
-
-
+        QSort(segments,0, segments.length - 1);
+        for (int i = 0; i < m; i++){
+            int count = 0;
+            int j = 0;
+            while (j < n && points[i] <= segments[j].stop){
+                if (segments[j].start <= points[i])
+                    count++;
+                j++;
+            }
+            result[i] = count;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
+    int partition(Segment[] A,int left,int right){
+        Segment temp = A[left];
+        int left_temp = left;
+        for (int i = left + 1;i < right;i++){
+            if  (A[i].compareTo(temp) < 0){
+                left_temp++;
+                Segment q = A[i];
+                A[i] = A[left_temp];
+                A[left_temp] = q;
+            }
+        }
+        Segment q = A[left];
+        A[left] = A[left_temp];
+        A[left_temp] = A[left];
 
-
+        return left_temp;
+    }
+    Segment[] QSort(Segment[] A,int left,int right){
+        if (left >= right)
+            return A;
+        int m = partition(A,left,right);
+        QSort(A,left,m - 1);
+        QSort(A,m + 1,right);
+        return A;
+    }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");

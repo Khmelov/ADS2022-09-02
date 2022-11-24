@@ -21,7 +21,7 @@ Sample Output:
 */
 public class B_MergeSort {
 
-    int[] getMergeSort(InputStream stream) throws FileNotFoundException {
+    public int[] getMergeSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -38,14 +38,47 @@ public class B_MergeSort {
         // тут ваше решение (реализуйте сортировку слиянием)
         // https://ru.wikipedia.org/wiki/Сортировка_слиянием
 
-
-
-
-
+        int[] buffer = new int[n];
+        int[] result = mergeSort(a, buffer, 0, n - 1);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return a;
+        return result;
     }
+
+    public int[] mergeSort(int[] array, int[] buffer, int left, int right) {
+        if (left == right) {
+            buffer[left] = array[left];
+            return buffer;
+        }
+
+        int middle = left + (right - left) / 2;
+
+        int[] lBuffer = mergeSort(array, buffer, left, middle);
+        int[] rBuffer = mergeSort(array, buffer, middle + 1, right);
+
+        int[] target = lBuffer == array ? buffer : array;
+
+        int lCurr = left, rCur = middle + 1;
+        for (int i = left; i <= right; i++) {
+            if (lCurr <= middle && rCur <= right) {
+                if (lBuffer[lCurr] < rBuffer[rCur]) {
+                    target[i] = lBuffer[lCurr];
+                    lCurr++;
+                } else {
+                    target[i] = rBuffer[rCur];
+                    rCur++;
+                }
+            } else if (lCurr <= middle) {
+                target[i] = lBuffer[lCurr];
+                lCurr++;
+            } else  {
+                target[i] = rBuffer[rCur];
+                rCur++;
+            }
+        }
+        return  target;
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataB.txt");
