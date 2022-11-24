@@ -35,6 +35,8 @@ Sample Output:
 
 public class C_GetInversions {
 
+    static int inversion;
+
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -48,15 +50,59 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-        for(int i = 0;i< n - 1;i++){
-            for(int j = i + 1;j < n;j++){
-                if(a[i] > a[j]) result++;
-            }
-        }
+        inversion = 0;
+        int[] tmp = new int[n];
+        System.arraycopy(a, 0, tmp, 0, a.length);
+        sortArray(tmp);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return inversion;
+    }
+
+    public int [] sortArray(int[] arrayA){
+
+        if (arrayA == null) {
+            return null;
+        }
+
+        if (arrayA.length < 2) {
+            return arrayA;
+        }
+
+        int [] arrayB = new int[arrayA.length / 2];
+        System.arraycopy(arrayA, 0, arrayB, 0, arrayA.length / 2);
+
+        int [] arrayC = new int[arrayA.length - arrayA.length / 2];
+        System.arraycopy(arrayA, arrayA.length / 2, arrayC, 0, arrayA.length - arrayA.length / 2);
+
+        arrayB = sortArray(arrayB);
+        arrayC = sortArray(arrayC);
+        return mergeArrays(arrayB, arrayC);
+    }
+
+    public static int[] mergeArrays(int[] a1, int[] a2) {
+        int[] res = new int[a1.length + a2.length];
+        int n = a1.length;
+        int m = a2.length;
+        int i = 0, j = 0, k = 0;
+        while (i < n && j < m) {
+            if (a1[i] <= a2[j]) {
+                res[k] = a1[i];
+                i++; }
+            else {
+                inversion++;
+                res[k] = a2[j];
+                j++; }
+            k++; }
+        while (i < n) {
+            res[k] = a1[i];
+            i++;
+            k++; }
+        while (j < m) {
+            res[k] = a2[j];
+            j++;
+            k++; }
+        return res;
     }
 
 

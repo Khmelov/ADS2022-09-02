@@ -42,12 +42,44 @@ public class B_EditDist {
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int m = one.length();
+        int n = two.length();
 
+        // matrix to store differences
+        int[][] matr = new int[m+1][n+1];
 
+        for(int i = 0;i <= m; i++)
+        {
+            matr[i][0] = i;
+        }
 
-        int result = 0;
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        for(int j = 1;j <= n; j++)
+        {
+            matr[0][j] = j;
+        }
+
+        for(int j=1;j<=n;j++)
+        {
+            for(int i=1;i<=m;i++)
+            {
+                if(one.charAt(i-1) == two.charAt(j-1))
+                {
+                    matr[i][j] = matr[i-1][j-1];
+                }
+                else
+                {
+                    matr[i][j] = Math.min(
+                            matr[i-1][j]+1,
+                            Math.min(
+                                    matr[i][j-1]+1,
+                                    matr[i-1][j-1]+1
+                            )
+                    );
+                }
+            }
+        }
+
+        return matr[m][n];
     }
 
 

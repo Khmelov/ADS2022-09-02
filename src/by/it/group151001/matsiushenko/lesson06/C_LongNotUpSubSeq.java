@@ -37,7 +37,7 @@ import java.util.Scanner;
 
 
 public class C_LongNotUpSubSeq {
-
+    static int[] path;
     int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -50,11 +50,36 @@ public class C_LongNotUpSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
+        int[] d = new int[n];
+        int[] p = new int[n];
+        for(int i = 0; i < n; i++){
+            d[i] = 1;
+            p[i] = -1;
+            for(int j = 0; j < i; j++){
+                if(m[i] <= m[j]){
+                    if(1 + d[j] > d[i]){
+                        d[i] = 1 +d[j];
+                        p[i] = j;
+                    }
+                }
+            }
+        }
+        int ans = d[0],  pos = 0;
+        for (int i=0; i<n; ++i) {
+            if (d[i] > ans) {
+                ans = d[i];
+                pos = i;
+            }
+        }
+        path = new int[ans];
+        int i = ans-1;
+        while (pos != -1) {
+            path[i] = pos+1;
+            pos = p[pos];
+            i--;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return ans;
     }
 
 

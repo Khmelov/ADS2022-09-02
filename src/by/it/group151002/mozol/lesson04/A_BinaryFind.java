@@ -46,16 +46,30 @@ public class A_BinaryFind {
         for (int i = 0; i < k; i++) {
             int value = scanner.nextInt();
             //тут реализуйте бинарный поиск индекса
-
-
-
-
-            result[i]=0;
+            result[i] = findElementIndex(a,value);
+            if(result[i]!=-1){
+                result[i]++;
+            }
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    private int findElementIndex(int[] arr,int elem){
+        int low = 0;
+        int high = arr.length - 1;
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            int midVal = arr[mid];
+            if (midVal < elem)
+                low = mid + 1;
+            else if (midVal > elem)
+                high = mid - 1;
+            else
+                return mid;
+        }
+        return -1;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

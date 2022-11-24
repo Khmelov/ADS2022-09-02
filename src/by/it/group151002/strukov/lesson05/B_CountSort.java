@@ -31,11 +31,21 @@ public class B_CountSort {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
-
-
-
-
-
+        int max, min = max = points[0];
+        for (int i = 0; i < n; i++) {
+            if(points[i] < min) min = points[i];
+            else if (points[i] > max) max = points[i];
+        }
+        int[] count = new int[max - min + 1];
+        for (int i = 0; i < n; i++) {
+            count[points[i] - min]++;
+        }
+        int k = 0;
+        for (int i = 0; i < count.length; i++) {
+            for (int j = 0; j < count[i]; j++) {
+                points[k++] = min + i;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
     }

@@ -46,8 +46,23 @@ public class A_LIS {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+        int[] arrPosition = new int[n];
 
+        for (int i = 0; i < n; i++){
+            arrPosition[i] = 1;
 
+            for(int j = 0; j < i; j++){
+                if (m[j] < m[i] && arrPosition[j] + 1 > arrPosition[i]) {
+                    arrPosition[i] = arrPosition[j] + 1;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (arrPosition[i] > result){
+                result = arrPosition[i];
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -55,7 +70,7 @@ public class A_LIS {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/naftolsky/lesson06/dataA.txt");
         A_LIS instance = new A_LIS();
         int result = instance.getSeqSize(stream);
         System.out.print(result);
