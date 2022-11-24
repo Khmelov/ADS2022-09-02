@@ -17,6 +17,11 @@ public class Lesson5Test {
         int[] result=instance.getAccessory(stream);
         boolean ok=Arrays.equals(result,new int[]{1,0,0});
         assertTrue("A failed", ok);
+
+        stream = new FileInputStream(root + "by/it/group151004/belsky/lesson05/dataA1.txt");
+        result = instance.getAccessory(stream);
+        ok = Arrays.equals(result, new int[] {1, 0, 0, 1, 1});
+        assertTrue("A failed", ok);
     }
 
 
@@ -38,6 +43,11 @@ public class Lesson5Test {
         C_QSortOptimized instance = new C_QSortOptimized();
         int[] result=instance.getAccessory2(stream);
         boolean ok=Arrays.equals(result,new int[]{1,0,0});
+        assertTrue("C failed", ok);
+
+        stream = new FileInputStream(root + "by/it/group151004/belsky/lesson05/dataA1.txt");
+        result = instance.getAccessory2(stream);
+        ok = Arrays.equals(result, new int[] {1, 0, 0, 1, 1});
         assertTrue("C failed", ok);
     }
 

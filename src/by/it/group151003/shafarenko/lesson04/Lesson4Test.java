@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class Lesson4Test {
     @Test
     public void A() throws Exception {
-        String root = System.getProperty("user.dir") + "/src/";
+        String root = System.getProperty("user.dir") + "/";
         InputStream stream = new FileInputStream(root + "by/it/group151003/shafarenko/lesson04/dataA.txt");
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();
@@ -29,7 +29,7 @@ public class Lesson4Test {
 
     @Test
     public void B() throws Exception {
-        String root = System.getProperty("user.dir") + "/src/";
+        String root = System.getProperty("user.dir") + "/";
         InputStream stream = new FileInputStream(root + "by/it/group151003/shafarenko/lesson04/dataB1.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
@@ -92,7 +92,7 @@ public class Lesson4Test {
 
     @Test
     public void C() throws Exception {
-        String root = System.getProperty("user.dir") + "/src/";
+        String root = System.getProperty("user.dir") + "/";
         InputStream stream = new FileInputStream(root + "by/it/group151003/shafarenko/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();

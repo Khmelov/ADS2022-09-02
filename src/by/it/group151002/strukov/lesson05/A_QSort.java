@@ -57,6 +57,25 @@ public class A_QSort {
         }
     }
 
+    void qSort(Segment[] arr, int l, int r){
+        if (l < r) {
+            Segment x = arr[l], tmp;
+            int j = l;
+            for (int i = l + 1; i < r; i++) {
+                if (arr[i].compareTo(x) < 0) {
+                    j++;
+                    tmp = arr[j];
+                    arr[j] = arr[i];
+                    arr[i] = tmp;
+                }
+            }
+            tmp = arr[j];
+            arr[j] = arr[l];
+            arr[l] = tmp;
+            qSort(arr, l, j - 1);
+            qSort(arr, j + 1, r);
+        }
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -82,7 +101,14 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-
+        qSort(segments, 0, n - 1);
+        for (int i = 0; i < m; i++) {
+            int k = 0;
+            while(k < n && points[i] > segments[k].stop) k++;
+            result[i] = k;
+            while(k < n && points[i] >= segments[k].start) k++;
+            result[i] = k - result[i];
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!

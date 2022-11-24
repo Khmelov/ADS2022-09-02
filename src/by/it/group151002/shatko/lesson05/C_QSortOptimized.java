@@ -33,130 +33,119 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable<Segment>{
+    private class Segment implements Comparable<Segment>{
         int start;
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            this.start = Math.min(start, stop);
+            this.stop = this.start == start ? stop : start;
         }
+
         @Override
-        public int compareTo(Segment o){
-            return this.stop - o.stop;
+        public int compareTo(Segment o) {
+            return stop < o.stop ? -1 : (stop == o.stop ? (Integer.compare(start, o.start)) : 1);
+        }
+    }
+    void swap(Segment[] arr, int i, int j) {
+        Segment temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    void quickSort(Segment[] arr, int l, int r) {
+        while (l < r) {
+            int i;
+            int j;
+
+            if (r - l == 1) {
+                if (arr[l].compareTo(arr[r]) > 0)
+                    swap(arr, l, r);
+                i = l;
+                j = r;
+            } else {
+                int mid = l, low = l, high = r;
+                Segment pivot = arr[r];
+
+                while (mid <= high) {
+
+                    if (arr[mid].compareTo(pivot) < 0)
+                        swap(arr, mid++, low++);
+                    else if (arr[mid].compareTo(pivot) == 0)
+                        mid++;
+                    else
+                        swap(arr, mid, high--);
+                }
+
+                i = low - 1;
+                j = mid;
+            }
+
+            quickSort(arr, l, i);
+            l = j;
         }
     }
 
+    int[] binarySearch(Segment[] segments, int[] points) {
+        int[] result = new int[points.length];
+        for (int i = 0; i < points.length; i++) {
+            int l = 0;
+            int r = segments.length - 1;
+            int mid = 0;
+
+            while (l <= r) {
+                mid = (l + r) / 2;
+                if (points[i] > segments[mid].stop) {
+                    l = mid + 1;
+                } else if (points[i] < segments[mid].start)
+                    r = mid - 1;
+                else {
+                    result[i] = 1;
+                    break;
+                }
+            }
+            l = mid - 1;
+            while (l >= 0 && points[i] <= segments[l--].stop)
+                result[i]++;
+
+            l = mid + 1;
+
+            while (l < segments.length && points[i] >= segments[l++].start)
+                result[i]++;
+
+        }
+        return result;
+    }
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
         Scanner scanner = new Scanner(stream);
-
         int n = scanner.nextInt();
         Segment[] segments = new Segment[n];
-        //число точек
         int m = scanner.nextInt();
         int[] points = new int[m];
         int[] result = new int[m];
 
         for (int i = 0; i < n; i++) {
-            segments[i] = new Segment(scanner.nextInt(),scanner.nextInt());
+            segments[i] = new Segment(scanner.nextInt(), scanner.nextInt());
         }
 
         for (int i = 0; i < m; i++) {
             points[i] = scanner.nextInt();
         }
 
-        Q_Sort_fix(segments,0, segments.length - 1);
+        quickSort(segments, 0, n - 1);
 
-        for (int i = 0; i < m; i++){
-            int res_bin_search = BinarySearch(segments,points[i],0, segments.length - 1);
-            if (res_bin_search > -1){
-                int count = 1;
-                int j = res_bin_search + 1;
-                while (j < n && points[i] <= segments[j].stop){
-                    if (segments[j].start <= points[i])
-                        count++;
-                    j++;
-                }
-                j = res_bin_search - 1;
-                while (j >= 0 && points[i] <= segments[j].stop){
-                    if (segments[j].start <= points[i])
-                        count++;
-                    j--;
-                }
-                result[i] = count;
-            }
-            else
-                result[i] = 0;
-        }
+        result = binarySearch(segments, points);
 
         return result;
     }
-    public static class Partition {
-        int left;
-        int right;
 
-        public Partition(int lt, int gt) {
-        }
-    }
-    Partition new_Partition(Segment[] A, int left, int right){
-        int lt = left;
-        int current = left;
-        int gt = right;
-        Segment value = A[left];
-        while (current <= gt) {
-            if (A[current].compareTo(value) < 0){
-                Segment temp = A[current];
-                A[current] = A[lt];
-                A[lt] = temp;
-                lt++;
-                current++;}
-            else{
-                if (A[current].compareTo(value) == 0)
-                    current++;
-                else{
-                    Segment temp = A[current];
-                    A[current] = A[gt];
-                    A[gt] = temp;
-                    gt--;
-                }
 
-            }
-        }
-        Partition res = new Partition(lt,gt);
-        return res;
-    }
-
-    Segment[] Q_Sort_fix(Segment[] A, int left, int right){
-        while (left < right) {
-            Partition middlePartition = new_Partition(A, left, right);
-            Q_Sort_fix(A, left, middlePartition.left - 1);
-            left = middlePartition.right + 1;
-
-        }
-        return A;
-    }
-    int BinarySearch(Segment[] A, int key, int left,int right){
-        while (left <= right){
-            int mid = (left + right)/2;
-            if (A[mid].start > key)
-                right = mid - 1;
-
-            else{
-                if (A[mid].stop < key)
-                    left = mid + 1;
-                else {
-                    return mid;
-                }
-            }
-        }
-        return -1;
-    }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/shatko/lesson05/dataC.txt");
         C_QSortOptimized instance = new C_QSortOptimized();
-        int[] result=instance.getAccessory2(stream);
+        int[] result = instance.getAccessory2(stream);
         for (int index:result){
             System.out.print(index+" ");
         }
