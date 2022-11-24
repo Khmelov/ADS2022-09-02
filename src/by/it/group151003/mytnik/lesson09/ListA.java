@@ -180,7 +180,7 @@ public class ListA<T> implements List<T> {
         int newCapacity = oldCapacity + (oldCapacity >> 1);
 
         if (newCapacity - minCapacity < 0) {
-            throw new OutOfMemoryError();
+            newCapacity = minCapacity;
         }
 
         return newCapacity;
