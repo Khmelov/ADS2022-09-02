@@ -32,6 +32,31 @@ import java.util.Scanner;
 
 public class A_LIS {
 
+    int findMax(int[] a){
+        int res = 0;
+
+        for (int i = 1; i < a.length; i++){
+            if (a[i] > a[res])
+                res = i;
+        }
+        return a[res];
+    }
+
+    int find(int[] arr){
+        if (arr.length == 1)
+            return arr.length;
+
+        int[] count = new int[arr.length];
+
+        for (int i = 1; i < arr.length; i++){
+            for (int j = 0; j < i; j++){
+                if (arr[i] > arr[j])
+                    if (count[i] <= count[j])
+                        count[i] = count[j] + 1;
+            }
+        }
+        return findMax(count);
+    }
 
     int getSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -45,11 +70,10 @@ public class A_LIS {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return find(m) + 1;
     }
 
 

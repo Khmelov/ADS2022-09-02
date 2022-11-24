@@ -38,6 +38,83 @@ import java.util.Scanner;
 
 public class C_LongNotUpSubSeq {
 
+    int find(int[] arr, int[] subsequence) {
+
+        if (arr.length <= 1) {
+            return 1;
+        }
+
+        int length = -1;
+
+        int[] size = new int[arr.length];
+
+        for (int i = 0; i < arr.length; ++i) {
+            subsequence[i] = -1;
+            size[i] = -1;
+        }
+
+        subsequence[0] = arr[0];
+        size[0] = 0;
+
+        for (int i = 1; i < arr.length; i++) {
+            size[i] = ceilIndex(subsequence, i, arr[i]);
+
+            if (length < size[i]) {
+                length = size[i];
+            }
+        }
+        return length + 1;
+    }
+
+    int ceilIndex(int[] subsequence, int startRight, int key){
+        int mid, left = 0, right = startRight, index = 0;
+        boolean isIndex = false;
+
+        for (mid = (left + right) / 2; left <= right && !isIndex; mid = (left + right) / 2) {
+            if (subsequence[mid] < key) {
+                right = mid - 1;
+            }
+            else if (mid + 1 <= right && subsequence[mid + 1] < key) {
+                subsequence[mid + 1] = key;
+                index = mid + 1;
+                isIndex = true;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        if (!isIndex) {
+            if (mid == left) {
+                subsequence[mid] = key;
+                index = mid;
+            }
+            else {
+                subsequence[mid + 1] = key;
+                index = mid + 1;
+            }
+        }
+
+        return index;
+    }
+
+    void findInd(int[] src, int[] ind){
+        for (int i = 0; i < ind.length; i++){
+            boolean cond = true;
+            for (int j = i; j < src.length && cond; j++) {
+                if (ind[i] == src[j]) {
+                    System.out.print(j + 1 + " ");
+                    src[j] = 0;
+                    cond = false;
+                }
+                src[j] = 0;
+            }
+            if (i + 1 >= ind.length || ind[i + 1] == 0){
+                System.out.println();
+                return;
+            }
+        }
+    }
+
     int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -50,9 +127,10 @@ public class C_LongNotUpSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
+        int[] num = new int[m.length];
+        int result;
+        result = find(m,num);
+        findInd(m,num);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

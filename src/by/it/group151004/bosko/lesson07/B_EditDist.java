@@ -39,17 +39,30 @@ import java.util.Scanner;
 
 public class B_EditDist {
 
+    int min(int a, int b, int c){
+        return Integer.min(a, Integer.min(b, c));
+    }
+
+    int diff(char a, char b){
+        if (a == b)
+            return 0;
+        else
+            return 1;
+    }
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-        int result = 0;
+        int[][] arr = new int[one.length() + 1][two.length() + 1];
+        for (int i = 0; i < arr.length; i++)
+            arr[i][0] = i;
+        for (int j = 0; j < arr[0].length; j++)
+            arr[0][j] = j;
+        for (int i = 1; i < arr.length; i++)
+            for (int j = 1; j < arr[i].length; j++)
+                arr[i][j] = min(arr[i - 1][j] + 1, arr[i][j - 1] + 1, arr[i - 1][j - 1] + diff(one.charAt(i - 1), two.charAt(j - 1)));
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return arr[one.length()][two.length()];
     }
-
 
 
     public static void main(String[] args) throws FileNotFoundException {

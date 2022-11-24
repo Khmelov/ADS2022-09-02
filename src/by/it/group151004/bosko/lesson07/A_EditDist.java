@@ -3,6 +3,7 @@ package by.it.group151004.bosko.lesson07;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -39,14 +40,40 @@ import java.util.Scanner;
 
 public class A_EditDist {
 
+    int min(int a, int b, int c){
+        return Integer.min(a, Integer.min(b, c));
+    }
+
+    int diff(char a, char b){
+        if (a == b)
+            return 0;
+        else
+            return 1;
+    }
+
+    int count(int[][] arr, int i, int j, String a, String b){
+        int ins, del, sub;
+        if (arr[i][j] == -1){
+            if (i == 0)
+                arr[i][j] = j;
+            else if (j == 0)
+                arr[i][j] = i;
+            else{
+                ins = count(arr, i, j - 1, a, b) + 1;
+                del = count(arr, i - 1, j, a, b) + 1;
+                sub = count(arr, i - 1, j - 1, a, b) + diff(a.charAt(i - 1), b.charAt(j - 1));
+                arr[i][j] = min(ins, del, sub);
+            }
+        }
+        return arr[i][j];
+    }
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-        int result = 0;
+        int[][] arr = new int[one.length() + 1][two.length() + 1];
+        for (int[] ints : arr) Arrays.fill(ints, -1);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return count(arr, one.length(), two.length(), one, two);
     }
 
 
