@@ -3,12 +3,11 @@ package by.it.group151004.belsky.lesson09;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
-public class ListA<T> implements List<T> {
-
+public class ListB<T> implements List<T> {
     private final ListEl<T> rootEl;
     private int size;
 
-    public ListA() {
+    public ListB() {
         rootEl = new ListEl<>();
         size = 0;
     }
@@ -50,14 +49,20 @@ public class ListA<T> implements List<T> {
         return false;
     }
 
-    @Override
-    public boolean addAll(Collection<? extends T> c) {
-        return false;
-    }
+//    @Override
+//    public boolean addAll(Collection<? extends T> c) {
+//        return false;
+//    }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
         return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        c.forEach(this::add);
+        return true;
     }
 
     @Override
@@ -110,11 +115,6 @@ public class ListA<T> implements List<T> {
         ListEl<T> bufEl = loopEl.next;
         loopEl.next = new ListEl<>(element, bufEl);
         this.size+=1;
-    }
-
-    public boolean addAll(List<T> pList) {
-        pList.forEach(this::add);
-        return true;
     }
 
     public T set(int index, T element) throws IndexOutOfBoundsException {
@@ -192,7 +192,7 @@ public class ListA<T> implements List<T> {
         str.append('[');
         while (loopEl.next != null) {
             loopEl = loopEl.next;
-            str.append(loopEl.data.toString());
+            str.append(loopEl.data == null ? "null" : loopEl.data.toString());
             if (loopEl.next != null) str.append(", ");
         }
         str.append(']');
