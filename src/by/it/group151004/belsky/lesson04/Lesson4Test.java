@@ -53,9 +53,12 @@ public class Lesson4Test {
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
         //long finishTime = System.currentTimeMillis();
-        boolean ok=(2==result);
+        boolean ok=(2==result); //for tests
         assertTrue("C failed", ok);
 
+        result = instance.calc(new FileInputStream(root + "by/it/group151004/belsky/lesson04/dataC1.txt"));
+        ok = (11 == result);
+        assertTrue("C failed", ok);
     }
 
 }

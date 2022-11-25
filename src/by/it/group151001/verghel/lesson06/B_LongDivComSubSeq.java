@@ -44,7 +44,17 @@ public class B_LongDivComSubSeq {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
-
+        int[] sum= new int[n];
+        for (int i=0;i<m.length;i++){
+            sum[i]=1;
+            for (int j=0;j<i;j++){
+                if ((m[i]%m[j]==0) && (sum[i]+1>sum[j]))
+                    sum[i]=sum[j]+1;
+            }
+        }
+        for (int i=0;i< m.length;i++)
+            if (sum[i]>result)
+                result=sum[i];
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;

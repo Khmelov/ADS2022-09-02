@@ -32,9 +32,7 @@ public class B_CountSort {
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
 
-
-
-
+        points = countSort(points);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
@@ -49,6 +47,35 @@ public class B_CountSort {
         for (int index:result){
             System.out.print(index+" ");
         }
+    }
+
+    int[] countSort(int[] arr) {
+        int min = arr[0];
+        int max = min;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+
+        int[] countArr = new int[max - min + 1];
+
+        for (int k : arr) {
+            countArr[k - min]++;
+        }
+
+        int index = 0;
+
+        for (int i = 0; i < countArr.length; i++) {
+            for (int j = 0; j < countArr[i]; j++) {
+                arr[index++] = i + min;
+            }
+        }
+
+        return arr;
     }
 
 }

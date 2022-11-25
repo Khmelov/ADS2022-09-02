@@ -3,6 +3,7 @@ package by.it.group151001.verghel.lesson07;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -40,13 +41,30 @@ import java.util.Scanner;
 public class A_EditDist {
 
 
+    int min(int a,int b,int c){return Integer.min(a, Integer.min(b, c));}
+
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int[][]words = new int[one.length()][two.length()];
+        for(int i = 0; i < one.length(); i++){
+            Arrays.fill(words[i],Integer.MAX_VALUE);
+        }
 
+        class edit{
+            int dist(int i,int j){
+                if (i==0)
+                    return j;
+                if (j==0)
+                    return i;
+                int cost = (one.charAt(i - 1) == two.charAt(j - 1)) ? 0: 1;
+                return min(dist(i-1,j)+1,
+                           dist(i,j-1)+1,
+                           dist(i-1,j-1)+cost);
+            }
+        }
 
-        int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return new edit().dist(one.length(),two.length());
     }
 
 

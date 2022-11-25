@@ -57,7 +57,6 @@ public class A_QSort {
         }
     }
 
-
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -126,7 +125,6 @@ public class A_QSort {
         segments[right] = temp;
         return j + 1;
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

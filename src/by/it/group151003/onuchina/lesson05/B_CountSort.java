@@ -31,13 +31,13 @@ public class B_CountSort {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
-        int[] count = new int[10];
+        int[] count = new int[11];
         //Считаем кол-во повторений каждого числа
         for (int i = 0; i < n; i++) {
             count[points[i]]++;
         }
         int b = 0;
-        for (int j = 0; j <= 10; j++){
+        for (int j = 0; j < 10; j++){
             for (int i = 0; i < count[j]; i++){
                 points[b] = j;
                 b++;
