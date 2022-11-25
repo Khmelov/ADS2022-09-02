@@ -132,7 +132,7 @@ public class Test_jd01_11 extends HomeWork {
         else
             System.out.println("          indexOf() ok: " + a);
 
-        if (e.remove(Integer.valueOf(444)) != a.remove(Integer.valueOf(444)))
+        if (e.remove(Integer.valueOf(444)) != a.remove(Integer.valueOf(444)) || e.remove(Integer.valueOf(1000)) != a.remove(Integer.valueOf(1000)))
             System.out.println("Диагностика: remove(Object o) не реализован или работает не так как в ArrayList");
         else
             System.out.println("   remove(Object o) ok: " + a);
