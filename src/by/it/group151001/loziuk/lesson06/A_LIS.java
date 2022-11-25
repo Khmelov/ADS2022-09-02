@@ -40,14 +40,25 @@ public class A_LIS {
         //общая длина последовательности
         int n = scanner.nextInt();
         int[] m = new int[n];
+
         //читаем всю последовательность
         for (int i = 0; i < n; i++) {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
+        int[] d = new int[n];
+        for (int i = 0;i < n; i++){
+            d[i] = 1;
+            for (int j = 0; j < i; j++){
+                if (m[j] < m[i] && d[i] < d[j] + 1)
+                    d[i] = d[j] + 1;
+            }
+        }
+        int result = d[0];
+        for (int i = 1; i < n; i++){
+            if (d[i] > result)
+                result = d[i];
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

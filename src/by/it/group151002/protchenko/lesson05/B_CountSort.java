@@ -3,6 +3,7 @@ package by.it.group151002.protchenko.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -32,9 +33,22 @@ public class B_CountSort {
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
 
+        int min = points[0];
+        int max = points[0];
+        for (int m: points)
+            if (m < min)
+                min = m;
+            else if (m > max)
+                max = m;
 
+        int[] temp = new int[max - min + 1];
+        for (int m: points)
+            temp[m - min]++;
 
-
+        int k = 0;
+        for (int i = 0; i < temp.length; i++)
+            for (int j = 0; j < temp[i]; j++)
+                points[k++] = min + i;
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;

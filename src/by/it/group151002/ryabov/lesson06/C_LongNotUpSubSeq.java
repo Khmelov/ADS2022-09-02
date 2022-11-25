@@ -38,7 +38,7 @@ import java.util.Scanner;
 
 public class C_LongNotUpSubSeq {
 
-    int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
+    String getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -50,11 +50,36 @@ public class C_LongNotUpSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
+        StringBuilder result = new StringBuilder();
+        int len = 0;
+        int[] p = new int[n];
+        int[] prev = new int[n];
+        prev[0] = -1;
+        int l = 0;
+        for (int i = 0; i < n; i++) {
+            p[i] = 1;
+            for (int j = 0; j < i; j++)
+                if ((m[j] >= m[i]) && (p[j] + 1 > p[i])) {
+                    p[i] = p[j] + 1;
+                    prev[i] = j;
+                }
+            if (p[i] > len) {
+                l = i;
+                len = p[i];
+            }
+        }
+        //result.append(len + "\n");
+        int i = 1;
+        while (l >= 0) {
+            result.append(l + 1).append(" ");
+            l = prev[l];
+        }
+        result.deleteCharAt(result.length() - 1);
+        String str = result.reverse().toString();
+        result.setLength(0);
+        result.append(len + "\n" + str);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return result.toString();
     }
 
 
@@ -62,7 +87,7 @@ public class C_LongNotUpSubSeq {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
-        int result = instance.getNotUpSeqSize(stream);
+        String result = instance.getNotUpSeqSize(stream);
         System.out.print(result);
     }
 
