@@ -79,18 +79,7 @@ public class C_HeapMax {
         }
 
         void insert(Long value) 
-        { //вставка
-        //     int i = 0;
-        //     for (; i < heap.size(); i++) 
-        //     {
-        //         if(heap.get(i) < value)
-        //         {
-        //             heap.add(i, value);  
-        //             break;  
-        //         }
-        //     }
-        //     if(i == heap.size())
-        //         heap.add(i, value); 
+        { ; 
             heap.add(value);
             siftUp(heap.size() - 1);
         }
@@ -140,7 +129,7 @@ public class C_HeapMax {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson03/heapData.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151003/barilko/lesson03/heapData.txt");
         C_HeapMax instance = new C_HeapMax();
         System.out.println("MAX="+instance.findMaxValue(stream));
     }
