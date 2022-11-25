@@ -44,7 +44,7 @@ public class A_EditDist {
         return i == j ? 0 : 1;
     }
 
-    private int edit(int [][] arr, String one, String two, int i, int j) {
+    private int calculate(int [][] arr, String one, String two, int i, int j) {
         if(arr[i][j] == -1)
         {
             if(i == 0) {
@@ -52,9 +52,9 @@ public class A_EditDist {
             } else if(j == 0) {
                 arr[i][j] = i;
             } else {
-                int put = edit(arr, one, two,i, j - 1) + 1;
-                int pop = edit(arr, one, two, i - 1, j) + 1;
-                int tmp = edit(arr, one, two, i - 1, j - 1) + cmp(one.charAt(i - 1), two.charAt(j - 1));
+                int put = calculate(arr, one, two,i, j - 1) + 1;
+                int pop = calculate(arr, one, two, i - 1, j) + 1;
+                int tmp = calculate(arr, one, two, i - 1, j - 1) + cmp(one.charAt(i - 1), two.charAt(j - 1));
 
                 arr[i][j] = Math.min(Math.min(put, pop), tmp);
             }
@@ -72,7 +72,7 @@ public class A_EditDist {
             Arrays.fill(st, -1);
         }
 
-        edit(arr, one, two, i - 1, j - 1);
+        calculate(arr, one, two, i - 1, j - 1);
 
         return arr[i - 1][j - 1];
     }
