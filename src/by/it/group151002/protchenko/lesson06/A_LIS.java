@@ -46,6 +46,18 @@ public class A_LIS {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+        for (int i = 1; i < m.length; i++) {
+            int start = i, end = i;
+            for (int j = i; j < m.length; j++) {
+                result = (end - start > result) ? (end - start) : result;
+                if (m[j] >= m[i-1]) {
+                    end++;}
+//                } else {
+//                    start = j;
+//                    end = j;
+//                }
+            }
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!

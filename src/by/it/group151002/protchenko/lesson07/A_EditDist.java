@@ -39,14 +39,24 @@ import java.util.Scanner;
 
 public class A_EditDist {
 
+    String first, second;
+
+    int min(int a, int b, int c) {
+        return Math.min(a, Math.min(b, c));
+    }
+
+    int dist(int i, int j) {
+        if (i == 0)
+            return j;
+        if (j == 0)
+            return i;
+        return min((dist(i-1, j) + 1), (dist(i, j-1) + 1), (dist(i-1, j-1) + (first.charAt(i-1) == second.charAt(j-1) ? 0 : 1)));
+    }
 
     int getDistanceEdinting(String one, String two) {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-        int result = 0;
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        first = one;
+        second = two;
+        return dist(one.length(), two.length());
     }
 
 
