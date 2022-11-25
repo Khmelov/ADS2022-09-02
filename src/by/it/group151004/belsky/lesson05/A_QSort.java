@@ -58,7 +58,7 @@ public class A_QSort {
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
 
-            return 0;
+            return this.stop - o.stop;
         }
     }
 
@@ -86,18 +86,48 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        QuickSort(segments, 0, segments.length-1);
 
-
+        for (int i = 0;i < points.length;i++) {
+            for (Segment seg : segments) {
+                if (points[i] >= seg.start && points[i] <= seg.stop) {
+                    result[i]+=1;
+                } else if (points[i] < seg.stop) {
+                    break;
+                }
+            }
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    public void QuickSort(Segment[] arr, int L, int R) {
+        int i = L, j = R, x = (L+R) / 2;
+        Segment temp;
+        do {
+            while (arr[i].compareTo(arr[x]) < 0) i+=1;
+            while (arr[j].compareTo(arr[x]) > 0) j-=1;
+
+            if (i <= j) {
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                i+=1;
+                j-=1;
+            }
+        } while (i <= j);
+
+        if (j > L)
+            QuickSort(arr, L, j);
+        if (i < R)
+            QuickSort(arr, i, R);
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/belsky/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){

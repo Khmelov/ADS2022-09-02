@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 // Lesson 3. C_Heap.
 // Задача: построить max-кучу = пирамиду = бинарное сбалансированное дерево на массиве.
-// ВАЖНО! НЕЛЬЗЯ ИСПОЛЬЗОВАТЬ НИКАКИЕ КОЛЛЕКЦИИ, КРОМЕ ARRAYLIST (его можно, но только для массива)
+// ВАЖНО! НЕЛЬЗЯ ИСПОЛЬЗОВАТЬ   НИКАКИЕ КОЛЛЕКЦИИ, КРОМЕ ARRAYLIST (его можно, но только для массива)
 
 //      Проверка проводится по данным файла
 //      Первая строка входа содержит число операций 1 ≤ n ≤ 100000.
@@ -43,22 +43,34 @@ public class C_HeapMax {
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вверх
+        void siftDown(int i) { //просеивание вниз
+            int j;
+            while (2 * i + 1 < heap.size()){
+                j = 2 * i + 2;
+                if (j >= heap.size() || heap.get(2 * i + 1) > heap.get(2 * i + 2))
+                    j = 2 * i + 1;
+                if (heap.get(i) > heap.get(j))
+                    break;
+                heap.set(i, heap.set(j, heap.get(i)));
+                i = j;
+            }
 
-            return i;
         }
-
-        int siftUp(int i) { //просеивание вниз
-
-            return i;
+        void siftUp(int i) { //просеивание вверх
+            while (heap.get(i) > heap.get((i - 1) / 2)){
+                heap.set(i, heap.set((i - 1) / 2, heap.get(i)));
+                i = (i - 1) / 2;
+            }
         }
-
-        void insert(Long value) { //вставка
+        void insert(Long value) {
+            heap.add(value);//вставка
+            siftUp(heap.size() - 1);
         }
-
         Long extractMax() { //извлечение и удаление максимума
-            Long result = null;
-
+            if (heap.size() == 1)
+                return heap.remove(0);
+            Long result = heap.set(0, heap.remove(heap.size() - 1));
+            siftDown(0);
             return result;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1

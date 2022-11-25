@@ -1,0 +1,10 @@
+9
+Insert 11
+Insert 10
+ExtractMax
+Insert 5000
+Insert 1
+ExtractMax
+Insert 2
+Insert 20
+ExtractMax

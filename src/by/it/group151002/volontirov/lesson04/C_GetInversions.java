@@ -48,15 +48,24 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
+        int left = 0;
+        int index = 0;
+        int right;
+        while(left < n - 1){
+            int count = 0;
+            index = left;
+            right = left;
+            while(right < n){
+                if(a[right] >= a[left]){
+                    count++;
+                } else {
+                    result += count;
+                    if(count == right - left) index = right;
+                }
+                right++;
+            }
+            left = ++index;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -64,7 +73,7 @@ public class C_GetInversions {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/volontirov/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);

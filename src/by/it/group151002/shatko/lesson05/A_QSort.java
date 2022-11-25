@@ -119,10 +119,8 @@ public class A_QSort {
         for (int i = 0; i < m; i++) {
             amount = 0;
             for (Segment camera : segments){
-                if (points[i] >= camera.start) {
-                    if (points[i] <= camera.stop) {
-                        amount++;
-                    }
+                if (points[i] >= camera.start && points[i] <= camera.stop) {
+                    amount++;
                 } else {
                     break;
                 }
@@ -133,6 +131,12 @@ public class A_QSort {
         for (Segment seg: segments) {
             System.out.println(seg.start + " " + seg.stop);
         }
+
+        for (int point: points) {
+            System.out.print(point + " ");
+        }
+
+        System.out.println();
 
         return result;
     }
