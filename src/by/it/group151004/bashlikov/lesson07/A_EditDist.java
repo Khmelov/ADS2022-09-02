@@ -3,6 +3,7 @@ package by.it.group151004.bashlikov.lesson07;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -39,14 +40,41 @@ import java.util.Scanner;
 
 public class A_EditDist {
 
+    private int cmp(char i, char j) {
+        return i == j ? 0 : 1;
+    }
+
+    private int edit(int [][] arr, String one, String two, int i, int j) {
+        if(arr[i][j] == -1)
+        {
+            if(i == 0) {
+                arr[i][j] = j;
+            } else if(j == 0) {
+                arr[i][j] = i;
+            } else {
+                int put = edit(arr, one, two,i, j - 1) + 1;
+                int pop = edit(arr, one, two, i - 1, j) + 1;
+                int tmp = edit(arr, one, two, i - 1, j - 1) + cmp(one.charAt(i - 1), two.charAt(j - 1));
+
+                arr[i][j] = Math.min(Math.min(put, pop), tmp);
+            }
+
+        }
+        return arr[i][j];
+    }
 
     int getDistanceEdinting(String one, String two) {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int i = one.length() + 1;
+        int j = two.length() + 1;
+        int[][] arr = new int[i][j];
 
+        for (int[] st: arr) {
+            Arrays.fill(st, -1);
+        }
 
-        int result = 0;
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        edit(arr, one, two, i - 1, j - 1);
+
+        return arr[i - 1][j - 1];
     }
 
 
