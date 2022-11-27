@@ -36,8 +36,9 @@ import java.util.Scanner;
 */
 
 
-public class C_LongNotUpSubSeq {
 
+public class C_LongNotUpSubSeq {
+    static int[] answer;
     int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -50,9 +51,35 @@ public class C_LongNotUpSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
+        int[] d = new int[n];
+        int[] index = new int[n];
 
-
+        for (int i = 0;i < n; i++){
+            d[i] = 1;
+            index[i] = -1;
+            for (int j = 0; j < i; j++){
+                if (m[i] <= m[j] && d[i] < d[j] + 1) {
+                    d[i] = d[j] + 1;
+                    index[i] = j;
+                }
+            }
+        }
+        int result = d[0];
+        int max = 0;
+        for (int i = 1; i < n; i++){
+            if (d[i] > result) {
+                result = d[i];
+                max = i;
+            }
+        }
+        answer = new int[result];
+        int i = result - 1;
+        do{
+            answer[i] = max + 1;
+            max = index[max];
+            i--;
+        }
+        while (max > -1);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -63,7 +90,11 @@ public class C_LongNotUpSubSeq {
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
         int result = instance.getNotUpSeqSize(stream);
-        System.out.print(result);
+        System.out.println(result);
+        for (int i = 0; i < result;i++){
+            System.out.print(String.valueOf(answer[i])+ ' ');
+        }
+
     }
 
 }

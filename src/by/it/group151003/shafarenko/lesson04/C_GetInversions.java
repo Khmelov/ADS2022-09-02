@@ -87,14 +87,14 @@ public class C_GetInversions {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        String root = System.getProperty("user.dir") + "/src/";
+        String root = System.getProperty("user.dir") + "/";
         InputStream stream = new FileInputStream(root + "by/it/group151003/shafarenko/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         Scanner scanner = new Scanner(stream);
         //long startTime = System.currentTimeMillis();
         int n = scanner.nextInt();
         int[] arr = new int[n];
-        for (int i = 1; i <= n; i++) {
+        for (int i = 0; i < n; i++) {
             arr[i] = scanner.nextInt();
         }
         int result = instance.calc(arr);
