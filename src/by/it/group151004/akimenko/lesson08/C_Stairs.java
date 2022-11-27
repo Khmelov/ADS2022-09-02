@@ -42,13 +42,18 @@ public class C_Stairs {
             stairs[i]=scanner.nextInt();
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        int result = 0;
-
-
+        int D1 = 0,D2 = stairs[0],tmp;
+        for(int i = 1; i < n;i++){
+            if(D1 + stairs[i] < D2 + stairs[i])
+                tmp = D2 + stairs[i];
+            else tmp = D1 + stairs[i];
+            D1 = D2;
+            D2 = tmp;
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return D2;
     }
 
 
