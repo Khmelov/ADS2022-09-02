@@ -157,8 +157,6 @@ public class ListB<T> implements List<T>{
 
     }
 
-
-
     @Override
     public int lastIndexOf(Object o) {
         return 0;

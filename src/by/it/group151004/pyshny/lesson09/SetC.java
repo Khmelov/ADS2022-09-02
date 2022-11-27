@@ -11,17 +11,17 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder();
-        str.append("[");
+        StringBuilder s = new StringBuilder();
+        s.append("[");
         for (int i = 0; i < amount; i++) {
-            str.append(A[i]);
-            str.append(", ");
+            s.append(A[i]);
+            s.append(", ");
         }
         if (amount!=0) {
-            str.delete(str.length() - 2, str.length());
+            s.delete(s.length() - 2, s.length());
         }
-        str.append("]");
-        return str.toString();
+        s.append("]");
+        return s.toString();
     }
 
     @Override
