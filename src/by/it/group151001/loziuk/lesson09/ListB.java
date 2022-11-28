@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class ListA<T> implements List<T> {
+public class ListB<T> implements List<T> {
 
     private class Node {
         T data;
@@ -31,7 +31,7 @@ public class ListA<T> implements List<T> {
         length++;
         return true;
     }
-
+    @Override
     public T remove(int index) {
         if (index > length - 1)
             return null;
@@ -66,6 +66,60 @@ public class ListA<T> implements List<T> {
         }
     }
 
+    @Override
+    public T set(int index, T e){
+        if (index > length - 1)
+            return null;
+        else {
+            int Ind = -1;
+            Node Cur = head;
+            while (Ind < index - 1){
+                Cur = Cur.next;
+                Ind++;
+            }
+            T Res = Cur.next.data;
+            Cur.next.data = e;
+            return Res;
+        }
+    }
+
+    @Override
+    public void add(int index, T e){
+        Node new_node = new Node(e,null);
+        if (index == 0){
+            new_node.next = head.next;
+            head.next = new_node;
+        }
+        else {
+            int Ind = -1;
+            Node Cur = head;
+            while (Ind < index - 1) {
+                Cur = Cur.next;
+                Ind++;
+            }
+            new_node.next = Cur.next;
+            Cur.next = new_node;
+            length++;
+        }
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c){
+        Node Cur = head;
+        while (Cur.next != null)
+            Cur = Cur.next;
+
+        for(T e : c) {
+            Node new_node = new Node(e,null);
+            Cur.next = new_node;
+            Cur = Cur.next;
+            length++;
+        }
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
         res.append('[');
@@ -124,11 +178,6 @@ public class ListA<T> implements List<T> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
-        return false;
-    }
-
-    @Override
     public boolean addAll(int index, Collection<? extends T> c) {
         return false;
     }
@@ -145,16 +194,6 @@ public class ListA<T> implements List<T> {
 
     @Override
     public void clear() {
-
-    }
-
-    @Override
-    public T set(int index, T element) {
-        return null;
-    }
-
-    @Override
-    public void add(int index, T element) {
 
     }
 
