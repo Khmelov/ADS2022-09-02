@@ -58,7 +58,7 @@ public class ListB<T> implements List<T> {
     }
 
     ListB() {
-        arr = setCapacity(null, 32);
+        arr = setCapacity(null, 96);
     }
 
     @Override
@@ -247,7 +247,7 @@ public class ListB<T> implements List<T> {
 
     @Override
     public void clear() {
-        arr = setCapacity(null, 32);
+        arr = setCapacity(null, 96);
     }
 
     @Override
