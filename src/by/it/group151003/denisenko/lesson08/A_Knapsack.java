@@ -28,7 +28,6 @@ Sample Output 2:
 */
 
 public class A_Knapsack {
-
     int getMaxWeight(InputStream stream ) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         Scanner scanner = new Scanner(stream);
@@ -38,7 +37,6 @@ public class A_Knapsack {
         for (int i = 0; i < n; i++) {
             gold[i]=scanner.nextInt();
         }
-
         //Array represents maximum weight of gold we can take with knapsack with capacity of corresponding index
         int[] maximumWeights = new int[w + 1];
 

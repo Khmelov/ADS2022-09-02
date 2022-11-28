@@ -32,7 +32,6 @@ public class B_Knapsack {
         for (int i = 0; i < n; i++) {
             gold[i]=scanner.nextInt();
         }
-
         //Each array cell with index i contains 1 if it's possible to fill knapsack in completely with gold bars we have
         //if knapsack would have capacity of i, 0 otherwise
         int[] arr = new int[w + 1];

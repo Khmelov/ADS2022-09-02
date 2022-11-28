@@ -17,6 +17,7 @@ public class Lesson8Test {
         assertEquals("A failed", res, 14);
     }
 
+
     @Test
     public void B() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
