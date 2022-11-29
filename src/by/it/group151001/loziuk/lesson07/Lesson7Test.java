@@ -10,7 +10,7 @@ public class Lesson7Test {
         A_EditDist instance = new A_EditDist();
         assertEquals("A1 failed", instance.getDistanceEdinting("ab","ab"),0);
         assertEquals("A2 failed", instance.getDistanceEdinting("short","ports"),3);
-        assertEquals("A3 failed", instance.getDistanceEdinting("distance","editing"),5);
+        assertEquals("A3 failed", instance.getDistanceEdinting("polynomial","exponential"),6);
     }
 
 
@@ -19,7 +19,7 @@ public class Lesson7Test {
         B_EditDist instance = new B_EditDist();
         assertEquals("B1 failed", instance.getDistanceEdinting("ab","ab"),0);
         assertEquals("B2 failed", instance.getDistanceEdinting("short","ports"),3);
-        assertEquals("B3 failed", instance.getDistanceEdinting("distance","editing"),5);
+        assertEquals("B3 failed", instance.getDistanceEdinting("polynomial","exponential"),6);
     }
 
     @Test
