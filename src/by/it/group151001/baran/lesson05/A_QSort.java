@@ -3,7 +3,10 @@ package by.it.group151001.baran.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
+
+import static java.lang.Math.random;
 
 /*
 Видеорегистраторы и площадь.
@@ -43,19 +46,50 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
+            if(start > stop){
+                int buf = start;
+                start = stop;
+                stop = buf;
+            }
             this.start = start;
             this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
         }
 
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
 
-            return 0;
+            return this.stop - o.stop;
         }
     }
+
+    public static int partition(Segment[] arr, int l, int r){
+        int rand = (int)(random()*(r - l)) + l;
+        Segment tmp = arr[rand];
+        arr[rand] = arr[l];
+        arr[l] = tmp;
+        int x = l;
+        int j = l;
+        for(int i = l + 1; i <= r; i++){
+            if(arr[i].compareTo(arr[x]) >= 0){
+                tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+            }
+        }
+        tmp = arr[x];
+        arr[x] = arr[j];
+        arr[j] = tmp;
+        return j;
+    }
+    public static void quickSort(Segment[] arr, int l, int r){
+        while(l < r) {
+            int m = partition(arr, l, r);
+            quickSort(arr, l, m - 1);
+            l = m + 1;
+        }
+    }
+
 
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
@@ -79,8 +113,14 @@ public class A_QSort {
         for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        quickSort(segments, 0, n - 1);
+
+        for(int i = 0; i < m; i++){
+            result[i] = 0;
+            for(int j = 0; j < n && points[i] <= segments[j].stop; j++){
+                if(points[i] >= segments[j].start) result[i]++;
+            }
+        }
 
 
 

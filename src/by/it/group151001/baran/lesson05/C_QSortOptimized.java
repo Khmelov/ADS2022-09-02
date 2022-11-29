@@ -33,21 +33,76 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
         Segment(int start, int stop){
             this.start = start;
             this.stop = stop;
+            if(start <= stop) {
+                this.start = start;
+                this.stop = stop;
+            } else{
+                this.start = stop;
+                this.stop = start;
+            }
         }
 
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+            return Integer.compare(this.start, o.start);
         }
     }
+
+    int BinSearch(Segment[] arr, int point){
+        int l = 0, r = arr.length - 1;
+        while (l <= r){
+            int mid = (l+r)/2;
+            if(arr[mid].start<=point && arr[mid].stop>=point){
+                return mid;
+            } else if(arr[mid].start > point){
+                r = mid - 1;
+            } else l = mid + 1;
+        }
+        return -1;
+    }
+
+    public static void swap(Segment[] a, int pos1, int pos2) {
+        if (pos1 != pos2) {
+            Segment temp = a[pos1];
+            a[pos1] = a[pos2];
+            a[pos2] = temp;
+        }
+    }
+    public static int[] partition(Segment[] arr, int left, int right) {
+        int i = left, curr = left, j = right;
+        Segment value = arr[left];
+        while (curr <= j) {
+            if(arr[curr].compareTo(value) < 0){
+                swap(arr, curr++, i++);
+            } else if(arr[curr].compareTo(value) == 0) {
+                curr++;
+            } else {
+                swap(arr, curr, j--);
+            }
+        }
+        return new int[] {i, j};
+    }
+    public static void Quick(Segment[] arr, int left, int right){
+        while (left<right){
+            int[] piv = partition(arr, left, right);
+            if (piv[0] - left < right - piv[1]) {
+                Quick(arr, left, piv[0] - 1);
+                left = piv[1] + 1;
+            } else {
+                Quick(arr, piv[1] + 1, right);
+                right = piv[0] - 1;
+            }
+        }
+    }
+
 
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
@@ -73,7 +128,20 @@ public class C_QSortOptimized {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
+        Quick(segments, 0, n-1);
+        for(int i=0; i<m; i++){
+            result[i] = 0;
+            int bin = BinSearch(segments,points[i]);
+            if(bin == -1){
+                break;
+            } else {
+                result[i] += 1;
+                while (segments[bin + 1].start < segments[bin].stop) {
+                    result[i] += 1;
+                    bin +=1;
+                }
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
