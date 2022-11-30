@@ -3,6 +3,7 @@ package by.it.group151001.danko.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -51,30 +52,58 @@ public class C_LongNotUpSubSeq {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+
         int[] maxSubsequence = new int[n];
-        for(int i = 0; i < n; i++)
-        {
+        int[] prevElements = new int[n];
+        int[] toPrint = new int[n];
+        int lastIndex = 0;
+
+        for (int i = 0; i < n; ++i) {
             maxSubsequence[i] = 1;
-            for(int j = 0; j < i; j++) {
-                if(m[i] <= m[j] && maxSubsequence[j] + 1 > maxSubsequence[i]) {
+            for (int j = 0; j < i; ++j) {
+                if (m[j] >= m[i] && maxSubsequence[j] + 1 > maxSubsequence[i]) {
                     maxSubsequence[i] = maxSubsequence[j] + 1;
+                    prevElements[i] = j;
                 }
+
             }
-            result = Math.max(result, maxSubsequence[i]);
+
+            if (result < maxSubsequence[i]) {
+                result = maxSubsequence[i];
+                lastIndex = i;
+            }
         }
 
+        System.out.println(result);
+        int count = 0;
+        int i = lastIndex;
+        while (prevElements[i] > 0 || i != 0){
+            toPrint[count] = i + 1;
+            i = prevElements[i];
+            count++;
+        }
+        if (prevElements[i] == 0 && i == 0){
+            toPrint[count] = 1;
+            count++;
+        }
 
+        printResult(toPrint, count);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
-
+    void printResult(int[] printArray, int count) {
+        for(int i = count - 1; i >= 0; i--)
+        {
+            System.out.print(printArray[i] + " ");
+        }
+        System.out.println();
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
         int result = instance.getNotUpSeqSize(stream);
-        System.out.print(result);
     }
 
 }

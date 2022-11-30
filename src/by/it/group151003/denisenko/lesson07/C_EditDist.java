@@ -39,7 +39,6 @@ import java.util.Scanner;
     # M (match) — совпадение.
 */
 public class C_EditDist {
-
     String getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         final int N = one.length() + 1;

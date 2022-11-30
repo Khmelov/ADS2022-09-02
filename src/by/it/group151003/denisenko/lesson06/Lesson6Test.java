@@ -17,8 +17,6 @@ public class Lesson6Test {
         boolean ok=(result==3);
         assertTrue("A failed", ok);
     }
-
-
     @Test
     public void B() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";

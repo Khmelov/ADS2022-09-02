@@ -43,7 +43,6 @@ public class A_EditDist {
         //Fill distancesTable with (-1)
         for (int i = 0; i < N; ++i)
             Arrays.fill(distancesTable[i], -1);
-
         editDistTD(distancesTable, one, two, N - 1, M - 1);
 
         int result = distancesTable[N - 1][M - 1];
