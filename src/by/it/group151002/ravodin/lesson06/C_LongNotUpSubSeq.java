@@ -38,6 +38,41 @@ import java.util.Scanner;
 
 public class C_LongNotUpSubSeq {
 
+    int find_not_up_seq(int n, int[] numbers, int[] index){
+        int[] extra_index = new int[n+1];
+        int[] temp = new int[n];
+        int last = numbers[0];
+        int counter = 1;
+        temp[0] = 1;
+        index[0] = 0;
+        extra_index[0] = 0;
+        for(int i = 1; i < n; ++i){
+            temp[i] = temp[i-1];
+            if(numbers[i] <= last) {
+                index[temp[i]] = i;
+                ++temp[i];
+                last = numbers[i];
+            } else {
+                if(numbers[i] <= numbers[i-1]) {
+                    counter++;
+                }
+                extra_index[counter - 1] = i;
+                if(counter >= temp[i]){
+                    int j = 0;
+                    while(numbers[index[temp[i] - j - 1]] < numbers[extra_index[0]])
+                        ++j;
+                    for(int z = 0;z < counter;j--, z++){
+                        index[temp[i] - j] = extra_index[z];
+                    }
+                    ++temp[i];
+                    last = numbers[i];
+                    counter = 1;
+                }
+            }
+        }
+        return temp[n-1];
+    }
+
     int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -49,10 +84,11 @@ public class C_LongNotUpSubSeq {
         for (int i = 0; i < n; i++) {
             m[i] = scanner.nextInt();
         }
-        //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
+        //тут реализуйте логику задачи методами динамического программирования (!!!);
+        //Integer seq_length = -1;
+        Integer seq_length = -1;
+        int[] index = new int[n];
+        int result = find_not_up_seq(n, m, index);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

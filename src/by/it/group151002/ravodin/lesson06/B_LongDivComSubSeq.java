@@ -30,7 +30,30 @@ import java.util.Scanner;
 
 public class B_LongDivComSubSeq {
 
+    int findDivSub(int n, int []arr){
 
+        int []temp = new int[n];
+        int last = arr[0];
+        int counter = 1;
+        temp[0] = 1;
+
+        for(int i = 1; i < n; ++i){
+            temp[i] = temp[i-1];
+            if(arr[i]  % last == 0) {
+                temp[i]++;
+                last = arr[i];
+            } else {
+                if(arr[i] % arr[i-1] == 0)
+                    counter++;
+                if(counter > temp[i]){
+                    temp[i]++;
+                    last = arr[i];
+                    counter = 0;
+                }
+            }
+        }
+        return temp[n-1];
+    }
     int getDivSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -43,8 +66,7 @@ public class B_LongDivComSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
+        int result = findDivSub(n, m);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
