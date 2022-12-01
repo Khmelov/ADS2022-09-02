@@ -17,6 +17,21 @@ import java.util.Scanner;
 
 public class B_CountSort {
 
+    static int[] sort(int[] array, int min, int max) {
+        int[] count = new int[max - min + 1];
+
+        for (int i = 0; i < array.length; i++) {
+            count[array[i] - min]++;
+        }
+
+        int idx = 0;
+        for (int i = 0; i < count.length; i++) {
+            for (int j = 0; j < count[i]; j++) {
+                array[idx++] = i + min;
+            }
+        }
+        return array;
+    }
 
     int[] countSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -31,11 +46,16 @@ public class B_CountSort {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
-
-
-
-
-
+        int min = points[0], max = points[0];
+        for(int i = 0; i < n; i++){
+            if(points[i] > max){
+                max = points[i];
+            }
+            if(points[i] < min){
+                min = points[i];
+            }
+        }
+        sort(points, min, max);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
     }
