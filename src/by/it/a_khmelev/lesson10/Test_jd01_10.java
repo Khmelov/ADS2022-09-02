@@ -61,7 +61,7 @@ public class Test_jd01_10 extends HomeWork {
             Method methodE = methodsE.get(mIndex);
             Method methodA = methodsA.get(mIndex);
             int params = methodE.getParameterCount();
-            if (params == 0) {
+            if (params < 2) {
                 Object expected = params == 0 ? methodE.invoke(e) : methodE.invoke(e, value);
                 Object actual = params == 0 ? methodA.invoke(a) : methodA.invoke(a, value);
                 String eString = e.toString();
