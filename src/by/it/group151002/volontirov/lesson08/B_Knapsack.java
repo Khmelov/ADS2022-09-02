@@ -27,7 +27,15 @@ Sample Output:
 */
 
 public class B_Knapsack {
-
+    int max;
+    void getWeightRec(int index, int weight, int n, int backpack, int[] weights){
+        if(weight > max) max = weight;
+        for(int i = index + 1; i < n; i++){
+            if(weight + weights[i] <= backpack){
+                getWeightRec(i, weight + weights[i], n, backpack, weights);
+            }
+        }
+    }
     int getMaxWeight(InputStream stream ) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         Scanner scanner = new Scanner(stream);
@@ -40,6 +48,9 @@ public class B_Knapsack {
 
 
         int result = 0;
+        max = 0;
+        getWeightRec(-1, 0, n, w, gold);
+        result = max;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

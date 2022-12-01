@@ -25,7 +25,14 @@ public class Lesson8Test {
         int res=instance.getMaxWeight(stream);
         assertEquals("B failed", res, 9);
     }
-
+    @Test
+    public void B2() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151002/volontirov/lesson08/dataB2.txt");
+        B_Knapsack instance = new B_Knapsack();
+        int res = instance.getMaxWeight(stream);
+        assertEquals("B failed", res, 14);
+    }
     @Test
     public void C() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
@@ -33,6 +40,14 @@ public class Lesson8Test {
         C_Stairs instance = new C_Stairs();
         int res=instance.getMaxSum(stream);
         assertEquals("C failed", res, 3);
+    }
+    @Test
+    public void C2() throws Exception {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/group151002/volontirov/lesson08/dataC2.txt");
+        C_Stairs instance = new C_Stairs();
+        int res = instance.getMaxSum(stream);
+        assertEquals("C2 failed", res, 15);
     }
 
 }
