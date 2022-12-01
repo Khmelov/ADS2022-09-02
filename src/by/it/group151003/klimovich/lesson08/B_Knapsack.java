@@ -46,6 +46,7 @@ public class B_Knapsack {
         int result = maxweights[w];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+
     }
 
 
