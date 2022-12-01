@@ -44,7 +44,7 @@ public class Test_jd01_10 extends HomeWork {
 
     private void randomCheck(TreeSet<String> methodNames, String className) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         Class<?> aclass = findClass(className);
-        //assertEquals("Неверное наследование", Object.class, aclass.getSuperclass());
+        assertEquals("Неверное наследование", Object.class, aclass.getSuperclass());
         System.out.println("\nA. Диагностика обязательных к реализации методов:");
         NavigableSet<Integer> e = (NavigableSet<Integer>) TreeSet.class.getDeclaredConstructor().newInstance();
         NavigableSet<Integer> a = (NavigableSet<Integer>) aclass.getDeclaredConstructor().newInstance();
@@ -52,11 +52,11 @@ public class Test_jd01_10 extends HomeWork {
         List<Method> methodsA = fill(aclass.getMethods(), methodNames);
         int seed = 1234;
         Random rnd = new Random(seed);
-        for (int testNumber = 0; testNumber < 1000+seed; testNumber++) {
+        for (int testNumber = 0; testNumber < seed; testNumber++) {
             Integer value = rnd.nextInt(10);
             for (int i = 0; i <= value % 10; i++) {
-                a.add(value + i);
-                e.add(value + i);
+                a.add(value + i*value);
+                e.add(value + i*value);
             }
             int mIndex = rnd.nextInt(methodsA.size());
             Method methodE = methodsE.get(mIndex);
