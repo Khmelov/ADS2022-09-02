@@ -66,48 +66,42 @@ public class C_EditDist {
             }
         }
         char symb;
-        char arrA[] = new char[one.length() + 1];
-        char arrB[] = new char[two.length() + 1];
-        for (int i = 1; i < arrA.length; i++) {
-           arrA[i] = one.charAt(i - 1);
-        }
-        for (int i = 1; i < arrB.length; i++) {
-            arrB[i] = two.charAt(i - 1);
-        }
+
         StringBuilder result = new StringBuilder();
         int i = one.length();
         int j = two.length();
         do {
-            cost = arrA[i] == arrB[j] ? 0 : 1;
-            symb = arrA[i] == arrB[j] ? '#' : '~';
+
+            cost = one.charAt(i-1) == two.charAt(j-1)  ? 0 : 1;
+            symb = one.charAt(i-1)  == two.charAt(j-1)  ? '#' : '~';
             if (table[i][j] == table[i - 1][j - 1] + cost) {
                 result.insert(0, ',');
                 result.insert(0, symb);
                 if (symb == '~') {
-                    result.insert(1, arrB[j]);
+                    result.insert(1, two.charAt(j-1));
                 }
                 i--;
                 j--;
             } else if (table[i][j] == table[i][j - 1] + 1) {
                 result.insert(0, ',');
                 result.insert(0, '+');
-                result.insert(1, arrB[i]);
+                result.insert(1, two.charAt(j-1));
                 j--;
             } else if (table[i][j] == table[i - 1][j] + 1) {
                 result.insert(0, ',');
                 result.insert(0, '-');
-                result.insert(1, arrA[i]);
+                result.insert(1, one.charAt(i-1));
                 i--;
             }
         } while (i > 0 && j > 0);
         if (i > 0) {
             result.insert(0, ',');
             result.insert(0, '-');
-            result.insert(1, arrA[i]);
+            result.insert(1, one.charAt(i-1));
         } else if (j > 0) {
             result.insert(0, ',');
             result.insert(0, '+');
-            result.insert(1, arrB[j]);
+            result.insert(1, two.charAt(j-1));
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result.toString();
