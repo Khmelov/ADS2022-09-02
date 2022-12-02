@@ -8,6 +8,7 @@ import java.util.ListIterator;
 public class ListB<T> implements List<T> {
     private int listSize = 0;
     private int listLength = 0;
+    private static final float grow_coefficient = 0.9f;
     private static final int defaultLen = 10;
     private Object[] arr;
 
@@ -24,7 +25,7 @@ public class ListB<T> implements List<T> {
     private void grow(){
         listLength = listLength + (listLength >> 1) + 1;
         Object[] newArr = new Object[listLength];
-        if (listSize >= 0) System.arraycopy(arr, 0, newArr, 0, listSize);
+        if (listSize > 0) System.arraycopy(arr, 0, newArr, 0, listSize);
         arr = newArr;
     }
 
@@ -40,7 +41,7 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean add(T t) {
-        if(listSize + 1 == listLength)
+        if(listSize + 1 >= (int)(listLength * grow_coefficient))
             grow();
         arr[listSize] = t;
         ++listSize;
@@ -89,7 +90,7 @@ public class ListB<T> implements List<T> {
     public void add(int index, T element) {
         if(index < 0 || index > listLength)
             return;
-        if(listSize + 1 == listLength)
+        if(listSize + 1 >= (int)(listLength * grow_coefficient))
             grow();
         System.arraycopy(arr, index, arr, index + 1, listSize - index);
         arr[index] = element;
@@ -116,7 +117,7 @@ public class ListB<T> implements List<T> {
     public boolean addAll(int index, Collection<? extends T> c) {
         if(index < 0 || index > listLength)
             return false;
-        while(listSize + c.size() >= listLength)
+        while(listSize + c.size() >= (int)(listLength * grow_coefficient))
             grow();
         System.arraycopy(arr, index, arr, index + c.size(), listSize - index);
         int i = 0;
@@ -152,7 +153,11 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        int index = indexOf(o);
+        if(index == -1)
+            return false;
+        remove(index);
+        return true;
     }
 
     @Override
