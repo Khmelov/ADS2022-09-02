@@ -28,21 +28,6 @@ public class SetC<T> implements Set<T> {
         this.addAll(c);
     }
 
-    private void resize(int newCapacity) {
-        Object[] newArray = new Object[newCapacity];
-        for (Object element : array) {
-            if (element != null) {
-                int index = Math.abs(element.hashCode()) % newCapacity;
-                while (newArray[index] != null) {
-                    index = (index + 1) % newCapacity;
-                }
-                newArray[index] = element;
-            }
-        }
-        array = newArray;
-        capacity = newCapacity;
-    }
-
     @Override
     public int size() { return size; }
 
@@ -230,5 +215,20 @@ public class SetC<T> implements Set<T> {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    private void resize(int newCapacity) {
+        Object[] newArray = new Object[newCapacity];
+        for (Object element : array) {
+            if (element != null) {
+                int index = Math.abs(element.hashCode()) % newCapacity;
+                while (newArray[index] != null) {
+                    index = (index + 1) % newCapacity;
+                }
+                newArray[index] = element;
+            }
+        }
+        array = newArray;
+        capacity = newCapacity;
     }
 }
