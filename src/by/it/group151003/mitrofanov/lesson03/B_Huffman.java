@@ -2,6 +2,7 @@ package by.it.group151003.mitrofanov.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -50,6 +51,26 @@ public class B_Huffman {
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
+        String line=scanner.nextLine();
+        String[] couple;
+        HashMap<String,String> symbols=new HashMap<>();
+        for(int i=0;i<count;i++)
+        {
+            line=scanner.nextLine();
+            couple=line.split(": ");
+            symbols.put(couple[1],couple[0]);
+        }
+        String coding=scanner.nextLine();
+        String elem="";
+        for(char nextDigit:coding.toCharArray())
+        {
+            elem+=nextDigit;
+            if(symbols.containsKey(elem))
+            {
+                result.append(symbols.get(elem));
+                elem="";
+            }
+        }
 
 
 
