@@ -32,6 +32,33 @@ import java.util.Scanner;
 
 public class A_LIS {
 
+    int find_lis(int n, int []numbers){
+
+        int []temp = new int[n];
+        int last = numbers[0];
+        int counter = 1;
+        temp[0] = 1;
+
+        for(int i = 1; i < n; ++i){
+            temp[i] = temp[i-1];
+
+            if(numbers[i] > last) {
+                temp[i]++;
+                last = numbers[i];
+            } else {
+                if(numbers[i] > numbers[i-1])
+                    counter++;
+                if(counter > temp[i]){
+                    temp[i]++;
+                    last = numbers[i];
+                    counter = 0;
+                }
+            }
+        }
+
+        return temp[n-1];
+    }
+
 
     int getSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -39,16 +66,13 @@ public class A_LIS {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //общая длина последовательности
         int n = scanner.nextInt();
-        int[] m = new int[n];
+        int[] seq = new int[n];
         //читаем всю последовательность
         for (int i = 0; i < n; i++) {
-            m[i] = scanner.nextInt();
+            seq[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
-
+        int result = find_lis(n, seq);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -56,7 +80,7 @@ public class A_LIS {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/ravodin/lesson06/dataA.txt");
         A_LIS instance = new A_LIS();
         int result = instance.getSeqSize(stream);
         System.out.print(result);

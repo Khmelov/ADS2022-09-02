@@ -3,6 +3,7 @@ package by.it.group151004.bashlikov.lesson07;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -39,18 +40,40 @@ import java.util.Scanner;
 
 public class B_EditDist {
 
-
-    int getDistanceEdinting(String one, String two) {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-        int result = 0;
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+    private int min(int... numbers) {
+        return Arrays.stream(numbers)
+                .min().orElse(Integer.MAX_VALUE);
     }
 
+    private int cmp(char a, char b) {
+        return a == b ? 0 : 1;
+    }
+    private int calculate(String one, String two) {
+        int[][]arr = new int[one.length() + 1][two.length() + 1];
 
+        for (int i = 0; i <= one.length(); i++) {
+            for (int j = 0; j <= two.length(); j++) {
+                if (i == 0) {
+                    arr[i][j]= j;
+                }
+                else if (j == 0) {
+                    arr[i][j]= i;
+                }
+                else {
+                    arr[i][j]= min(arr[i - 1][j - 1]
+                                    + cmp(one.charAt(i - 1), two.charAt(j - 1)),
+                            arr[i - 1][j] + 1,
+                            arr[i][j - 1]+  1);
+                }
+            }
+        }
+
+        return arr[one.length()][two.length()];
+    }
+
+    int getDistanceEdinting(String one, String two) {
+        return calculate(one, two);
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
