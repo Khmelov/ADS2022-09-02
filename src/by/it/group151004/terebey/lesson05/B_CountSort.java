@@ -17,6 +17,33 @@ import java.util.Scanner;
 
 public class B_CountSort {
 
+    int[] sort(int[] array, int min, int max) {
+        int[] countIntegers = new int[max- min + 1];
+
+        for (int i = 0; i < array.length; i++) {
+            countIntegers[array[i] - min]++;
+        }
+
+        int insertPosition = 0;
+        for (int i = min; i <= max; i++) {
+            for (int j = 0; j < countIntegers[i - min]; j++) {
+                array[insertPosition++] = i;
+            }
+        }
+        return array;
+    }
+
+    int[] sort(int[] array) {
+        int max, min = max = array[0];
+        for (int j : array) {
+            if (j < min)
+                min = j;
+
+            if (j > max)
+                max = j;
+        }
+        return sort(array, min, max);
+    }
 
     int[] countSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -31,7 +58,7 @@ public class B_CountSort {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
-
+        sort(points);
 
 
 
@@ -43,7 +70,7 @@ public class B_CountSort {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/terebey/lesson05/dataB.txt");
         B_CountSort instance = new B_CountSort();
         int[] result=instance.countSort(stream);
         for (int index:result){
