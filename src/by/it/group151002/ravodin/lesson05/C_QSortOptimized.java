@@ -3,6 +3,8 @@ package by.it.group151002.ravodin.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /*
@@ -49,6 +51,40 @@ public class C_QSortOptimized {
         }
     }
 
+    static int[] NumberOfSegments(Segment[] segments,
+                                 int[] points)
+    {
+        ArrayList<int[]> pts = new ArrayList<>(),
+                segs = new ArrayList<>();
+
+        for(int i = 0; i < points.length; i++)
+        {
+            pts.add(new int[]{points[i], i});
+        }
+
+        for(int i = 0; i < segments.length; i++)
+        {
+            segs.add(new int[]{segments[i].start, 1});
+            segs.add(new int[]{segments[i].stop + 1, -1});
+        }
+        Collections.sort(segs, (a, b) -> b[0] - a[0]);
+        Collections.sort(pts, (a, b) -> a[0] - b[0]);
+        int count = 0;
+        int[] result = new int[points.length];
+
+        for(int i = 0; i < points.length; i++)
+        {
+            int x = pts.get(i)[0];
+            while (segs.size() != 0 && segs.get(segs.size() - 1)[0] <= x)
+            {
+                count += segs.get(segs.size() - 1)[1];
+                segs.remove(segs.size() - 1);
+            }
+            result[pts.get(i)[1]] = count;
+        }
+        return result;
+    }
+
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -68,13 +104,13 @@ public class C_QSortOptimized {
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-
+        result = NumberOfSegments(segments, points);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
