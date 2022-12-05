@@ -33,7 +33,7 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
 
@@ -43,12 +43,73 @@ public class C_QSortOptimized {
         }
 
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+            return Integer.compare(this.start, o.start);
         }
     }
 
+    int[] partition(Segment[] arr, int l, int r) {
+        int[] points = new int[2];
+        int x = l + (int)(Math.random() * (r - l + 1));
+        int xStart = arr[x].start;
+        int i = l;
+        int j = r;
+        int k = l;
+        while (k <= j) {
+            if (arr[k].start < xStart) {
+                Segment temp = arr[i];
+                arr[i] = arr[k];
+                arr[k] = temp;
+                i++;
+                k++;
+            }
+            else if (arr[k].start > xStart) {
+                Segment temp = arr[j];
+                arr[j] = arr[k];
+                arr[k] = temp;
+                j--;
+            }
+            else {
+                k++;
+            }
+        }
+        points[0] = i;
+        points[1] = j;
+        return points;
+    }
+
+    void quickSort(Segment[] arr, int l, int r) {
+        while (l < r) {
+            int[] points = partition(arr, l, r);
+            if (points[0] - l < r - points[1]) {
+                quickSort(arr, l, points[0] - 1);
+                l = points[1] + 1;
+            } else {
+                quickSort(arr, points[1] + 1, r);
+                r = points[0] - 1;
+            }
+        }
+    }
+
+    public int binarySearch(Segment[] arr, int x) {
+        int l = 0;
+        int r = arr.length - 1;
+        int m;
+        while (l <= r) {
+            m = (l + r) / 2;
+            if (arr[m].start <= x && arr[m].stop >= x) {
+                return m;
+            }
+            if (arr[m].start > x) {
+                r = m - 1;
+            }
+            else if (arr[m].start < x) {
+                l = m + 1;
+            }
+        }
+        return -1;
+    }
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -68,13 +129,35 @@ public class C_QSortOptimized {
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        quickSort(segments, 0, n - 1);
 
-
+        for (int i = 0; i < m; i++) {
+            int index = binarySearch(segments, points[i]);
+            if (index == -1)
+                result[i] = 0;
+            else {
+                result[i]++;
+                int j = index - 1;
+                while (j >= 0 && segments[j].start <= points[i]) {
+                    if (points[i] <= segments[j].stop) {
+                        result[i]++;
+                    }
+                    j--;
+                }
+                j = index + 1;
+                while (j < n && segments[j].start <= points[i]) {
+                    if (points[i] <= segments[j].stop) {
+                        result[i]++;
+                    }
+                    j++;
+                }
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

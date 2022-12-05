@@ -22,8 +22,6 @@ public class FiboC {
     }
 
     long fasterC(long n, int m) {
-        //Решение сложно найти интуитивно
-        //возможно потребуется дополнительный поиск информации
         //см. период Пизано
         int max_period_test = 6 * m + 2;
         int[] div_rems = new int[max_period_test + 1];

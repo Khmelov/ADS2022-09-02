@@ -66,7 +66,7 @@ public class A_BinaryFind {
 
 
     public static void main(String[] args) throws FileNotFoundException {
-        String root = System.getProperty("user.dir") + "/src/";
+        String root = System.getProperty("user.dir") + "/";
         InputStream stream = new FileInputStream(root + "by/it/group151003/shafarenko/lesson04/dataA.txt");
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();

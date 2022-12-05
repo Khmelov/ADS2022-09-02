@@ -49,12 +49,12 @@ public class C_HeapMax {
             right_child = 2*i+2;
             change_index = i;
             if ((left_child < heap.size())&&(heap.get(change_index) < heap.get(left_child))) change_index = left_child;
-            if ((right_child < heap.size())&&(heap.get(change_index) < heap.get(right_child))) change_index = right_child;
+            if ((right_child < heap.size())&&(heap.get(change_index) > heap.get(right_child))) change_index = right_child;
             if (i != change_index) {
                 Long tmp = heap.get(i);
                 heap.set(i, heap.get(change_index));
                 heap.set(change_index, tmp);
-                siftUp(change_index);
+                siftDown(change_index);
             }
             return i;
         }

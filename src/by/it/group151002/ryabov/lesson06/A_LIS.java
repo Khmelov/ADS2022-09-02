@@ -46,8 +46,21 @@ public class A_LIS {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
-
-
+        int[] p = new int[n + 1];
+        for (int i = 0; i < n; i++){
+            int low = 1;
+            int high = result + 1;
+            while (low != high){
+                int middle = (low + high)/2;
+                if (p[middle] < m[i])
+                    low = middle + 1;
+                else
+                    high = middle;
+            }
+            p[low] = m[i];
+            if (low > result)
+                result = low;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
