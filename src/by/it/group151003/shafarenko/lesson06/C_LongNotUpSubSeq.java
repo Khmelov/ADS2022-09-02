@@ -67,12 +67,13 @@ public class C_LongNotUpSubSeq {
         System.out.println(result);
 
         int i = m.length;
-        int[] ind = new int[result];
+        int length = result;
+        int[] ind = new int[length];
         do {
             i--;
-            if (d[i] == result) {
-                ind[result - 1] = i + 1;
-                result--;
+            if (d[i] == length) {
+                ind[length - 1] = i + 1;
+                length--;
             }
         } while (d[i] != 1);
         for (int j = 0; j < ind.length; j++) {

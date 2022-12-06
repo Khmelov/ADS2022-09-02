@@ -38,15 +38,29 @@ import java.util.Scanner;
 */
 
 public class A_EditDist {
-
-
+    static int getEqNum(char first, char second)
+    {
+        if (first == second)
+            return 0;
+        else
+            return 1;
+    }
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-        int result = 0;
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        int[][] mat = new int[one.length() + 1][two.length() + 1];
+        if (one.isEmpty())
+        {
+            return two.length();
+        }
+        if (two.isEmpty())
+        {
+            return one.length();
+        }
+        int r = getDistanceEdinting(one.substring(1), two.substring(1))
+                                            + getEqNum(one.charAt(0),two.charAt(0));
+        int i = getDistanceEdinting(one, two.substring(1))+ 1;
+        int d = getDistanceEdinting(one.substring(1), two)+ 1;
+        return Math.min(r, Math.min(i, d));
     }
 
 

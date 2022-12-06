@@ -23,21 +23,35 @@ public class B_CountSort {
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //размер массива
-        int n = scanner.nextInt();
+        int n = scanner.nextInt(), maxNum = 10;
         int[] points=new int[n];
 
         //читаем точки
         for (int i = 0; i < n; i++) {
             points[i]=scanner.nextInt();
         }
+
         //тут реализуйте логику задачи с применением сортировки подсчетом
+        int[] sortedArr = new int[n];
+        int[] frequency = new int[maxNum];
 
+        for(int i=0;i<maxNum;i++){
+            frequency[i]=0;
+        }
 
+        for(int i=0;i<n;i++){
+            frequency[points[i] - 1]++;
+        }
 
-
+        int count = 0;
+        for (int i = 0; i < frequency.length; i++) {
+            for (int j = 0; j < frequency[i]; j++) {
+                sortedArr[count++] = i + 1;
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return points;
+        return sortedArr;
     }
 
 
