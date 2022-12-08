@@ -1,4 +1,4 @@
-package by.it.group151002.shidlouski.lesson03;
+package by.it.group151003.saydalikhujaev.lesson03;
 
 import org.junit.Test;
 
@@ -17,7 +17,6 @@ public class Lesson3Test {
     Package:            by.it.a_khmelev (тут ваша фамилия)
     Search for test:    In whole project
     */
-
 
     @Test
     public void A() throws Exception {
