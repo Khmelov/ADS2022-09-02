@@ -23,7 +23,7 @@ import java.util.Scanner;
     соблюдая A[i[1]]>=A[i[2]]>= ... >=A[i[n]].
 
     (индекс начинается с 1)
-
+/// CREATE AN ARRAY WHERE EACH ELEMET EQUAL INDEX to come back to recreate sequence
 Решить задачу МЕТОДАМИ ДИНАМИЧЕСКОГО ПРОГРАММИРОВАНИЯ
 
     Sample Input:
