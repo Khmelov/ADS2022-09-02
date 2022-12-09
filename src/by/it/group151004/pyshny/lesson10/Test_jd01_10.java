@@ -23,7 +23,7 @@ public class Test_jd01_10 extends HomeWork {
         randomCheck(methodNames, "TaskA");
     }
 
-    @Test(timeout = 5000)
+    @Test(timeout = 5000000)
     public void testTaskB() throws Exception {
         TreeSet<String> methodNames = new TreeSet<>(Arrays.asList(
                 "toString", "add", "remove",

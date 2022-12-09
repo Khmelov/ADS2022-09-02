@@ -3,8 +3,47 @@ package by.it.group151004.pyshny.lesson10;
 import java.util.*;
 
 public class TaskB<E>  implements NavigableSet<E> {
-    public Object[] A = new Object[100];
     public int amount = 0;
+    private int i=0;
+    private Node<E> root;
+    public int compareTo(E o, E o1) {
+        return Integer.compare((int)o, (int)o1);
+    }
+    int arr[]=new int[100];
+
+    public class Node<E> {
+        private E data;
+        private Node<E> leftChild;
+        private Node<E> rightChild;
+        private Node<E> parent;
+
+        public void setLeftChild(Node<E> newNode) {
+            leftChild = newNode;
+        }
+
+        public void setRightChild(Node<E> newNode) {
+            rightChild = newNode;
+        }
+
+        public Node(E data) {
+            this.data = data;
+        }
+        public Node<E> getLeftChild() {
+            return leftChild;
+        }
+
+        public Node<E> getRightChild() {
+            return rightChild;
+        }
+
+        public E getvalue() {
+            return data;
+        }
+
+        public Node<E> getparent() {
+            return parent;
+        }
+    }
     //Создайте БЕЗ использования других классов (включая абстрактные)
     //аналог дерева TreeSet
 
@@ -12,75 +51,180 @@ public class TaskB<E>  implements NavigableSet<E> {
     public TaskB() {
     }
 
-    private void sortset(){
-        Object[] arr = A;
-        for (int i = 0; i < amount; i++) {
-            for (int j = 0; j < amount - i - 1; j++) {
-                if ((int)A[j] >(int)A[j+1]) {
-                    E temp=(E)A[j];
-                    A[j] = A[j+1];
-                    A[j+1] = temp;
+    @Override
+    public boolean add(E e) {
+        Node<E> current = root;
+        Node<E> prev;
+        Node<E> newNode = new Node<>(e);
+        if(!contains(e)) {
+            if (root == null) {
+                root = newNode;
+                root.parent = null;
+                amount++;
+                return true;
+            } else {
+                while (true) {
+                    prev = current;
+                    if (compareTo(current.getvalue(), e) > 0) {
+                        if (current.leftChild == null) {
+                            current.setLeftChild(newNode);
+                            current.leftChild.parent = current;
+                            amount++;
+                            return true;
+                        }
+                        current = current.getLeftChild();
+                    } else {
+
+                        if (current.rightChild == null) {
+                            current.setRightChild(newNode);
+                            current.rightChild.parent = current;
+                            amount++;
+                            return true;
+                        }
+                        current = current.getRightChild();
+                    }
                 }
             }
         }
-    }
-
-    @Override
-    public boolean add(E e) {
-        if(!contains(e)){
-            if (amount == A.length - 2) {
-                Object[] newA = new Object[A.length * 2];
-                System.arraycopy(A, 0, newA, 0, amount);
-                A = newA;
-            }
-            A[amount] = e;
-            amount++;
-            if(amount>1) sortset();
-            return true;
-        }
-        else return false;
+        return false;
     }
 
     @Override
     public boolean remove(Object o) {
-        int remove = -1;
-        for (int i = 0; i < amount; i++) {
-            if (A[i] == o) {
-                remove = i;
-                break;
+        Node<E> current = root;
+        boolean flag=false;
+        while(!flag && amount>0){
+            if(current==null) return false;
+            if(current!=null && compareTo(current.getvalue(),(E)o)>0){
+                current=current.getLeftChild();
+            } else
+            if(current!=null && compareTo(current.getvalue(),(E)o)<0){
+                current=current.getRightChild();
+            }
+            if(current!=null && compareTo(current.getvalue(),(E)o)==0){
+                flag = true;
             }
         }
-        if (remove == -1)
-            return false;
-        for (int i = remove; i < amount; i++) {
-            A[i] = A[i+1];
+        if(current.leftChild==null && current.rightChild==null){
+            if(current.parent==null){
+                root=null;
+            } else
+            if(current.parent.rightChild==current){
+                current.parent.rightChild=null;
+            }else {
+                current.parent.leftChild = null;
+            }
+            amount--;
+            return true;
         }
-        A[amount] = null;
-        amount--;
-        return true;
+        if(current.leftChild==null || current.rightChild==null){
+            if(current.leftChild==null){
+                if(current.parent==null){
+                    root=current.getRightChild();
+                } else
+                if(current.parent.leftChild==current){
+                    current.rightChild.parent=current.parent;
+                    current.parent.leftChild=current.rightChild;
+                } else
+                if(current.parent.rightChild==current){
+                    current.rightChild.parent=current.parent;
+                    current.parent.rightChild = current.rightChild;
+                }
+            }
+            if(current.rightChild==null){
+                if(current.parent==null){
+                    root=current.getLeftChild();
+                } else
+                if(current.parent!=null && current.parent.rightChild==current){
+                    current.leftChild.parent=current.parent;
+                    current.parent.rightChild=current.leftChild;
+                } else
+                if(current.parent!=null && current.parent.leftChild==current){
+                    current.leftChild.parent=current.parent;
+                    current.parent.leftChild = current.leftChild;
+                }
+            }
+            amount--;
+            return true;
+        }
+        if(current.leftChild!=null && current.rightChild!=null){
+            Node<E> tmp;
+            tmp=current.getRightChild();
+            boolean flag1=false;
+            while(tmp.leftChild!=null){
+                tmp=tmp.getLeftChild();
+                flag1=true;
+            }
+            if(flag1){
+                if(tmp.rightChild!=null){
+                    tmp.rightChild.parent=tmp.parent;
+                    tmp.parent.leftChild=tmp.rightChild;
+                    current.data=tmp.data;
+                }
+                if(tmp.rightChild==null){
+                    tmp.parent.leftChild=null;
+                    current.data=tmp.data;
+                }
+                amount--;
+                return true;
+            }
+            else if(!flag1){
+                if(tmp.rightChild!=null) {
+                    tmp.rightChild.parent = tmp.parent;
+                    tmp.parent.rightChild = tmp.rightChild;
+                    current.data = tmp.data;
+                }
+                if(tmp.rightChild==null){
+                    tmp.parent.rightChild=null;
+                    current.data=tmp.data;
+                }
+                amount--;
+                return true;
+            }
+            amount--;
+            return true;
+        }
+        return false;
+    }
+
+    void inOrder(Node root, StringBuilder str){
+        if(root==null){return;}
+        inOrder(root.leftChild,str);
+        str.append(root.data);
+        str.append(", ");
+        if(amount>0) arr[i]=(int)root.data;
+        i++;
+        inOrder(root.rightChild,str);
     }
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder();
-        str.append("[");
-        for (int i = 0; i < amount; i++) {
-            str.append(A[i]);
-            str.append(", ");
-        }
-        if (str.length() < 2) {
-            str.append("]");
+        i=0;
+        StringBuilder s = new StringBuilder();
+        s.append('[');
+        inOrder(root,s);
+        if (s.length() < 2) {
+            s.append("]");
         } else {
-            str.delete(str.length()-2, str.length());
-            str.append("]");
+            s.delete(s.length()-2, s.length());
+            s.append("]");
         }
-        return str.toString();
+        return s.toString();
     }
 
     @Override
     public boolean contains(Object o) {
-        for (Object el : A) {
-            if (el == o ){
+        Node<E> current = root;
+        boolean flag=false;
+        while(!flag && amount>0){
+            if(current==null) return false;
+            if(current!=null && compareTo(current.getvalue(),(E)o)>0){
+                current=current.getLeftChild();
+            }
+            if(current!=null && compareTo(current.getvalue(),(E)o)<0){
+                current=current.getRightChild();
+            }
+            if(current!=null && compareTo(current.getvalue(),(E)o)==0){
                 return true;
             }
         }
@@ -89,14 +233,13 @@ public class TaskB<E>  implements NavigableSet<E> {
 
     @Override
     public Iterator<E> iterator() {
-        Iterator<E> iterator = (Iterator<E>) Arrays.stream(A).iterator();
-        return iterator;
+        return null;
     }
 
     @Override
     public void clear() {
         amount=0;
-        A= new Object[100];
+        root = null;
     }
 
     @Override
@@ -111,16 +254,20 @@ public class TaskB<E>  implements NavigableSet<E> {
 
     @Override
     public E first() {
-        if(amount>=0){
-            return (E)A[0];
+        if(amount>0){
+            Node<E> current = root;
+            while(current.leftChild!=null){current= current.getLeftChild();}
+            return current.data;
         }
         else return null;
     }
 
     @Override
     public E last() {
-        if(amount>=0){
-            return (E)A[amount-1];
+        if(amount>0){
+            Node<E> current = root;
+            while(current.rightChild!=null){current= current.getRightChild();}
+            return current.data;
         }
         else return null;
     }
