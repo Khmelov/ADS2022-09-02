@@ -9,8 +9,6 @@ public class TaskB<E>  implements NavigableSet<E> {
     public int compareTo(E o, E o1) {
         return Integer.compare((int)o, (int)o1);
     }
-    int arr[]=new int[100];
-
     public class Node<E> {
         private E data;
         private Node<E> leftChild;
@@ -192,7 +190,6 @@ public class TaskB<E>  implements NavigableSet<E> {
         inOrder(root.leftChild,str);
         str.append(root.data);
         str.append(", ");
-        if(amount>0) arr[i]=(int)root.data;
         i++;
         inOrder(root.rightChild,str);
     }
