@@ -46,18 +46,35 @@ public class A_Knapsack {
             gold[i]=scanner.nextInt();
         }
 
+        int[][] weight_table = new int[n + 1][w + 1];
+        for(int i = 0; i <= n; ++i)
+            weight_table[i][0] = 0;
+        for(int i = 0; i<= w; ++i)
+            weight_table[0][i] = 0;
 
-        int result = 0;
+
+        for(int i = 1; i <= n; ++i){
+            for(int j = 1; j <= w; ++j){
+                if(gold[i-1] > j)
+                    weight_table[i][j] = weight_table[i-1][j];
+                else {
+                    weight_table[i][j] = Math.max(weight_table[i-1][j], gold[i-1] + weight_table[i][j - gold[i-1]]);
+                }
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+       return weight_table[n][w];
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson08/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/rusakovich/lesson08/dataA.txt");
         A_Knapsack instance = new A_Knapsack();
+        long startTime = System.currentTimeMillis();
         int res=instance.getMaxWeight(stream);
-        System.out.println(res);
+        long finishTime = System.currentTimeMillis();
+        System.out.println("Knapsack weight: " + res);
+        System.out.println("Time: " + (finishTime - startTime) + "ms");
     }
 }
