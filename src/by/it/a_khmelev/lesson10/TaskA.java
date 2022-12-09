@@ -2,10 +2,12 @@ package by.it.a_khmelev.lesson10;
 
 import java.util.*;
 
-public class TaskA<E>  implements NavigableSet<E> {
+public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
 
-    //Создайте БЕЗ использования других классов (включая абстрактные)
-    //аналог дерева TreeSet
+    //Создайте аналог дерева TreeSet БЕЗ использования других классов СТАНДАРТНОЙ БИБЛИОТЕКИ
+    //Не нужно на массивах это делать или маскируя в поля TreeSet, TreeMap и т.д.
+    //Можно реализовать класс Node с двумя потомками такого же типа,
+    //а уже в нем должно быть поле элемента E. Далее на этой основе ожидается бинарное дерево.
 
     //Обязательные к реализации методы и конструкторы
     public TaskA() {
