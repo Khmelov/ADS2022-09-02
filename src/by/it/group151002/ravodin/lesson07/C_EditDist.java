@@ -49,13 +49,62 @@ import java.util.Scanner;
 
 public class C_EditDist {
 
+    static int getEqNum(char first, char second)
+    {
+        if (first == second)
+            return 0;
+        else
+            return 1;
+    }
     String getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
+        int[][] mat = new int[one.length() + 1][two.length() + 1];
+        char[][] ops = new char[one.length() + 1][two.length() + 1];
+        for (int i = 0; i <= one.length(); i++) {
+            mat[i][0] = i;
+            ops[i][0] = 'D';
+        }
+        for (int i = 0; i <= two.length(); i++) {
+            mat[0][i] = i;
+            ops[0][i] = 'I';
+        }
 
-        String result = "";
+        for (int i = 1; i <= one.length(); i++)
+            for (int j = 1; j <= two.length(); j++) {
+                int cost = getEqNum(one.charAt(i - 1), two.charAt(j - 1));
+                if(mat[i][j - 1] < mat[i - 1][j] && mat[i][j - 1] < mat[i - 1][j - 1] + cost) {
+                    mat[i][j] = mat[i][j - 1] + 1;
+                    ops[i][j] = '+';
+                }
+                else if(mat[i - 1][j] < mat[i - 1][j - 1] + cost) {
+                    mat[i][j] = mat[i - 1][j] + 1;
+                    ops[i][j] = '-';
+                }
+                else {
+                    mat[i][j] = mat[i - 1][j - 1] + cost;
+                    ops[i][j] = (cost == 1) ? '~' : '#';
+                }
+            }
+        String str = "";
+        int i = one.length(), j = two.length();
+        do {
+            char c = ops[i][j];
+            str += c;
+            str += ',';
+            if(c == '~' || c == '#') {
+                i--;
+                j--;
+            }
+            else if(c == '-') {
+                i --;
+            }
+            else {
+                j --;
+            }
+        } while((i != 0) || (j != 0));
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return str;
     }
 
 

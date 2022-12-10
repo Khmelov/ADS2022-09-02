@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,16 +12,16 @@ public class Lesson8Test {
     @Test
     public void A() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson08/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/rusakovich/lesson08/dataA.txt");
         A_Knapsack instance = new A_Knapsack();
         int res=instance.getMaxWeight(stream);
-        assertEquals("A failed", res, 14);
+        assertEquals("A failed", res, 10);
     }
 
     @Test
     public void B() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson08/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/rusakovich/lesson08/dataB.txt");
         B_Knapsack instance = new B_Knapsack();
         int res=instance.getMaxWeight(stream);
         assertEquals("B failed", res, 9);
@@ -29,10 +30,17 @@ public class Lesson8Test {
     @Test
     public void C() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson08/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/rusakovich/lesson08/dataC.txt");
         C_Stairs instance = new C_Stairs();
-        int res=instance.getMaxSum(stream);
-        assertEquals("C failed", res, 3);
+        Scanner scanIn = new Scanner(stream);
+        int n = scanIn.nextInt();
+        int res=instance.getMaxSum(n, instance.get_arr(scanIn, n));
+        assertEquals("C0 failed", res, 1);
+        n = scanIn.nextInt();
+        res=instance.getMaxSum(n, instance.get_arr(scanIn, n));
+        assertEquals("C1 failed", res, -6);
+
+
     }
 
 }
