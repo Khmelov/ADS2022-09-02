@@ -1,6 +1,7 @@
 package by.it.group151004.belsky.lesson11;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class Edge {
     private Vertex from;
@@ -78,29 +79,42 @@ class Vertex {
 }
 
 public class Graph {
-    ArrayList<Vertex> vertices;
+    private HashMap<String, Vertex> vertices = new HashMap<>();;
+    private ArrayList<Edge> edges = new ArrayList<>();
 
-    public Graph() {
-        this.vertices = new ArrayList<>();
-    }
-
-    public Graph(ArrayList<Vertex> vertices) {
-        this.vertices = vertices;
-    }
+    public Graph() { }
 
     public void addVertex(Vertex v) {
-        vertices.add(v);
+        vertices.put(v.getName(), v);
+    }
+
+    public Vertex getVertex(String name) {
+        return vertices.get(name);
+    }
+
+    public HashMap<String, Vertex> getVertices() {
+        return vertices;
+    }
+
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+
+    public void addEdge(String fromVert, String toVert, float weight) {
+        Edge newEdge = new Edge(vertices.get(fromVert), vertices.get(toVert), weight);
+        edges.add(newEdge);
+        vertices.get(fromVert).addEdge(newEdge);
     }
 
     public void removeVertex(Vertex v) {
         vertices.remove(v);
     }
 
-    public int size() {
+    public int verticesCount() {
         return vertices.size();
     }
 
-    public int indexOf(Vertex v) {
-        return vertices.indexOf(v);
-    }
+//    public int indexOf(Vertex v) {
+//        return vertices.indexOf(v);
+//    }
 }
