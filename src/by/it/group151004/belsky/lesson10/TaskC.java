@@ -232,7 +232,16 @@ public class TaskC<E extends Comparable<E>>  implements NavigableSet<E> {
 
     @Override
     public E floor(E e) {
-        return null;
+        ArrayList<E> list = new ArrayList<>();
+        traversalAL(list, root);
+        E result = null;
+        for (E listEl : list) {
+            if (e.compareTo(listEl) < 0) {
+                break;
+            }
+            result = listEl;
+        }
+        return result;
     }
 
     @Override
@@ -259,17 +268,52 @@ public class TaskC<E extends Comparable<E>>  implements NavigableSet<E> {
 
     @Override
     public E higher(E e) {
+        ArrayList<E> list = new ArrayList<>();
+        traversalAL(list, root);
+        for (E listEl : list) {
+            if (e.compareTo(listEl) < 0) {
+                return listEl;
+            }
+        }
         return null;
     }
 
     @Override
     public E pollFirst() {
-        return null;
+        Node <E, Boolean> loopPt = root;
+        E result;
+        if (loopPt == null) return null;
+        if (loopPt.getLeft() == null) {
+            result = root.getKey();
+            remove(result);
+            return result;
+        }
+
+        while (loopPt.getLeft().getLeft() != null) {
+            loopPt = loopPt.getLeft();
+        }
+        result = loopPt.getLeft().getKey();
+        remove(result);
+        return result;
     }
 
     @Override
     public E pollLast() {
-        return null;
+        Node <E, Boolean> loopPt = root;
+        E result;
+        if (loopPt == null) return null;
+        if (loopPt.getRight() == null) {
+            result = root.getKey();
+            remove(result);
+            return result;
+        }
+
+        while (loopPt.getRight().getRight() != null) {
+            loopPt = loopPt.getRight();
+        }
+        result = loopPt.getRight().getKey();
+        remove(result);
+        return result;
     }
 
 
