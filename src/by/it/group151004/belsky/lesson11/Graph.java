@@ -56,6 +56,10 @@ class Vertex {
         outEdges.add(e);
     }
 
+    public void addEdge(Vertex v, float weight) {
+        outEdges.add(new Edge(this, v, weight));
+    }
+
     public void removeEdge(Edge e) {
         outEdges.remove(e);
     }

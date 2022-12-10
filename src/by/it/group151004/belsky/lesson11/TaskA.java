@@ -41,9 +41,6 @@ public class TaskA {
         vG.addEdge(new Edge(vG, vF, 1));
         vG.addEdge(new Edge(vG, vH, 1));
 
-
-        Vertex startV = vA;
-
         HashMap<Vertex, Float> map = new HashMap<>();
         map.put(vA, Float.POSITIVE_INFINITY);
         map.put(vB, Float.POSITIVE_INFINITY);
@@ -71,23 +68,5 @@ public class TaskA {
             System.out.println(vertex.getName()+": "+aFloat);
         }));
 
-    }
-}
-
-class PQueueElement {
-    private final Vertex vertex;
-    private final float qWeight;
-
-    public PQueueElement(Vertex vertex, float qWeight) {
-        this.vertex = vertex;
-        this.qWeight = qWeight;
-    }
-
-    public Vertex getVertex() {
-        return vertex;
-    }
-
-    public float getqWeight() {
-        return qWeight;
     }
 }
