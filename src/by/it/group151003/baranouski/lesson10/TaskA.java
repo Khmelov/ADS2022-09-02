@@ -141,14 +141,11 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
                 m_node = child;
             }
         }
-        ++m_size;
         return true; //Case where we can't delete node and return false is above
     }
 
     @Override
-    public boolean remove(Object o) {
-        return delete(m_node, (E) o);
-    } //Calls recursive function
+    public boolean remove(Object o) { --m_size; return delete(m_node, (E) o); } //Calls recursive function
 
     private String str(Node node, StringJoiner txt) {
         if (node == null)
@@ -161,7 +158,7 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
 
     @Override
     public String toString() { //Calls recursive function
-        StringJoiner txt = new StringJoiner(",", "[", "]");;
+        StringJoiner txt = new StringJoiner(", ", "[", "]");;
         return str(m_node, txt);
     }
     /////////////////////////////////////////////////////////////////////////
