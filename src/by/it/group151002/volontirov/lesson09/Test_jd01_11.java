@@ -30,6 +30,7 @@ public class Test_jd01_11 extends HomeWork {
             assertEquals("ошибка add или toString() не работает", e.toString(), a.toString());
         }
         assertEquals("метод add(T e) или toString не работает", e.toString(), a.toString());
+
         System.out.println("add(T e) toString() ok: " + a);
         System.out.flush();
 
@@ -150,7 +151,7 @@ public class Test_jd01_11 extends HomeWork {
         }
     };
 
-    @Test(timeout = 1500)
+    @Test
     public void testTaskC__SetC() throws Exception {
         System.out.println("\nC. Диагностика обязательных к реализации методов:");
         Class<?> aclass = findClass("SetC");
