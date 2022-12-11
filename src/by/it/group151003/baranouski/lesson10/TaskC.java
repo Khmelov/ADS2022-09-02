@@ -142,14 +142,11 @@ public class TaskC<E extends Comparable<E>>  implements NavigableSet<E> {
                 m_node = child;
             }
         }
-        ++m_size;
         return true; //Case where we can't delete node and return false is above
     }
 
     @Override
-    public boolean remove(Object o) {
-        return delete(m_node, (E) o);
-    } //Calls recursive function
+    public boolean remove(Object o) { --m_size; return delete(m_node, (E) o); } //Calls recursive function
 
     @Override
     public boolean contains(Object o) {
@@ -213,12 +210,13 @@ public class TaskC<E extends Comparable<E>>  implements NavigableSet<E> {
             @Override
             public void remove() {
                 del(m_node, 0);
+                --m_size;
             }
         };
     }
 
     @Override
-    public void clear() { m_node = null; }
+    public void clear() { m_node = null; m_size = 0; }
 
     @Override
     public boolean isEmpty() { return m_node == null; }
@@ -330,6 +328,7 @@ public class TaskC<E extends Comparable<E>>  implements NavigableSet<E> {
             m_node = null;
         else
             grandParent.m_leftNode = null;
+        --m_size;
         return info;
     }
 
@@ -351,6 +350,7 @@ public class TaskC<E extends Comparable<E>>  implements NavigableSet<E> {
             m_node = null;
         else
             grandParent.m_rightNode = null;
+        --m_size;
         return info;
     }
 
@@ -365,7 +365,7 @@ public class TaskC<E extends Comparable<E>>  implements NavigableSet<E> {
 
     @Override
     public String toString() {
-        StringJoiner txt = new StringJoiner(",", "[", "]");;
+        StringJoiner txt = new StringJoiner(", ", "[", "]");;
         return str(m_node, txt);
     }
     /////////////////////////////////////////////////////////////////////////
