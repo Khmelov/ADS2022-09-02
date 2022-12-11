@@ -57,6 +57,25 @@ public class A_QSort {
         }
     }
 
+    void quickSort(Segment[] arr, int leftSide, int rightSide){
+        if (leftSide < rightSide) {
+            Segment x = arr[leftSide], temp;
+            int j = leftSide;
+            for (int i = leftSide + 1; i < rightSide; i++) {
+                if (arr[i].compareTo(x) < 0) {
+                    j++;
+                    temp = arr[j];
+                    arr[j] = arr[i];
+                    arr[i] = temp;
+                }
+            }
+            temp = arr[j];
+            arr[j] = arr[leftSide];
+            arr[leftSide] = temp;
+            quickSort(arr, leftSide, j - 1);
+            quickSort(arr, j + 1, rightSide);
+        }
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -64,27 +83,32 @@ public class A_QSort {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //число отрезков отсортированного массива
         int n = scanner.nextInt();
-        Segment[] segments=new Segment[n];
+        Segment[] segments = new Segment[n];
         //число точек
         int m = scanner.nextInt();
-        int[] points=new int[m];
-        int[] result=new int[m];
+        int[] arrOfPoints = new int[m];
+        int[] result = new int[m];
 
         //читаем сами отрезки
         for (int i = 0; i < n; i++) {
             //читаем начало и конец каждого отрезка
-            segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
+            segments[i] = new Segment(scanner.nextInt(), scanner.nextInt());
         }
         //читаем точки
         for (int i = 0; i < m; i++) {
-            points[i]=scanner.nextInt();
+            arrOfPoints[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-
-
-
+        quickSort(segments, 0, n - 1);
+        for (int i = 0; i < m; i++) {
+            int k = 0;
+            while(k < n && arrOfPoints[i] > segments[k].stop) k++;
+            result[i] = k;
+            while(k < n && arrOfPoints[i] >= segments[k].start) k++;
+            result[i] = k - result[i];
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
