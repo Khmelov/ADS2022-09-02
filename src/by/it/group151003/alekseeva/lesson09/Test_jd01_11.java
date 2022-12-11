@@ -146,7 +146,7 @@ public class Test_jd01_11 extends HomeWork {
         for (Short i : arr) {
             if (!a.contains(i)) {
                 fail(message+"\n+!a.contains("+i+")\nexpected:"+e.toString()+")\nactual:"+a.toString());
-            }
+            } 
         }
     };
 

@@ -47,7 +47,7 @@ public class SetC<T> implements Set<T> {
     @Override
     public boolean add(T t) {
         if (!contains(t)) {
-            if (currentSize == array.length - 1) {
+            if (currentSize == array.length-1) {
                 Object[] newArray = new Object[array.length * 2];
                 System.arraycopy(array, 0, newArray, 0, currentSize);
                 array = newArray;

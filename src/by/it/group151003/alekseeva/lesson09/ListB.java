@@ -39,7 +39,7 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean add(T e) {
-        if (currentSize == array.length - 1) {
+        if (currentSize == array.length-1) {
             Object[] newArray = new Object[array.length * 2];
             System.arraycopy(array, 0, newArray, 0, currentSize);
             array = newArray;
