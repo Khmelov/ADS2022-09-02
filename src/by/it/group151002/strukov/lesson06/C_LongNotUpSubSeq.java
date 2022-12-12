@@ -52,7 +52,7 @@ public class C_LongNotUpSubSeq {
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int[] index = new int[n];
         int[] prev = new int[n];
-        int  length = 0;
+        int length = 0;
         int left, right, mid;
         for (int i = 0; i < n; i++) {
             left = 1;

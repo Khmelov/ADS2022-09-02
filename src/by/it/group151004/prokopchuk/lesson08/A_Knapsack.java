@@ -3,6 +3,7 @@ package by.it.group151004.prokopchuk.lesson08;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -48,6 +49,16 @@ public class A_Knapsack {
 
 
         int result = 0;
+        Arrays.sort(gold);
+        int i = n-1;
+        while (i > -1 && w!= 0) {
+            if (gold[i] <= w) {
+                w-= gold[i];
+                result += gold[i];
+            } else {
+                i--;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -55,7 +66,7 @@ public class A_Knapsack {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson08/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/prokopchuk/lesson08/dataA.txt");
         A_Knapsack instance = new A_Knapsack();
         int res=instance.getMaxWeight(stream);
         System.out.println(res);

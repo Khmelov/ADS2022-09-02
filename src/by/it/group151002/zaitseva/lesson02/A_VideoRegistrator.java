@@ -33,6 +33,8 @@ public class A_VideoRegistrator {
             if (events[i] > finishtime){
                 result.add(events[i]);
                 finishtime = events[i] + workDuration;
+
+
             }
         }
         //i - это индекс события events[i]
