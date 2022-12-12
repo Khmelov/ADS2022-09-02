@@ -52,7 +52,41 @@ public class C_LongNotUpSubSeq {
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
 
+        int[] iaPrev = new int[n];
+        int[] iaMin = new int[n + 1];
+        iaMin[0] = -1;
 
+        for(int i = 0; i < n; ++i)
+        {
+            int low = 1;
+            int high = result + 1;
+            while(low < high)
+            {
+                int mid = low + (high - low) / 2;
+                if(m[i] <= m[iaMin[mid]])
+                    low = mid + 1;
+                else
+                    high = mid;
+            }
+
+            int iNewLength = low;
+
+            iaPrev[i] = iaMin[iNewLength - 1];
+            iaMin[iNewLength] = i;
+
+            if(iNewLength > result)
+                result = iNewLength;
+        }
+
+        int k = 1 + iaMin[result];
+        for(int i = result - 1; i >= 0; --i)
+        {
+            iaMin[i] = k;
+            k = 1 + iaPrev[k - 1];
+        }
+        for(int i = 0; i < result; ++i)
+            System.out.printf("%d ", iaMin[i]);
+        System.out.println("");
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
