@@ -19,10 +19,6 @@ public class C_Stairs {
     }
 
     public int getMaxSum(int[] stairs) {
-        if (stairs.length == 1) {
-            return stairs[0];
-        }
-
         int[] maxSum = new int[stairs.length + 1];
 
         maxSum[0] = 0;

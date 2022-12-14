@@ -43,8 +43,8 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            this.start = start < stop ? start : stop;
+            this.stop = stop > start ? stop : start;
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
         }
@@ -52,11 +52,46 @@ public class A_QSort {
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
+            if(this.start < o.start) return -1;
+            if(this.start > o.start) return 1;
             return 0;
         }
     }
 
+    void quickSort(Segment[] array, int low, int high) {
+        if (array.length == 0)
+            return;
+
+        if (low >= high)
+            return;
+
+        int middle = low + (high - low) / 2;
+
+        int i = low, j = high;
+        while (i <= j) {
+            while (array[i].compareTo(array[middle]) < 0) {
+                i++;
+            }
+
+            while (array[j].compareTo(array[middle]) > 0) {
+                j--;
+            }
+
+            if (i <= j) {
+                Segment temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+                i++;
+                j--;
+            }
+        }
+
+        if (low < j)
+            quickSort(array, low, j);
+
+        if (high > i)
+            quickSort(array, i, high);
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -79,11 +114,24 @@ public class A_QSort {
         for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        quickSort(segments, 0, segments.length - 1);
 
+        int amount;
+        for (int i = 0; i < m; i++) {
+            amount = 0;
+            for (Segment camera : segments){
+                if (points[i] >= camera.start && points[i] <= camera.stop) {
+                    amount++;
+                } else {
+                    break;
+                }
+            }
+            result[i] = amount;
+        }
 
-
+        for (Segment seg: segments) {
+            System.out.println(seg.start + " " + seg.stop);
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
