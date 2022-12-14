@@ -21,6 +21,7 @@ public class TaskA<E> implements NavigableSet<E> {
         TaskA<Integer> tree = new TaskA<>();
         tree.add(8);
         tree.add(7);
+        tree.SetKey(null);
     }
 
     @Override
@@ -160,7 +161,7 @@ public class TaskA<E> implements NavigableSet<E> {
     @Override
     public String toString() {
         if (this.value == null){
-            return "[ ]";
+            return "[]";
         }
         StringBuilder sb = new StringBuilder();
         sb.append("[");
