@@ -3,6 +3,7 @@ package by.it.group151004.prokopchuk.lesson08;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -43,7 +44,20 @@ public class C_Stairs {
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         int result = 0;
-
+        int i = 0;
+        while (i < n) {
+            if (stairs[i] > 0) {
+                result+=stairs[i];
+            } else {
+                if ((i+1 != n) && (stairs[i+1] > stairs[i])) {
+                    i++;
+                    result+= stairs[i];
+                } else {
+                    result += stairs[i];
+                }
+            }
+            i++;
+        }
 
 
 
@@ -54,7 +68,7 @@ public class C_Stairs {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson08/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151004/prokopchuk/lesson08/dataC.txt");
         C_Stairs instance = new C_Stairs();
         int res=instance.getMaxSum(stream);
         System.out.println(res);
