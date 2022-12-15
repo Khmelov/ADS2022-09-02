@@ -3,6 +3,7 @@ package by.it.group151002.ravodin.lesson07;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -40,12 +41,36 @@ import java.util.Scanner;
 public class B_EditDist {
 
 
+
+    // check for distinct characters
+    // in str1 and str2
+
+    static int getEqNum(char first, char second)
+    {
+        if (first == second)
+            return 0;
+        else
+            return 1;
+    }
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-        int result = 0;
+        int[][] mat = new int[one.length() + 1][two.length() + 1];
+        for (int i = 0; i <= one.length(); i++)
+        {
+            for (int j = 0; j <= two.length(); j++) {
+                if (i == 0) {
+                    mat[i][j] = j;
+                }
+                else if (j == 0) {
+                    mat[i][j] = i;
+                }
+                else {
+                    mat[i][j] = Math.min(mat[i - 1][j - 1] + getEqNum(one.charAt(i - 1), two.charAt(j - 1)),
+                                Math.min(mat[i - 1][j] + 1, mat[i][j - 1] + 1));
+                }
+            }
+        }
+        int result = mat[one.length()][two.length()];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

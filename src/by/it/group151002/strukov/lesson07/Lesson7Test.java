@@ -25,7 +25,7 @@ public class Lesson7Test {
     @Test
     public void C() throws Exception {
         C_EditDist instance = new C_EditDist();
-        assertEquals("C1 failed", instance.getDistanceEdinting("ab","ab"),"#,#,");
+        assertEquals("C1 failed", instance.getDistanceEdinting("ab","ab"),"#,#");
         //путей может быть много, поэтому тут жестко проверить все сложно
         //надо найти и проверить их все, что делает тест сложнее реализации
         //возможно, что хватит только подсчета повторов.

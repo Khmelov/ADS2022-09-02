@@ -43,8 +43,13 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if(start <= stop){
+                this.start = start;
+                this.stop = stop;
+            }else{
+                this.start = stop;
+                this.stop = start;
+            }
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
         }
@@ -53,9 +58,41 @@ public class A_QSort {
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
 
-            return 0;
+            return Integer.compare(start, o.start);
         }
     }
+
+    private void swap(Segment[] segments, int i, int j) {
+        Segment temp = segments[i];
+        segments[i] = segments[j];
+        segments[j] = temp;
+    }
+
+    private void quicksort(Segment[] segments, int left, int right) {
+        if (left >= right)
+            return;
+        int i = left, j = right;
+        Segment pivot = segments[left + (right - left) / 2];
+
+        while (i <= j) {
+            while (segments[i].compareTo(pivot) == -1) {
+                i++;
+            }
+            while (segments[j].compareTo(pivot) == 1) {
+                j--;
+            }
+            if (i <= j) {
+                swap(segments, i, j);
+                i++;
+                j--;
+            }
+        }
+        if (left < j)
+            quicksort(segments, left, j);
+        if (i < right)
+            quicksort(segments, i, right);
+    }
+
 
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
@@ -81,7 +118,14 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
+        quicksort(segments, 0, segments.length - 1);
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (points[i]>=segments[j].start && points[i]<=segments[j].stop){
+                    result[i]++;
+                }
+            }
+        }
 
 
 
