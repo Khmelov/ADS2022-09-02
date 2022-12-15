@@ -2,212 +2,213 @@ package by.it.group151002.bobrik.lesson10;
 
 import java.util.*;
 
-public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
+public class TaskA<E>  implements NavigableSet<E> {
 
     //Создайте БЕЗ использования других классов (включая абстрактные)
     //аналог дерева TreeSet
 
     //Обязательные к реализации методы и конструкторы
-    public TaskA() {
+//    public TaskA() {
+//    }
+
+    public int size = 0;
+    public Node<E> root;
+    public int compareTo(E o1, E o2)
+    {
+        return Integer.compare((int)o1, (int)o2);
     }
 
-    public class Node implements Comparable<E>  {
-        E data;
+    public class Node<E>
+    {
+        //sorry for public, but I'm too lazy
+        public E data;
+        public Node<E> left;
+        public Node<E> right;
+        public Node<E> parent;
 
-        Node left;
-        Node right;
-        Node parent;
-
-        boolean color;
-
-        public Node(E data) {
+        public Node(E data)
+        {
             this.data = data;
-        }
-
-        @Override
-        public int compareTo(E o) {
-            return data.compareTo(o);
-        }
-    }
-
-    private Node root = null;
-
-    private void replaceParentsChild(Node parent, Node oldChild, Node newChild) {
-        if (parent == null) {
-            root = newChild;
-        } else if (parent.left == oldChild) {
-            parent.left = newChild;
-        } else if (parent.right == oldChild) {
-            parent.right = newChild;
-        } else {
-            throw new IllegalStateException("Node is not a child of its parent");
-        }
-
-        if (newChild != null) {
-            newChild.parent = parent;
-        }
-    }
-
-    private void rotateRight(Node node) {
-        Node parent = node.parent;
-        Node leftChild = node.left;
-
-        node.left = leftChild.right;
-        if (leftChild.right != null) {
-            leftChild.right.parent = node;
-        }
-
-        leftChild.right = node;
-        node.parent = leftChild;
-
-        replaceParentsChild(parent, node, leftChild);
-    }
-    private void rotateLeft(Node node) {
-        Node parent = node.parent;
-        Node rightChild = node.right;
-
-        node.right = rightChild.left;
-        if (rightChild.left != null) {
-            rightChild.left.parent = node;
-        }
-
-        rightChild.left = node;
-        node.parent = rightChild;
-
-        replaceParentsChild(parent, node, rightChild);
-    }
-    private Node getUncle(Node parent) {
-        Node grandparent = parent.parent;
-        if (grandparent.left == parent) {
-            return grandparent.right;
-        } else if (grandparent.right == parent) {
-            return grandparent.left;
-        } else {
-            return null;
-        }
-    }
-    private void fixRedBlackPropertiesAfterInsert(Node node) {
-        Node parent = node.parent;
-
-        // Case 1: Parent is null, we've reached the root, the end of the recursion
-        if (parent == null) {
-            // Uncomment the following line if you want to enforce black roots (rule 2):
-            // node.color = BLACK;
-            return;
-        }
-
-        // Parent is black --> nothing to do
-        if (parent.color == true) {
-            return;
-        }
-
-        // From here on, parent is red
-        Node grandparent = parent.parent;
-
-        // Case 2:
-        // Not having a grandparent means that parent is the root. If we enforce black roots
-        // (rule 2), grandparent will never be null, and the following if-then block can be
-        // removed.
-        if (grandparent == null) {
-            // As this method is only called on red nodes (either on newly inserted ones - or -
-            // recursively on red grandparents), all we have to do is to recolor the root black.
-            parent.color = true;
-            return;
-        }
-
-        // Get the uncle (may be null/nil, in which case its color is BLACK)
-        Node uncle = getUncle(parent);
-
-        // Case 3: Uncle is red -> recolor parent, grandparent and uncle
-        if (uncle != null && uncle.color == false) {
-            parent.color = true;
-            grandparent.color = false;
-            uncle.color = true;
-
-            // Call recursively for grandparent, which is now red.
-            // It might be root or have a red parent, in which case we need to fix more...
-            fixRedBlackPropertiesAfterInsert(grandparent);
-        }
-
-        // Parent is left child of grandparent
-        else if (parent == grandparent.left) {
-            // Case 4a: Uncle is black and node is left->right "inner child" of its grandparent
-            if (node == parent.right) {
-                rotateLeft(parent);
-
-                // Let "parent" point to the new root node of the rotated sub-tree.
-                // It will be recolored in the next step, which we're going to fall-through to.
-                parent = node;
-            }
-
-            // Case 5a: Uncle is black and node is left->left "outer child" of its grandparent
-            rotateRight(grandparent);
-
-            // Recolor original parent and grandparent
-            parent.color = true;
-            grandparent.color = false;
-        }
-
-        // Parent is right child of grandparent
-        else {
-            // Case 4b: Uncle is black and node is right->left "inner child" of its grandparent
-            if (node == parent.left) {
-                rotateRight(parent);
-
-                // Let "parent" point to the new root node of the rotated sub-tree.
-                // It will be recolored in the next step, which we're going to fall-through to.
-                parent = node;
-            }
-
-            // Case 5b: Uncle is black and node is right->right "outer child" of its grandparent
-            rotateLeft(grandparent);
-
-            // Recolor original parent and grandparent
-            parent.color = true;
-            grandparent.color = false;
         }
     }
 
     @Override
     public boolean add(E key) {
-        Node node = root;
-        Node parent = null;
+        Node<E> curr = root;
+        Node<E> elem = new Node<>(key);
+        if (!contains(key))
+        {
+            if (root == null)
+            {
+                root = new Node(key);
+//                root = elem;
+                root.parent = null;
+                size++;
+                return true;
+            }
+            else
+            {
+                boolean isInserted = false;
+                while (!isInserted)
+                {
+                    if (compareTo(curr.data, key) > 0)
+                    {
+                        if (curr.left == null)
+                        {
+                            curr.left = elem;
+                            curr.left.parent = curr;
+                            size++;
+                            return true;
+                        }
 
-        // Traverse the tree to the left or right depending on the key
-        while (node != null) {
-            parent = node;
-            if (key.compareTo(node.data) < 0) {
-                node = node.left;
-            } else if (key.compareTo(node.data) > 0) {
-                node = node.right;
+                        curr = curr.left;
+                    }
+                    else
+                    {
+                        if (curr.right == null)
+                        {
+                            curr.right = elem;
+                            curr.right.parent = curr;
+                            size++;
+                            return true;
+                        }
+
+                        curr = curr.right;
+                    }
+                }
             }
         }
 
-        // Insert new node
-        Node newNode = new Node(key);
-        newNode.color = false;
-        if (parent == null) {
-            root = newNode;
-        } else if (key.compareTo(parent.data) > 0) {
-            parent.left = newNode;
-        } else {
-            parent.right = newNode;
-        }
-        newNode.parent = parent;
-
-        fixRedBlackPropertiesAfterInsert(newNode);
-
-        return true;
-    }
-
-    @Override
-    public boolean remove(Object o) {
         return false;
     }
 
     @Override
+    public boolean remove(Object o) {
+        Node<E> curr = root;
+        boolean flag = false;
+        while(!flag && size > 0){
+            if(curr == null) return false;
+            if(curr != null && compareTo(curr.data, (E) o) > 0){
+                curr=curr.left;
+            } else
+            if(curr!=null && compareTo(curr.data,(E)o) < 0){
+                curr=curr.right;
+            }
+            if(curr!=null && compareTo(curr.data,(E)o)==0){
+                flag = true;
+            }
+        }
+        if(curr.left==null && curr.right==null){
+            if(curr.parent==null){
+                root=null;
+            } else
+            if(curr.parent.right==curr){
+                curr.parent.right=null;
+            }else {
+                curr.parent.left = null;
+            }
+            size--;
+            return true;
+        }
+        if(curr.left==null || curr.right==null){
+            if(curr.left==null){
+                if(curr.parent==null){
+                    root=curr.right;
+                } else
+                if(curr.parent.left==curr){
+                    curr.right.parent=curr.parent;
+                    curr.parent.left=curr.right;
+                } else
+                if(curr.parent.right==curr){
+                    curr.right.parent=curr.parent;
+                    curr.parent.right = curr.right;
+                }
+            }
+            if(curr.right==null){
+                if(curr.parent==null){
+                    root=curr.left;
+                } else
+                if(curr.parent!=null && curr.parent.right==curr){
+                    curr.left.parent=curr.parent;
+                    curr.parent.right=curr.left;
+                } else
+                if(curr.parent!=null && curr.parent.left==curr){
+                    curr.left.parent=curr.parent;
+                    curr.parent.left = curr.left;
+                }
+            }
+            size--;
+            return true;
+        }
+        if(curr.left!=null && curr.right!=null){
+            Node<E> tmp;
+            tmp=curr.right;
+            boolean flag1=false;
+            while(tmp.left!=null){
+                tmp=tmp.left;
+                flag1=true;
+            }
+            if(flag1){
+                if(tmp.right!=null){
+                    tmp.right.parent=tmp.parent;
+                    tmp.parent.left=tmp.right;
+                    curr.data=tmp.data;
+                }
+                if(tmp.right==null){
+                    tmp.parent.left=null;
+                    curr.data=tmp.data;
+                }
+                size--;
+                return true;
+            }
+            else if(!flag1){
+                if(tmp.right!=null) {
+                    tmp.right.parent = tmp.parent;
+                    tmp.parent.right = tmp.right;
+                    curr.data = tmp.data;
+                }
+                if(tmp.right==null){
+                    tmp.parent.right=null;
+                    curr.data=tmp.data;
+                }
+                size--;
+                return true;
+            }
+            size--;
+            return true;
+        }
+
+        return false;
+    }
+
+
+    void LRB(Node<E> root, StringBuilder res)
+    {
+        if (root != null)
+        {
+            LRB(root.left, res);
+            res.append(root.data);
+            res.append(", ");
+            LRB(root.right, res);
+        }
+
+    }
+    @Override
     public String toString() {
-        return null;
+        StringBuilder res = new StringBuilder();
+        res.append('[');
+        LRB(root, res);
+        if (res.length() < 2)
+        {
+            res.append(']');
+        }
+        else
+        {
+            res.delete(res.length() - 2, res.length());
+            res.append("]");
+        }
+
+        return res.toString();
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
@@ -218,7 +219,30 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        Node<E> curr = root;
+        boolean isFound = false;
+        while (size >= 1 && isFound == false)
+        {
+            if (curr == null)
+            {
+                isFound = false;
+                break;
+            }
+            else if (curr != null && compareTo(curr.data, (E) o) > 0)
+            {
+                curr = curr.left;
+            }
+            else if (curr != null && compareTo(curr.data, (E) o) < 0)
+            {
+                curr = curr.right;
+            }
+            else if (curr != null && compareTo(curr.data, (E) o) == 0)
+            {
+                isFound = true;
+            }
+        }
+
+        return isFound;
     }
 
     @Override
@@ -228,17 +252,23 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
 
     @Override
     public void clear() {
-
+        root = null;
+        size = 0;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        if (size > 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
@@ -348,11 +378,35 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
 
     @Override
     public E first() {
-        return null;
+        if (size > 0)
+        {
+            Node<E> curr = root;
+            while (curr.left != null)
+            {
+                curr = curr.left;
+            }
+            return curr.data;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public E last() {
-        return null;
+        if (size > 0)
+        {
+            Node<E> curr = root;
+            while (curr.right != null)
+            {
+                curr = curr.right;
+            }
+            return curr.data;
+        }
+        else
+        {
+            return null;
+        }
     }
 }
