@@ -86,7 +86,6 @@ public class Test_jd01_10 extends HomeWork {
                 .filter(m -> methodNames.contains(m.getName()))
                 .filter(this::notComparable)
                 .sorted((m1, m2) -> m1.getName().compareTo(m2.getName()))
-                .distinct()
                 .toList();
     }
 
@@ -95,6 +94,5 @@ public class Test_jd01_10 extends HomeWork {
                 0 == Arrays.stream(m.getParameterTypes())
                         .filter(p -> p == Comparable.class)
                         .count();
-
     }
 }
