@@ -9,8 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 @SuppressWarnings("all")
 
@@ -18,10 +17,10 @@ import static org.junit.Assert.fail;
 public class Test_jd01_11 extends HomeWork {
 
 
-    @Test(timeout = 1500)
+    @Test
     public void testTaskA__ListA() throws Exception {
         System.out.println("\nA. Диагностика обязательных к реализации методов:");
-        Class<?> aclass = findClass("ListA");
+        Class<?> aclass = findClass("List_A");
         List<Integer> a = (List<Integer>) aclass.getDeclaredConstructor().newInstance();
         List<Integer> e = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -48,6 +47,9 @@ public class Test_jd01_11 extends HomeWork {
         assertEquals("ошибка get(int index) не работает", e.get(0), a.get(0));
         System.out.println("     get(int index) ok: " + a);
         System.out.flush();
+        List_A_Checking_Methods list_a_checking_methods = new List_A_Checking_Methods();
+        boolean is_Valid = list_a_checking_methods.add_Methods_Checking();
+        assertTrue("Checking Failed", is_Valid);
     }
 
     @Test(timeout = 1500)
