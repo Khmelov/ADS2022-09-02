@@ -33,19 +33,17 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment  implements Comparable<Segment>{
         int start;
         int stop;
-
         Segment(int start, int stop){
             this.start = start;
             this.stop = stop;
         }
 
         @Override
-        public int compareTo(Object o) {
-            //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+        public int compareTo(Segment o) {
+            return Integer.compare(this.start, o.start);
         }
     }
 
@@ -68,18 +66,82 @@ public class C_QSortOptimized {
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
-        //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        quickSort(segments, 0, segments.length - 1);
 
-
+        for (int i = 0; i < points.length; i++) {
+            int index = binarySearch(segments, points[i]);
+            if (index == -1) {
+                result[i] = 0;
+            } else {
+                int count = 1;
+                int j = index - 1;
+                while (j >= 0 && segments[j].start == segments[index].start) {
+                    count++;
+                    j--;
+                }
+                j = index + 1;
+                while (j < segments.length && segments[j].start == segments[index].start) {
+                    count++;
+                    j++;
+                }
+                result[i] = count;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
+    private int binarySearch(Segment[] segments, int point) {
+        int left = 0;
+        int right = segments.length - 1;
+        int middle = 0;
+        while (left <= right) {
+            middle = (left + right) / 2;
+            if (segments[middle].start <= point && segments[middle].stop >= point) {
+                return middle;
+            } else if (segments[middle].start > point) {
+                right = middle - 1;
+            } else {
+                left = middle + 1;
+            }
+        }
+        return -1;
+    }
+    private int Accessory(Segment[] segments, int point) {
+        int count = 0;
+        for (Segment segment : segments) {
+            if (segment.start <= point && segment.stop >= point) {
+                count++;
+            }
+        }
+        return count;
+    }
+    private void quickSort(Segment[] segments, int left, int right) {
+        if (left < right) {
+            int q = partition(segments, left, right);
+            quickSort(segments, left, q - 1);
+            quickSort(segments, q + 1, right);
+        }
+    }
 
-
+    private int partition(Segment[] segments, int left, int right) {
+        Segment x = segments[right];
+        int j = left - 1;
+        for (int k = left; k < right; k++) {
+            if (segments[k].compareTo(x) <= 0) {
+                j++;
+                Segment temp = segments[j];
+                segments[j] = segments[k];
+                segments[k] = temp;
+            }
+        }
+        Segment temp = segments[j + 1];
+        segments[j + 1] = segments[right];
+        segments[right] = temp;
+        return j + 1;
+    }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataC.txt");

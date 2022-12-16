@@ -50,12 +50,61 @@ import java.util.Scanner;
 public class C_EditDist {
 
     String getDistanceEdinting(String one, String two) {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-        String result = "";
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        int m = one.length();
+        int n = two.length();
+        StringBuilder result = new StringBuilder();
+        int[][] t = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++)
+            t[i][0] = i;
+        for (int j = 1; j <= n; j++)
+            t[0][j] = j;
+        int minCost;
+        for (int i = 1; i <= m; i++)
+            for (int j = 1; j <= n; j++) {
+                minCost = one.charAt(i - 1) == two.charAt(j - 1) ? 0: 1;
+                t[i][j] = Integer.min(Integer.min(t[i - 1][j] + 1, t[i][j - 1] + 1), t[i - 1][j - 1] + minCost);
+            }
+        char costSymbol;
+        char[] a = new char[one.length()+1];
+        char[] b = new char[two.length()+1];
+        for(int i = 1; i < a.length; i++)
+            a[i] = one.charAt(i - 1);
+        for(int i = 1; i < b.length; i++)
+            b[i] = two.charAt(i - 1);
+        int i = m ;
+        int j = n;
+        do {
+            minCost = a[i] == b[j ]? 0: 1;
+            costSymbol = a[i] == b[j] ? '#': '~';
+            if (t[i][j] == t[i - 1][j - 1] + minCost){
+                result.insert(0, ',');
+                result.insert(0, costSymbol);
+                if (costSymbol == '~')
+                    result.insert(1, b[j]);;
+                i--;
+                j--;
+            } else if (t[i][j] == t[i][j - 1] + 1) {
+                result.insert(0, ',');
+                result.insert(0, '+');
+                result.insert(1, b[i ]);
+                j--;
+            }else if(t[i][j] == t[i - 1][j] + 1){
+                result.insert(0, ',');
+                result.insert(0, '-');
+                result.insert(1, a[i]);
+                i--;
+            }
+        } while ((i > 0) && (j > 0));
+        if (i > 0) {
+            result.insert(0, ',');
+            result.insert(0, '-');
+            result.insert(1, a[i]);
+        }else if (j > 0) {
+            result.insert(0, ',');
+            result.insert(0, '+');
+            result.insert(1, b[j]);
+        }
+        return result.toString();
     }
 
 

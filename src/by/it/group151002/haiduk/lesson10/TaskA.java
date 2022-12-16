@@ -3,92 +3,217 @@ package by.it.group151002.haiduk.lesson10;
 import java.util.*;
 
 public class TaskA<E>  implements NavigableSet<E> {
-    private final int INITIAL_AMOUNT = 10;
-    int curSize = 0;
-    private Object[] array = new Object[INITIAL_AMOUNT];
-
-    //Создайте БЕЗ использования других классов (включая абстрактные)
-    //аналог дерева TreeSet
-    //Обязательные к реализации методы и конструкторы
-
-    public TaskA() {
+    public int amount = 0;
+    private Node<E> root;
+    public int compareTo(E o1, E o2) {
+        return Integer.compare((int)o1, (int)o2);
     }
+    public class Node<E> {
+        private E data;
+        private Node<E> leftChild;
+        private Node<E> rightChild;
+        private Node<E> parent;
 
-    private int compareTo(E first, E second) {
-        return Integer.compare((int)first, (int)second);
-    }
-
-    private void sorting() {
-        for (int i = 0; i < curSize; i++) {
-            for (int j = 0; j < curSize - i - 1; j++) {
-                if (compareTo((E)array[j], (E)array[j+1]) > 0) {
-                    E temp = (E)array[j];
-                    array[j] = array[j+1];
-                    array[j+1] = temp;
-                }
-            }
+        public void setLeftChild(Node<E> newNode) {
+            leftChild = newNode;
         }
+
+        public void setRightChild(Node<E> newNode) {
+            rightChild = newNode;
+        }
+
+        public Node(E data) {
+            this.data = data;
+        }
+        public Node<E> getLeftChild() {
+            return leftChild;
+        }
+
+        public Node<E> getRightChild() {
+            return rightChild;
+        }
+
+        public E getValue() {
+            return data;
+        }
+
+        public Node<E> getParent() {
+            return parent;
+        }
+    }
+    //Создайте аналог дерева TreeSet БЕЗ использования других классов СТАНДАРТНОЙ БИБЛИОТЕКИ
+    //Не нужно на массивах это делать или маскируя в поля TreeSet, TreeMap и т.д.
+    //Можно реализовать класс Node с двумя полями такого же типа (потомки дерева),
+    //в нем также может быть поле элемента E. Далее на этой основе ожидается бинарное дерево.
+
+    //Обязательные к реализации методы и конструкторы
+    public TaskA() {
     }
 
     @Override
     public boolean add(E e) {
-        if (!contains(e)) {
-            if (curSize == array.length - 1) {
-                Object[] new_arr = new Object[array.length + INITIAL_AMOUNT / 2];
-                System.arraycopy(array, 0, new_arr, 0, curSize);
-                array = new_arr;
+        Node<E> current = root;
+        Node<E> newNode = new Node<>(e);
+        if(!contains(e)) {
+            if (root == null) {
+                root = newNode;
+                root.parent = null;
+                amount++;
+                return true;
+            } else {
+                while (true) {
+                    if (compareTo(current.getValue(), e) > 0) {
+                        if (current.leftChild == null) {
+                            current.setLeftChild(newNode);
+                            current.leftChild.parent = current;
+                            amount++;
+                            return true;
+                        }
+                        current = current.getLeftChild();
+                    } else {
+                        if (current.rightChild == null) {
+                            current.setRightChild(newNode);
+                            current.rightChild.parent = current;
+                            amount++;
+                            return true;
+                        }
+                        current = current.getRightChild();
+                    }
+                }
             }
-            array[curSize++] = e;
-            if (curSize > 1) {
-                sorting();
-            }
-            return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
     public boolean remove(Object o) {
-        int remove = -1;
-        for (int i = 0; i < curSize; i++)
-            if (array[i] == o) {
-                remove = i;
-                break;
+        Node<E> current = root;
+        boolean flag=false;
+        while(!flag && amount>0){
+            if(current == null)
+                return false;
+            if(compareTo(current.getValue(), (E)o) > 0){
+                current=current.getLeftChild();
+            } else
+            if(compareTo(current.getValue(), (E)o) < 0){
+                current=current.getRightChild();
             }
-        if (remove == -1)
-            return false;
-        System.arraycopy(array, remove + 1, array, remove, curSize - remove);
-        array[curSize] = null;
-        curSize--;
+            if(current != null && compareTo(current.getValue(), (E)o) == 0){
+                flag = true;
+            }
+        }
+        if (current != null && current.leftChild == null && current.rightChild == null) {
+            if (current.parent == null)
+                root = null;
+            else if (current.parent.rightChild == current)
+                current.parent.rightChild = null;
+            else
+                current.parent.leftChild = null;
+            amount--;
+            return true;
+        }
+        if(current.leftChild == null || current.rightChild == null){
+            if(current.leftChild == null){
+                if(current.parent == null){
+                    root=current.getRightChild();
+                } else
+                if(current.parent.leftChild == current){
+                    current.rightChild.parent = current.parent;
+                    current.parent.leftChild = current.rightChild;
+                } else
+                if(current.parent.rightChild == current){
+                    current.rightChild.parent = current.parent;
+                    current.parent.rightChild = current.rightChild;
+                }
+            }
+            if(current.rightChild == null){
+                if(current.parent == null){
+                    root = current.getLeftChild();
+                } else
+                if(current.parent.rightChild == current){
+                    current.leftChild.parent = current.parent;
+                    current.parent.rightChild = current.leftChild;
+                } else
+                if(current.parent.leftChild == current){
+                    current.leftChild.parent = current.parent;
+                    current.parent.leftChild = current.leftChild;
+                }
+            }
+            amount--;
+            return true;
+        }
+        Node<E> tmp;
+        tmp = current.getRightChild();
+        flag = false;
+        while(tmp.leftChild != null){
+            tmp = tmp.getLeftChild();
+            flag = true;
+        }
+        if(flag){
+            if(tmp.rightChild != null){
+                tmp.rightChild.parent = tmp.parent;
+                tmp.parent.leftChild = tmp.rightChild;
+                current.data = tmp.data;
+            }
+            if(tmp.rightChild == null){
+                tmp.parent.leftChild = null;
+                current.data = tmp.data;
+            }
+        }
+        else {
+            if(tmp.rightChild != null) {
+                tmp.rightChild.parent = tmp.parent;
+                tmp.parent.rightChild = tmp.rightChild;
+                current.data = tmp.data;
+            }
+            if(tmp.rightChild == null){
+                tmp.parent.rightChild = null;
+                current.data = tmp.data;
+            }
+        }
+        amount--;
         return true;
+    }
+
+    void inOrder(Node root,StringBuilder str){
+        if(root == null)
+            return;
+        inOrder(root.leftChild, str);
+        str.append(root.data);
+        str.append(", ");
+        inOrder(root.rightChild, str);
     }
 
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        str.append("[");
-        for (int i = 0; i < curSize; i++) {
-            str.append(array[i]);
-            str.append(", ");
-        }
+        str.append('[');
+        inOrder(root, str);
         if (str.length() >= 2)
-            str.delete(str.length()-2, str.length());
+            str.delete(str.length() - 2, str.length());
         str.append("]");
         return str.toString();
     }
-
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
     ////////         Эти методы реализовывать необязательно      ////////////
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
+
     @Override
     public boolean contains(Object o) {
-        for (Object el : array)
-            if (el == o)
+        Node<E> current = root;
+        while(amount > 0){
+            if(current == null)
+                return false;
+            if(compareTo(current.getValue(), (E)o) > 0)
+                current = current.getLeftChild();
+            if(current != null && compareTo(current.getValue(), (E)o) < 0)
+                current = current.getRightChild();
+            if(current != null && compareTo(current.getValue(), (E)o) == 0)
                 return true;
+        }
         return false;
     }
 
