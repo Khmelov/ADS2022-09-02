@@ -3,9 +3,9 @@ package by.it.group151004.burbouski.lesson11;
 import java.util.*;
 
 public class TaskB {
-	private Map<Character, List<Character>> graph;
-	private List<Character> topologicalOrder;
-	private boolean[] visited;
+	public Map<Character, List<Character>> graph;
+	public List<Character> topologicalOrder;
+	public boolean[] visited;
 
 	public TaskB(Map<Character, List<Character>> graph) {
 		this.graph = graph;
@@ -22,7 +22,7 @@ public class TaskB {
 		Collections.reverse(topologicalOrder);
 	}
 
-	private void dfs(Character vertex) {
+	public void dfs(Character vertex) {
 		visited[vertex - 'A'] = true;
 		for (Character neighbor : graph.get(vertex)) {
 			if (!visited[neighbor - 'A']) {

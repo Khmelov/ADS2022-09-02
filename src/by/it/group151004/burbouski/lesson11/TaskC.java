@@ -3,13 +3,13 @@ package by.it.group151004.burbouski.lesson11;
 import java.util.*;
 
 public class TaskC {
-	private Map<Character, List<Character>> graph;
-	private Map<Character, Integer> preValues;
-	private Map<Character, Integer> postValues;
-	private int counter = 1;
-	private List<Character> topologicalOrder;
-	private boolean[] visited;
-	private int srcs;
+	public Map<Character, List<Character>> graph;
+	public Map<Character, Integer> preValues;
+	public Map<Character, Integer> postValues;
+	public int counter = 1;
+	public List<Character> topologicalOrder;
+	public boolean[] visited;
+	public int srcs;
 
 	public TaskC(Map<Character, List<Character>> graph) {
 		this.graph = graph;
@@ -28,7 +28,7 @@ public class TaskC {
 		Collections.reverse(topologicalOrder);
 	}
 
-	private void dfs(Character vertex) {
+	public void dfs(Character vertex) {
 		preValues.put(vertex, counter++);
 		visited[vertex - 'A'] = true;
 		for (char neighbor : graph.get(vertex)) {

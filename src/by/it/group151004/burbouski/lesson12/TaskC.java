@@ -1,7 +1,7 @@
 package by.it.group151004.burbouski.lesson12;
 
 public class TaskC {
-	static final int INF = 1000000000;
+	public static final int INF = 1000000000;
 
 	public static void main(String[] args) {
 		int[][] distances = new int[][] {

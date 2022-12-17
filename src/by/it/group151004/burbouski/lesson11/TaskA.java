@@ -3,13 +3,12 @@ package by.it.group151004.burbouski.lesson11;
 import java.util.*;
 
 public class TaskA {
-
 	public static class DFS {
-		private boolean[] visited;
-		private int[] pre;
-		private int[] post;
-		private int preCounter;
-		private int postCounter;
+		public boolean[] visited;
+		public int[] pre;
+		public int[] post;
+		public int preCounter;
+		public int postCounter;
 
 		public DFS(Graph g) {
 			visited = new boolean[g.getNumVertices()];
@@ -25,7 +24,7 @@ public class TaskA {
 			}
 		}
 
-		private void dfs(Graph g, int v) {
+		public void dfs(Graph g, int v) {
 			visited[v] = true;
 			pre[v] = preCounter++;
 
@@ -51,8 +50,8 @@ public class TaskA {
 	}
 
 	public static class Graph {
-		private LinkedList<Integer>[] adjacencyLists;
-		private String[] vertexNames;
+		public LinkedList<Integer>[] adjacencyLists;
+		public String[] vertexNames;
 
 		public Graph(int numVertices) {
 			adjacencyLists = new LinkedList[numVertices];
