@@ -85,6 +85,22 @@ public class C_QSortOptimized {
     }
 
 
+    private int findElementIndex(int[] arr,int elem){
+        int low = 0;
+        int high = arr.length - 1;
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            int midVal = arr[mid];
+            if (midVal < elem)
+                low = mid + 1;
+            else if (midVal > elem)
+                high = mid - 1;
+            else
+                return mid;
+        }
+        return -1;
+    }
+
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
