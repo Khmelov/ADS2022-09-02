@@ -2,24 +2,29 @@ package by.it.group151002.bybikov.lesson09;
 
 import java.util.*;
 
-public class List_A<T> implements List<T> {
-    private Object[] list_Field;
-    private static final int BEGIN_CAPACITY = 10;
+public class List_B<T> implements List<T> {
+    private int length = 0;
     private int capacity;
-    private int length;
+    private final static int BEGIN_CAPACITY = 10;
+    private Object[] list_Field;
 
     private void setCapacity(int capacity) {
+        if (capacity <= length) {
+            throw new IndexOutOfBoundsException("Capacity: %d, must been greater then length: %d".formatted(this.capacity, this.length));
+        }
         Object[] new_Field = new Object[capacity];
-        for (int i = 0; i < this.capacity; i++) {
+        for (int i = 0; i < this.length; i++) {
             new_Field[i] = this.list_Field[i];
         }
-        this.capacity = capacity;
         this.list_Field = new_Field;
+        this.capacity = capacity;
     }
 
-    List_A () {
-        this.setCapacity(BEGIN_CAPACITY);
+    List_B() {
+        List<Integer> list = new ArrayList<>();
+        //list.subList();
         this.length = 0;
+        setCapacity(BEGIN_CAPACITY);
     }
 
     @Override
@@ -34,6 +39,11 @@ public class List_A<T> implements List<T> {
 
     @Override
     public boolean contains(Object o) {
+        for (int i = 0; i < this.length; i++) {
+            if (this.list_Field[i].equals(o)){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -44,7 +54,11 @@ public class List_A<T> implements List<T> {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] new_Field = new Object[this.length];
+        for (int i = 0; i < this.length; i++) {
+            new_Field[i] = this.list_Field[i];
+        }
+        return new_Field;
     }
 
     @Override
@@ -57,12 +71,18 @@ public class List_A<T> implements List<T> {
         if (this.length == this.capacity) {
             setCapacity(this.capacity * 2);
         }
-        this.list_Field[length++] = t;
+        this.list_Field[this.length++] = t;
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
+        for (int i = 0; i < this.length; i++) {
+            if (this.list_Field[i].equals(o)) {
+                this.remove(i);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -93,7 +113,8 @@ public class List_A<T> implements List<T> {
 
     @Override
     public void clear() {
-
+        this.length = 0;
+        setCapacity(BEGIN_CAPACITY);
     }
 
     @Override
@@ -101,33 +122,33 @@ public class List_A<T> implements List<T> {
         if (index < 0 || index >= this.length) {
             throw new IndexOutOfBoundsException("index: %d, when the list size: %d".formatted(index, length));
         }
-        T result = (T)this.list_Field[index];
-        return result;
+        return (T)this.list_Field[index];
     }
 
     @Override
     public T set(int index, T element) {
-        return null;
+        if (index < 0 || index >= this.length) {
+            throw new IndexOutOfBoundsException("index: %d, when the list size: %d".formatted(index, length));
+        }
+        T result = this.get(index);
+        this.list_Field[index] = element;
+        return result;
     }
 
     @Override
     public void add(int index, T element) {
-        if (index < 0 || index > length) {
+        if (index < 0 || index > this.length){
             throw new IndexOutOfBoundsException("index: %d, when the list size: %d".formatted(index, length));
         }
         if (this.length == this.capacity){
-            this.setCapacity(this.capacity * 2);
+            setCapacity(this.capacity * 2);
         }
-        for (int i = this.length - 1; i >= index; i--){
-            this.list_Field[i + 1] = this.list_Field[i];
-        }
-        this.list_Field[index] = element;
-        length++;
+        this.list_Field[this.length++] = element;
     }
 
     @Override
     public T remove(int index) {
-        if (index < 0 || index >= this.length) {
+        if(index < 0 || index >= this.length){
             throw new IndexOutOfBoundsException("index: %d, when the list size: %d".formatted(index, length));
         }
         T result = (T)this.list_Field[index];
@@ -140,12 +161,21 @@ public class List_A<T> implements List<T> {
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        for (int i = 0; i < this.length; i++) {
+            if (this.list_Field[i].equals(o)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        for (int i = this.length - 1; i >= 0; i--) {
+            if (this.list_Field[i].equals(o))
+                return i;
+        }
+        return -1;
     }
 
     @Override
@@ -162,11 +192,12 @@ public class List_A<T> implements List<T> {
     public List<T> subList(int fromIndex, int toIndex) {
         return null;
     }
+
     @Override
-    public String toString() {
+    public String toString () {
         StringBuilder result = new StringBuilder();
         result.append('[');
-        if (this.length > 0) {
+        if (this.length > 0){
             result.append(this.list_Field[0].toString());
             for (int i = 1; i < this.length; i++) {
                 result.append(", ");
