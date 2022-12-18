@@ -42,13 +42,18 @@ public class C_Stairs {
             stairs[i]=scanner.nextInt();
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        int result = 0;
-
+        int []result = new int[n + 1];
+        result[0] = 0;
+        result[1] = stairs[0];
+        for(int i = 2; i <= n; i++)
+        {
+            result[i] = stairs[i - 1] + Math.max(result[i - 1], result[i - 2]);
+        }
 
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return result[n];
     }
 
 
