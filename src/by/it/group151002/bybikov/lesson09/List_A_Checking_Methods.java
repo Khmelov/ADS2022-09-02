@@ -7,7 +7,7 @@ public class List_A_Checking_Methods {
 
     boolean add_Methods_Checking() {
         RandomValuesMethods randomValuesMethods = new RandomValuesMethods();
-        int test_Size = randomValuesMethods.getIntRandomValueInRange(0, 100);
+        int test_Size = randomValuesMethods.getIntRandomValueInRange(0, 1000);
         while (test_Size-- >= 0){
             List_A<Integer> custom_List = new List_A<>();
             List<Integer> java_List = new ArrayList<>();
@@ -26,13 +26,20 @@ public class List_A_Checking_Methods {
                     int add_index = randomValuesMethods.getIntRandomValueInRange(-100, 200);
                     try {
                         custom_List.add(add_index, add_Value);
+                    }catch (Exception e){
+
+                    }
+                    try {
                         java_List.add(add_index, add_Value);
                     }catch (Exception e){
 
                     }
+
                 }
 
             if (!custom_List.toString().equals(java_List.toString())){
+                System.out.println(custom_List.toString());
+                System.out.println(java_List.toString());
                 System.err.println("Index && value add mismatch");
                 return false;
             }
