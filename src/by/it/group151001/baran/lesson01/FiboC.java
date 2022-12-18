@@ -6,6 +6,8 @@ package by.it.group151001.baran.lesson01;
  * время расчета должно быть не более 2 секунд
  */
 
+import java.util.ArrayList;
+
 public class FiboC {
 
     private long startTime = System.currentTimeMillis();
@@ -21,10 +23,20 @@ public class FiboC {
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
+    private static ArrayList<Long> f = new ArrayList<Long>();
+    public static Long fib(int n, int m){
+        if(n >= f.size()){
+            f.add(fib(n - 1, m) + fib(n - 2, m));
+        }
+        return f.get(n);
+    }
+
     long fasterC(long n, int m) {
         //Решение сложно найти интуитивно
         //возможно потребуется дополнительный поиск информации
         //см. период Пизано
+
+
         return 0L;
     }
 
