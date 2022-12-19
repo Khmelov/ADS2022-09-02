@@ -3,6 +3,7 @@ package lesson08;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -48,6 +49,16 @@ public class A_Knapsack {
 
 
         int result = 0;
+        int count = n-1;
+        Arrays.sort(gold);
+
+        while (count > -1 && w != 0) {
+            if (gold[count] <= w) {
+                w -= gold[count];
+                result += gold[count];
+            } else
+                count--;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
