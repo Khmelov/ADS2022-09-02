@@ -15,6 +15,8 @@ import java.util.Scanner;
 Вольный перевод: http://programador.ru/sorting-positive-int-linear-time/
 */
 
+
+
 public class B_CountSort {
 
 
@@ -32,12 +34,30 @@ public class B_CountSort {
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
 
-
+        sort (points, 0, 10);
 
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
+    }
+
+    static int[] sort(int[] array, int min, int max)
+    {
+        int[] count = new int[max - min + 1];
+        for (int i = 0; i < array.length; i++)
+        {
+            count[array[i] - min]++;
+        }
+        int idx = 0;
+        for (int i = 0; i < count.length; i++)
+        {
+            for (int j = 0; j < count[i]; j++)
+            {
+                array[idx++] = i + min;
+            }
+        }
+        return array;
     }
 
 
