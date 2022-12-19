@@ -3,6 +3,58 @@ package by.it.group151004.burbouski.lesson11;
 import java.util.*;
 
 public class TaskA {
+	public LinkedList<Integer>[] adjacencyLists;
+	public String[] vertexNames;
+
+	public TaskA(int numVertices) {
+		adjacencyLists = new LinkedList[numVertices];
+		for (int i = 0; i < numVertices; i++) {
+			adjacencyLists[i] = new LinkedList<>();
+		}
+		vertexNames = new String[numVertices];
+	}
+
+	public void addEdge(int v1, int v2) {
+		adjacencyLists[v1].add(v2);
+		adjacencyLists[v2].add(v1);
+	}
+
+	public void setVertexName(int v, String name) {
+		vertexNames[v] = name;
+	}
+
+	public String getVertexName(int v) {
+		return vertexNames[v];
+	}
+
+	public int getNumVertices() {
+		return adjacencyLists.length;
+	}
+
+	public LinkedList<Integer> getNeighbors(int v) {
+		return adjacencyLists[v];
+	}
+
+	public int[] getVerticesInAlphabeticalOrder() {
+		int[] vertices = new int[getNumVertices()];
+		for (int i = 0; i < vertices.length; i++) {
+			vertices[i] = i;
+		}
+		Arrays.sort(vertices);
+		return vertices;
+	}
+
+	public int[] getNeighborsInAlphabeticalOrder(int v) {
+		int[] neighbors = new int[adjacencyLists[v].size()];
+		int i = 0;
+		for (int neighbor : adjacencyLists[v]) {
+			neighbors[i] = neighbor;
+			i++;
+		}
+		Arrays.sort(neighbors);
+		return neighbors;
+	}
+
 	public static class DFS {
 		public boolean[] visited;
 		public int[] pre;
@@ -10,7 +62,7 @@ public class TaskA {
 		public int preCounter;
 		public int postCounter;
 
-		public DFS(Graph g) {
+		public DFS(TaskA g) {
 			visited = new boolean[g.getNumVertices()];
 			pre = new int[g.getNumVertices()];
 			post = new int[g.getNumVertices()];
@@ -24,7 +76,7 @@ public class TaskA {
 			}
 		}
 
-		public void dfs(Graph g, int v) {
+		public void dfs(TaskA g, int v) {
 			visited[v] = true;
 			pre[v] = preCounter++;
 
@@ -49,61 +101,8 @@ public class TaskA {
 		}
 	}
 
-	public static class Graph {
-		public LinkedList<Integer>[] adjacencyLists;
-		public String[] vertexNames;
-
-		public Graph(int numVertices) {
-			adjacencyLists = new LinkedList[numVertices];
-			for (int i = 0; i < numVertices; i++) {
-				adjacencyLists[i] = new LinkedList<>();
-			}
-			vertexNames = new String[numVertices];
-		}
-
-		public void addEdge(int v1, int v2) {
-			adjacencyLists[v1].add(v2);
-			adjacencyLists[v2].add(v1);
-		}
-
-		public void setVertexName(int v, String name) {
-			vertexNames[v] = name;
-		}
-
-		public String getVertexName(int v) {
-			return vertexNames[v];
-		}
-
-		public int getNumVertices() {
-			return adjacencyLists.length;
-		}
-
-		public LinkedList<Integer> getNeighbors(int v) {
-			return adjacencyLists[v];
-		}
-
-		public int[] getVerticesInAlphabeticalOrder() {
-			int[] vertices = new int[getNumVertices()];
-			for (int i = 0; i < vertices.length; i++) {
-				vertices[i] = i;
-			}
-			Arrays.sort(vertices);
-			return vertices;
-		}
-
-		public int[] getNeighborsInAlphabeticalOrder(int v) {
-			int[] neighbors = new int[adjacencyLists[v].size()];
-			int i = 0;
-			for (int neighbor : adjacencyLists[v]) {
-				neighbors[i++] = neighbor;
-			}
-			Arrays.sort(neighbors);
-			return neighbors;
-		}
-	}
-
 	public static void main(String[] args) {
-		Graph g = new Graph(9);
+		TaskA g = new TaskA(9);
 		g.setVertexName(0, "A");
 		g.setVertexName(1, "B");
 		g.setVertexName(2, "C");

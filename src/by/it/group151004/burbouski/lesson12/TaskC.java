@@ -1,10 +1,11 @@
 package by.it.group151004.burbouski.lesson12;
 
 public class TaskC {
-	public static final int INF = 1000000000;
+	public int INF = 1000000000;
+	public int u;
+	public int v;
 
-	public static void main(String[] args) {
-		int[][] distances = new int[][] {
+	public int[][] matrix = {
 			{ INF, 4, -2, INF, INF, INF, INF, INF, INF, INF },
 			{ INF, INF, INF, INF, INF, INF, -2, -4, INF, INF },
 			{ INF, INF, INF, 2, INF, 1, INF, INF, INF, INF },
@@ -16,21 +17,25 @@ public class TaskC {
 			{ INF, INF, INF, INF, INF, INF, INF, 1, INF, INF },
 			{ 7, INF, 6, INF, 6, 5, INF, INF, INF, INF } };
 
-		//Floyd Warshell
+	public TaskC(int u, int v) {
+		this.u = u;
+		this.v = v;
+	}
+
+	public int floydWarshell() {
 		for (int k = 0; k < 10; k++) {
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
-					distances[i][j] = Math.min(distances[i][j], distances[i][k] + distances[k][j]);
+					matrix[i][j] = Math.min(matrix[i][j], matrix[i][k] + matrix[k][j]);
 				}
-
 			}
 		}
+		return Math.min(matrix[u][v], Math.min(matrix[v][u], matrix[u][u] + matrix[v][v]));
+	}
 
-		int u = 0; // начальная вершина ребра (нумеруем с нуля по алфавиту, т.е. это А)
-		int v = 3; // конечная вершина ребра (это Д)
-
-		int minLength = Math.min(distances[u][v], Math.min(distances[v][u], distances[u][u] + distances[v][v]));
-
-		System.out.println("Минимальная длина цикла, содержащего ребро (" + u + ", " + v + "): " + minLength);
+	public static void main(String[] args) {
+		TaskC sus = new TaskC(2, 3);
+		int minLength = sus.floydWarshell();
+		System.out.println("Minimum length of a cycle containing an edge (" + (char) ('A' + sus.u) + ", " + (char) ('A' + sus.v) + "): " + minLength);
 	}
 }

@@ -3,12 +3,12 @@ package by.it.group151004.burbouski.lesson12;
 import java.util.*;
 
 public class TaskA {
-	public static int INF = Integer.MAX_VALUE;
-	public static List<List<Pair>> adj = new ArrayList<>();
-	public static int[] dist;
-	public static boolean[] visited;
+	public int INF = 1000;
+	public List<List<Pair>> adj = new ArrayList<>();
+	public int[] dist;
+	public boolean[] visited;
 
-	public static void dijkstra(int start) {
+	public void dijkstra(int start) {
 		dist = new int[adj.size()];
 		Arrays.fill(dist, INF);
 		visited = new boolean[adj.size()];
@@ -53,28 +53,29 @@ public class TaskA {
 	}
 
 	public static void main(String[] args) {
+		TaskA sus = new TaskA();
 		for (int i = 0; i < 8; i++) {
-			adj.add(new ArrayList<Pair>());
+			sus.adj.add(new ArrayList<Pair>());
 		}
 
-		adj.get(0).add(new Pair(4, 4));
-		adj.get(0).add(new Pair(5, 8));
-		adj.get(0).add(new Pair(1, 1));
-		adj.get(1).add(new Pair(5, 6));
-		adj.get(1).add(new Pair(6, 6));
-		adj.get(1).add(new Pair(2, 2));
-		adj.get(2).add(new Pair(6, 2));
-		adj.get(2).add(new Pair(3, 1));
-		adj.get(3).add(new Pair(6, 1));
-		adj.get(3).add(new Pair(7, 4));
-		adj.get(6).add(new Pair(5, 1));
-		adj.get(6).add(new Pair(7, 1));
-		adj.get(4).add(new Pair(5, 5));
+		sus.adj.get(0).add(new Pair(4, 4));
+		sus.adj.get(0).add(new Pair(5, 8));
+		sus.adj.get(0).add(new Pair(1, 1));
+		sus.adj.get(1).add(new Pair(5, 6));
+		sus.adj.get(1).add(new Pair(6, 6));
+		sus.adj.get(1).add(new Pair(2, 2));
+		sus.adj.get(2).add(new Pair(6, 2));
+		sus.adj.get(2).add(new Pair(3, 1));
+		sus.adj.get(3).add(new Pair(6, 1));
+		sus.adj.get(3).add(new Pair(7, 4));
+		sus.adj.get(6).add(new Pair(5, 1));
+		sus.adj.get(6).add(new Pair(7, 1));
+		sus.adj.get(4).add(new Pair(5, 5));
 
-		dijkstra(0);
+		sus.dijkstra(0);
 
-		for (int i = 0; i < dist.length; i++) {
-			System.out.println("Shortest path from A to " + (char) ('A' + i) + ": " + dist[i]);
+		for (int i = 0; i < sus.dist.length; i++) {
+			System.out.println("Shortest path from A to " + (char) ('A' + i) + ": " + sus.dist[i]);
 		}
 	}
 }
