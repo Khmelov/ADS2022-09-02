@@ -1,6 +1,7 @@
 package by.it.group151002.shatko.lesson11;
 
 public class TaskA {
+    public static final int AMOUNT_OF_VERTICES = 9;
     public static boolean[] visited;
     public static int[] pre;
     public static int[] post;
@@ -35,7 +36,7 @@ public class TaskA {
     }
 
     public static void main(String[] args) {
-        Graph graph = new Graph(9);
+        Graph graph = new Graph(AMOUNT_OF_VERTICES);
         graph.setName(0, 'A');
         graph.setName(1, 'B');
         graph.setName(2, 'C');
