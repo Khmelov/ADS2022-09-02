@@ -43,17 +43,21 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
+            if (start<=stop) {
+                this.start = start;
+                this.stop = stop;
+            }
+            else {
+                this.start = stop;
+                this.stop = start;
+        }
         }
 
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
 
-            return 0;
+            return Integer.compare(this.start, o.start);
         }
     }
 
@@ -81,15 +85,49 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
+        quickSort(segments, 0, segments.length - 1);
 
-
+        for (int i=0; i<m;i++){
+            result[i] = Accessory(segments, points[i]);
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    private int Accessory(Segment[] segments, int point) {
+        int count = 0;
+        for (Segment segment : segments) {
+            if (segment.start <= point && segment.stop >= point) {
+                count++;
+            }
+        }
+        return count;
+    }
+    private void quickSort(Segment[] segments, int left, int right) {
+        if (left < right) {
+            int q = partition(segments, left, right);
+            quickSort(segments, left, q - 1);
+            quickSort(segments, q + 1, right);
+        }
+    }
 
+    private int partition(Segment[] segments, int left, int right) {
+        Segment x = segments[right];
+        int j = left - 1;
+        for (int k = left; k < right; k++) {
+            if (segments[k].compareTo(x) <= 0) {
+                j++;
+                Segment temp = segments[j];
+                segments[j] = segments[k];
+                segments[k] = temp;
+            }
+        }Segment temp = segments[j + 1];
+        segments[j + 1] = segments[right];
+        segments[right] = temp;
+        return j + 1;
+    }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");

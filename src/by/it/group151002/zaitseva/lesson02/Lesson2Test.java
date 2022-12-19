@@ -39,7 +39,7 @@ public class Lesson2Test {
         };
 
         List<B_Sheduler.Event> starts = instance.calcStartTimes(events, 0, 10);  //рассчитаем оптимальное заполнение аудитории
-        boolean ok=starts.toString().equals("[(0:1), (1:2), (2:3), (3:5), (6:7), (7:9)]");
+        boolean ok=starts.toString().equals("[(0:1), (1:2), (2:3), (4:5), (6:7), (8:9)]");
         assertTrue("B_Sheduler failed", ok);
     }
     @Test

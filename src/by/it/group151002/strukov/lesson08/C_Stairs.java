@@ -30,6 +30,8 @@ Sample Input 3:
 Sample Output 3:
 3
 
+Aboba
+
 */
 
 public class C_Stairs {
