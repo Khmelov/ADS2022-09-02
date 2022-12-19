@@ -3,6 +3,7 @@ package by.it.group151004.matsiushin.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -52,8 +53,7 @@ public class A_QSort {
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+            return Integer.compare(start, o.start);
         }
     }
 
@@ -81,13 +81,48 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
-
+        Arrays.sort(segments);
+        QSort(segments, 0, segments.length - 1);
+        int numOf;
+        for(int i=0; i< points.length; i++)
+        {
+            numOf =0;
+            for (int j=0; j<segments.length; j++)
+            {
+                if( ( segments[j].start <= points[i] ) && ( points[i] <= segments[j].stop ) )
+                {
+                    numOf++;
+                }
+            }
+            result[i]= numOf;
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
+
+    public void QSort(Segment[] segments, int left, int right) {
+        if (left < right) {
+            int pilpos = partition(segments, left, right);
+            QSort(segments, left, pilpos - 1);
+            QSort(segments, pilpos + 1, right);
+        }
+    }
+
+    public int partition(Segment[] segments, int left, int right) {
+        Segment pillar = segments[right];
+        int pilpos = left;
+        for (int curpos = left; curpos < right; curpos++) {
+            if (segments[curpos].compareTo(pillar) <= 0) {
+                Segment tmp = segments[pilpos];
+                segments[pilpos] = segments[curpos];
+                segments[curpos] = tmp;
+                pilpos++;
+            }
+        }
+        return pilpos;
+    }
+
 
 
     public static void main(String[] args) throws FileNotFoundException {
