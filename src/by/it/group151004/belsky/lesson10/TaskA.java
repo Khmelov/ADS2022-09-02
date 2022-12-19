@@ -21,9 +21,9 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
     public boolean add(E e) {
         if (root == null) {
             root = new Node<>(e, true);
-            return false;
-        } else if (root.getKey().equals(e)) {
             return true;
+        } else if (root.getKey().equals(e)) {
+            return false;
         }
 
         Node<E, Boolean> loopPt = root;
@@ -32,9 +32,9 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
                 //left
                 if (loopPt.getLeft() == null) {
                     loopPt.setLeft(new Node<>(e, true));
-                    return false;
-                } else if (loopPt.getLeft().getKey().equals(e)) {
                     return true;
+                } else if (loopPt.getLeft().getKey().equals(e)) {
+                    return false;
                 } else {
                     loopPt = loopPt.getLeft();
                 }
@@ -42,9 +42,9 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
                 //right
                 if (loopPt.getRight() == null) {
                     loopPt.setRight(new Node<>(e, true));
-                    return false;
-                } else if (loopPt.getRight().getKey().equals(e)) {
                     return true;
+                } else if (loopPt.getRight().getKey().equals(e)) {
+                    return false;
                 } else {
                     loopPt = loopPt.getRight();
                 }
@@ -59,7 +59,7 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
             loopPt = loopPt.getLeft();
         }
         Node<E, Boolean> returnPt = loopPt.getLeft();
-        loopPt.setLeft(null);
+        loopPt.setLeft(returnPt.getRight());
         return returnPt;
     }
 
@@ -87,10 +87,10 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
                         return true;
                     }
 
-                    if (parentPt.getLeft().equals(loopPt)) {
+                    if (parentPt.getLeft() != null && parentPt.getLeft().equals(loopPt)) {
                         //isLeft
                         parentPt.setLeft(null);
-                    } else if (parentPt.getRight().equals(loopPt)) {
+                    } else if (parentPt.getRight() != null && parentPt.getRight().equals(loopPt)) {
                         //isRight
                         parentPt.setRight(null);
                     }
