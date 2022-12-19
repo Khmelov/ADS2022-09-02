@@ -3,6 +3,8 @@ package by.it.group151002.ryabov.lesson11;
 import java.util.*;
 
 public class GraphC {
+    public static List<Character> sources = new ArrayList<>();
+    public static List<Character> sinks = new ArrayList<>();
     public static int[] pre;
     public static int[] post;
     public static int clock;
@@ -33,8 +35,6 @@ public class GraphC {
     }
 
     public static void sinkAndSources(Graph g) {
-        List<Character> sources = new ArrayList<>();
-        List<Character> sinks = new ArrayList<>();
         for (int i = 0; i < g.getVertexCount(); i++){
             if (g.getNeighbors(i).length == 0)
                 sinks.add(g.getName(i));

@@ -3,11 +3,12 @@ package by.it.group151002.ryabov.lesson12;
 import java.util.*;
 
 public class GraphC {
-    private static List<List<Node>> graph;
-    private static PriorityQueue<Node> pq;
-    private static Set<Integer> visited;
-    private static int[] dist;
-    private static int vertexNum;
+    public static int res;
+    public static List<List<Node>> graph = new ArrayList<List<Node>>();
+    public static PriorityQueue<Node> pq;
+    public static Set<Integer> visited = new HashSet<Integer>();
+    public static int[] dist;
+    public static int vertexNum;
     public static void dijkstra(int src){
         for (int i = 0; i < vertexNum; i++)
             dist[i] = Integer.MAX_VALUE;
@@ -39,8 +40,6 @@ public class GraphC {
         vertexNum = 10;
         dist = new int[vertexNum];
         pq = new PriorityQueue<Node>(vertexNum, new Node());
-        visited = new HashSet<Integer>();
-        graph = new ArrayList<List<Node>>();
         for (int i = 0; i < vertexNum; i++){
             List<Node> item = new ArrayList<Node>();
             graph.add(item);
@@ -64,7 +63,7 @@ public class GraphC {
         int u = 7;
         int v = 6;
         dijkstra(v);
-        int res = dist[u];
+        res = dist[u];
         for (int i = 0; i < graph.get(u).size(); i++)
             if (graph.get(u).get(i).node == v)
                 res += graph.get(u).get(i).cost;
