@@ -39,10 +39,27 @@ import java.util.Scanner;
 
 public class A_EditDist {
 
+    int minAmong(int a, int b, int c) {
+        return Integer.min(Integer.min(a, b), c);
+    }
+
+    int findDist(String s1, String s2, int m, int n) {
+
+        if (m == 0 && n == 0)
+            return  0;
+        if (m == 0)
+            return n;
+        if (n == 0)
+            return m;
+        int term = s1.charAt(m - 1) == s2.charAt(n - 1) ? 0 : 1;
+        return minAmong(findDist(s1, s2, m, n - 1) + 1,findDist(s1, s2, m - 1, n) + 1, findDist(s1, s2, m - 1, n - 1) + term);
+    }
+
+
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return 0;
+        return findDist(one,two,one.length(),two.length());
     }
 
 

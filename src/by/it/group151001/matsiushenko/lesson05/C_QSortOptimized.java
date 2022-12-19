@@ -57,7 +57,7 @@ public class C_QSortOptimized {
     void QSort(Segment[] arr, int l, int r){
         while (l < r) {
             int i, j;
-            //partition
+
             if (r - l == 1){
                 if (arr[l].compareTo(arr[r]) > 0)
                     swap(arr, l, r);

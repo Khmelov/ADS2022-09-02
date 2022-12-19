@@ -50,11 +50,9 @@ public class A_LIS {
         int[] max = new int[n];
         for (int i = 0; i < n; i++) {
             max[i] = 1;
-            for (int j = 0; j < i; j++) {
-                if (m[j] < m[i] && max[j] + 1 > max[i]) {
+            for (int j = 0; j < i; j++)
+                if (m[j] < m[i] && max[j] + 1 > max[i])
                     max[i] = max[j] + 1;
-                }
-            }
         }
         int result = max[0];
         for (int i = 1; i < n; i++)
