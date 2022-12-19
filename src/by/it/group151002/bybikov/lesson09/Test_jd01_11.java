@@ -52,10 +52,10 @@ public class Test_jd01_11 extends HomeWork {
         assertTrue("Checking Failed", is_Valid);
     }
 
-    @Test(timeout = 1500)
+    @Test//(timeout = 1500)
     public void testTaskB__ListB() throws Exception {
         System.out.println("\nB. Диагностика обязательных к реализации методов:");
-        Class<?> aclass = findClass("ListB");
+        Class<?> aclass = findClass("List_B");
         List<Long> a = (List<Long>) aclass.getDeclaredConstructor().newInstance();
         List<Long> e = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -93,6 +93,7 @@ public class Test_jd01_11 extends HomeWork {
 
         e.add(0, null);
         a.add(0, null);
+
         assertEquals("ошибка add(int index, T e)", e.toString(), a.toString());
 
         e.add(4, 444L);

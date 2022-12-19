@@ -198,10 +198,20 @@ public class List_B<T> implements List<T> {
         StringBuilder result = new StringBuilder();
         result.append('[');
         if (this.length > 0){
-            result.append(this.list_Field[0].toString());
+            if (this.list_Field[0] == null){
+                result.append("null");
+            }
+            else {
+                result.append(this.list_Field[0].toString());
+            }
             for (int i = 1; i < this.length; i++) {
                 result.append(", ");
-                result.append(this.list_Field[i].toString());
+                if (this.list_Field[i] == null){
+                    result.append("null");
+                }
+                else {
+                    result.append(this.list_Field[i].toString());
+                }
             }
         }
         result.append(']');
