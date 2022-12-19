@@ -39,12 +39,7 @@ public class List_B<T> implements List<T> {
 
     @Override
     public boolean contains(Object o) {
-        for (int i = 0; i < this.length; i++) {
-            if (this.list_Field[i].equals(o)){
-                return true;
-            }
-        }
-        return false;
+        return this.indexOf(o) >= 0;
     }
 
     @Override
@@ -77,11 +72,10 @@ public class List_B<T> implements List<T> {
 
     @Override
     public boolean remove(Object o) {
-        for (int i = 0; i < this.length; i++) {
-            if (this.list_Field[i].equals(o)) {
-                this.remove(i);
-                return true;
-            }
+        int index = indexOf(o);
+        if (index != -1){
+            this.remove(index);
+            return true;
         }
         return false;
     }
@@ -93,7 +87,15 @@ public class List_B<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        if (c.size() == 0)
+            return false;
+        if (this.size() + c.size() > this.capacity){
+            this.setCapacity(this.size() + c.size());
+        }
+        for (T t : c) {
+            this.list_Field[this.length++] = t;
+        }
+        return true;
     }
 
     @Override
@@ -143,7 +145,11 @@ public class List_B<T> implements List<T> {
         if (this.length == this.capacity){
             setCapacity(this.capacity * 2);
         }
-        this.list_Field[this.length++] = element;
+        for (int i = this.length; i > index; i--) {
+            this.list_Field[i] = this.list_Field[i - 1];
+        }
+        this.list_Field[index] = element;
+        this.length++;
     }
 
     @Override
@@ -161,9 +167,18 @@ public class List_B<T> implements List<T> {
 
     @Override
     public int indexOf(Object o) {
-        for (int i = 0; i < this.length; i++) {
-            if (this.list_Field[i].equals(o)){
-                return i;
+        if (o == null){
+            for (int i = 0; i < this.length; i++) {
+                if (this.list_Field[i] == null) {
+                    return i;
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < this.length; i++) {
+                if (o.equals(this.list_Field[i])) {
+                    return i;
+                }
             }
         }
         return -1;
@@ -171,9 +186,17 @@ public class List_B<T> implements List<T> {
 
     @Override
     public int lastIndexOf(Object o) {
-        for (int i = this.length - 1; i >= 0; i--) {
-            if (this.list_Field[i].equals(o))
-                return i;
+        if (o == null){
+            for (int i = this.length - 1; i >= 0; i--) {
+                if (this.list_Field[i] == null)
+                    return i;
+            }
+        }
+        else {
+            for (int i = this.length - 1; i >= 0; i--) {
+                if (o.equals(this.list_Field[i]))
+                    return i;
+            }
         }
         return -1;
     }

@@ -139,6 +139,10 @@ public class Test_jd01_11 extends HomeWork {
             System.out.println("Диагностика: remove(Object o) не реализован или работает не так как в ArrayList");
         else
             System.out.println("   remove(Object o) ok: " + a);
+        List_B_Checking_Methods list_b_checking_methods = new List_B_Checking_Methods();
+        boolean is_Valid = list_b_checking_methods.add_Methods_Checking();
+        assertTrue("Checking Failed", is_Valid);
+
     }
 
     private void assertSet(String message, Set<Short> e, Set<Short> a){
