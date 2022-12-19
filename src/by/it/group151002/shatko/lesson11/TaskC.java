@@ -8,7 +8,7 @@ public class TaskC {
     public static int[] post;
     public static int clock;
     public static boolean[] visited;
-    public static List<Character> linearization;
+    public static List<Character> linearization = new ArrayList<>();
 
     public static void sort(Graph graph){
         visited = new boolean[graph.getVertexCount()];
@@ -69,7 +69,6 @@ public class TaskC {
         graph.addOrientedEdge(4, 5);
         graph.addOrientedEdge(5, 6);
         graph.addOrientedEdge(5, 7);
-        linearization = new ArrayList<>();
         sort(graph);
         for (int i = 0; i < graph.getVertexCount(); i++)
             System.out.println(graph.getName(i) + ": pre = " + pre[i] + ", post = " + post[i]);
