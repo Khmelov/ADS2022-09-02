@@ -5,7 +5,7 @@ import java.util.*;
 public class TaskB {
     public static final int AMOUNT_OF_VERTICES = 8;
     public static boolean[] visited;
-    public static List<Character> topological;
+    public static List<Character> topological = new ArrayList<>();
 
     public static void sort(Graph graph, int start){
         visited = new boolean[graph.getVertexCount()];
@@ -41,7 +41,6 @@ public class TaskB {
         graph.addOrientedEdge(4, 5);
         graph.addOrientedEdge(5, 6);
         graph.addOrientedEdge(5, 7);
-        topological = new ArrayList<>();
         sort(graph, 0);
         System.out.println(topological);
     }
