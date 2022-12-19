@@ -42,15 +42,17 @@ public class A_Knapsack {
         int w=scanner.nextInt();
         int n=scanner.nextInt();
         int gold[]=new int[n];
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
             gold[i]=scanner.nextInt();
-        }
-
-
-        int result = 0;
+        int[] amount = new int[w + 1];
+        for (int i = 0; i <= w; i++)
+            for (int j = 0; j < n; j++)
+                if (gold[j] <= i)
+                    amount[i] = Math.max(amount[i], amount[i - gold[j]] + gold[j]);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return amount[w];
     }
+
 
 
     public static void main(String[] args) throws FileNotFoundException {
