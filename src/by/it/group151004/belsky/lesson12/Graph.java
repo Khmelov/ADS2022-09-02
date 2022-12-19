@@ -1,7 +1,9 @@
-package by.it.group151004.belsky.lesson11;
+package by.it.group151004.belsky.lesson12;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 class Edge {
     private Vertex from;
@@ -83,6 +85,28 @@ public class Graph {
     private ArrayList<Edge> edges = new ArrayList<>();
 
     public Graph() { }
+
+    public static Graph readGraphFromFile(InputStream stream) {
+        Scanner in = new Scanner(stream);
+        Graph graph = new Graph();
+
+        while (in.hasNextLine()) {
+            String nextLine = in.nextLine();
+            if (nextLine.equals("")) continue;
+
+            String[] arr = nextLine.split(" ");
+            if (arr.length == 2) {
+                //isVertex
+                graph.addVertex(new Vertex(arr[1]));
+
+            } else if (arr.length >= 4) {
+                //isEdge
+                graph.addEdge(arr[1], arr[2], Float.parseFloat(arr[3]));
+            }
+
+        }
+        return graph;
+    }
 
     public void addVertex(Vertex v) {
         vertices.put(v.getName(), v);
