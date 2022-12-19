@@ -3,23 +3,23 @@ package by.it.group151004.burbouski.lesson12;
 import java.util.Arrays;
 
 public class TaskB {
-	public static final int INF = 1000000000;
-	public static int[][] g = new int[][] {
-	/* */   /*a    b    c    d    e    f    g    h    i    s(j)*/
-	/*a*/	{ INF, 4,   -2,  INF, INF, INF, INF, INF, INF, INF },
-	/*b*/	{ INF, INF, INF, INF, INF, INF, -2 , -4 , INF, INF },
-	/*c*/	{ INF, INF, INF, 2  , INF, 1  , INF, INF, INF, INF },
-	/*d*/	{ INF, INF, INF, INF, INF, INF, INF, INF, INF, INF },
-	/*e*/	{ INF, INF, INF, INF, INF, -2 , INF, 3  , INF, INF },
-	/*f*/	{ INF, INF, INF, 3  , INF, INF, INF, INF, INF, INF },
-	/*g*/	{ INF, INF, INF, INF, INF, INF, INF, INF, -1 , INF },
-	/*h*/	{ INF, INF, INF, INF, INF, INF, 1  , INF, INF, INF },
-	/*i*/	{ INF, INF, INF, INF, INF, INF, INF, 1  , INF, INF },
-	/*g*/	{ 7  , INF, 6  , INF, 6  , 5  , INF, INF, INF, INF }};
-	public static int[] dist = new int[10];
-	public static int[] path = new int[10];
+	public int INF = 1000000000;
+	public int[] dist = new int[10];
+	public int[] path = new int[10];
 
-	public static void bellmanFord(int s) {
+	public int[][] matrix = {
+			{ INF, 4, -2, INF, INF, INF, INF, INF, INF, INF },
+			{ INF, INF, INF, INF, INF, INF, -2, -4, INF, INF },
+			{ INF, INF, INF, 2, INF, 1, INF, INF, INF, INF },
+			{ INF, INF, INF, INF, INF, INF, INF, INF, INF, INF },
+			{ INF, INF, INF, INF, INF, -2, INF, 3, INF, INF },
+			{ INF, INF, INF, 3, INF, INF, INF, INF, INF, INF },
+			{ INF, INF, INF, INF, INF, INF, INF, INF, -1, INF },
+			{ INF, INF, INF, INF, INF, INF, 1, INF, INF, INF },
+			{ INF, INF, INF, INF, INF, INF, INF, 1, INF, INF },
+			{ 7, INF, 6, INF, 6, 5, INF, INF, INF, INF } };
+
+	public void bellmanFord(int s) {
 		Arrays.fill(dist, INF);
 		Arrays.fill(path, -1);
 		dist[s] = 0;
@@ -27,8 +27,8 @@ public class TaskB {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 10; j++) {
 				for (int k = 0; k < 10; k++) {
-					if (dist[k] > dist[j] + g[j][k]) {
-						dist[k] = dist[j] + g[j][k];
+					if (dist[k] > dist[j] + matrix[j][k]) {
+						dist[k] = dist[j] + matrix[j][k];
 						path[k] = j;
 					}
 				}
@@ -36,7 +36,7 @@ public class TaskB {
 		}
 	}
 
-	public static void printPath(int s, int e) {
+	public void printPath(int s, int e) {
 		if (s == e) {
 			System.out.print((char) (s + 'A') + " ");
 		} else if (path[e] == -1) {
@@ -48,12 +48,13 @@ public class TaskB {
 	}
 
 	public static void main(String[] args) {
-		bellmanFord(0);
+		TaskB sus = new TaskB();
+		sus.bellmanFord(0);
 
 		for (int i = 0; i < 10; i++) {
 			System.out.print("Shortest path from A to " + (char) (i + 'A') + ": ");
-			printPath(0, i);
-			System.out.println("\nDistance: " + dist[i]);
+			sus.printPath(0, i);
+			System.out.println("\nDistance: " + sus.dist[i]);
 		}
 	}
 }
