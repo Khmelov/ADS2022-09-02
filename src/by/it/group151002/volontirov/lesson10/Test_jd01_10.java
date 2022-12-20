@@ -52,7 +52,8 @@ public class Test_jd01_10 extends HomeWork {
         List<Method> methodsA = fill(aclass.getMethods(), methodNames);
         int seed = 1234;
         Random rnd = new Random(seed);
-        for (int testNumber = 0; testNumber < seed; testNumber++) {
+        for (int testNumber = 0; testNumber < seed; testNumber++)
+        {
             Integer value = rnd.nextInt(10);
             for (int i = 0; i <= value % 10; i++) {
                 a.add(value + i*value);
