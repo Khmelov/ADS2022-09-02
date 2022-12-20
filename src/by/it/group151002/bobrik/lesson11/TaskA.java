@@ -23,49 +23,6 @@ public class TaskA {
         adj[y][x] = 1;
     }
 
-//    public int[] getNeighbors(int index)
-//    {
-//        int[] neighbors = new int[v];
-//        int j = 0;
-//        for (int i = 0; i < v; i++)
-//        {
-//            neighbors[j++] = i;
-//        }
-//        Arrays.sort(neighbors);
-//        return neighbors;
-//    }
-//
-//    public void DFS(int start)
-//    {
-//        v = 9;
-//        pre = new int[v];
-//        post = new int[v];
-//        visited = new boolean[v];
-//        for (int i = 0; i < v; i++)
-//        {
-//            if (!visited[i])
-//            {
-//                dfs(i);
-//            }
-//        }
-//    }
-//
-//    public void dfs(int vertex)
-//    {
-//        res = res + vertex + " ";
-//        visited[vertex] = true;
-//        pre[vertex] = preCounter++;
-//        int[] neighbors = getNeighbors(vertex);
-//        for (int i = 0; i < v; i++)
-//        {
-//            if (!visited[i])
-//            {
-//                dfs(i);
-//            }
-//        }
-//        post[vertex] = postCounter++;
-//    }
-
     public void initDFS()
     {
         visited = new boolean[v];

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 //поставьте курсор на следующую строку и нажмите Ctrl+Shift+F10
 public class Test_jd01_11 extends HomeWork {
 
-    @Test
+    @Test (timeout = 3000)
     public void testTaskA() throws Exception {
         TaskA g = new TaskA();
         int v = 9;
@@ -45,6 +45,27 @@ public class Test_jd01_11 extends HomeWork {
         int[] expectedPostArr = {11, 10, 9, 17, 5, 8, 16, 15, 7};
         String expectedPost = Arrays.toString(expectedPostArr);
         assertTrue("POST Values are Incorrect", expectedPost.equals(actualPost));
+    }
+
+    @Test (timeout = 3000)
+    public void testTaskB() throws Exception {
+        TaskB graph = new TaskB();
+        int v = 8;
+        graph.v = v;
+        graph.adj = new int[v][v];
+        graph.addEdge(0, 2);
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 3);
+        graph.addEdge(2, 4);
+        graph.addEdge(3, 5);
+        graph.addEdge(4, 5);
+        graph.addEdge(5, 6);
+        graph.addEdge(5, 7);
+        graph.sort();
+        int[] expectedArr = {1, 0, 2, 4, 3, 5 ,7, 6};
+        String expected = Arrays.toString(expectedArr);
+        String actual = Arrays.toString(graph.topol);
+        assertTrue("SORT is not VALID", expected.equals(actual));
     }
 
 
