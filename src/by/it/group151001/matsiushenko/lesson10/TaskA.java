@@ -1,37 +1,31 @@
-package by.it.group151001.beryozkin.lesson10;
+package by.it.group151001.matsiushenko.lesson10;
 
 import java.util.*;
 
-public class TaskA<E> implements NavigableSet<E> {
+public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
 
-    //Создайте БЕЗ использования других классов (включая абстрактные)
-    //аналог дерева TreeSet
-    private transient NavigableMap<E, Object> m;
-    // Dummy value to associate with an Object in the backing Map
-    private static final Object PRESENT = new Object();
+    //Создайте аналог дерева TreeSet БЕЗ использования других классов СТАНДАРТНОЙ БИБЛИОТЕКИ
+    //Не нужно на массивах это делать или маскируя в поля TreeSet, TreeMap и т.д.
+    //Можно реализовать класс Node с двумя полями такого же типа (потомки дерева),
+    //в нем также может быть поле элемента E. Далее на этой основе ожидается бинарное дерево.
 
     //Обязательные к реализации методы и конструкторы
     public TaskA() {
-        this(new TreeMap<E, Object>());
-    }
-
-    TaskA(NavigableMap<E, Object> m) {
-        this.m = m;
     }
 
     @Override
     public boolean add(E e) {
-        return m.put(e, PRESENT) == null;
+        return false;
     }
 
     @Override
     public boolean remove(Object o) {
-        return m.remove(o) == PRESENT;
+        return false;
     }
 
     @Override
     public String toString() {
-        return m.keySet().toString();
+        return null;
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////

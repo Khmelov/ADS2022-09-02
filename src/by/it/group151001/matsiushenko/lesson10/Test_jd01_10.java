@@ -1,9 +1,10 @@
-package by.it.group151001.beryozkin.lesson10;
+package by.it.group151001.matsiushenko.lesson10;
 
 
 import by.it.HomeWork;
 import org.junit.Test;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -29,7 +30,7 @@ public class Test_jd01_10 extends HomeWork {
                 "toString", "add", "remove",
                 "contains", "clear", "isEmpty", "size", "first", "last"
         ));
-        randomCheck(methodNames, "TaskB");
+        randomCheck(methodNames, "TaskC");
     }
 
     @Test(timeout = 5000)
@@ -39,7 +40,7 @@ public class Test_jd01_10 extends HomeWork {
                 "contains", "clear", "isEmpty", "size", "first", "last",
                 "lower", "floor", "ceiling", "higher", "pollFirst", "pollLast"
         ));
-        randomCheck(methodNames, "TaskC");
+        randomCheck(methodNames, "TT");
     }
 
     private void randomCheck(TreeSet<String> methodNames, String className) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
@@ -48,6 +49,7 @@ public class Test_jd01_10 extends HomeWork {
         System.out.println("\nA. Диагностика обязательных к реализации методов:");
         NavigableSet<Integer> e = (NavigableSet<Integer>) TreeSet.class.getDeclaredConstructor().newInstance();
         NavigableSet<Integer> a = (NavigableSet<Integer>) aclass.getDeclaredConstructor().newInstance();
+        Field[] fields = a.getClass().getDeclaredFields();
         List<Method> methodsE = fill(e.getClass().getMethods(), methodNames);
         List<Method> methodsA = fill(aclass.getMethods(), methodNames);
         int seed = 1234;
