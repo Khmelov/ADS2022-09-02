@@ -33,13 +33,24 @@ public class B_Knapsack {
         Scanner scanner = new Scanner(stream);
         int w=scanner.nextInt();
         int n=scanner.nextInt();
-        int gold[]=new int[n];
+        int[] gold=new int[n];
         for (int i = 0; i < n; i++) {
             gold[i]=scanner.nextInt();
         }
 
+        int[][] weights = new int[n+1][w+1];
+        for(int i = 0; i <= n ; i++){
+            for(int j = 0 ;j <= w; j++){
+                if (i==0 || j==0)
+                    weights[i][j] = 0;
+                else if (gold[i-1] <= j)
+                    weights[i][j] = Math.max(gold[i-1]+weights[i-1][j-gold[i-1]],weights[i-1][j]);
+                else
+                    weights[i][j] = weights[i-1][j];
+            }
+        }
 
-        int result = 0;
+        int result = weights[n][w];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

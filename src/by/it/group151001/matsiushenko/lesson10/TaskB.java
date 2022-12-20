@@ -1,68 +1,75 @@
-package by.it.group151001.matsiushenko.lesson10;
+package by.it.group151001.beryozkin.lesson10;
 
 import java.util.*;
 
-public class TaskB<E extends Comparable<E>>  implements NavigableSet<E> {
+public class TaskB<E> implements NavigableSet<E> {
 
-    //Создайте аналог дерева TreeSet БЕЗ использования других классов СТАНДАРТНОЙ БИБЛИОТЕКИ
-    //Не нужно на массивах это делать или маскируя в поля TreeSet, TreeMap и т.д.
-    //Можно реализовать класс Node с двумя полями такого же типа (потомки дерева),
-    //в нем также может быть поле элемента E. Далее на этой основе ожидается бинарное дерево.
+    //Создайте БЕЗ использования других классов (включая абстрактные)
+    //аналог дерева TreeSet
+    private transient NavigableMap<E, Object> m;
+    // Dummy value to associate with an Object in the backing Map
+    private static final Object PRESENT = new Object();
 
     //Обязательные к реализации методы и конструкторы
     public TaskB() {
+        this(new TreeMap<E, Object>());
+    }
+
+    TaskB(NavigableMap<E, Object> m) {
+        this.m = m;
     }
 
     @Override
     public boolean add(E e) {
-        return false;
+        return m.put(e, PRESENT) == null;
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        return m.remove(o) == PRESENT;
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return m.containsKey(o);
     }
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return m.navigableKeySet().iterator();
     }
 
     @Override
     public void clear() {
-
+        m.clear();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return m.isEmpty();
     }
 
     @Override
     public int size() {
-        return 0;
+        return m.size();
     }
 
     @Override
     public E first() {
-        return null;
+        return m.firstKey();
     }
 
     @Override
     public E last() {
-        return null;
+        return m.lastKey();
     }
 
 
     @Override
     public String toString() {
-        return null;
+        return m.keySet().toString();
     }
+
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
     ////////         Эти методы реализовывать необязательно      ////////////
@@ -97,7 +104,6 @@ public class TaskB<E extends Comparable<E>>  implements NavigableSet<E> {
     public E pollLast() {
         return null;
     }
-
 
     @Override
     public Object[] toArray() {
