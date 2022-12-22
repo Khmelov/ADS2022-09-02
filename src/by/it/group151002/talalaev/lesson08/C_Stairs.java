@@ -44,9 +44,13 @@ public class C_Stairs {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         int result = 0;
 
+        int[] sum = new int[n];
+        for (int i = 0; i < 2 && i < n; i++)
+            sum[i] = stairs[i];
+        for (int i = 2; i < n; i++)
+            sum[i] = Math.max(sum[i - 1], sum[i - 2]) + stairs[i];
 
-
-
+        result = sum[n-1];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
