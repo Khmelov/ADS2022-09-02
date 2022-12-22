@@ -2,14 +2,14 @@ package by.it.group151003.mytnik.lesson09;
 
 import java.util.*;
 
-public class ListA<T> implements List<T> {
+public class ListAB<T> implements List<T> {
     private Object[] array;
 
     private static final int DEFAULT_CAPACITY = 10;
 
     private int size;
 
-    public ListA() {
+    public ListAB() {
         this.array = new Object[DEFAULT_CAPACITY];
     }
 

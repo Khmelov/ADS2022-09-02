@@ -30,6 +30,8 @@ Sample Input 3:
 Sample Output 3:
 3
 
+Aboba
+
 */
 
 public class C_Stairs {
@@ -40,7 +42,7 @@ public class C_Stairs {
         int n = scanner.nextInt();
         int stairs[] = new int[n];
         for (int i = 0; i < n; i++)
-            stairs[i]=scanner.nextInt();
+            stairs[i] = scanner.nextInt();
         int[] sum = new int[n];
         for (int i = 0; i < 2 && i < n; i++)
             sum[i] = stairs[i];
