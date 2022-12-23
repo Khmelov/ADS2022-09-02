@@ -320,12 +320,14 @@ public class TaskC<E>  implements NavigableSet<E> {
             public int compare(E o1, E o2) {
                 if (o1.hashCode() > o2.hashCode()){
                     return 1;
-                }else if(o1.hashCode() < o2.hashCode()){
-                    return -1;
-                }else return 0;
+                }else
+                    if(o1.hashCode() < o2.hashCode()){
+                        return -1;
+                    }else
+                        return 0;
             }
         });
-        for(int i = 0; i < arr.size();i++){
+        for (int i = 0; i < arr.size();i++){
             if (arr.get(i).hashCode() > e.hashCode()){
                 return arr.get(i);
             }
@@ -353,7 +355,6 @@ public class TaskC<E>  implements NavigableSet<E> {
         return null;
     }
 
-
     private void subString(StringBuilder sb) {
         if(this.value == null){
             return;
@@ -378,7 +379,6 @@ public class TaskC<E>  implements NavigableSet<E> {
         sb.delete(sb.length() - 2,sb.length());
         sb.append("]");
         return sb.toString();
-
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
