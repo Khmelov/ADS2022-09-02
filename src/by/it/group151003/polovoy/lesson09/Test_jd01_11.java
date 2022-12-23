@@ -53,7 +53,7 @@ public class Test_jd01_11 extends HomeWork {
     @Test(timeout = 1500)
     public void testTaskB__ListB() throws Exception {
         System.out.println("\nB. Диагностика обязательных к реализации методов:");
-        Class<?> aclass = findClass("ListB");
+        Class<?> aclass = findClass("ListA");
         List<Long> a = (List<Long>) aclass.getDeclaredConstructor().newInstance();
         List<Long> e = new ArrayList<>();
         for (int i = 0; i < 10; i++) {

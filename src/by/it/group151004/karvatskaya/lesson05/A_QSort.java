@@ -45,8 +45,6 @@ public class A_QSort {
         Segment(int start, int stop){
             this.start = start;
             this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
         }
 
         @Override
