@@ -2,7 +2,7 @@ package by.it.group151001.nesteruk.lesson10;
 
 import java.util.*;
 
-public class TaskB<E extends Comparable<E>>  implements NavigableSet<E> {
+public class TaskB<E>  implements NavigableSet<E> {
 
     //Создайте аналог дерева TreeSet БЕЗ использования других классов СТАНДАРТНОЙ БИБЛИОТЕКИ
     //Не нужно на массивах это делать или маскируя в поля TreeSet, TreeMap и т.д.
@@ -13,56 +13,219 @@ public class TaskB<E extends Comparable<E>>  implements NavigableSet<E> {
     public TaskB() {
     }
 
+    private class Node {
+        E data;
+        Node parent;
+        Node left;
+        Node right;
+
+        Node(E data) {
+            this.data = data;
+        }
+    }
+
+    private Node root = null;
+    private int size = 0;
+
+    private int compare(E obj1, E obj2) {
+        return Integer.compare((int)obj1, (int)obj2);
+    }
     @Override
     public boolean add(E e) {
-        return false;
+        Node cur = root;
+        Node parent = cur;
+        int result = 0;
+        while (cur != null){
+            parent = cur;
+            result = compare(cur.data, e);
+            if (result > 0){
+                cur = cur.left;
+            }
+            else if (result < 0){
+                cur = cur.right;
+            }
+            else{
+                return false;
+            }
+        }
+        Node new_node = new Node(e);
+        if (parent == null)
+            root = new_node;
+        else if (result > 0) {
+            parent.left = new_node;
+            parent.left.parent = parent;
+        }
+        else {
+            parent.right = new_node;
+            parent.right.parent = parent;
+        }
+        size++;
+        return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        Node cur = root;
+        int result = 0;
+        Node parent = null;
+        while (cur != null && ((result = compare(cur.data, (E)o)) != 0)) {
+            parent = cur;
+            if (result > 0)
+                cur = cur.left;
+            else
+                cur = cur.right;
+        }
+        if (cur == null)
+            return false;
+        if (cur.left == null && cur.right == null) {
+            if (cur != root) {
+                if (parent.right == cur)
+                    parent.right = null;
+                else
+                    parent.left = null;
+            } else
+                root = null;
+        }
+        else if (cur.left != null && cur.right != null){
+            Node min = cur.right;
+            while (min.left != null) {
+                min = min.left;
+            }
+            remove(min.data);
+            size++;
+            cur.data = min.data;
+        }
+        else{
+            Node child  = (cur.left != null)? cur.left: cur.right;
+            if (cur != root){
+                if (cur == parent.left){
+                    parent.left = child;
+                    child.parent = parent;
+                }
+                else {
+                    parent.right = child;
+                    child.parent = parent;
+                }
+            }
+            else
+                root = child;
+        }
+        size--;
+        return true;
+    }
+    private String makeString(Node node, String res){
+        if (node != null){
+            res = res  + makeString(node.left, res) + ", " + node.data.toString()  + makeString(node.right, res);
+        }
+        return res;
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        if (root == null)
+            return "[" + result + "]";
+        return "[" + makeString(root, result).substring(2) + "]";
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        Node cur = root;
+        int result = 0;
+        while (cur != null && ((result = compare(cur.data, (E)o)) != 0))
+            if (result > 0)
+                cur = cur.left;
+            else
+                cur = cur.right;
+        return cur != null;
     }
 
+    private class SetIterator<T> implements Iterator<T> {
+        private Node node, next;
+        private Node findLeft(Node node) {
+            if (node == null)
+                return null;
+            while (node.left != null) {
+                node = node.left;
+            }
+            return node;
+        }
+        SetIterator(){
+            node = null;
+            next = null;
+        }
+        @Override
+        public boolean hasNext() {
+            if (node == null) {
+                next = findLeft(root);
+            } else if (node.right != null) {
+                next = findLeft(node.right);
+            } else {
+                next = node;
+                while (next.parent != null && next == next.parent.right) {
+                    next = next.parent;
+                }
+                next = next.parent;
+                if (next == null)
+                    return false;
+            }
+            return true;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public T next() {
+            if (next == null)
+                return null;
+            node = next;
+            return (T) next.data;
+        }
+    }
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new SetIterator<>();
     }
 
     @Override
     public void clear() {
-
+        root = null;
+        size = 0;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return root == null;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public E first() {
-        return null;
+        if (root == null)
+            return null;
+        else{
+            Node cur = root;
+            while (cur.left != null)
+                cur = cur.left;
+            return cur.data;
+        }
     }
 
     @Override
     public E last() {
-        return null;
+        if (root == null)
+            return null;
+        else{
+            Node cur = root;
+            while (cur.right != null)
+                cur = cur.right;
+            return cur.data;
+        }
     }
 
-
-    @Override
-    public String toString() {
-        return null;
-    }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
     ////////         Эти методы реализовывать необязательно      ////////////
