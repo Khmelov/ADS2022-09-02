@@ -3,143 +3,204 @@ package by.it.group151001.loziuk.lesson10;
 import java.util.*;
 
 public class TaskA<E>  implements NavigableSet<E> {
-    private E Value;
-    private TaskA<E> Left;
-    private TaskA<E> Right;
-    private void SetKey(TaskA<E> elem){
-        this.Value = elem.Value;
-        this.Left = elem.Left;
-        this.Right = elem.Right;
-    }
-    //Создайте БЕЗ использования других классов (включая абстрактные)
-    //аналог дерева TreeSet
-
-    //Обязательные к реализации методы и конструкторы
-    public TaskA() {
-        this.Value = null;
-        this.Left = null;
-        this.Right = null;
+    public int size = 0;
+    public Node<E> root;
+    public int compareTo(E o1, E o2)
+    {
+        return Integer.compare((int)o1, (int)o2);
     }
 
-    public static void main(String[] args) {
-        TaskA<Integer> tree = new TaskA<>();
-        tree.add(8);
-        tree.add(7);
+    public class Node<E>
+    {
+        //sorry for public, but I'm too lazy
+        public E data;
+        public Node<E> left;
+        public Node<E> right;
+        public Node<E> parent;
+
+        public Node(E data)
+        {
+            this.data = data;
+        }
     }
 
     @Override
-    public boolean add(E e) {
-        if (this.Value == null){
-            this.Value = e;
-            this.Left = new TaskA<>();
-            this.Right = new TaskA<>();
-            return true;
-        }
-        else{
-            if(e.hashCode() > this.Value.hashCode())
-                return this.Right.add(e);
-            else
-                return this.Left.add(e);
-        }
-    }
-
-    public TaskA<E> getMinChild(TaskA<E> temp)
-    {
-        while (temp.Left.Value != null) {
-            temp = temp.Left;
-        }
-        return temp;
-    }
-
-    public TaskA<E> delete(TaskA<E> root, E deleting){
-        TaskA<E> pred = null;
-        TaskA<E>  temp = root;
-        while (temp.Value != null && !temp.Value.equals(deleting)){
-            pred = temp;
-            if (deleting.hashCode() > temp.Value.hashCode())
-                temp = temp.Right;
-            else
-                temp = temp.Left;
-        }
-        if (temp.Value == null)
-            return root;
-        else{
-            //лист
-            if(temp.Left.Value == null && temp.Right.Value == null){
-                //не корень
-                if (temp.Value != root.Value){
-                    if(pred.Left.Value == temp.Value)
-                        pred.Left.Value = null;
-                    else
-                        pred.Right.Value = null;
-                }
-                //корень
-                else
-                    root.Value = null;
+    public boolean add(E key) {
+        Node<E> curr = root;
+        Node<E> elem = new Node<>(key);
+        if (!contains(key))
+        {
+            if (root == null)
+            {
+                root = new Node(key);
+//                root = elem;
+                root.parent = null;
+                size++;
+                return true;
             }
-            else{
-                //1 ребенок
-                if ((temp.Left.Value != null && temp.Right.Value == null) || (temp.Left.Value == null && temp.Right.Value != null)){
-                    TaskA<E> child;
-                    if (temp.Left.Value == null)
-                        child = temp.Right;
-                    else
-                        child = temp.Left;
+            else
+            {
+                boolean isInserted = false;
+                while (!isInserted)
+                {
+                    if (compareTo(curr.data, key) > 0)
+                    {
+                        if (curr.left == null)
+                        {
+                            curr.left = elem;
+                            curr.left.parent = curr;
+                            size++;
+                            return true;
+                        }
 
-                    //не корень
-                    if (temp.Value != root.Value){
-                        if(pred.Left.Value == temp.Value)
-                            pred.Left = child;
-                        else
-                            pred.Right = child;
+                        curr = curr.left;
                     }
-                    //корень
                     else
-                        root = child;
-                }
-                // 2 ребенка
-                else{
-                    TaskA<E> min = getMinChild(temp.Right);
-                    E newValue = min.Value;
-                    delete(root,newValue);
-                    temp.Value = newValue;
+                    {
+                        if (curr.right == null)
+                        {
+                            curr.right = elem;
+                            curr.right.parent = curr;
+                            size++;
+                            return true;
+                        }
+
+                        curr = curr.right;
+                    }
                 }
             }
         }
-        return root;
+
+        return false;
     }
 
     @Override
     public boolean remove(Object o) {
-        TaskA<E> root = delete(this,(E)o);
-        this.SetKey(root);
-        return root.Value == this.Value;
-    }
-
-    private void subString(StringBuilder sb) {
-        if(this.Value == null){
-            return;
+        Node<E> curr = root;
+        boolean flag = false;
+        while(!flag && size > 0){
+            if(curr == null) return false;
+            if(curr != null && compareTo(curr.data, (E) o) > 0){
+                curr=curr.left;
+            } else
+            if(curr!=null && compareTo(curr.data,(E)o) < 0){
+                curr=curr.right;
+            }
+            if(curr!=null && compareTo(curr.data,(E)o)==0){
+                flag = true;
+            }
         }
-        this.Left.subString(sb);
-        sb.append(this.Value);
-        sb.append(", ");
-        this.Right.subString(sb);
+        if(curr.left==null && curr.right==null){
+            if(curr.parent==null){
+                root=null;
+            } else
+            if(curr.parent.right==curr){
+                curr.parent.right=null;
+            }else {
+                curr.parent.left = null;
+            }
+            size--;
+            return true;
+        }
+        if(curr.left==null || curr.right==null){
+            if(curr.left==null){
+                if(curr.parent==null){
+                    root=curr.right;
+                } else
+                if(curr.parent.left==curr){
+                    curr.right.parent=curr.parent;
+                    curr.parent.left=curr.right;
+                } else
+                if(curr.parent.right==curr){
+                    curr.right.parent=curr.parent;
+                    curr.parent.right = curr.right;
+                }
+            }
+            if(curr.right==null){
+                if(curr.parent==null){
+                    root=curr.left;
+                } else
+                if(curr.parent!=null && curr.parent.right==curr){
+                    curr.left.parent=curr.parent;
+                    curr.parent.right=curr.left;
+                } else
+                if(curr.parent!=null && curr.parent.left==curr){
+                    curr.left.parent=curr.parent;
+                    curr.parent.left = curr.left;
+                }
+            }
+            size--;
+            return true;
+        }
+        if(curr.left!=null && curr.right!=null){
+            Node<E> tmp;
+            tmp=curr.right;
+            boolean flag1=false;
+            while(tmp.left!=null){
+                tmp=tmp.left;
+                flag1=true;
+            }
+            if(flag1){
+                if(tmp.right!=null){
+                    tmp.right.parent=tmp.parent;
+                    tmp.parent.left=tmp.right;
+                    curr.data=tmp.data;
+                }
+                if(tmp.right==null){
+                    tmp.parent.left=null;
+                    curr.data=tmp.data;
+                }
+                size--;
+                return true;
+            }
+            else if(!flag1){
+                if(tmp.right!=null) {
+                    tmp.right.parent = tmp.parent;
+                    tmp.parent.right = tmp.right;
+                    curr.data = tmp.data;
+                }
+                if(tmp.right==null){
+                    tmp.parent.right=null;
+                    curr.data=tmp.data;
+                }
+                size--;
+                return true;
+            }
+            size--;
+            return true;
+        }
+
+        return false;
     }
 
+
+    void LRB(Node<E> root, StringBuilder res)
+    {
+        if (root != null)
+        {
+            LRB(root.left, res);
+            res.append(root.data);
+            res.append(", ");
+            LRB(root.right, res);
+        }
+
+    }
     @Override
     public String toString() {
-        if (this.Value == null){
-            return "[ ]";
+        StringBuilder res = new StringBuilder();
+        res.append('[');
+        LRB(root, res);
+        if (res.length() < 2)
+        {
+            res.append(']');
         }
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        Left.subString(sb);
-        sb.append(this.Value);
-        sb.append(", ");
-        Right.subString(sb);
-        sb.delete(sb.length() - 2,sb.length());
-        sb.append("]");
-        return sb.toString();
+        else
+        {
+            res.delete(res.length() - 2, res.length());
+            res.append("]");
+        }
+
+        return res.toString();
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
@@ -150,7 +211,30 @@ public class TaskA<E>  implements NavigableSet<E> {
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        Node<E> curr = root;
+        boolean isFound = false;
+        while (size >= 1 && isFound == false)
+        {
+            if (curr == null)
+            {
+                isFound = false;
+                break;
+            }
+            else if (curr != null && compareTo(curr.data, (E) o) > 0)
+            {
+                curr = curr.left;
+            }
+            else if (curr != null && compareTo(curr.data, (E) o) < 0)
+            {
+                curr = curr.right;
+            }
+            else if (curr != null && compareTo(curr.data, (E) o) == 0)
+            {
+                isFound = true;
+            }
+        }
+
+        return isFound;
     }
 
     @Override
@@ -160,17 +244,23 @@ public class TaskA<E>  implements NavigableSet<E> {
 
     @Override
     public void clear() {
-
+        root = null;
+        size = 0;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        if (size > 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
@@ -280,11 +370,36 @@ public class TaskA<E>  implements NavigableSet<E> {
 
     @Override
     public E first() {
-        return null;
+        if (size > 0)
+        {
+            Node<E> curr = root;
+            while (curr.left != null)
+            {
+                curr = curr.left;
+            }
+            return curr.data;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public E last() {
-        return null;
+        if (size > 0)
+        {
+            Node<E> curr = root;
+            while (curr.right != null)
+            {
+                curr = curr.right;
+            }
+            return curr.data;
+        }
+        else
+        {
+            return null;
+        }
     }
 }
+
