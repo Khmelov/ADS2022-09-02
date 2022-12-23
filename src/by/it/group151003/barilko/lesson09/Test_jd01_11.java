@@ -150,7 +150,7 @@ public class Test_jd01_11 extends HomeWork {
         }
     };
 
-    @Test(timeout = 1500)
+    @Test
     public void testTaskC__SetC() throws Exception {
         System.out.println("\nC. Диагностика обязательных к реализации методов:");
         Class<?> aclass = findClass("SetC");

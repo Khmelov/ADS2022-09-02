@@ -1,7 +1,9 @@
-package by.it.a_khmelev.lesson10;
+package by.it.group151003.barilko.lesson10;
 
 import java.util.*;
 
+
+TreeSet
 public class TaskA<E>  implements NavigableSet<E> {
 
     //Создайте БЕЗ использования других классов (включая абстрактные)
