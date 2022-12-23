@@ -4,28 +4,90 @@ import java.util.*;
 
 public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
 
-    //Создайте аналог дерева TreeSet БЕЗ использования других классов СТАНДАРТНОЙ БИБЛИОТЕКИ
-    //Не нужно на массивах это делать или маскируя в поля TreeSet, TreeMap и т.д.
-    //Можно реализовать класс Node с двумя полями такого же типа (потомки дерева),
-    //в нем также может быть поле элемента E. Далее на этой основе ожидается бинарное дерево.
+    private E item;
+    private TaskA<E> left;
+    private TaskA<E> right;
 
-    //Обязательные к реализации методы и конструкторы
+
+    private void setNode(TaskA<E> node){
+        this.item = node.item;
+        this.right = node.right;
+        this.left = node.left;
+    }
+
     public TaskA() {
+        this.item = null;
+        this.left = null;
+        this.right = null;
     }
-
-    @Override
-    public boolean add(E e) {
-        return false;
-    }
-
     @Override
     public boolean remove(Object o) {
+        if(!(o instanceof Comparable)){
+            return false;
+        }
+        if(item == null) {
+            return false;
+        }
+        if(item.compareTo((E) o) < 0) {
+            return this.right.remove(o);
+        }
+        if(item.compareTo((E) o) > 0){
+            return this.left.remove(o);
+        }
+        if(this.right.item == null) {
+            this.setNode(this.left);
+        } else if(left.item == null) {
+            this.setNode(this.right);
+        } else
+            this.left.delete_right(this);
+        return true;
+    }
+    @Override
+    public boolean add(E e) {
+        if(this.item == null){
+            this.item = e;
+            this.right = new TaskA<>();
+            this.left = new TaskA<>();
+            return true;
+        }
+        if(item.compareTo(e) > 0){
+            return this.left.add(e);
+        }
+        if(item.compareTo(e) < 0){
+            return this.right.add(e);
+        }
         return false;
     }
-
+    private void delete_right(TaskA<E> deleted){
+        if(this.right != null && this.right.item != null){
+            this.right.delete_right(deleted);
+            return;
+        }
+        deleted.item = this.item;
+        this.setNode(this.left);
+    }
+    private void subString(StringBuilder sb) {
+        if(this.item == null){
+            return;
+        }
+        this.left.subString(sb);
+        sb.append(this.item);
+        sb.append(", ");
+        this.right.subString(sb);
+    }
     @Override
     public String toString() {
-        return null;
+        if(this.item == null){
+            return "[]";
+        }
+        StringBuilder sb = new StringBuilder("[");
+        left.subString(sb);
+        sb.append(item);
+        sb.append(", ");
+        right.subString(sb);
+        sb.delete(sb.length() - 2, sb.length());
+        sb.append("]");
+        return sb.toString();
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
