@@ -4,28 +4,107 @@ import java.util.*;
 
 public class TaskB<E extends Comparable<E>>  implements NavigableSet<E> {
 
-    //Создайте аналог дерева TreeSet БЕЗ использования других классов СТАНДАРТНОЙ БИБЛИОТЕКИ
-    //Не нужно на массивах это делать или маскируя в поля TreeSet, TreeMap и т.д.
-    //Можно реализовать класс Node с двумя полями такого же типа (потомки дерева),
-    //в нем также может быть поле элемента E. Далее на этой основе ожидается бинарное дерево.
+    private E item;
+    private TaskB<E> left;
+    private TaskB<E> right;
 
-    //Обязательные к реализации методы и конструкторы
+
+    private void setNode(TaskB<E> node){
+        this.item = node.item;
+        this.right = node.right;
+        this.left = node.left;
+    }
+
     public TaskB() {
+        this.item = null;
+        this.left = null;
+        this.right = null;
     }
-
-    @Override
-    public boolean add(E e) {
-        return false;
-    }
-
     @Override
     public boolean remove(Object o) {
+        if(!(o instanceof Comparable)){
+            return false;
+        }
+        if(item == null) {
+            return false;
+        }
+        if(item.compareTo((E) o) < 0) {
+            return this.right.remove(o);
+        }
+        if(item.compareTo((E) o) > 0){
+            return this.left.remove(o);
+        }
+        if(this.right.item == null) {
+            this.setNode(this.left);
+        } else if(left.item == null) {
+            this.setNode(this.right);
+        } else
+            this.left.delete_right(this);
+        return true;
+    }
+    @Override
+    public boolean add(E e) {
+        if(this.item == null){
+            this.item = e;
+            this.right = new TaskB<>();
+            this.left = new TaskB<>();
+            return true;
+        }
+        if(item.compareTo(e) > 0){
+            return this.left.add(e);
+        }
+        if(item.compareTo(e) < 0){
+            return this.right.add(e);
+        }
         return false;
+    }
+    private void delete_right(TaskB<E> deleted){
+        if(this.right != null && this.right.item != null){
+            this.right.delete_right(deleted);
+            return;
+        }
+        deleted.item = this.item;
+        this.setNode(this.left);
+    }
+    private void subString(StringBuilder sb) {
+        if(this.item == null){
+            return;
+        }
+        this.left.subString(sb);
+        sb.append(this.item);
+        sb.append(", ");
+        this.right.subString(sb);
+    }
+    @Override
+    public String toString() {
+        if(this.item == null){
+            return "[]";
+        }
+        StringBuilder sb = new StringBuilder("[");
+        left.subString(sb);
+        sb.append(item);
+        sb.append(", ");
+        right.subString(sb);
+        sb.delete(sb.length() - 2, sb.length());
+        sb.append("]");
+        return sb.toString();
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        if(!(o instanceof Comparable)){
+            return false;
+        }
+        if(item == null){
+            return false;
+        }
+        if((item.compareTo((E) o)) < 0){
+            return this.right.contains(o);
+        }
+        if((item.compareTo((E) o)) > 0){
+            return this.left.contains(o);
+        }
+        return true;
     }
 
     @Override
@@ -35,33 +114,40 @@ public class TaskB<E extends Comparable<E>>  implements NavigableSet<E> {
 
     @Override
     public void clear() {
-
+        this.item = null;
+        this.right = null;
+        this.left = null;
     }
 
     @Override
     public boolean isEmpty() {
+        if(item == null){
+            return true;
+        }
         return false;
     }
 
     @Override
     public int size() {
-        return 0;
+        if (this.item == null)
+            return 0;
+        return 1 + this.left.size() + this.right.size();
     }
 
     @Override
     public E first() {
-        return null;
+        if(this.left.item != null){
+            return this.left.first();
+        }
+        return this.item;
     }
 
     @Override
     public E last() {
-        return null;
-    }
-
-
-    @Override
-    public String toString() {
-        return null;
+        if(this.right.item != null){
+            return this.right.last();
+        }
+        return this.item;
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
