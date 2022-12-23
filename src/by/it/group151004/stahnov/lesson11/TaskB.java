@@ -3,13 +3,13 @@ package by.it.group151004.stahnov.lesson11;
 import java.util.*;
 
 public class TaskB {
-    public Map<Character, List<Character>> graph;
-    public List<Character> topologicalOrder;
-    public boolean[] visited;
+    private final Map<Character, List<Character>> graph;
+    private final boolean[] visited;
+    private final Stack<Character> topologicalOrder;
 
     public TaskB(Map<Character, List<Character>> graph) {
         this.graph = graph;
-        topologicalOrder = new ArrayList<>();
+        topologicalOrder = new Stack<>();
         visited = new boolean[graph.size()];
     }
 
@@ -29,8 +29,10 @@ public class TaskB {
                 dfs(neighbor);
             }
         }
-        topologicalOrder.add(vertex);
+        topologicalOrder.push(vertex);
     }
+
+    public String getOrder(){return this.topologicalOrder.toString();}
 
     public static void main(String[] args) {
         Map<Character, List<Character>> graph = new HashMap<>();
@@ -45,6 +47,6 @@ public class TaskB {
 
         TaskB topologicalSort = new TaskB(graph);
         topologicalSort.sort();
-        System.out.println(topologicalSort.topologicalOrder);
+        System.out.println(topologicalSort.getOrder());
     }
 }
