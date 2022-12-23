@@ -49,13 +49,68 @@ import java.util.Scanner;
 
 public class C_EditDist {
 
-    String getDistanceEdinting(String one, String two) {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+    int findMinOfThree(int a, int b, int c) {
+        return Integer.min(Integer.min(a, b), c);
+    }
 
+    String getDistanceEdinting(String s1, String s2) {
+        int m = s1.length();
+        int n = s2.length();
+        int[][] d = new int[m + 1][n + 1];
+        for (int i = 0; i < m; i++) {
+            d[i][0] = i;
+        }
+        for (int j = 0; j < n; j++) {
+            d[0][j] = j;
+        }
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                int term = s1.charAt(i - 1) == s2.charAt(j - 1) ? 0 : 1;
+                d[i][j] = findMinOfThree(d[i][j - 1] + 1, //insert
+                        d[i - 1][j] + 1, //delete
+                        d[i - 1][j - 1] + term); //change
+            }
+        }
 
-        String result = "";
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        StringBuilder result = new StringBuilder();
+        int i = m;
+        int j = n;
+        while (i > 0 && j > 0) {
+            int term = s1.charAt(i - 1) == s2.charAt(j - 1) ? 0 : 1;
+            if (d[i][j] == d[i][j - 1] + 1) {
+                result.insert(0, ",");
+                result.insert(0, s2.charAt(i - 1));
+                result.insert(0, "+");
+                j--;
+            } else if (d[i][j] == d[i - 1][j] + 1) {
+                result.insert(0, ",");
+                result.insert(0, s1.charAt(i - 1));
+                result.insert(0, "-");
+                i--;
+            } else {
+                if (term == 0) {
+                    result.insert(0, ",");
+                    result.insert(0, "#");
+                } else {
+                    result.insert(0, ",");
+                    result.insert(0, s2.charAt(j - 1));
+                    result.insert(0, "~");
+                }
+                i--;
+                j--;
+            }
+        }
+        if (i > 0) {
+            result.insert(0, ",");
+            result.insert(0, s1.charAt(i - 1));
+            result.insert(0, "-");
+        } else if (j > 0) {
+            result.insert(0, ",");
+            result.insert(0, s2.charAt(j - 1));
+            result.insert(0, "+");
+        }
+
+        return result.toString();
     }
 
 
@@ -64,9 +119,9 @@ public class C_EditDist {
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson07/dataABC.txt");
         C_EditDist instance = new C_EditDist();
         Scanner scanner = new Scanner(stream);
-        System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
-        System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
-        System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
+        System.out.println(instance.getDistanceEdinting(scanner.nextLine(), scanner.nextLine()));
+        System.out.println(instance.getDistanceEdinting(scanner.nextLine(), scanner.nextLine()));
+        System.out.println(instance.getDistanceEdinting(scanner.nextLine(), scanner.nextLine()));
     }
 
 }

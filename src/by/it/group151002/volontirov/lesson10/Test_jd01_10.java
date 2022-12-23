@@ -23,7 +23,7 @@ public class Test_jd01_10 extends HomeWork {
         randomCheck(methodNames, "TaskA");
     }
 
-    @Test(timeout = 5000)
+    @Test//(timeout = 5000)
     public void testTaskB() throws Exception {
         TreeSet<String> methodNames = new TreeSet<>(Arrays.asList(
                 "toString", "add", "remove",
@@ -52,13 +52,14 @@ public class Test_jd01_10 extends HomeWork {
         List<Method> methodsA = fill(aclass.getMethods(), methodNames);
         int seed = 1234;
         Random rnd = new Random(seed);
-        for (int testNumber = 0; testNumber < seed; testNumber++) {
+        for (int testNumber = 0; testNumber < seed; testNumber++)
+        {
             Integer value = rnd.nextInt(10);
             for (int i = 0; i <= value % 10; i++) {
                 a.add(value + i*value);
                 e.add(value + i*value);
             }
-            int mIndex = rnd.nextInt(methodsA.size());
+            int mIndex = rnd.nextInt(methodsE.size());
             Method methodE = methodsE.get(mIndex);
             Method methodA = methodsA.get(mIndex);
             int params = methodE.getParameterCount();
