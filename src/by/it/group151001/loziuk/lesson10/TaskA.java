@@ -12,7 +12,6 @@ public class TaskA<E>  implements NavigableSet<E> {
 
     public class Node<E>
     {
-        //sorry for public, but I'm too lazy
         public E data;
         public Node<E> left;
         public Node<E> right;
@@ -33,7 +32,6 @@ public class TaskA<E>  implements NavigableSet<E> {
             if (root == null)
             {
                 root = new Node(key);
-//                root = elem;
                 root.parent = null;
                 size++;
                 return true;
@@ -76,65 +74,65 @@ public class TaskA<E>  implements NavigableSet<E> {
 
     @Override
     public boolean remove(Object o) {
-        Node<E> curr = root;
+        Node<E> cur = root;
         boolean flag = false;
         while(!flag && size > 0){
-            if(curr == null) return false;
-            if(curr != null && compareTo(curr.data, (E) o) > 0){
-                curr=curr.left;
+            if(cur == null) return false;
+            if(cur != null && compareTo(cur.data, (E) o) > 0){
+                cur = cur.left;
             } else
-            if(curr!=null && compareTo(curr.data,(E)o) < 0){
-                curr=curr.right;
+            if(cur != null && compareTo(cur.data,(E)o) < 0){
+                cur = cur.right;
             }
-            if(curr!=null && compareTo(curr.data,(E)o)==0){
+            if(cur != null && compareTo(cur.data,(E)o)==0){
                 flag = true;
             }
         }
-        if(curr.left==null && curr.right==null){
-            if(curr.parent==null){
+        if(cur.left == null && cur.right == null){
+            if(cur.parent==null){
                 root=null;
             } else
-            if(curr.parent.right==curr){
-                curr.parent.right=null;
+            if(cur.parent.right==cur){
+                cur.parent.right=null;
             }else {
-                curr.parent.left = null;
+                cur.parent.left = null;
             }
             size--;
             return true;
         }
-        if(curr.left==null || curr.right==null){
-            if(curr.left==null){
-                if(curr.parent==null){
-                    root=curr.right;
+        if(cur.left==null || cur.right==null){
+            if(cur.left==null){
+                if(cur.parent==null){
+                    root=cur.right;
                 } else
-                if(curr.parent.left==curr){
-                    curr.right.parent=curr.parent;
-                    curr.parent.left=curr.right;
+                if(cur.parent.left==cur){
+                    cur.right.parent=cur.parent;
+                    cur.parent.left=cur.right;
                 } else
-                if(curr.parent.right==curr){
-                    curr.right.parent=curr.parent;
-                    curr.parent.right = curr.right;
+                if(cur.parent.right==cur){
+                    cur.right.parent=cur.parent;
+                    cur.parent.right = cur.right;
                 }
             }
-            if(curr.right==null){
-                if(curr.parent==null){
-                    root=curr.left;
+            if(cur.right==null){
+                if(cur.parent==null){
+                    root=cur.left;
                 } else
-                if(curr.parent!=null && curr.parent.right==curr){
-                    curr.left.parent=curr.parent;
-                    curr.parent.right=curr.left;
+                if(cur.parent!=null && cur.parent.right==cur){
+                    cur.left.parent=cur.parent;
+                    cur.parent.right=cur.left;
                 } else
-                if(curr.parent!=null && curr.parent.left==curr){
-                    curr.left.parent=curr.parent;
-                    curr.parent.left = curr.left;
+                if(cur.parent!=null && cur.parent.left==cur){
+                    cur.left.parent=cur.parent;
+                    cur.parent.left = cur.left;
                 }
             }
             size--;
             return true;
         }
-        if(curr.left!=null && curr.right!=null){
+        if(cur.left!=null && cur.right!=null){
             Node<E> tmp;
-            tmp=curr.right;
+            tmp=cur.right;
             boolean flag1=false;
             while(tmp.left!=null){
                 tmp=tmp.left;
@@ -144,11 +142,11 @@ public class TaskA<E>  implements NavigableSet<E> {
                 if(tmp.right!=null){
                     tmp.right.parent=tmp.parent;
                     tmp.parent.left=tmp.right;
-                    curr.data=tmp.data;
+                    cur.data=tmp.data;
                 }
                 if(tmp.right==null){
                     tmp.parent.left=null;
-                    curr.data=tmp.data;
+                    cur.data=tmp.data;
                 }
                 size--;
                 return true;
@@ -157,11 +155,11 @@ public class TaskA<E>  implements NavigableSet<E> {
                 if(tmp.right!=null) {
                     tmp.right.parent = tmp.parent;
                     tmp.parent.right = tmp.right;
-                    curr.data = tmp.data;
+                    cur.data = tmp.data;
                 }
                 if(tmp.right==null){
                     tmp.parent.right=null;
-                    curr.data=tmp.data;
+                    cur.data=tmp.data;
                 }
                 size--;
                 return true;
