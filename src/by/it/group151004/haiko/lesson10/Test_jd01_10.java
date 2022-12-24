@@ -38,7 +38,7 @@ public class Test_jd01_10 extends HomeWork {
         TreeSet<String> methodNames = new TreeSet<>(Arrays.asList(
                 "toString", "add", "remove",
                 "contains", "clear", "isEmpty", "size", "first", "last",
-                "lower", "floor", "ceiling", "higher", "pollFirst", "pollLast"
+                "lower", "floor", "ceiling" , "higher", "pollFirst", "pollLast"
         ));
         randomCheck(methodNames, "TaskC");
     }
