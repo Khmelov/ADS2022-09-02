@@ -39,20 +39,31 @@ import java.util.Scanner;
 
 public class A_EditDist {
 
+    int findMinOfThree(int a, int b, int c) {
+        return Integer.min(Integer.min(a, b), c);
+    }
 
-    int getDistanceEdinting(String one, String two) {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+    int findDist(String s1, String s2, int m, int n) {
+        if (m == 0 && n == 0)
+            return 0;
+        if (m == 0)
+            return n;
+        if (n == 0)
+            return m;
+        int term = s1.charAt(m - 1) == s2.charAt(n - 1) ? 0 : 1;
+        return findMinOfThree(findDist(s1, s2, m, n - 1) + 1, //insert
+                findDist(s1, s2, m - 1, n) + 1, //delete
+                findDist(s1, s2, m - 1, n - 1) + term); //change
+    }
 
-
-        int result = 0;
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+    int getDistanceEdinting(String s1, String s2) {
+        return findDist(s1, s2, s1.length(), s2.length());
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson07/dataABC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/shatko/lesson07/dataABC.txt");
         A_EditDist instance = new A_EditDist();
         Scanner scanner = new Scanner(stream);
         System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));

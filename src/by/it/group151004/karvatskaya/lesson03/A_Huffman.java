@@ -121,7 +121,7 @@ public class A_Huffman {
 
         Map<Character, Integer> count = new HashMap<>();
 
-        //1.
+        //1.перебираем символы по очереди и рассчитываем их частоту, добавим 1 если в карте нет и инк если есть
         for (int i = 0; i < s.length(); i++)
         {
             if (count.containsKey(s.charAt(i)))
@@ -134,14 +134,14 @@ public class A_Huffman {
             }
         }
 
-        //2.
+        //2.перенесем все символы в приоритетную очередь
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
         for (Map.Entry<Character, Integer> entry: count.entrySet())
         {
             LeafNode lnode = new LeafNode(entry.getValue(),entry.getKey());
             priorityQueue.add(lnode);
         }
-        //3.
+        //3.вынимем по 2 узла из очереди и возвращая родителя в очередь построим дерево кодирования
         while (priorityQueue.size() != 1)
         {
             Node LChild = priorityQueue.poll();
@@ -150,7 +150,7 @@ public class A_Huffman {
             priorityQueue.add(ParNode);
         }
 
-        //4.
+        //4.последний из родителей будет корнем
         Node base = priorityQueue.poll();
         base.fillCodes("");
         StringBuilder sb = new StringBuilder();

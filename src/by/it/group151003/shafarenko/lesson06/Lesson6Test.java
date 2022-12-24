@@ -37,16 +37,7 @@ public class Lesson6Test {
         boolean ok=(result==4);
         assertTrue("C failed", ok);
 
-        OutputStream stream1 = new FileOutputStream(root + "/by/it/a_khmelev/lesson06/dataC2.txt", true);
-        stream1.write(10000);
-        for (int i = 1; i <= 10000; i++) {
-            stream1.write((int)(Math.random() * 1000));
-        }
-        stream = new FileInputStream(root + "/by/it/a_khmelev/lesson06/dataC2.txt");
-        result=instance.getNotUpSeqSize(stream);
-        ok = true;
-        assertTrue("C failed", ok);
-        System.out.println();
+
     }
 
 }
