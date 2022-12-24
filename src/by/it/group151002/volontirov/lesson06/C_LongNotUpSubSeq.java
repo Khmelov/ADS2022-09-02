@@ -3,7 +3,7 @@ package by.it.group151002.volontirov.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.sql.Struct;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -39,32 +39,65 @@ import java.util.Scanner;
 
 public class C_LongNotUpSubSeq {
 
-    int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
-        //подготовка к чтению данных
-        Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        //общая длина последовательности
-        int n = scanner.nextInt();
-        int[] m = new int[n];
-        //читаем всю последовательность
-        for (int i = 0; i < n; i++) {
-            m[i] = scanner.nextInt();
+    boolean wasNotAlreadyAdded(int[] arr, int value) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == value)
+                return false;
         }
-        //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return true;
     }
 
+    int getNotUpSeqSize(InputStream stream) throws FileNotFoundException {
+        Scanner scanner = new Scanner(stream);
+
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        scanner.close();
+
+        int[] result = new int[n];
+        int[] lengths = new int[n];
+        int[] prev = new int[n];
+        for (int i = 0; i < n; i++) {
+            lengths[i] = 1;
+            prev[i] = -1;
+            for (int j = 0; j < i; j++) {
+                if (arr[j] >= arr[i] && lengths[j] + 1 > lengths[i]) {
+                    lengths[i] = lengths[j] + 1;
+                    prev[i] = j;
+                }
+            }
+        }
+
+        int k = 0;
+        for (int i = 0; i < n; i++) {
+            if (lengths[i] > result[0]) {
+                result[0] = lengths[i];
+                k = i;
+            }
+        }
+
+        while(k != -1) {
+            result[lengths[k]] = k + 1;
+            k = prev[k];
+        }
+
+        System.out.println(result[0]);
+        for (int i = 1; i < result[0] + 1; i++) {
+            System.out.print(result[i] + " ");
+        }
+
+        return result[0];
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group151002/shatko/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
         int result = instance.getNotUpSeqSize(stream);
-        System.out.print(result);
     }
 
 }

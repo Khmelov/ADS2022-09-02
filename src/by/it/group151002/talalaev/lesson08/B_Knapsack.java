@@ -34,16 +34,18 @@ public class B_Knapsack {
         int w=scanner.nextInt();
         int n=scanner.nextInt();
         int gold[]=new int[n];
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
             gold[i]=scanner.nextInt();
-        }
-
-
-        int result = 0;
+        int[][] amount = new int[w + 1][n + 1];
+        for (int i = 0; i <= w; i++)
+            for (int j = 1; j <= n; j++) {
+                amount[i][j] = amount[i][j - 1];
+                if (gold[j - 1] <= i)
+                    amount[i][j] = Math.max(amount[i][j], amount[i - gold[j - 1]][j - 1] + gold[j - 1]);
+            }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return amount[w][n];
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
