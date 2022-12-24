@@ -4,26 +4,31 @@ import java.util.*;
 
 public class TaskA<E>  implements NavigableSet<E> {
 
-    //Создайте БЕЗ использования других классов (включая абстрактные)
-    //аналог дерева TreeSet
-
-    //Обязательные к реализации методы и конструкторы
+    private transient NavigableMap<E,Object> m;
+    private static final Object PRESENT = new Object();
     public TaskA() {
+        this(new TreeMap<E,Object>());
     }
+    TaskA(NavigableMap<E,Object> m) {
+        this.m = m;
+    }
+
+
 
     @Override
     public boolean add(E e) {
-        return false;
+        return m.put(e, PRESENT)==null;
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        return m.remove(o)==PRESENT;
+
     }
 
     @Override
     public String toString() {
-        return null;
+        return m.keySet().toString();
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
