@@ -45,21 +45,19 @@ public class A_LIS {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-        for (int i = 1; i < m.length; i++) {
-            int start = i, end = i;
-            for (int j = i; j < m.length; j++) {
-                result = (end - start > result) ? (end - start) : result;
-                if (m[j] >= m[i-1]) {
-                    end++;}
-//                } else {
-//                    start = j;
-//                    end = j;
-//                }
+        int seq[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            seq[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if ((m[i] > m[j ]) && (seq[j] + 1 > seq[i]))
+                    seq[i] = seq[j]+1;
             }
         }
-
-
+        int result = seq[0];
+        for (int i = 0; i < n; i++) {
+            if (seq[i] > result)
+                result = seq[i];
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
