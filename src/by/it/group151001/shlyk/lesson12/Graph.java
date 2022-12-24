@@ -1,5 +1,7 @@
 package by.it.group151001.shlyk.lesson12;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +25,7 @@ public class Graph {
     public char getMaxLabel(){
         return (char) (graphMatrix.length + 'A' - 1);
     }
-    public class GraphItemData{
+    public static class GraphItemData{
         private final int nodeLabel;
         private int pathValue;
         GraphItemData(int lblNode){
@@ -33,7 +35,7 @@ public class Graph {
     }
     public class GraphItem{
 
-        private GraphItemData self;
+        private final GraphItemData self;
         private int edgeWeight; //to the next arc
         public GraphItem next;
         public GraphItem prev;
@@ -56,7 +58,7 @@ public class Graph {
             self = origin.self;
             isDummy = true;
         }
-        public void add(int edgeWeight, GraphItem next){
+        public void add(int edgeWeight, @NotNull GraphItem next){
             next.edgeWeight = edgeWeight;
             if(this.next == null){
                 this.next = next;
@@ -67,7 +69,7 @@ public class Graph {
              next.next = saved;
             }
         }
-        public void addBehind(GraphItem last){
+        public void addBehind(@NotNull GraphItem last){
             GraphItem emptyItem = new GraphItem(last);
             if(this.prev == null) {
                 this.prev = emptyItem;
@@ -117,6 +119,10 @@ public class Graph {
         void add(int lblCurr, int edgeWeight){
             path.add(lblCurr);
             weight += edgeWeight;
+        }
+        void add(int index, int lblCurr, int edgeWeight){
+            weight += edgeWeight;
+            path.add(index, lblCurr);
         }
         void add(int lblCurr){
             path.add(lblCurr);
@@ -219,7 +225,7 @@ public class Graph {
     void updateIndex(){
         Arrays.fill(index, false);
     }
-    private void linkPath(GraphItem itemStart){
+    private void linkPath(@NotNull GraphItem itemStart){
         ArrayList<GraphItem> nextGeneration = new ArrayList<>();
         ArrayList<GraphItem> currGeneration = new ArrayList<>();
         itemStart.setPathValue(0);//we at the start
