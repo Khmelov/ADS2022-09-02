@@ -60,7 +60,7 @@ public class A_EditDist {
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        int min_size = 0, max_size = 0;
+        int min_size = 0;
         if(one.isEmpty())
             return two.length();
         if(two.isEmpty())
@@ -69,7 +69,6 @@ public class A_EditDist {
             getDistanceEdinting(two, one);
 
         min_size = one.length();
-        max_size = two.length();
 
         int[] m_line = new int [min_size + 1];
         int[] m_pline = new int[min_size + 1];
