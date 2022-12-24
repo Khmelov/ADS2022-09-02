@@ -7,7 +7,7 @@ public class List_A_Checking_Methods {
 
     boolean add_Methods_Checking() {
         RandomValuesMethods randomValuesMethods = new RandomValuesMethods();
-        int test_Size = randomValuesMethods.getIntRandomValueInRange(100, 1000);
+        int test_Size = randomValuesMethods.getIntRandomValueInRange(10, 100);
         while (test_Size-- >= 0){
             List_A<Integer> custom_List = new List_A<>();
             List<Integer> java_List = new ArrayList<>();

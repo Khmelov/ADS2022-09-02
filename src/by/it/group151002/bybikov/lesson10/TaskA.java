@@ -3,6 +3,7 @@ package by.it.group151002.bybikov.lesson10;
 import java.util.*;
 
 public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
+    private Binary_Tree<E> set = null;
 
     //Создайте аналог дерева TreeSet БЕЗ использования других классов СТАНДАРТНОЙ БИБЛИОТЕКИ
     //Не нужно на массивах это делать или маскируя в поля TreeSet, TreeMap и т.д.
@@ -11,21 +12,22 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
 
     //Обязательные к реализации методы и конструкторы
     public TaskA() {
+        this.set = new Binary_Tree<>();
     }
 
     @Override
     public boolean add(E e) {
-        return false;
+        return this.set.insert_Value(e);
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        return this.set.remove_Value(o);
     }
 
     @Override
     public String toString() {
-        return null;
+        return this.set.toString();
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
@@ -36,7 +38,7 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return set.contains(o);
     }
 
     @Override
@@ -51,12 +53,12 @@ public class TaskA<E extends Comparable<E>>  implements NavigableSet<E> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return set.is_Empty();
     }
 
     @Override
     public int size() {
-        return 0;
+        return set.size();
     }
 
     @Override

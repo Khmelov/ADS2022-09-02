@@ -9,7 +9,7 @@ public class List_B_Checking_Methods {
         Object custom = null;
         Object java = null;
         RandomValuesMethods randomValuesMethods = new RandomValuesMethods();
-        int test_Size = randomValuesMethods.getIntRandomValueInRange(1000, 2000);
+        int test_Size = randomValuesMethods.getIntRandomValueInRange(10, 20);
         while (test_Size-- >= 0){
             List_B<Double> custom_List = new List_B<>();
             List<Double> java_List = new ArrayList<>();
