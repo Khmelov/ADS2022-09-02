@@ -1,11 +1,10 @@
 package by.it.group151002.bybikov.lesson10;
 
-public class Binary_Tree_Node<T> {
+public class Binary_Tree_Node<T extends Comparable<T>> {
     private T top_Value;
     private Binary_Tree_Node<T> right;
     private Binary_Tree_Node<T> left;
     private Binary_Tree_Node<T> parent;
-
     Binary_Tree_Node(){
         this.top_Value = null;
         this.left = null;
@@ -31,7 +30,7 @@ public class Binary_Tree_Node<T> {
         this.right = right;
     }
 
-    void setParent(Binary_Tree_Node<T> parent) {
+    void setParent(Binary_Tree_Node<T> parent){
         this.parent = parent;
     }
 
@@ -47,7 +46,8 @@ public class Binary_Tree_Node<T> {
         return this.left;
     }
 
-    Binary_Tree_Node<T> getParent(){
+    Binary_Tree_Node<T> getParent() {
         return this.parent;
     }
+
 }

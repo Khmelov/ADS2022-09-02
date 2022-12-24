@@ -10,18 +10,23 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("all")
 
 //поставьте курсор на следующую строку и нажмите Ctrl+Shift+F10
 public class Test_jd01_10 extends HomeWork {
 
-    @Test(timeout = 5000)
+    @Test
     public void testTaskA() throws Exception {
-        TreeSet<String> methodNames = new TreeSet<>(Arrays.asList(
-                "toString", "add", "remove"
-        ));
-        randomCheck(methodNames, "TaskA");
+
+//        TreeSet<String> methodNames = new TreeSet<>(Arrays.asList(
+//                "toString", "add", "remove"
+//        ));
+//        randomCheck(methodNames, "TaskA");
+        Binary_Tree_Checking_Methods binary_tree_checking_methods = new Binary_Tree_Checking_Methods();
+        boolean is_Valid = binary_tree_checking_methods.methods_Checking();
+        assertTrue("Checking Failed", is_Valid);
     }
 
     @Test(timeout = 5000)
