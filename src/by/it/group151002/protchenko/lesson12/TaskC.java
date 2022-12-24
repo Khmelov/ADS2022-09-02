@@ -26,18 +26,18 @@ public class TaskC {
 
     public static void dijkstra(int start) {
         dist = new int[graph.size()];
-        for (int i = 0; i < graph.size(); i++) {
+        for (int i = 0; i < graph.size(); i++) { //������������� "��������������"
             dist[i] = 100;
         }
         visited = new boolean[graph.size()];
         dist[start] = 0;
 
-        PriorityQueue<TaskC.Node> H = new PriorityQueue<>(Comparator.comparingInt(p -> p.cost));
+        PriorityQueue<Node> H = new PriorityQueue<>(Comparator.comparingInt(p -> p.cost));
 
-        H.offer(new TaskC.Node(start, 0));
+        H.offer(new Node(start, 0));
 
         while (!H.isEmpty()) {
-            TaskC.Node node = H.poll();
+            Node node = H.poll();
             int curr = node.dest;
             if (visited[curr])
                 continue;
@@ -49,7 +49,7 @@ public class TaskC {
 
                 if (dist[next] > dist[curr] + cost) {
                     dist[next] = dist[curr] + cost;
-                    H.offer(new TaskC.Node(next, dist[next]));
+                    H.offer(new Node(next, dist[next]));
                 }
             }
         }

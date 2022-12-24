@@ -1,8 +1,6 @@
 package by.it.group151002.protchenko.lesson11;
 
-import java.util.*;
-
-public class TaskA {
+public class GraphA {
     public static boolean[] visited;
     public static int[] pre;
     public static int[] post;
@@ -10,6 +8,7 @@ public class TaskA {
     public static int clock;
 
     public static void dfs(Graph g, int vertex) {
+        res = new String();
         visited = new boolean[g.getVertexCount()];
         pre = new int[g.getVertexCount()];
         post = new int[g.getVertexCount()];
@@ -26,10 +25,10 @@ public class TaskA {
         pre[vertex] = clock++;
         for (int i : g.getNeighbors(vertex)) {
             if (!visited[i]) {
-                res = res + g.getName(vertex) + " - " + g.getName(i) + " (tree), ";
+                res = res + g.getName(vertex) + " - " + g.getName(i) + " (tree) ";
                 search(g, i);
             } else if (pre[vertex] > pre[i] && post[vertex] <= post[i])
-                res = res + g.getName(vertex) + " - " + g.getName(i) + " (back), ";
+                res = res + g.getName(vertex) + " - " + g.getName(i) + " (back) ";
 
         }
         post[vertex] = clock++;

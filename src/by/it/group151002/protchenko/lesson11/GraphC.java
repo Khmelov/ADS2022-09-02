@@ -1,8 +1,10 @@
 package by.it.group151002.protchenko.lesson11;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class TaskC {
+public class GraphC {
     public static List<Character> sources = new ArrayList<>();
     public static List<Character> sinks = new ArrayList<>();
     public static int[] pre;

@@ -1,8 +1,9 @@
 package by.it.group151002.protchenko.lesson11;
 
-import java.util.*;
-
-public class TaskB {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+public class GraphB {
     public static boolean[] visited;
     public static List<Character> topological;
 

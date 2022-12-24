@@ -3,6 +3,8 @@ package by.it.group151002.protchenko.lesson12;
 import java.util.*;
 
 public class TaskA {
+    public static final int AMOUNT_OF_VERTICES = 8;
+    private static final char START_VERTEX = 'A';
     public List<List<Node>> graph = new ArrayList<>();
     public int[] dist;
     public boolean[] visited;
@@ -11,7 +13,7 @@ public class TaskA {
         public int dest;
         public int cost;
 
-        Node(int dest, int cost) {
+        Node (int dest, int cost) {
             this.dest = dest;
             this.cost = cost;
         }
@@ -19,7 +21,7 @@ public class TaskA {
 
     public void dijkstra(int start) {
         dist = new int[graph.size()];
-        for (int i = 0; i < graph.size(); i++) {
+        for (int i = 0; i < graph.size(); i++) { //������������� "��������������"
             dist[i] = 100;
         }
         visited = new boolean[graph.size()];
@@ -50,7 +52,7 @@ public class TaskA {
 
     public static void main(String[] args) {
         TaskA taskA = new TaskA();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < AMOUNT_OF_VERTICES; i++) {
             taskA.graph.add(new ArrayList<>());
         }
 
@@ -76,7 +78,7 @@ public class TaskA {
         taskA.dijkstra(0);
 
         for (int i = 0; i < taskA.dist.length; i++) {
-            System.out.println("The shortest path from " + 'A' + " to " + (char) ('A' + i) + " = " + taskA.dist[i]);
+            System.out.println("The shortest path from " + START_VERTEX + " to " + (char)(START_VERTEX + i) + " = " + taskA.dist[i]);
         }
     }
 }

@@ -11,9 +11,9 @@ public class Graph {
     public Graph(int count) {
         vertexCount = count;
         graph = new ArrayList<ArrayList<Integer>>();
-        for (int i = 0; i < vertexCount; i++)
+        for (int i = 0; i < vertexCount; i++) {
             graph.add(new ArrayList<Integer>());
-
+        }
         vertexNames = new char[vertexCount];
     }
 
