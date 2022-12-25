@@ -40,7 +40,7 @@ public class Test_jd01_10 extends HomeWork {
                 "contains", "clear", "isEmpty", "size", "first", "last",
                 "lower", "floor", "ceiling", "higher", "pollFirst", "pollLast"
         ));
-        randomCheck(methodNames, "TT");
+        randomCheck(methodNames, "TaskC");
     }
 
     private void randomCheck(TreeSet<String> methodNames, String className) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
