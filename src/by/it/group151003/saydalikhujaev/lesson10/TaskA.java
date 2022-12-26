@@ -2,213 +2,171 @@ package by.it.group151003.saydalikhujaev.lesson10;
 
 import java.util.*;
 
-public class TaskA<E>  implements NavigableSet<E> {
+public class TaskA<E> implements NavigableSet<E> {
+    private E value;
+    private TaskA<E> left;
+    private TaskA<E> right;
 
-    //Создайте БЕЗ использования других классов (включая абстрактные)
-    //аналог дерева TreeSet
-
-    //Обязательные к реализации методы и конструкторы
-//    public TaskA() {
-//    }
-
-    public int size = 0;
-    public Node<E> root;
-    public int compareTo(E o1, E o2)
-    {
-        return Integer.compare((int)o1, (int)o2);
+    private void SetKey(TaskA<E> elem) {
+        this.left = elem.left;
+        this.right = elem.right;
+        this.value = elem.value;
     }
 
-    public class Node<E>
-    {
-        //sorry for public, but I'm too lazy
-        public E data;
-        public Node<E> left;
-        public Node<E> right;
-        public Node<E> parent;
+    public TaskA() {
+        this.value = null;
+        this.left = null;
+        this.right = null;
+    }
 
-        public Node(E data)
-        {
-            this.data = data;
-        }
+    public static void main(String[] args) {
+        TaskA<Integer> tree = new TaskA<>();
+        tree.add(8);
+        tree.add(7);
+        tree.SetKey(null);
     }
 
     @Override
-    public boolean add(E key) {
-        Node<E> curr = root;
-        Node<E> elem = new Node<>(key);
-        if (!contains(key))
-        {
-            if (root == null)
-            {
-                root = new Node(key);
-//                root = elem;
-                root.parent = null;
-                size++;
-                return true;
+    public boolean add(E e) {
+        if (this.value == null) {
+            this.value = e;
+            this.left = new TaskA<>();
+            this.right = new TaskA<>();
+            return true;
+        } else {
+            if (this.value.hashCode() < e.hashCode()) {
+                return this.right.add(e);
             }
-            else
-            {
-                boolean isInserted = false;
-                while (!isInserted)
-                {
-                    if (compareTo(curr.data, key) > 0)
-                    {
-                        if (curr.left == null)
-                        {
-                            curr.left = elem;
-                            curr.left.parent = curr;
-                            size++;
-                            return true;
-                        }
-
-                        curr = curr.left;
-                    }
-                    else
-                    {
-                        if (curr.right == null)
-                        {
-                            curr.right = elem;
-                            curr.right.parent = curr;
-                            size++;
-                            return true;
-                        }
-
-                        curr = curr.right;
-                    }
-                }
+            if (this.value.hashCode() > e.hashCode()) {
+                return this.left.add(e);
             }
         }
-
         return false;
     }
 
+    public TaskA<E> getMinimumKey(TaskA<E> curr) {
+        while (curr.left.value != null) {
+            curr = curr.left;
+        }
+        return curr;
+    }
+
+    public TaskA<E> deleteNode(TaskA<E> root, E key) {
+        // указатель для хранения родителя текущего узла
+        TaskA<E> parent = null;
+
+        // начинаем с корневого узла
+        TaskA<E> curr = root;
+        System.out.println(curr.value);
+        // поиск ключа в BST и установка его родительского указателя
+        while (curr.value != null && !curr.value.equals(key)) {
+            // обновить родителя до текущего узла
+            parent = curr;
+
+            // если заданный ключ меньше текущего узла, переходим в левое поддерево;
+            // иначе идем в правое поддерево
+            if (curr.value.hashCode() > key.hashCode()) {
+                curr = curr.left;
+            } else {
+                curr = curr.right;
+            }
+        }
+
+        // возвращаем, если ключ не найден в дереве
+        if (curr.value == null) {
+            return root;
+        }
+
+        // Случай 1: удаляемый узел не имеет дочерних элементов, т. е. является листовым узлом
+        if (curr.left.value == null && curr.right.value == null) {
+            // если удаляемый узел не является корневым узлом, то устанавливаем его
+            // родительский левый/правый дочерний элемент в null
+            if (curr.value != root.value) {
+                if (parent.left.value == curr.value) {
+                    parent.left.value = null;
+                } else {
+                    parent.right.value = null;
+                }
+            }
+            // если дерево имеет только корневой узел, устанавливаем его в null
+            else {
+                root.value = null;
+            }
+        }
+
+        // Случай 2: удаляемый узел имеет двух потомков
+        else if (curr.left.value != null && curr.right.value != null) {
+            // найти его неупорядоченный узел-преемник
+            TaskA<E> successor = getMinimumKey(curr.right);
+
+            // сохраняем последующее значение
+            E val = successor.value;
+
+            // рекурсивно удаляем преемника. Обратите внимание, что преемник
+            // будет иметь не более одного потомка (правого потомка)
+            deleteNode(root, successor.value);
+
+            // копируем значение преемника в текущий узел
+            curr.value = val;
+        }
+
+        // Случай 3: удаляемый узел имеет только одного потомка
+        else {
+            // выбираем дочерний узел
+            TaskA<E> child = (curr.left.value != null) ? curr.left : curr.right;
+
+            // если удаляемый узел не является корневым узлом, устанавливаем его родителя
+            // своему потомку
+            if (curr.value != root.value) {
+                if (curr.value == parent.left.value) {
+                    parent.left = child;
+                } else {
+                    parent.right = child;
+                }
+            }
+
+            // если удаляемый узел является корневым узлом, то установить корень дочернему
+            else {
+                root = child;
+            }
+        }
+
+        return root;
+    }
+
     @Override
+
     public boolean remove(Object o) {
-        Node<E> curr = root;
-        boolean flag = false;
-        while(!flag && size > 0){
-            if(curr == null) return false;
-            if(curr != null && compareTo(curr.data, (E) o) > 0){
-                curr=curr.left;
-            } else
-            if(curr!=null && compareTo(curr.data,(E)o) < 0){
-                curr=curr.right;
-            }
-            if(curr!=null && compareTo(curr.data,(E)o)==0){
-                flag = true;
-            }
-        }
-        if(curr.left==null && curr.right==null){
-            if(curr.parent==null){
-                root=null;
-            } else
-            if(curr.parent.right==curr){
-                curr.parent.right=null;
-            }else {
-                curr.parent.left = null;
-            }
-            size--;
-            return true;
-        }
-        if(curr.left==null || curr.right==null){
-            if(curr.left==null){
-                if(curr.parent==null){
-                    root=curr.right;
-                } else
-                if(curr.parent.left==curr){
-                    curr.right.parent=curr.parent;
-                    curr.parent.left=curr.right;
-                } else
-                if(curr.parent.right==curr){
-                    curr.right.parent=curr.parent;
-                    curr.parent.right = curr.right;
-                }
-            }
-            if(curr.right==null){
-                if(curr.parent==null){
-                    root=curr.left;
-                } else
-                if (curr.parent!=null && curr.parent.right==curr){
-                    curr.left.parent=curr.parent;
-                    curr.parent.right=curr.left;
-                } else
-                if(curr.parent!=null && curr.parent.left==curr){
-                    curr.left.parent=curr.parent;
-                    curr.parent.left = curr.left;
-                }
-            }
-            size--;
-            return true;
-        }
-        if (curr.left!=null && curr.right!=null){
-            Node<E> tmp;
-            tmp=curr.right;
-            boolean flag1=false;
-            while(tmp.left!=null){
-                tmp=tmp.left;
-                flag1=true;
-            }
-            if(flag1){
-                if(tmp.right!=null){
-                    tmp.right.parent=tmp.parent;
-                    tmp.parent.left=tmp.right;
-                    curr.data=tmp.data;
-                }
-                if(tmp.right==null){
-                    tmp.parent.left=null;
-                    curr.data=tmp.data;
-                }
-                size--;
-                return true;
-            }
-            else if(!flag1){
-                if(tmp.right!=null) {
-                    tmp.right.parent = tmp.parent;
-                    tmp.parent.right = tmp.right;
-                    curr.data = tmp.data;
-                }
-                if(tmp.right==null){
-                    tmp.parent.right=null;
-                    curr.data=tmp.data;
-                }
-                size--;
-                return true;
-            }
-            size--;
-            return true;
-        }
-
-        return false;
+        TaskA<E> root = deleteNode(this, (E) o);
+        this.SetKey(root);
+        return root.value == this.value;
     }
 
-
-    void LRB(Node<E> root, StringBuilder res)
-    {
-        if (root != null)
-        {
-            LRB(root.left, res);
-            res.append(root.data);
-            res.append(", ");
-            LRB(root.right, res);
+    private void subString(StringBuilder sb) {
+        if (this.value == null) {
+            return;
         }
-
+        this.left.subString(sb);
+        sb.append(this.value);
+        sb.append(", ");
+        this.right.subString(sb);
     }
+
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder();
-        res.append('[');
-        LRB(root, res);
-        if (res.length() < 2)
-        {
-            res.append(']');
+        if (this.value == null) {
+            return "[]";
         }
-        else
-        {
-            res.delete(res.length() - 2, res.length());
-            res.append("]");
-        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        left.subString(sb);
+        sb.append(this.value);
+        sb.append(", ");
+        right.subString(sb);
+        sb.delete(sb.length() - 2, sb.length());
+        sb.append("]");
+        return sb.toString();
 
-        return res.toString();
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
@@ -219,30 +177,7 @@ public class TaskA<E>  implements NavigableSet<E> {
 
     @Override
     public boolean contains(Object o) {
-        Node<E> curr = root;
-        boolean isFound = false;
-        while (size >= 1 && isFound == false)
-        {
-            if (curr == null)
-            {
-                isFound = false;
-                break;
-            }
-            else if (curr != null && compareTo(curr.data, (E) o) > 0)
-            {
-                curr = curr.left;
-            }
-            else if (curr != null && compareTo(curr.data, (E) o) < 0)
-            {
-                curr = curr.right;
-            }
-            else if (curr != null && compareTo(curr.data, (E) o) == 0)
-            {
-                isFound = true;
-            }
-        }
-
-        return isFound;
+        return false;
     }
 
     @Override
@@ -252,23 +187,17 @@ public class TaskA<E>  implements NavigableSet<E> {
 
     @Override
     public void clear() {
-        root = null;
-        size = 0;
+
     }
 
     @Override
     public boolean isEmpty() {
-        if (size > 0)
-        {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     @Override
     public int size() {
-        return size;
+        return 0;
     }
 
     @Override
@@ -378,35 +307,11 @@ public class TaskA<E>  implements NavigableSet<E> {
 
     @Override
     public E first() {
-        if (size > 0)
-        {
-            Node<E> curr = root;
-            while (curr.left != null)
-            {
-                curr = curr.left;
-            }
-            return curr.data;
-        }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     @Override
     public E last() {
-        if (size > 0)
-        {
-            Node<E> curr = root;
-            while (curr.right != null)
-            {
-                curr = curr.right;
-            }
-            return curr.data;
-        }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 }
