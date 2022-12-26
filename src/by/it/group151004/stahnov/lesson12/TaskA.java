@@ -48,29 +48,29 @@ public class TaskA {
     }
 
     public static void main(String[] args) {
-        TaskA sus = new TaskA();
+        TaskA taskA = new TaskA();
         for (int i = 0; i < 8; i++) {
-            sus.adj.add(new ArrayList<Pair>());
+            taskA.adj.add(new ArrayList<>());
         }
 
-        sus.adj.get(0).add(new Pair(4, 4));
-        sus.adj.get(0).add(new Pair(5, 8));
-        sus.adj.get(0).add(new Pair(1, 1));
-        sus.adj.get(1).add(new Pair(5, 6));
-        sus.adj.get(1).add(new Pair(6, 6));
-        sus.adj.get(1).add(new Pair(2, 2));
-        sus.adj.get(2).add(new Pair(6, 2));
-        sus.adj.get(2).add(new Pair(3, 1));
-        sus.adj.get(3).add(new Pair(6, 1));
-        sus.adj.get(3).add(new Pair(7, 4));
-        sus.adj.get(6).add(new Pair(5, 1));
-        sus.adj.get(6).add(new Pair(7, 1));
-        sus.adj.get(4).add(new Pair(5, 5));
+        taskA.adj.get(0).add(new Pair(4, 4));
+        taskA.adj.get(0).add(new Pair(5, 8));
+        taskA.adj.get(0).add(new Pair(1, 1));
+        taskA.adj.get(1).add(new Pair(5, 6));
+        taskA.adj.get(1).add(new Pair(6, 6));
+        taskA.adj.get(1).add(new Pair(2, 2));
+        taskA.adj.get(2).add(new Pair(6, 2));
+        taskA.adj.get(2).add(new Pair(3, 1));
+        taskA.adj.get(3).add(new Pair(6, 1));
+        taskA.adj.get(3).add(new Pair(7, 4));
+        taskA.adj.get(6).add(new Pair(5, 1));
+        taskA.adj.get(6).add(new Pair(7, 1));
+        taskA.adj.get(4).add(new Pair(5, 5));
 
-        sus.dijkstra(0);
+        taskA.dijkstra(0);
 
-        for (int i = 0; i < sus.dist.length; i++) {
-            System.out.println("Shortest path from A to " + (char) ('A' + i) + ": " + sus.dist[i]);
+        for (int i = 0; i < taskA.dist.length; i++) {
+            System.out.println("Shortest path from A to " + (char) ('A' + i) + ": " + taskA.dist[i]);
         }
     }
 }
