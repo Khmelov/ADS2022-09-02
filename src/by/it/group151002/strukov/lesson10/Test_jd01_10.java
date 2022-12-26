@@ -18,10 +18,47 @@ public class Test_jd01_10 extends HomeWork {
 
     @Test(timeout = 5000)
     public void testTaskA() throws Exception {
-        TreeSet<String> methodNames = new TreeSet<>(Arrays.asList(
+        System.out.println("\nA. Диагностика обязательных к реализации методов:");
+        Class<?> aclass = findClass("TaskA");
+        NavigableSet<Integer> e = (NavigableSet<Integer>) TreeSet.class.getDeclaredConstructor().newInstance();
+        NavigableSet<Integer> a = (NavigableSet<Integer>) aclass.getDeclaredConstructor().newInstance();
+        for (int i = 0; i < 10; i++) {
+            e.add(i * 2);
+            a.add(i * 2);
+            assertEquals("ошибка add или toString() не работает", e.toString(), a.toString());
+        }
+        assertEquals("метод add(T e) или toString не работает", e.toString(), a.toString());
+        System.out.println("add(T e) toString() ok: " + a);
+
+        assertEquals("метод contains() не работает", e.contains(4), a.contains(4));
+        System.out.println("      contains(T e) ok: " + a);
+
+        assertEquals("метод size() не работает", e.size(), a.size());
+        System.out.println("      size() ok: " + a.size());
+
+        assertEquals("ошибка remove(Object o) не работает", e.remove(4), a.remove(4));
+        assertEquals("метод add(T e) или toString не работает", e.toString(), a.toString());
+        System.out.println("remove(T e) toString() ok: " + a);
+
+        assertEquals("метод first() не работает", e.first(), a.first());
+        System.out.println("      first() ok: " + a.first());
+
+        assertEquals("метод last() не работает", e.last(), a.last());
+        System.out.println("      last() ok: " + a.last());
+
+        assertEquals("метод isEmpty() не работает", e.isEmpty(), a.isEmpty());
+        System.out.println("      isEmpty() ok: " + a.isEmpty());
+
+        a.clear();
+        assertEquals("ошибка clear", 0, a.size());
+        System.out.println("      clear ok: " + a);
+
+        assertEquals("ошибка isEmpty", true, a.isEmpty());
+        System.out.println("      isEmpty() ok: " + a.isEmpty());
+        /*TreeSet<String> methodNames = new TreeSet<>(Arrays.asList(
                 "toString", "add", "remove"
         ));
-        randomCheck(methodNames, "TaskA");
+        randomCheck(methodNames, "TaskA");*/
     }
 
     @Test(timeout = 5000)
@@ -30,7 +67,7 @@ public class Test_jd01_10 extends HomeWork {
                 "toString", "add", "remove",
                 "contains", "clear", "isEmpty", "size", "first", "last"
         ));
-        randomCheck(methodNames, "TaskC");
+        randomCheck(methodNames, "TaskB");
     }
 
     @Test(timeout = 5000)
@@ -40,7 +77,7 @@ public class Test_jd01_10 extends HomeWork {
                 "contains", "clear", "isEmpty", "size", "first", "last",
                 "lower", "floor", "ceiling", "higher", "pollFirst", "pollLast"
         ));
-        randomCheck(methodNames, "TT");
+        randomCheck(methodNames, "TaskC");
     }
 
     private void randomCheck(TreeSet<String> methodNames, String className) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
