@@ -37,29 +37,56 @@ import java.util.Scanner;
 
 public class C_HeapMax {
 
-    private class MaxHeap {
+    private class MaxHeap<T extends Comparable<T>> {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение.
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
-        private List<Long> heap = new ArrayList<>();
+        private List<T> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вверх
-
+        private int siftUp(int i) { //просеивание вниз
+            int parent = i / 2 - 1 + (i % 2);
+            while (i > 0 && heap.get(parent).compareTo(heap.get(i)) < 0) {
+                swap(parent, i);
+                i = parent;
+            }
             return i;
         }
 
-        int siftUp(int i) { //просеивание вниз
-
+        private int siftDown(int i) { //просеивание вверх
+            int left = i * 2 + 1;
+            int right = i * 2 + 2;
+            int temp = i;
+            if
+            (left < heap.size() && heap.get(i).compareTo(heap.get(left)) > 0) {
+                temp = left;
+            }else if
+            (right < heap.size() && heap.get(i).compareTo(heap.get(right)) > 0) {
+                temp = right;
+            }if (temp != i) {
+                swap(i, temp);
+                siftDown(temp);
+            }
             return i;
         }
 
-        void insert(Long value) { //вставка
+        public void insert(T value) {//вставка
+            heap.add(value);
+            siftUp(heap.size() - 1);
         }
 
-        Long extractMax() { //извлечение и удаление максимума
-            Long result = null;
-
+        public T extractMax() { //извлечение и удаление максимума
+            T result = heap.get(0);
+            heap.set(0, null);
+            swap(0, heap.size() - 1);
+            heap.remove(heap.size() - 1);
+            siftDown(0);
             return result;
+        }
+
+        private void swap(int aIndex, int bIndex) {
+            T temp = heap.get(aIndex);
+            heap.set(aIndex, heap.get(bIndex));
+            heap.set(bIndex, temp);
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     }
@@ -67,7 +94,7 @@ public class C_HeapMax {
     //эта процедура читает данные из файла, ее можно не менять.
     Long findMaxValue(InputStream stream) {
         Long maxValue=0L;
-        MaxHeap heap = new MaxHeap();
+        MaxHeap<Long> heap = new MaxHeap<>();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(stream);
         Integer count = scanner.nextInt();
@@ -84,7 +111,7 @@ public class C_HeapMax {
                 if (p[0].equalsIgnoreCase("insert"))
                     heap.insert(Long.parseLong(p[1]));
                 i++;
-            //System.out.println(heap); //debug
+                //System.out.println(heap); //debug
             }
         }
         return maxValue;
@@ -102,3 +129,4 @@ public class C_HeapMax {
     // "В реальном бою" все существенно иначе. Изучите и используйте коллекции
     // TreeSet, TreeMap, PriorityQueue и т.д. с нужным CompareTo() для объекта внутри.
 }
+

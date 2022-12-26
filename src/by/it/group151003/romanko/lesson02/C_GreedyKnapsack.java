@@ -1,4 +1,5 @@
 package by.it.group151003.romanko.lesson02;
+
 /*
 Даны
 1) объем рюкзака 4
@@ -14,35 +15,10 @@ package by.it.group151003.romanko.lesson02;
  */
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
-    private static class Item implements Comparable<Item> {
-        int cost;
-        int weight;
-
-        Item(int cost, int weight) {
-            this.cost = cost;
-            this.weight = weight;
-        }
-
-        @Override
-        public String toString() {
-            return "Item{" +
-                    "cost=" + cost +
-                    ", weight=" + weight +
-                    '}';
-        }
-
-        @Override
-        public int compareTo(Item o) {
-            //тут может быть ваш компаратор
-
-
-            return 0;
-        }
-    }
-
     double calc(File source) throws FileNotFoundException {
         Scanner input = new Scanner(source);
         int n = input.nextInt();      //сколько предметов в файле
@@ -65,13 +41,54 @@ public class C_GreedyKnapsack {
         //будет особенно хорошо, если с собственной сортировкой
         //кроме того, можете описать свой компаратор в классе Item
         //ваше решение.
-
-
-
-
-
+        Arrays.sort(items);
+        int i = 0;
+        int diff;
+        while (W > 0) {
+            diff = W - items[i].getWeight();
+            diff = diff < 0 ? W : items[i].getWeight();
+            result += diff * items[i].getPortion();
+            W -= items[i].getWeight();
+            i++;
+        }
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
+    }
+
+    private static class Item implements Comparable<Item> {
+        int cost;
+        int weight;
+
+        Item(int cost, int weight) {
+            this.cost = cost;
+            this.weight = weight;
+        }
+
+        int getCost(){
+            return this.cost;
+        }
+
+        int getWeight() {
+            return this.weight;
+        }
+
+        double getPortion() {
+            return (double) this.cost / this.weight;
+        }
+
+        @Override
+        public String toString() {
+            return "Item{" +
+                    "cost=" + cost +
+                    ", weight=" + weight +
+                    '}';
+        }
+
+        @Override
+        public int compareTo(Item o) {
+            //тут может быть ваш компаратор
+            return (-1) * Double.compare(this.getPortion(), o.getPortion());
+        }
     }
 
     public static void main(String[] args) throws FileNotFoundException {

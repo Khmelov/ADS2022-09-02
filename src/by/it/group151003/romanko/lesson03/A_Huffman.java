@@ -113,27 +113,29 @@ public class A_Huffman {
     //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
     String encode(File file) throws FileNotFoundException {
         //прочитаем строку для кодирования из тестового файла
+        codes.clear();
         Scanner scanner = new Scanner(file);
         String s = scanner.next();
 
         //все комментарии от тестового решения были оставлены т.к. это задание A.
         //если они вам мешают их можно удалить
 
-        Map<Character, Integer> count = new HashMap<>();
+        Map<Character, Integer> count = getFreqTable(s);
         //1. переберем все символы по очереди и рассчитаем их частоту в Map count
-            //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
+        //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
 
         //2. перенесем все символы в приоритетную очередь в виде листьев
-        PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
-
+        PriorityQueue<Node> priorityQueue = fillLeafs(count);
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
         //построим дерево кодирования Хаффмана.
         //У родителя частоты детей складываются.
+        Node huffmanHead = huffman(priorityQueue);
+        huffmanHead.fillCodes("");
 
         //4. последний из родителей будет корнем этого дерева
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = decode(s);
         //.....
 
         return sb.toString();
@@ -142,10 +144,43 @@ public class A_Huffman {
     }
     //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
+    Map<Character, Integer> getFreqTable(String str) {
+        Map<Character, Integer> freq = new HashMap<>();
+        for(int i = 0; i < str.length(); i++) {
+            Character ch = str.charAt(i);
+            if (freq.containsKey(ch)) {
+                freq.put(ch, freq.get(ch) + 1);
+            } else { freq.put(ch, 1); }
+        }
+        return freq;
+    }
 
+    private PriorityQueue<Node> fillLeafs(Map<Character, Integer> freqTable) {
+        PriorityQueue<Node> queue = new PriorityQueue<>();
+        for (Map.Entry<Character, Integer> entry: freqTable.entrySet()) {
+            queue.add(new LeafNode(entry.getValue(), entry.getKey()));
+        }
+        return queue;
+    }
+
+    private Node huffman(PriorityQueue<Node> queue) {
+        while(queue.size() > 1) {
+            Node node = new InternalNode(queue.poll(), queue.poll());
+            queue.add(node);
+        }
+        return queue.poll();
+    }
+
+    private StringBuilder decode(String s) {
+        StringBuilder code = new StringBuilder();
+        for (Character ch : s.toCharArray()) {
+            code.append(codes.get(ch));
+        }
+        return code;
+    }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelev/lesson03/dataHuffman.txt");
+        File f = new File(root + "by/it/group151002/poluectov/lesson03/dataHuffmanTest.txt");
         A_Huffman instance = new A_Huffman();
         long startTime = System.currentTimeMillis();
         String result = instance.encode(f);
@@ -158,3 +193,4 @@ public class A_Huffman {
     }
 
 }
+

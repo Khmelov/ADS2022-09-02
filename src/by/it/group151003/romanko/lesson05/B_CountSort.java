@@ -25,15 +25,23 @@ public class B_CountSort {
         //размер массива
         int n = scanner.nextInt();
         int[] points=new int[n];
+        int[] counter = new int[10];
 
         //читаем точки
         for (int i = 0; i < n; i++) {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
-
-
-
+        for (int point: points){
+            counter[point]++;
+        }
+        int index = 0;
+        for (int i = 0; i < counter.length; i++) {
+            for (int j = 0; j < counter[i]; j++) {
+                points[index] = i;
+                index++;
+            }
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
