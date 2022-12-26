@@ -66,6 +66,16 @@ public class Test_jd01_10 extends HomeWork {
         System.out.println(a);
     }
 
+    @Test(timeout = 5000)
+    public void testTaskC() throws Exception {
+        TreeSet<String> methodNames = new TreeSet<>(Arrays.asList(
+                "toString", "add", "remove",
+                "contains", "clear", "isEmpty", "size", "first", "last",
+                "lower", "floor", "ceiling", "higher", "pollFirst", "pollLast"
+        ));
+        randomCheck(methodNames, "TaskC");
+    }
+
     private static List<Method> fill(Method[] e, TreeSet<String> methodNames) {
         return Arrays.stream(e)
                 .filter(m -> methodNames.contains(m.getName()))

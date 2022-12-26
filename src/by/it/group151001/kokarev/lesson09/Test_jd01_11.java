@@ -138,6 +138,79 @@ public class Test_jd01_11 extends HomeWork {
             System.out.println("   remove(Object o) ok: " + a);
     }
 
+    @Test(timeout = 1500)
+    public void testTaskC__SetC() throws Exception {
+        System.out.println("\nC. Диагностика обязательных к реализации методов:");
+        Class<?> aclass = findClass("SetC");
+        Set<Short> a = (Set<Short>) aclass.getDeclaredConstructor().newInstance();
+        Set<Short> e = new HashSet<>();
+        for (int i = 0; i < 10; i++) {
+            e.add((short) (i * 2));
+            a.add((short) (i * 2));
+            assertSet("ошибка add или toString() не работает", e, a);
+        }
+        assertSet("метод add(T e) или toString не работает", e, a);
+        System.out.println("add(T e) toString() ok: " + a);
+        System.out.flush();
+
+        assertEquals("ошибка remove(Object o) не работает", e.remove(0), a.remove(0));
+        assertSet("ошибка remove(Object o) или toString() не работает", e, a);
+
+        assertEquals("ошибка remove(Object o) не работает", e.remove(8), a.remove(8));
+        assertSet("ошибка remove(Object o) или toString() не работает", e, a);
+
+        assertEquals("ошибка remove(Object o) не работает", e.remove(4), a.remove(4));
+        assertSet("ошибка remove(Object o) или toString() не работает", e, a);
+        assertSet("ошибка size", e, a);
+
+        System.out.println("   remove(Object o) ok: " + a);
+        System.out.flush();
+
+        List<Short> added = new ArrayList<>();
+        added.add(null);
+        added.add(null);
+        added.add((short) 1000);
+        added.add((short) 1000);
+        added.add((short) 1001);
+        added.add((short) 1002);
+        e.addAll(added);
+        a.addAll(added);
+        assertSet("ошибка addAll", e, a);
+        System.out.println("  addAll(List<?> c) ok: " + a);
+        System.out.flush();
+
+        assertEquals("ошибка contains не работает", e.contains(1001), a.contains(1001));
+        assertEquals("ошибка contains не работает", e.contains(-1), a.contains(-1));
+        assertSet("ошибка contains", e, a);
+        System.out.println("      contains(T e) ok: " + a);
+        System.out.flush();
+
+        assertEquals("ошибка size не работает", e.size(), a.size());
+        assertSet("ошибка size", e, a);
+        System.out.println("             size() ok: " + a);
+        System.out.flush();
+
+
+        assertEquals("ошибка containsAll не работает", e.containsAll(added), a.containsAll(added));
+        assertSet("ошибка containsAll", e, a);
+        System.out.println("        containsAll ok: " + a);
+        System.out.flush();
+
+        assertEquals("ошибка removeAll не работает", e.removeAll(added), a.removeAll(added));
+        assertSet("ошибка removeAll", e, a);
+        System.out.println("          removeAll ok: " + a);
+        System.out.flush();
+
+        assertEquals("ошибка isEmpty не работает", e.isEmpty(), a.isEmpty());
+        assertSet("ошибка isEmpty", e, a);
+        assertSet("ошибка isEmpty", e, a);
+        e.clear(); a.clear();
+        assertEquals("ошибка clear", 0, a.size());
+        assertEquals("ошибка clear или isEmpty не работает", e.size(), a.size());
+        System.out.println("    clear и isEmpty ok: " + a);
+        System.out.flush();
+    }
+
     private void assertSet(String message, Set<Short> e, Set<Short> a){
         List<Short> arr=new ArrayList<>(e);
         boolean ok=true;
