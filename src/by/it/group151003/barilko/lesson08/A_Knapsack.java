@@ -3,6 +3,8 @@ package by.it.group151003.barilko.lesson08;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -39,15 +41,20 @@ public class A_Knapsack {
     int getMaxWeight(InputStream stream ) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         Scanner scanner = new Scanner(stream);
-        int w=scanner.nextInt();
-        int n=scanner.nextInt();
-        int gold[]=new int[n];
-        for (int i = 0; i < n; i++) {
-            gold[i]=scanner.nextInt();
+        int weight=scanner.nextInt();
+        int numOf=scanner.nextInt();
+        int weightOfGold[]=new int[numOf];
+        for (int i = 0; i < numOf; i++) {
+            weightOfGold[i]=scanner.nextInt();
         }
 
+        int min = Integer.MAX_VALUE;
+        for(int i = 0; i < numOf; ++i)
+            min = weightOfGold[i] < min ? weightOfGold[i] : min;  
 
-        int result = 0;
+        int num = weight / min;
+
+        int result = num * min;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

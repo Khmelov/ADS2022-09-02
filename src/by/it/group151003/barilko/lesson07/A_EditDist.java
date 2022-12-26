@@ -41,24 +41,35 @@ import java.util.Scanner;
 public class A_EditDist {
 
 
+    int editDistRec(int[][] arr, String first, String second, int i, int j)
+    {
+        if(arr[i][j] == -1)
+        {
+            if(i == 0)
+                arr[i][j] = j;
+            else if(j == 0)
+                arr[i][j] = i;
+            else
+            {
+                int ins = editDistRec(arr, first, second, i, j - 1) + 1;
+                int del = editDistRec(arr, first, second, i - 1, j) + 1;
+                int sub = editDistRec(arr, first, second, i - 1, j - 1) + (first.charAt(i - 1) == second.charAt(j - 1) ? 0 : 1);
+                arr[i][j] = Integer.min(Integer.min(ins, del), sub);
+            }
+        }
+        return arr[i][j];
+    }
+
     int getDistanceEdinting(String first, String second) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         int[][] arr = new int[first.length() + 1][second.length() + 1];
         for(int i = 0; i < first.length() + 1; ++i)
         {
-            arr[i][0] = i;
-            if(i < second.length())
-                arr[0][i] = i;
+            for(int j = 0; j < second.length() + 1; ++j)
+                arr[i][j] = -1;
         }
 
-        for(int i = 1; i < first.length() + 1; ++i)
-            for(int j = 1; j < second.length() + 1; ++j)
-            {
-                int ins = arr[i][j - 1] + 1;
-                int del = arr[i - 1][j] + 1;
-                int sub = arr[i - 1][j - 1] + (first.charAt(i - 1) == second.charAt(j - 1) ? 0 : 1);
-                arr[i][j] = Integer.min(Integer.min(ins, del), sub);
-            }
+        editDistRec(arr, first, second, first.length(), second.length());
 
         int result = arr[first.length()][second.length()];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
