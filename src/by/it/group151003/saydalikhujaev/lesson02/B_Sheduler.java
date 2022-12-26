@@ -1,6 +1,7 @@
 package by.it.group151003.saydalikhujaev.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны интервальные события events
@@ -40,6 +41,23 @@ public class B_Sheduler {
         System.out.println(starts);                                 //покажем рассчитанный график занятий
     }
 
+    void sortEvents(Event[] events) {
+        for (int i = 1; i < events.length; i++ ) {
+            int j = i;
+            boolean wasExchange;
+            do {
+                wasExchange = false;
+                if (events[j].stop < events[j - 1].stop) {
+                    Event tmp = events[j];
+                    events[j] = events[j - 1];
+                    events[j - 1] = tmp;
+                    wasExchange = true;
+                }
+                j--;
+            } while (wasExchange && j > 0);
+        }
+    }
+
     List<Event> calcStartTimes(Event[] events, int from, int to) {
         //events - события которые нужно распределить в аудитории
         //в период [from, int] (включительно).
@@ -49,11 +67,19 @@ public class B_Sheduler {
         result = new ArrayList<>();
         //ваше решение.
 
-
-
-
-
-
+        sortEvents(events);
+        result = new ArrayList<>(Arrays.asList(events));
+        int currentEventEndTime = 0;
+        if(result.size() != 0)
+            currentEventEndTime = result.get(0).stop;
+        for (int i = 1; i < result.size(); ) {
+            if (result.get(i).start < currentEventEndTime)
+                result.remove(i);
+            else {
+                currentEventEndTime = result.get(i).stop;
+                i++;
+            }
+        }
         return result;                        //вернем итог
     }
 }
