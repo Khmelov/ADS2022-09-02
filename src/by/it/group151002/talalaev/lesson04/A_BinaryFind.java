@@ -1,8 +1,10 @@
-package by.it;
+package by.it.group151002.talalaev.lesson04;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -39,21 +41,40 @@ public class A_BinaryFind {
         for (int i = 1; i <= n; i++) {
             a[i-1] = scanner.nextInt();
         }
-
+        System.out.println(a.toString());
         //размер массива индексов
         int k = scanner.nextInt();
         int[] result=new int[k];
         for (int i = 0; i < k; i++) {
             int value = scanner.nextInt();
-            //тут реализуйте бинарный поиск индекса
-
-
-
-
-            result[i]=0;
+            result[i]= binF(a, value);
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    public static int binF(int[] arr, int elem){
+        int l = 0, r = arr.length-1;
+        if (arr[0] > arr[1]){
+            while (l <= r){
+                int m = l + (r-l)/2;
+                if (arr[m]==elem) return m+1;
+                if (arr[m] > elem)
+                    l = m+1;
+                else
+                    r = m-1;
+            }
+        } else {
+            while (l <= r){
+                int m = l + (r-l)/2;
+                if (arr[m]==elem) return m+1;
+                if (arr[m] < elem)
+                    l = m+1;
+                else
+                    r = m-1;
+            }
+        }
+        return -1;
     }
 
 

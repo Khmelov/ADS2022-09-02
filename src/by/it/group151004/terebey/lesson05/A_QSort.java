@@ -3,6 +3,7 @@ package by.it.group151004.terebey.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -11,18 +12,14 @@ import java.util.Scanner;
 Известны данные о том, когда каждая из них включалась и выключалась (отрезки работы)
 Известен список событий на площади (время начала каждого события).
 Вам необходимо определить для каждого события сколько камер его записали.
-
 В первой строке задано два целых числа:
     число включений камер (отрезки) 1<=n<=50000
     число событий (точки) 1<=m<=50000.
-
 Следующие n строк содержат по два целых числа ai и bi (ai<=bi) -
 координаты концов отрезков (время работы одной какой-то камеры).
 Последняя строка содержит m целых чисел - координаты точек.
 Все координаты не превышают 10E8 по модулю (!).
-
 Точка считается принадлежащей отрезку, если она находится внутри него или на границе.
-
 Для каждой точки в порядке их появления во вводе выведите,
 скольким отрезкам она принадлежит.
     Sample Input:
@@ -32,7 +29,6 @@ import java.util.Scanner;
     1 6 11
     Sample Output:
     1 0 0
-
 */
 
 public class A_QSort {
@@ -52,8 +48,7 @@ public class A_QSort {
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-
-            return 0;
+            return Integer.compare(start, o.start);
         }
     }
 
@@ -81,9 +76,16 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
-
+        Arrays.sort(segments);
+        for (int i = 0; i < points.length; i++) {
+            int num = 0;
+            for (Segment segment : segments) {
+                if (segment.start <= points[i] && points[i] <= segment.stop) {
+                    num++;
+                }
+            }
+            result[i] = num;
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -92,7 +94,7 @@ public class A_QSort {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it//group151004/terebey/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){

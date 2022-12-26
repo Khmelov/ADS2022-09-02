@@ -98,6 +98,7 @@ public class C_HeapMax {
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(stream);
         Integer count = scanner.nextInt();
+        scanner.nextLine();
         for (int i = 0; i < count; ) {
             String s = scanner.nextLine();
             if (s.equalsIgnoreCase("extractMax")) {
@@ -113,7 +114,7 @@ public class C_HeapMax {
                 i++;
             }
         }
-        heap.extractMax();
+        maxValue = heap.extractMax();
         return maxValue;
     }
 

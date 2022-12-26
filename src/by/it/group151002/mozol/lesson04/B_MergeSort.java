@@ -34,17 +34,54 @@ public class B_MergeSort {
             a[i] = scanner.nextInt();
             System.out.println(a[i]);
         }
+        a = sortArr(a);
 
         // тут ваше решение (реализуйте сортировку слиянием)
         // https://ru.wikipedia.org/wiki/Сортировка_слиянием
-
-
-
-
-
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return a;
+    }
+
+    static int findMin(int fir, int sec) {
+        if (fir < sec) {
+            return fir;
+        } else {
+            return sec;
+        }
+    }
+    static int[] sortArr(int[] arr) {
+        for (int i = 1; i < arr.length; i *= 2) {
+            for (int j = 0; j < arr.length - i; j += i * 2) {
+                arr = mergeArr(j, j + i, findMin(j + 2 * i, arr.length), arr);
+            }
+        }
+        return arr;
+    }
+    static int[] mergeArr(int left, int mid, int right,  int[] arr) {
+        int iter1 = 0;
+        int iter2 = 0;
+        int[] res = new int[right - left];
+        while ((iter1 + left < mid) && (iter2 + mid < right)) {
+            if (arr[left + iter1] < arr[mid + iter2]) {
+                res[iter1 + iter2] = arr[left + iter1];
+                iter1++;
+            } else {
+                res[iter1 + iter2] = arr[mid + iter2];
+                iter2++;
+            }
+        }
+        while (left + iter1 < mid) {
+            res[iter1 + iter2] = arr[left + iter1];
+            iter1++;
+        }
+        while (mid + iter2 < right) {
+            res[iter1 + iter2] = arr[mid + iter2];
+            iter2++;
+        }
+        for (int i = 0; i < iter1 + iter2; i++) {
+            arr[left + i] = res[i];
+        }
+        return arr;
     }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

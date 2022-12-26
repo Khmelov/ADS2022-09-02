@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson05;
+package by.it.group151004.danilov.lesson05;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,19 +33,19 @@ import java.util.Scanner;
 public class C_QSortOptimized {
 
     //отрезок
-    private class Segment  implements Comparable{
+    private class Segment implements Comparable<Segment> {
         int start;
         int stop;
 
-        Segment(int start, int stop){
+        Segment(int start, int stop) {
             this.start = start;
             this.stop = stop;
         }
 
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+            return Integer.compare(this.start, o.start);
         }
     }
 
@@ -56,27 +56,86 @@ public class C_QSortOptimized {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //число отрезков отсортированного массива
         int n = scanner.nextInt();
-        Segment[] segments=new Segment[n];
+        Segment[] segments = new Segment[n];
         //число точек
         int m = scanner.nextInt();
-        int[] points=new int[m];
-        int[] result=new int[m];
+        int[] points = new int[m];
+        int[] result = new int[m];
 
         //читаем сами отрезки
         for (int i = 0; i < n; i++) {
             //читаем начало и конец каждого отрезка
-            segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
+            segments[i] = new Segment(scanner.nextInt(), scanner.nextInt());
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
-            points[i]=scanner.nextInt();
+        for (int i = 0; i < m; i++) {
+            points[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
+        quickSort(segments, 0, segments.length - 1);
+        for (int i = 0; i < points.length; ++i) {
+            int count = 0;
+            int j = binarySearch(segments, points[i]);
+            while (j >= 0 && segments[j].start <= points[i]) {
+                if (segments[j].stop >= points[i])
+                    ++count;
+                --j;
+            }
+            result[i] = count;
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    private int binarySearch(Segment[] segments, int point) {
+        int left = 0;
+        int middle;
+        int right = segments.length - 1;
+        while (left <= right) {
+            middle = (left + right) / 2;
+            if (segments[middle].start <= point && segments[middle].stop >= point)
+                return middle;
+            else if (segments[middle].start > point)
+                right = middle - 1;
+            else
+                left = middle + 1;
+        }
+        return -1;
+    }
+
+    private int partition(Segment[] segments, int left, int right) {
+        Segment pivot = segments[left];
+        int i = left + 1, j = right, k = i - 1;
+        while (i <= j) {
+            if (segments[i].compareTo(pivot) < 0) {
+                ++k;
+                swap(segments, k, i);
+                ++i;
+            } else if (segments[i].compareTo(pivot) > 0) {
+                swap(segments, i, j);
+                --j;
+            } else {
+                ++i;
+            }
+        }
+        return k;
+    }
+
+    private void quickSort(Segment[] segments, int left, int right) {
+        while (left < right) {
+            int m = partition(segments, left, right);
+            quickSort(segments, left, m - 1);
+            left = m + 1;
+
+        }
+    }
+
+    private void swap(Segment[] segments, int i, int j) {
+        Segment temp = segments[i];
+        segments[i] = segments[j];
+        segments[j] = temp;
     }
 
 
@@ -84,9 +143,9 @@ public class C_QSortOptimized {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson05/dataC.txt");
         C_QSortOptimized instance = new C_QSortOptimized();
-        int[] result=instance.getAccessory2(stream);
-        for (int index:result){
-            System.out.print(index+" ");
+        int[] result = instance.getAccessory2(stream);
+        for (int index : result) {
+            System.out.print(index + " ");
         }
     }
 
