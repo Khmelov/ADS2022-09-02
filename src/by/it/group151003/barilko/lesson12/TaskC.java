@@ -1,8 +1,6 @@
 package by.it.group151003.barilko.lesson12;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.Vector;

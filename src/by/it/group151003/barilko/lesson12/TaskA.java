@@ -22,7 +22,7 @@ public class TaskA {
 
     public void dijkstra(int start) {
         dist = new int[graph.size()];
-        for (int i = 0; i < graph.size(); i++) { //èíèöèàëèçàöèÿ "áåñêîíå÷íîñòüþ"
+        for (int i = 0; i < graph.size(); i++) { 
             dist[i] = MAX;
         }
         visited = new boolean[graph.size()];

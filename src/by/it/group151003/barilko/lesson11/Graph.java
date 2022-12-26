@@ -1,18 +1,17 @@
 package by.it.group151003.barilko.lesson11;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class Graph {
-    public ArrayList<ArrayList<Integer>> graph;
+    public Vector<Vector<Integer>> graph;
     public int vertexCount;
     public char[] vertexNames;
 
     public Graph(int count) {
         vertexCount = count;
-        graph = new ArrayList<>();
+        graph = new Vector<>();
         for (int i = 0; i < vertexCount; i++) {
-            graph.add(new ArrayList<>());
+            graph.add(new Vector<>());
         }
         vertexNames = new char[vertexCount];
     }
