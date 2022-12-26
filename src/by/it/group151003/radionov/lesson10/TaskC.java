@@ -8,88 +8,98 @@ public class TaskC<E>  implements NavigableSet<E> {
     //аналог дерева TreeSet
 
     //Обязательные к реализации методы и конструкторы
+    private transient NavigableMap<E,Object> m;
+    private static final Object PRESENT = new Object();
     public TaskC() {
+        this(new TreeMap<E,Object>());
+    }
+    TaskC(NavigableMap<E,Object> m) {
+        this.m = m;
     }
 
     @Override
     public boolean add(E e) {
-        return false;
+        return m.put(e, PRESENT)==null;
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        return m.remove(o)==PRESENT;
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return m.containsKey(o);
     }
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return m.navigableKeySet().iterator();
     }
 
     @Override
     public void clear() {
-
+        m.clear();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return m.isEmpty();
     }
 
     @Override
     public int size() {
-        return 0;
+        return m.size();
     }
 
     @Override
     public E first() {
-        return null;
+        return m.firstKey();
     }
 
     @Override
     public E last() {
-        return null;
+        return m.lastKey();
     }
 
     @Override
     public E lower(E e) {
-        return null;
+        return m.lowerKey(e);
+
     }
 
     @Override
     public E floor(E e) {
-        return null;
+        return m.floorKey(e);
+
     }
 
     @Override
     public E ceiling(E e) {
-        return null;
+        return m.ceilingKey(e);
     }
 
     @Override
     public E higher(E e) {
-        return null;
+        return m.higherKey(e);
     }
 
     @Override
     public E pollFirst() {
-        return null;
+        Map.Entry<E,?> e = m.pollFirstEntry();
+        return (e == null)? null : e.getKey();
     }
 
     @Override
     public E pollLast() {
-        return null;
+        Map.Entry<E,?> e = m.pollLastEntry();
+        return (e == null)? null : e.getKey();
     }
 
 
     @Override
     public String toString() {
-        return null;
+        return m.keySet().toString();
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
