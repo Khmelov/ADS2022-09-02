@@ -1,17 +1,11 @@
 package by.it.group151003.rustamov.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-/*
-даны интервальные события events
-реализуйте метод calcStartTimes, так, чтобы число принятых к выполнению
-непересекающихся событий было максимально.
-Алгоритм жадный. Для реализации обдумайте надежный шаг.
-*/
 
 public class B_Sheduler {
-    //событие у аудитории(два поля: начало и конец)
-    static class Event {
+    static class Event implements Comparable<Event> {
         int start;
         int stop;
 
@@ -23,6 +17,10 @@ public class B_Sheduler {
         @Override
         public String toString() {
             return "("+ start +":" + stop + ")";
+        }
+
+        public int compareTo(Event o) {
+            return Integer.compare(this.stop, o.stop);
         }
     }
 
@@ -41,19 +39,25 @@ public class B_Sheduler {
     }
 
     List<Event> calcStartTimes(Event[] events, int from, int to) {
-        //events - события которые нужно распределить в аудитории
-        //в период [from, int] (включительно).
-        //оптимизация проводится по наибольшему числу непересекающихся событий.
-        //начало и конец событий могут совпадать.
-        List<Event> result;
-        result = new ArrayList<>();
-        //ваше решение.
+        List<Event> res = new ArrayList<>();
+        Arrays.sort(events);
+        Event currentEvent = null;
 
+        int i = 0;
+        boolean fl = true;
+        while (fl) {
+            if (events[i].start >= from) {
+                currentEvent = events[i];
+                res.add(events[i]);
+                fl = false;
+            }
+        }
 
-
-
-
-
-        return result;                        //вернем итог
+        for (i = 1; i < events.length; i++)
+            if (currentEvent.stop <= events[i].start && currentEvent.stop <= to) {
+                res.add(events[i]);
+                currentEvent = events[i];
+            }
+        return res;
     }
 }
