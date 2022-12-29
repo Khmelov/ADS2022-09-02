@@ -1,7 +1,5 @@
 package by.it.group151001.milkovskaya.lesson11;
 
-import by.it.group151001.aleksandrov.lesson11.Graph;
-
 import java.util.*;
 
 public class TaskC {

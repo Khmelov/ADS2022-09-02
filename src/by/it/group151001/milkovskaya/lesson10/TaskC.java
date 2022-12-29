@@ -12,6 +12,16 @@ public class TaskC<E>  implements NavigableSet<E> {
     //Обязательные к реализации методы и конструкторы
     public Node<E> root;
     public int size = 0;
+    class SortDescending implements Comparator<E>{
+        public int compare(E o1, E o2)
+    {
+        return Integer.compare((int)o2, (int)o1);
+    }}
+    class SortInc implements Comparator<E>{
+        public int compare(E o1, E o2)
+        {
+            return Integer.compare((int)o1, (int)o2);
+        }}
     public int compareTo(E o1, E o2)
     {
         return Integer.compare((int)o1, (int)o2);
@@ -104,12 +114,12 @@ public class TaskC<E>  implements NavigableSet<E> {
                 }
                 size--;
             } else if (curr.left != null && curr.right != null) {
-               Node<E> successor = getMinimumKey(curr.right);
+                Node<E> successor = getMinimumKey(curr.right);
                 E val = successor.data;
                 remove(successor.data);
                 curr.data = val;
             } else {
-               Node<E> child = (curr.left != null) ? curr.left : curr.right;
+                Node<E> child = (curr.left != null) ? curr.left : curr.right;
                 if (curr != root) {
                     if (curr == prnt.left) {
                         prnt.left = child;
@@ -233,23 +243,74 @@ public class TaskC<E>  implements NavigableSet<E> {
         return res.toString();
     }
 
+    ArrayList<E> inArray(Node<E> root, ArrayList<E> arr){
+        if (root != null) {
+            arr.add(root.data);
+            arr = inArray(root.left,arr);
+            arr = inArray(root.right,arr);
+        }
+        return arr;
+    }
+
     @Override
     public E lower(E e) {
+        ArrayList<E> arr = new ArrayList<>();
+        arr = inArray(root,arr);
+        Collections.sort(arr, new SortDescending());
+        for(int i = 0; i < arr.size();i++){
+            if (compareTo(arr.get(i), e) < 0){
+                return arr.get(i);
+            }
+        }
         return null;
     }
 
     @Override
     public E floor(E e) {
+        ArrayList<E> arr = new ArrayList<>();
+        arr = inArray(root,arr);
+        Collections.sort(arr, new SortDescending());
+        for(int i = 0; i < arr.size();i++){
+            if (compareTo(arr.get(i), e) <= 0){
+                return arr.get(i);
+            }
+        }
         return null;
     }
 
     @Override
     public E ceiling(E e) {
+        Node<E> temp = root;
+        if (!contains(e))
+        {
+                while (temp != null)
+                {
+                    if (compareTo(temp.data, e) < 0)
+                    {
+                        temp = temp.right;
+                    }
+                    else
+                    {
+                        return e;
+                    }
+                }
+
+        } else{
+            return e;
+        }
         return null;
     }
 
     @Override
     public E higher(E e) {
+        ArrayList<E> arr = new ArrayList<>();
+        arr = inArray(root,arr);
+        Collections.sort(arr, new SortInc());
+        for(int i = 0; i < arr.size();i++){
+            if (compareTo(arr.get(i), e) > 0){
+                return arr.get(i);
+            }
+        }
         return null;
     }
 
@@ -353,6 +414,4 @@ public class TaskC<E>  implements NavigableSet<E> {
     public SortedSet<E> tailSet(E fromElement) {
         return null;
     }
-
-
 }
