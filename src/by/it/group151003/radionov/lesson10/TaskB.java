@@ -8,58 +8,64 @@ public class TaskB<E>  implements NavigableSet<E> {
     //аналог дерева TreeSet
 
     //Обязательные к реализации методы и конструкторы
+    private transient NavigableMap<E,Object> m;
+    private static final Object PRESENT = new Object();
     public TaskB() {
+        this(new TreeMap<E,Object>());
+    }
+    TaskB(NavigableMap<E,Object> m) {
+        this.m = m;
     }
 
     @Override
     public boolean add(E e) {
-        return false;
+        return m.put(e, PRESENT)==null;
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        return m.remove(o)==PRESENT;
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return m.containsKey(o);
     }
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return m.navigableKeySet().iterator();
     }
 
     @Override
     public void clear() {
-
+        m.clear();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return m.isEmpty();
     }
 
     @Override
     public int size() {
-        return 0;
+        return m.size();
     }
 
     @Override
     public E first() {
-        return null;
+        return m.firstKey();
     }
 
     @Override
     public E last() {
-        return null;
+        return m.lastKey();
     }
 
 
     @Override
     public String toString() {
-        return null;
+        return m.keySet().toString();
     }
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
