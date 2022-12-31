@@ -45,7 +45,6 @@ public class A_LIS {
             x[i] = scanner.nextInt();
         }
 
-        int[] P = new int[n];
         int[] M = new int[n + 1];
         int L = 0;
         int lo,hi,mid, newL;
@@ -62,7 +61,6 @@ public class A_LIS {
                 }
             }
             newL = lo;
-            P[i] = M[newL - 1];
             M[newL] = i;
             if(newL > L){
                 L = newL;
