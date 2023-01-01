@@ -8,7 +8,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,7 +30,7 @@ public class Test_jd01_10 extends HomeWork {
                 "toString", "add", "remove",
                 "contains", "clear", "isEmpty", "size", "first", "last"
         ));
-        randomCheck(methodNames, "TaskB");
+        randomCheck(methodNames, "TaskC");
     }
 
     @Test(timeout = 5000)
@@ -51,15 +50,15 @@ public class Test_jd01_10 extends HomeWork {
         NavigableSet<Integer> e = (NavigableSet<Integer>) TreeSet.class.getDeclaredConstructor().newInstance();
         NavigableSet<Integer> a = (NavigableSet<Integer>) aclass.getDeclaredConstructor().newInstance();
         Field[] fields = a.getClass().getDeclaredFields();
-        List<Method> methodsE = fill(e.getClass(), methodNames);
-        List<Method> methodsA = fill(aclass, methodNames);
+        List<Method> methodsE = fill(e.getClass().getMethods(), methodNames);
+        List<Method> methodsA = fill(aclass.getMethods(), methodNames);
         int seed = 1234;
         Random rnd = new Random(seed);
         for (int testNumber = 0; testNumber < seed; testNumber++) {
             Integer value = rnd.nextInt(10);
             for (int i = 0; i <= value % 10; i++) {
-                a.add(value + i * value);
-                e.add(value + i * value);
+                a.add(value + i*value);
+                e.add(value + i*value);
             }
             int mIndex = rnd.nextInt(methodsA.size());
             Method methodE = methodsE.get(mIndex);
@@ -79,20 +78,10 @@ public class Test_jd01_10 extends HomeWork {
         System.out.println(a);
     }
 
-    private List<Method> fill(Class<?> c, TreeSet<String> methodNames) {
-        return Stream.of(c.getMethods(), c.getDeclaredMethods())
-                .flatMap(Arrays::stream)
-                .distinct()
+    private static List<Method> fill(Method[] e, TreeSet<String> methodNames) {
+        return Arrays.stream(e)
                 .filter(m -> methodNames.contains(m.getName()))
-                .filter(this::notComparable)
                 .sorted((m1, m2) -> m1.getName().compareTo(m2.getName()))
                 .toList();
-    }
-
-    private boolean notComparable(Method m) {
-        return m.getReturnType() != Comparable.class &&
-                0 == Arrays.stream(m.getParameterTypes())
-                        .filter(p -> p == Comparable.class)
-                        .count();
     }
 }
