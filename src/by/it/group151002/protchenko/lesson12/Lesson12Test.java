@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import by.it.group151002.protchenko.lesson12.TaskA.Node;
 
-public class Lesson12_Tests {
+public class Lesson12Test {
 
     @Test(timeout = 2000)
     public void taskA() {
