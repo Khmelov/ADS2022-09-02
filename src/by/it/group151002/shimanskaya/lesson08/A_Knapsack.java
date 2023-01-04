@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
-import java.lang.Math;
 
 /*
 Задача на программирование: рюкзак с повторами
@@ -42,19 +41,21 @@ public class A_Knapsack {
         Scanner scanner = new Scanner(stream);
         int w=scanner.nextInt();
         int n=scanner.nextInt();
-        int gold[]=new int[n];
+        int gold[] = new int[n];
         for (int i = 0; i < n; i++) {
-            gold[i]=scanner.nextInt();
+            gold[i] = scanner.nextInt();
         }
-        int[] arr = new int[w + 1];
+
+        int[] D = new int[w + 1];
+
         for (int i = 0; i <= w; i++) {
-            for (int j = 0; j < gold.length; j++) {
-                    if (gold[j] <= i){
-                        arr[i]= Math.max(arr[i], arr[i - gold[j]] + gold[j]);
-                    }
-                }
+            for (int j = 0; j < n; j++) {
+                if (gold[j] <= i)
+                    D[i] = Math.max(D[i], D[i - gold[j]] + gold[j]);
+            }
         }
-        int result = arr[w];
+
+        int result = D[w];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

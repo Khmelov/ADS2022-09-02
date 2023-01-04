@@ -28,25 +28,27 @@ Sample Output:
 
 public class B_Knapsack {
 
-    int getMaxWeight(InputStream stream ) {
+    int getMaxWeight(InputStream stream) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         Scanner scanner = new Scanner(stream);
-        int w=scanner.nextInt();
-        int n=scanner.nextInt();
-        int gold[]=new int[n];
+        int w = scanner.nextInt();
+        int n = scanner.nextInt();
+        int[] gold = new int[n];
         for (int i = 0; i < n; i++) {
-            gold[i]=scanner.nextInt();
+            gold[i] = scanner.nextInt();
         }
-        int[][] arr = new int[w + 1][n + 1];
+
+        int[][] D = new int[w + 1][n + 1];
         for (int i = 0; i <= w; i++) {
-            for (int j = 1; j <= gold.length; j++) {
-                arr[i][j] = arr[i][j - 1];
-                if (gold[j - 1] <= i){
-                    arr[i][j]= Math.max(arr[i][j], arr[i - gold[j - 1]][j - 1] + gold[j - 1]);
-                }
+            for (int j = 1; j <= n; j++) {
+                D[i][j] = D[i][j - 1];
+                if (gold[j - 1] <= i)
+                    D[i][j] = Math.max(D[i][j], D[i - gold[j - 1]][j - 1] + gold[j - 1]);
             }
         }
-        int result = arr[w][n];
+
+
+        int result = D[w][n];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -56,7 +58,7 @@ public class B_Knapsack {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson08/dataB.txt");
         B_Knapsack instance = new B_Knapsack();
-        int res=instance.getMaxWeight(stream);
+        int res = instance.getMaxWeight(stream);
         System.out.println(res);
     }
 
