@@ -1,4 +1,4 @@
-package by.it.a_khmelev.lesson05;
+package by.it.group151002.shimanskaya.lesson05;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -60,10 +60,17 @@ public class B_CountSort {
         for (int i = 0; i < n; i++) {
             points[i] = arr1[i];
         }
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        display(points);
+
+       //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
     }
 
+    void display(int[] arr){
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i]+" ");
+        }
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
