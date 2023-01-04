@@ -7,15 +7,17 @@ public class TaskC {
     public Map<Character, Integer> preValues;
     public Map<Character, Integer> postValues;
     public int counter = 1;
-    public List<Character> topologicalOrder;
+    public Stack<Character> topologicalOrder;
     public boolean[] visited;
     public int srcs;
+    List<Character> sources = new ArrayList<>();
+    List<Character> sinks = new ArrayList<>();
 
     public TaskC(Map<Character, List<Character>> graph) {
         this.graph = graph;
         this.preValues = new HashMap<>();
         this.postValues = new HashMap<>();
-        topologicalOrder = new ArrayList<>();
+        topologicalOrder = new Stack<>();
         visited = new boolean[graph.size()];
     }
 
@@ -36,25 +38,24 @@ public class TaskC {
                 dfs(neighbor);
             }
         }
-        topologicalOrder.add(vertex);
+        topologicalOrder.push(vertex);
         postValues.put(vertex, counter++);
     }
 
-    public Map<Character, Integer> getPreValues() {
-        return preValues;
+    public String getPreValues() {
+        return preValues.toString();
     }
 
-    public Map<Character, Integer> getPostValues() {
-        return postValues;
+    public String getPostValues() {
+        return postValues.toString();
     }
 
-    public List<Character> getTopologicalOrder() {
-        return topologicalOrder;
+    public String getTopologicalOrder() {
+        return topologicalOrder.toString();
     }
 
     public void findSourcesAndSinks() {
-        List<Character> sources = new ArrayList<>();
-        List<Character> sinks = new ArrayList<>();
+
         for (char vertex : graph.keySet()) {
             if (graph.get(vertex).isEmpty()) {
                 sinks.add(vertex);
@@ -71,9 +72,11 @@ public class TaskC {
             }
         }
         this.srcs = sources.size();
-        System.out.println("Sources: " + sources);
-        System.out.println("Sinks: " + sinks);
     }
+
+    public String getSources(){return this.sources.toString();}
+    public String getSinks(){return this.sinks.toString();}
+    public int getLins(){return this.srcs * 2 * 2;}
 
     public static void main(String[] args) {
         Map<Character, List<Character>> graph = new HashMap<>();
@@ -86,13 +89,14 @@ public class TaskC {
         graph.put('G', List.of());
         graph.put('H', List.of());
 
-        TaskC topologicalSort = new TaskC(graph);
-        topologicalSort.sort();
-        topologicalSort.findSourcesAndSinks();
-        int lins = topologicalSort.srcs * 2 * 2; //по 2 развилки в Ц и Ф
-        System.out.println("Linearizations: " + lins);
-        System.out.println("Pre values: " + topologicalSort.getPreValues());
-        System.out.println("Post values: " + topologicalSort.getPostValues());
-        System.out.println("Topological order: " + topologicalSort.getTopologicalOrder());
+        TaskC taskC = new TaskC(graph);
+        taskC.sort();
+        taskC.findSourcesAndSinks();
+        System.out.println("Sources: " + taskC.getSources());
+        System.out.println("Sinks: " + taskC.getSinks());
+        System.out.println("Linearizations: " + taskC.getLins());
+        System.out.println("Pre values: " + taskC.getPreValues());
+        System.out.println("Post values: " + taskC.getPostValues());
+        System.out.println("Topological order: " + taskC.getTopologicalOrder());
     }
 }
