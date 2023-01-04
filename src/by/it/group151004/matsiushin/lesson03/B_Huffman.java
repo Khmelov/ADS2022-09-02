@@ -2,6 +2,8 @@ package by.it.group151004.matsiushin.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -51,6 +53,25 @@ public class B_Huffman {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
 
+        Map<String ,String> map = new HashMap<>();
+        scanner.nextLine();
+        for (int i = 0; i < count; i++)
+        {
+            String[] line = scanner.nextLine().split(": ");
+            map.put(line[1], line[0]);
+        }
+
+        String symb = "";
+        String str = scanner.next();
+        for (int i = 0; i <= length - 1; i++)
+        {
+            symb += str.charAt(i);
+            if (map.containsKey(symb))
+            {
+                result.append(map.get(symb));
+                symb = "";
+            }
+        }
 
 
 
