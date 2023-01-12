@@ -1,11 +1,11 @@
-package by.it.group151002.vakar.lesson09;
+package by.it.group151002.redkovskiy.lesson09;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class ListA<T> implements List<T> {
+public class ListATask<T> implements List<T> {
 
     private class Node {
         T data;
