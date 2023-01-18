@@ -17,7 +17,6 @@ public class Lesson2Test {
     Search for test:    In whole project
     */
 
-
     @Test
     public void A_VideoRegistrator() {
         A_VideoRegistrator instance=new A_VideoRegistrator();
