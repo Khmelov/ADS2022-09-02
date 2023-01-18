@@ -50,8 +50,36 @@ public class C_LongNotUpSubSeq {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
-        int result = 0;
-
+        int seq[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            seq[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if ((m[j] >= m[i]) && (seq[j] + 1 > seq[i]))
+                    seq[i] = seq[j]+1;
+            }
+        }
+        int result = seq[0];
+        for (int i = 0; i < n; i++) {
+            if (seq[i] > result)
+                result = seq[i];
+        }
+        System.out.println(result);
+        int k;
+        int[] srArr = new int[result];
+        for (int i = n-1; i>=0; i--) {
+            if (seq[i] == result) {
+                k = result;
+                for (int j = i; j > -1; j--) {
+                    if ((m[j] >= m[i]) && (seq[j] == k)) {
+                        srArr[result - k] = j + 1;
+                        k--;
+                    }
+                }
+                for (int count = result-1; count > -1; count--) {
+                    System.out.println(srArr[count] + " ");
+                }
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -63,7 +91,7 @@ public class C_LongNotUpSubSeq {
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson06/dataC.txt");
         C_LongNotUpSubSeq instance = new C_LongNotUpSubSeq();
         int result = instance.getNotUpSeqSize(stream);
-        System.out.print(result);
+//        System.out.print(result);
     }
 
 }
