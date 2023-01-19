@@ -55,7 +55,7 @@ public class C_LongNotUpSubSeq {
         for (int i = 0; i < n; i++) {
             arr[i] = 1;
             for (int j = 0; j < i; j++) {
-                if (m[j] >= m[i] && arr[j] + 1 > arr[i]) {
+                if (m[j] >= m[i] && arr[j] >= arr[i]) {
                     arr[i] = arr[j] + 1;
                 }
             }

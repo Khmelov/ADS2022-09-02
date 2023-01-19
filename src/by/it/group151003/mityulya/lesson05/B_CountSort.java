@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 При сортировке реализуйте метод со сложностью O(n)
 
-Пример: https://karussell.wordpress.com/2010/03/01/fast-integer-sorting-algorithm-on/
+Пример: https://karussell .wordpress.com/2010/03/01/fast-integer-sorting-algorithm-on/
 Вольный перевод: http://programador.ru/sorting-positive-int-linear-time/
 */
 
