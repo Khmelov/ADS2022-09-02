@@ -1,9 +1,12 @@
 package by.it.group151003.romanko.lesson04;
 
+import javax.swing.plaf.TableHeaderUI;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /*
 Рассчитать число инверсий одномерного массива.
@@ -32,8 +35,9 @@ Sample Output:
 Большой тестовый массив можно прочитать свой или сгенерировать его программно.
 */
 
-
 public class C_GetInversions {
+
+    int inverceCount;
 
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -46,21 +50,57 @@ public class C_GetInversions {
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
-        int result = 0;
+        int result;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
+        mergeSortWithInvarianceCount(a);
+        result = inverceCount;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    int[] mergeSortWithInvarianceCount(int[] arr){
+        inverceCount = 0;
+        return divide(arr);
+    }
+
+    int[] divide(int[] arr){
+        if (arr.length <= 1) {
+            return arr;
+        }
+        int mid = arr.length / 2;
+        int[] left = divide(Arrays.copyOfRange(arr, 0, mid));
+        int[] right = divide(Arrays.copyOfRange(arr, mid, arr.length));
+
+        return mergeWithInvarianceCount(left, right);
+    }
+
+    int[] mergeWithInvarianceCount(int[] left, int[] right) {
+        int[] res = new int[left.length + right.length];
+        int l = 0;
+        int r = 0;
+        int i = 0;
+        while (i < res.length) {
+            if (r >= right.length) {
+                res[i] = left[l];
+                l++;
+            }else
+            if (l >= left.length) {
+                res[i] = right[r];
+                inverceCount += left.length - l;
+                r++;
+            }else
+            if (left[l] <= right[r]){
+                res[i] = left[l];
+                l++;
+            }else{
+                res[i] = right[r];
+                inverceCount += left.length - l;
+                r++;
+            }
+            i++;
+        }
+        return res;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

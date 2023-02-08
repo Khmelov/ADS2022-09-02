@@ -1,6 +1,7 @@
 package by.it.group151003.romanko.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны события events
@@ -25,6 +26,18 @@ public class A_VideoRegistrator {
         List<Double> result;
         result = new ArrayList<>();
         int i=0;                              //i - это индекс события events[i]
+        double temp;
+        Arrays.sort(events);
+        while (i < events.length){
+            result.add(events[i]);
+            temp = events[i++] + workDuration;
+            if (temp < events[events.length - 1]) {
+                while (temp > events[i]) {
+                    i++;
+                }
+            } else
+                break;
+        }
         //комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
         //подготовка к жадному поглощению массива событий
         //hint: сортировка Arrays.sort обеспечит скорость алгоритма

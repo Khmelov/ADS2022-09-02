@@ -32,10 +32,6 @@ public class TaskA {
         return adjacencyLists.length;
     }
 
-    public LinkedList<Integer> getNeighbors(int v) {
-        return adjacencyLists[v];
-    }
-
     public int[] getVerticesInAlphabeticalOrder() {
         int[] vertices = new int[getNumVertices()];
         for (int i = 0; i < vertices.length; i++) {
@@ -57,40 +53,41 @@ public class TaskA {
     }
 
     public static class DFS {
-        public boolean[] visited;
-        public int[] pre;
-        public int[] post;
-        public int preCounter;
-        public int postCounter;
+        private final boolean[] visited;
+        private final int[] pre;
+        private final int[] post;
+        private int counter;
+        public StringBuilder str = new StringBuilder();
 
         public DFS(TaskA g) {
             visited = new boolean[g.getNumVertices()];
             pre = new int[g.getNumVertices()];
             post = new int[g.getNumVertices()];
-            preCounter = 0;
-            postCounter = 0;
+            counter = 0;
 
             for (int v : g.getVerticesInAlphabeticalOrder()) {
                 if (!visited[v]) {
-                    dfs(g, v);
+                    Explore(g, v);
                 }
             }
         }
 
-        public void dfs(TaskA g, int v) {
+        public void Explore(TaskA g, int v) {
             visited[v] = true;
-            pre[v] = preCounter++;
+            pre[v] = counter++;
 
             for (int neighbor : g.getNeighborsInAlphabeticalOrder(v)) {
                 if (!visited[neighbor]) {
-                    System.out.println(g.getVertexName(v) + " - " + g.getVertexName(neighbor) + " (tree edge)");
-                    dfs(g, neighbor);
+                    str.append(g.getVertexName(v)).append(" - ").append(g.getVertexName(neighbor)).append(" (tree edge) ");
+                    //System.out.println(g.getVertexName(v) + " - " + g.getVertexName(neighbor) + " (tree edge)");
+                    Explore(g, neighbor);
                 } else {
-                    System.out.println(g.getVertexName(v) + " - " + g.getVertexName(neighbor) + " (back edge)");
+                    str.append(g.getVertexName(v)).append(" - ").append(g.getVertexName(neighbor)).append(" (back edge) ");
+                    //System.out.println(g.getVertexName(v) + " - " + g.getVertexName(neighbor) + " (back edge)");
                 }
             }
 
-            post[v] = postCounter++;
+            post[v] = counter++;
         }
 
         public int getPre(int v) {
@@ -100,33 +97,39 @@ public class TaskA {
         public int getPost(int v) {
             return post[v];
         }
+
+        public String getString() {
+            return str.toString();
+        }
     }
 
     public static void main(String[] args) {
-        TaskA g = new TaskA(9);
-        g.setVertexName(0, "A");
-        g.setVertexName(1, "B");
-        g.setVertexName(2, "C");
-        g.setVertexName(3, "D");
-        g.setVertexName(4, "E");
-        g.setVertexName(5, "F");
-        g.setVertexName(6, "G");
-        g.setVertexName(7, "H");
-        g.setVertexName(8, "I");
-        g.addEdge(3, 7);
-        g.addEdge(3, 6);
-        g.addEdge(6, 7);
-        g.addEdge(0, 1);
-        g.addEdge(0, 4);
-        g.addEdge(1, 4);
-        g.addEdge(1, 2);
-        g.addEdge(2, 5);
-        g.addEdge(5, 8);
+        TaskA taskA = new TaskA(9);
+        taskA.setVertexName(0, "A");
+        taskA.setVertexName(1, "B");
+        taskA.setVertexName(2, "C");
+        taskA.setVertexName(3, "D");
+        taskA.setVertexName(4, "E");
+        taskA.setVertexName(5, "F");
+        taskA.setVertexName(6, "G");
+        taskA.setVertexName(7, "H");
+        taskA.setVertexName(8, "I");
+        taskA.addEdge(3, 7);
+        taskA.addEdge(3, 6);
+        taskA.addEdge(6, 7);
+        taskA.addEdge(0, 1);
+        taskA.addEdge(0, 4);
+        taskA.addEdge(1, 4);
+        taskA.addEdge(1, 2);
+        taskA.addEdge(2, 5);
+        taskA.addEdge(5, 8);
+        taskA.addEdge(4, 5);
 
-        DFS dfs = new DFS(g);
+        DFS dfs = new DFS(taskA);
 
-        for (int v : g.getVerticesInAlphabeticalOrder()) {
-            System.out.println(g.getVertexName(v) + ": pre = " + dfs.getPre(v) + ", post = " + dfs.getPost(v));
+        System.out.println(dfs.getString());
+        for (int v : taskA.getVerticesInAlphabeticalOrder()) {
+            System.out.println(taskA.getVertexName(v) + ": pre = " + dfs.getPre(v) + ", post = " + dfs.getPost(v));
         }
     }
 }
